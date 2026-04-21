@@ -1,0 +1,326 @@
+@import "tailwindcss";
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/thumbs";
+
+body {
+  font-family: var(--font-sfpro), sans-serif;
+}
+
+.mont-text {
+  font-family: var(--font-mont);
+}
+
+@theme {
+  --color-orange: #FFAD01;
+  --color-gray: #1D1C1A;
+  --color-green: #FFAD01;
+  --color-lightgreen: #FFEFCC;
+  --color-para: #4d4d4d;
+  --color-text-gray: #62615F;
+  --color-light-gray: #FFF;
+  --color-header: #FFFBF3;
+  --color-secgray: #373737;
+  --color-seclightgray: #7A7A7A;
+  --color-lightgray: #909090;
+  --color-border: #E9E9E9;
+  --color-lightblack: #333333;
+  --color-redmark: #ef4343;
+  --color-lightyellow: #FFDE99;
+}
+
+@layer components {
+  .input {
+    @apply w-full px-5 py-3 rounded-[10px] border border-border focus:outline-none;
+  }
+}
+
+.py-30 {
+  padding: 30px 0;
+}
+.mb-30 {
+  margin-bottom: 30px;
+}
+.gradient {
+  background: linear-gradient(180deg, #FFAD0100 0%, #FFAD01 50%, var(--color-orange) 100%);
+}
+.bg-gradient {
+  background: linear-gradient(180deg, #FFAD0100 0%, #37373714 8%);
+}
+.gradient-btn {
+  background: linear-gradient(-90deg, #FFCE67 0%, var(--color-green) 100%);
+}
+
+
+/* Slide sidebar from left */
+.sidebar-open {
+  transform: translateX(0);
+}
+
+.sidebar-closed {
+  transform: translateX(-100%);
+}
+
+select option:checked {
+  background-color: #027b66 !important;
+  color: #fff !important;
+}
+select option:checked {
+  background-color: #027b66 !important;
+  color: white !important;
+}
+
+.bg-position {
+  background-size: cover;
+  background-position: 100% 100%;
+}
+.webkit-box {
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+}
+
+@media (min-width: 1024px) {
+  .bg-position {
+    background-size: 100% 100%;
+  }
+}
+/* global.css */
+.container-custom {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
+}
+
+@media (min-width: 640px) {
+  .container-custom {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container-custom {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-custom {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-custom {
+    max-width: 1170px;
+  } 
+}
+
+@media (min-width: 1441px) {
+  .container-custom {
+    max-width: 1320px;
+  } 
+}
+
+@media (min-width: 1600px) {
+  .container-custom {
+    max-width: 1400px;
+  } 
+}
+
+@media (min-width: 1920px) {
+  .container-custom {
+    max-width: 1600px;
+  }
+}
+
+.verify-account-block-navigation header,
+.verify-account-block-navigation footer,
+.verify-account-block-navigation .header,
+.verify-account-block-navigation .footer {
+  pointer-events: none !important;
+  opacity:1;
+}
+
+.verify-account-block-navigation .verify-alert-message {
+  pointer-events: auto !important;
+}
+
+@media (min-width: 1024px) {
+  .hero-custom-mt {
+    margin-top: 80px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .hero-img-margin {
+    margin-right: -5rem;
+  }
+  .hero-custom-mt {
+    margin-top: 0px;
+  }
+}
+
+@media (max-width: 1439px) {
+  .container-custom {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+/* ---loader--- */
+@keyframes wave {
+  0%,
+  100% {
+    transform: scaleY(0.5);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scaleY(1.2);
+    opacity: 1;
+  }
+}
+
+@utility animate-wave {
+  animation: wave 1s ease-in-out infinite;
+}
+
+@keyframes dotBounce {
+  0%,
+  80%,
+  100% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1.4); /* ⬅️ bounce feel */
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-slide-in {
+  animation: slideIn 0.25s ease-out forwards;
+}
+.range-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  background: transparent;
+  appearance: none;
+  pointer-events: none;
+}
+
+.range-thumb::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #FFAD01;
+  border-radius: 999px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.range-thumb::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #0f766e;
+  border-radius: 999px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.input-class {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  font-size: 14px;
+  outline: none;
+}
+.input-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}
+.error {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #ef4444;
+}
+.react-tel-input .country-list{
+  left: 5%;
+  top: 100%;
+}
+/* Toolbar *//* ✅ Wrapper handles border + radius */
+.ql-toolbar {
+  border: none !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+  background: #f9fafb;
+}
+
+.ql-container {
+  border: none !important;
+    height: 250px !important; 
+  border-bottom-left-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+}
+
+/* Editor area padding */
+/* ✅ Fixed height editor with inner scroll */
+.ql-editor {
+  min-height: 150px;
+  max-height: 250px;   /* 👈 Fixed max height */
+  overflow-y: auto;    /* 👈 Scroll inside editor */
+  padding: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+/* Hide scrollbar but keep scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE & Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.input:focus{
+  outline: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  height: 0;
+  width: 0;
+  display: none;
+}
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;   /* light gray */
+  border-radius: 9999px;       /* 🔥 fully rounded */
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+}
+
+/* Firefox */
+.custom-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}

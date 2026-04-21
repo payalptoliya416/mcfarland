@@ -1,0 +1,31 @@
+RewriteEngine On
+
+# ✅ Block Next internal txt files everywhere
+RedirectMatch 404 (^|/)(__next.*\.txt)$
+
+# ✅ Allow _next static assets (IMPORTANT)
+RewriteRule ^_next/ - [L]
+
+# ✅ Allow static files (images, js, css, fonts)
+RewriteCond %{REQUEST_URI} \.(js|css|png|jpg|jpeg|gif|svg|ico|webp|woff|woff2|ttf)$ [NC]
+RewriteRule ^ - [L]
+
+# ✅ Allow real files/folders
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# ✅ Inventory deep routes
+RewriteRule ^inventory(/.*)?$ /inventory/index.html [L]
+
+# ✅ Checkout deep routes
+RewriteRule ^checkout(/.*)?$ /checkout/index.html [L]
+
+# ✅ Confirmation deep routes
+RewriteRule ^confirmation(/.*)?$ /confirmation/index.html [L]
+
+RewriteRule ^sale-agreement(/.*)?$ /sale-agreement/index.html [L]
+
+
+# ✅ SPA fallback
+RewriteRule . /index.html [L]
