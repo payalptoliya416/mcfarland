@@ -339,28 +339,24 @@ const inventorySubmenu: NavItem[] = useMemo(() => {
     setLoggedIn(isLoggedIn());
   }, [pathname]);
 
-const [currentPath, setCurrentPath] = useState("");
+const currentPath = pathname; 
 
-useEffect(() => {
-  if (typeof window !== "undefined") {
-    setCurrentPath(window.location.pathname);
+const hasBgImage = useMemo(() => {
+  if (!currentPath) return false;
+
+  if (currentPath === "/inventory" || currentPath === "/inventory/") {
+    return false;
   }
-}, []);
 
-const isInventoryMain =
-  currentPath === "/inventory" || currentPath === "/inventory/";
-
-const hasBgImage =
-  !isInventoryMain &&
-  (
+  return (
     currentPath.startsWith("/inventory") ||
     currentPath.startsWith("/verify-account") ||
-    currentPath.startsWith("/verify-account/") ||
     currentPath.startsWith("/signup") ||
     currentPath.startsWith("/confirmation") ||
     currentPath.startsWith("/sale-agreement") ||
     currentPath.startsWith("/checkout")
   );
+}, [currentPath]);
 
   return (
     <>
