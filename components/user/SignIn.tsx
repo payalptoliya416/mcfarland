@@ -251,8 +251,8 @@ export default function SignInForm(): JSX.Element {
                           transition flex items-center justify-center gap-3
                           ${
                             loading
-                              ? "bg-green/70 cursor-not-allowed"
-                              : "bg-green hover:opacity-90 cursor-pointer"
+                              ? "bg-gray/70 cursor-not-allowed"
+                              : "bg-gray hover:opacity-90 cursor-pointer"
                           }
                           text-white
                         `}

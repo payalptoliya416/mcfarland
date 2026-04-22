@@ -260,7 +260,7 @@ const handlePlaceBid = async () => {
         Place your bid
       </label>
       {licenseBlocked && (
-        <div className="rounded-lg mb-4 p-3 bg-orange/10 border border-orange text-orange text-sm">
+        <div className="rounded-lg mb-4 p-3 bg-orange/10 border border-orange text-balck text-sm">
           {licenseBlockMessage}
         </div>
       )}
@@ -300,8 +300,8 @@ const handlePlaceBid = async () => {
         disabled={bidLoading || !!error || licenseBlocked}
         className={`w-full py-[15px] rounded-lg text-base leading-[16px] font-medium mb-[15px] flex justify-center items-center gap-[10px] mont-text transition-all duration-300 mt-4 ${
           licenseBlocked
-            ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-            : "bg-green text-white hover:brightness-110 hover:bg-green/90"
+            ? "bg-gray-300 text-balck cursor-not-allowed"
+            : "bg-green text-balck hover:brightness-110 hover:bg-green/90"
         }`}
       >
         {bidLoading ? (
@@ -326,8 +326,8 @@ const handlePlaceBid = async () => {
         disabled={buyLoading || licenseBlocked}
         className={`w-full py-[15px] rounded-lg text-base leading-[16px] font-medium flex justify-center items-center gap-[10px] border mont-text transition-all duration-300 ${
           licenseBlocked
-            ? "bg-gray-100 text-gray-600 border-gray-300 cursor-not-allowed"
-            : "bg-white text-green border-green hover:bg-green hover:text-white"
+            ? "bg-gray-100 text-balck border-gray-300 cursor-not-allowed"
+            : "bg-white text-balck border-green hover:bg-green hover:text-white"
         }`}
       >
         {buyLoading ? (

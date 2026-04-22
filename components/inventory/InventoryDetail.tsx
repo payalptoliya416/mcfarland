@@ -470,7 +470,7 @@ if (loading || isRedirecting) {
                 {formatPrice(data?.current_bid)}
               </p>
             </div>
-            <div className="flex items-center bg-[#FFEFCC] text-green border border-lightgreen px-4 py-3 rounded-xl gap-[10px] text-base mb-[30px]">
+            <div className="flex items-center bg-[#FFEFCC] text-black border border-lightgreen px-4 py-3 rounded-xl gap-[10px] text-base mb-[30px]">
               <Image src="/assets/fire-new.png" alt="icon" width={30} height={30} />
               {offerCount === 1
                 ? "1 offer was received"

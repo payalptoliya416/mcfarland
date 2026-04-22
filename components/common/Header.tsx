@@ -338,22 +338,30 @@ const inventorySubmenu: NavItem[] = useMemo(() => {
   useEffect(() => {
     setLoggedIn(isLoggedIn());
   }, [pathname]);
-const segments = pathname.split("/").filter(Boolean);
 
-const isInventoryDetail =
-  segments[0] === "inventory" &&
-  segments.length >= 5;;
+const [currentPath, setCurrentPath] = useState("");
 
-  const hasBgImage =
-    isInventoryDetail ||
-    pathname.startsWith("/signin") ||
-    pathname.startsWith("/verify-account/") ||
-    pathname.startsWith("/verify-account") ||
-    pathname.startsWith("/signup") ||
-    pathname.startsWith("/confirmation") ||
-    pathname.startsWith("/sale-agreement") ||
-    pathname.startsWith("/checkout");
-    
+useEffect(() => {
+  if (typeof window !== "undefined") {
+    setCurrentPath(window.location.pathname);
+  }
+}, []);
+
+const isInventoryMain =
+  currentPath === "/inventory" || currentPath === "/inventory/";
+
+const hasBgImage =
+  !isInventoryMain &&
+  (
+    currentPath.startsWith("/inventory") ||
+    currentPath.startsWith("/verify-account") ||
+    currentPath.startsWith("/verify-account/") ||
+    currentPath.startsWith("/signup") ||
+    currentPath.startsWith("/confirmation") ||
+    currentPath.startsWith("/sale-agreement") ||
+    currentPath.startsWith("/checkout")
+  );
+
   return (
     <>
     {isNavigating && (
