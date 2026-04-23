@@ -327,8 +327,7 @@ export default function AdminOrder() {
 const handleDelete = async (id: number) => {
   try {
     const res = await adminOrdersService.delete(id);
-
-    if (res?.status) {
+    if (res?.success) {
       toast.success(res.message || "Order deleted successfully");
 
       // ✅ STEP 1: instant UI update
@@ -338,9 +337,9 @@ const handleDelete = async (id: number) => {
       if (data.length === 1 && page > 1) {
         setPage((p) => p - 1); // this will trigger useEffect
       }
-
-      // ✅ STEP 3 (optional but recommended): background refetch
-      fetchOrders();
+ setTimeout(() => {
+          fetchOrders();
+        }, 0);
     }
   } catch {
     toast.error("Failed to delete order");

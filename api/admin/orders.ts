@@ -63,7 +63,7 @@ export interface OrderApiResponse {
   };
 }
 type DeleteOrderResponse = {
-  status: boolean;
+  success: boolean;
   message: string;
 };
 /* ================= SERVICE ================= */
