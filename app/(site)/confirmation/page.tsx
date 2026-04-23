@@ -173,7 +173,7 @@ Our team is currently reviewing your order details and preparing the transaction
           We are now preparing your Invoice.
           <br />
           You will receive the invoice at{" "}
-          <span className="font-semibold text-[#006d5b]">
+          <span className="font-semibold text-green">
             {userEmail || "your registered email"}
           </span>{" "}
           once it has been issued.
@@ -305,7 +305,7 @@ if (pageLoading || userLoading) {
                 {/* Icon + Line */}
                 <div className="relative flex flex-col items-center shrink-0">
                   {/* Icon Circle */}
-                  <div className="w-[55px] md:w-[70px] h-[55px] md:h-[70px] rounded-full bg-[#006d5b] flex items-center justify-center relative">
+                  <div className="w-[55px] md:w-[70px] h-[55px] md:h-[70px] rounded-full bg-green flex items-center justify-center relative">
                     {/* Icon Wrapper */}
                     <div className="w-[28px] md:w-[32px] h-[28px] md:h-[32px] flex items-center justify-center">
                       {(() => {
@@ -318,11 +318,9 @@ if (pageLoading || userLoading) {
                 </div>
                 {index !== steps.length - 1 && (
                   <div className="absolute top-1/2 left-[28px] md:left-[35px] -translate-x-1/2 md:mt-1">
-                    <Image
+                     <img
                       src="/assets/strechline-new.png"
                       alt="connector-line"
-                      width={8}
-                      height={50}
                       className="object-contain"
                     />
                   </div>

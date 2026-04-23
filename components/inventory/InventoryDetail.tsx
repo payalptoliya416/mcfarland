@@ -21,6 +21,7 @@ import { calculateDistanceApi } from "@/api/calculateDistance";
 import { Category } from "@/api/data";
 import { formatPrice } from "@/hooks/formate";
 import { useRouter } from "next/navigation";
+import { IoIosTime } from "react-icons/io";
 
 function getTimeLeft(endTime: string) {
   const end = new Date(endTime.replace(" ", "T")).getTime();
@@ -914,6 +915,16 @@ if (loading || isRedirecting) {
                     />
                     <p className="text-secgray">
                       Delivery anywhere within the USA & Canada
+                    </p>
+                  </div>
+
+                   <div
+                    className="flex items-center gap-3 p-4 rounded-xl 
+                                bg-[linear-gradient(90deg,#f6f6f6_0%,#ffffff_100%)]"
+                  >
+                    <IoIosTime size={22} className="text-gray"/>
+                    <p className="text-secgray">
+                      Delivery Time: 10–14 Days
                     </p>
                   </div>
 

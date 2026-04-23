@@ -375,7 +375,7 @@ const hasBgImage = useMemo(() => {
     }
   `}
     >
-      <div className="container-custom mx-auto flex justify-between items-center py-4 px-4 md:px-0">
+      <div className="container-custom mx-auto flex justify-between items-center pb-4 px-4 md:px-0">
         <Link href="/">
           {settings?.dark_logo && (
             <Image

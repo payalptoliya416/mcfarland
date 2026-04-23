@@ -65,7 +65,7 @@ export default function AdminSidebar({
       `}
     >
       {/* LOGO (FIXED) */}
-      <div className="flex items-center justify-center py-4 shrink-0">
+      <div className="flex items-center justify-center py-1 shrink-0">
         <Link href="/">
           {settings?.dark_logo && (
             <Image
@@ -75,7 +75,7 @@ export default function AdminSidebar({
               width={120}
               loading="eager"
               priority
-              className="h-[42px] w-auto"
+              className="h-[77px] w-auto"
             />
           )}
         </Link>

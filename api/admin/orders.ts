@@ -62,7 +62,10 @@ export interface OrderApiResponse {
     to: number;
   };
 }
-
+type DeleteOrderResponse = {
+  status: boolean;
+  message: string;
+};
 /* ================= SERVICE ================= */
 
 export const adminOrdersService = {
@@ -80,6 +83,11 @@ export const adminOrdersService = {
   adminApi("/orders/update-payment-slip-status", {
     method: "POST",
     body: JSON.stringify(payload),
-  }),
+    }),
+    delete: (id: number) =>
+    adminApi<DeleteOrderResponse>("/orders/delete", {
+      method: "POST",
+      body: JSON.stringify({ order_id: id }),
+    }),
 };
 

@@ -208,16 +208,16 @@ const handleMenuNavigate = (path: string) => {
   return (
     <>
       <div className="bg-[#FFFBF3]">
-        <div className="container-custom mx-auto flex justify-between items-center py-[14px] sm:gap-2">
+        <div className="container-custom mx-auto flex justify-between items-center py-2 sm:gap-2">
           <Link href="/">
             {settings?.dark_logo && (
               <Image
                 src={`${settings.dark_logo}`}
                 alt="Logo"
-                height={52}
-                width={130}
-                loading="eager"
-                priority
+                height={0}
+              width={0}
+              style={{ width: "100%", height: "100%" }}
+              priority
               />
             )}
           </Link>

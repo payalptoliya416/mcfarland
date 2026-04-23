@@ -24,6 +24,7 @@ const [position, setPosition] = useState({
   left: 0,
   width: 0,
 });
+const [loading, setLoading] = useState(false);
   /* ================= CLICK OUTSIDE ================= */
   const dropdownRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -64,6 +65,7 @@ const [position, setPosition] = useState({
   /* ================= CHANGE HANDLER ================= */
   const handleChange = async (status: StatusType) => {
     try {
+          setLoading(true);
       await adminUserService.changeStatus(
         userId,
         statusConfig[status].apiValue
@@ -74,7 +76,9 @@ const [position, setPosition] = useState({
       onUpdated();
     } catch {
       toast.error("Failed to update status");
-    }
+    }finally {
+    setLoading(false); 
+  }
   };
 
 const handleToggle = () => {
@@ -94,16 +98,28 @@ const handleToggle = () => {
   return (
     <div ref={ref} className="relative inline-block">
       {/* BUTTON */}
-      <button
-        onClick={handleToggle}
-        className={`flex items-center justify-between gap-2 px-2 py-1.5 w-[90px] sm:w-[100px] rounded-md text-sm font-medium cursor-pointer transition-all duration-150 ${current.btnClass}
-        `}
-      >
-        {current.label}
-        <FiChevronDown
-          className={`transition-transform duration-200 ${ open ? "rotate-180" : "" }`}
-        />
-      </button>
+   <button
+  onClick={handleToggle}
+  disabled={loading} // ✅ disable while loading
+  className={`flex items-center justify-between gap-2 px-2 py-1.5 w-[90px] sm:w-[100px] rounded-md text-sm font-medium transition-all duration-150 ${
+    loading ? "bg-gray-400 text-white cursor-not-allowed" : current.btnClass
+  }`}
+>
+  {loading ? (
+    <>
+      Loading...
+    </>
+  ) : (
+    <>
+      {current.label}
+      <FiChevronDown
+        className={`transition-transform duration-200 ${
+          open ? "rotate-180" : ""
+        }`}
+      />
+    </>
+  )}
+</button>
 
       {open &&
   createPortal(

@@ -14,6 +14,7 @@ import { TooltipWrapper } from "@/adminpanel/TooltipWrapper";
 import { IoReceiptSharp } from "react-icons/io5";
 import { HiOutlineTrash } from "react-icons/hi2";
 import ConfirmModal from "@/components/tables/ConfirmDialog";
+import toast from "react-hot-toast";
 
 /* ================= TYPES ================= */
 export type OrderRow = {
@@ -309,13 +310,13 @@ export default function AdminOrder() {
               </button>
             </TooltipWrapper>
 
-          {/* <TooltipWrapper content="Delete machinery">
+          <TooltipWrapper content="Delete Order">
             <HiOutlineTrash
               className="text-[#DD3623] cursor-pointer"
-              size={18}
+              size={20}
               onClick={() => setDeleteId(row.id)}
             />
-          </TooltipWrapper> */}
+          </TooltipWrapper>
             
           </div>
         );
@@ -323,12 +324,35 @@ export default function AdminOrder() {
     },
   ];
 
+const handleDelete = async (id: number) => {
+  try {
+    const res = await adminOrdersService.delete(id);
+
+    if (res?.status) {
+      toast.success(res.message || "Order deleted successfully");
+
+      // ✅ STEP 1: instant UI update
+      setData((prev) => prev.filter((item) => item.id !== id));
+
+      // ✅ STEP 2: pagination handle
+      if (data.length === 1 && page > 1) {
+        setPage((p) => p - 1); // this will trigger useEffect
+      }
+
+      // ✅ STEP 3 (optional but recommended): background refetch
+      fetchOrders();
+    }
+  } catch {
+    toast.error("Failed to delete order");
+  }
+};
+
     const confirmDelete = async () => {
     if (!deleteId) return;
 
     try {
       setDeleteLoading(true);
-      // await handleDelete(deleteId);
+      await handleDelete(deleteId);
       setDeleteId(null); 
     } finally {
       setDeleteLoading(false);

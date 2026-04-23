@@ -282,7 +282,7 @@ function SaleAgreement() {
                   type="button"
                   onClick={handleSave}
                   className="h-9 px-5 rounded-lg bg-green text-sm font-medium
-              text-white hover:bg-[#00695C] transition cursor-pointer"
+              text-white transition cursor-pointer"
                 >
                   Save
                 </button>
@@ -309,7 +309,7 @@ function SaleAgreement() {
               type="button"
               onClick={handleFinalSubmit}
               className="h-[42px] px-5 rounded-lg text-sm font-medium text-white transition 
-            bg-green hover:bg-[#00695C] cursor-pointer"
+            bg-green hover:bg-gray hover:text-white cursor-pointer"
             >
               Agree & Submit
             </button>
