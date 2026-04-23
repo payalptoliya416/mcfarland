@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 function TrackingHero() {
   return (
-    <section className="relative -mt-32">
+    <section className="relative -mt-[136px]">
       {/* Background */}
       <div
         className="absolute top-0 left-0 w-full h-full xl:h-[500px] bg-[url(/assets/main-bg-test.png)] bg-no-repeat bg-top -z-10 bg-cover lg:bg-[length:100%_100%]"

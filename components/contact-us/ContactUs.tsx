@@ -8,7 +8,7 @@ function ContactUs() {
 
   return (
     <>
-      <section className="relative -mt-32">
+      <section className="relative -mt-[136px]">
 
         {/* ⭐ Background Fade-in First */}
         <motion.div

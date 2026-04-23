@@ -312,7 +312,16 @@ const handlePlaceBid = async () => {
           </>
         ) : (
           <>
-            <Image src="/assets/hammer.png" alt="icon" width={15} height={15} />
+          <Image
+            src={
+              bidLoading || !!error || licenseBlocked
+                ? "/assets/hammer2.png"
+                : "/assets/hammer.png"
+            }
+            alt="icon"
+            width={15}
+            height={15}
+          />
            BID from {formatPrice(bidNumber)}
           </>
         )}
@@ -337,7 +346,11 @@ const handlePlaceBid = async () => {
     </>
   ) : (
     <>
-      <Image src="/assets/bag-new.png" alt="icon" width={15} height={15} />
+      <Image src={
+              buyLoading || licenseBlocked
+                ? "/assets/bag-new2.png"
+                : "/assets/bag-new.png"
+            } alt="icon" width={15} height={15} />
       Buy Now for  {formatPrice(buyNow)}
     </>
   )}

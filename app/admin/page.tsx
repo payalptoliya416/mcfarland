@@ -60,7 +60,7 @@ useEffect(() => {
   };
 
   return (
-    <div className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-[#f9f4e7]">
+    <div className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
       {/* BACKGROUND */}
       <Image
         src="/assets/Bg-new.png"
@@ -175,7 +175,7 @@ useEffect(() => {
                 className="
                   w-full h-12 lg:h-[50px]
                   rounded-[12px]
-                  gradient-btn
+                  bg-gray
                   text-white
                   font-semibold
                   text-[15px]

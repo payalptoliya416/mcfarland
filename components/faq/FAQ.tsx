@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 function FaqHero() {
   return (
-    <section className="relative -mt-32">
+    <section className="relative -mt-36">
       
       {/* Background */}
       <div

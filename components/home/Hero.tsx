@@ -30,7 +30,7 @@ useEffect(() => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2, ease: "easeOut" }}
-        className="-mt-32 absolute top-0 left-0 w-full h-full lg:h-[750px] xl:lg:h-[770px] bg-[url(/assets/main-bg-test.png)] bg-no-repeat bg-top -z-10  bg-cover lg:bg-[length:100%_100%]"
+        className="-mt-[136px] absolute top-0 left-0 w-full h-full lg:h-[750px] xl:lg:h-[770px] bg-[url(/assets/main-bg-test.png)] bg-no-repeat bg-top -z-10  bg-cover lg:bg-[length:100%_100%]"
       ></motion.div>
       <div className="container-custom mx-auto">
         <div className="grid grid-cols-12 pt-10 sm:pt-20">

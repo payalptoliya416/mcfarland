@@ -798,7 +798,7 @@ if (loading || isRedirecting) {
                         <button
                           type="submit"
                           disabled={calcLoading}
-                          className="py-3 px-[18px] border border-green text-green rounded-xl text-base font-medium transition mont-text mt-5 cursor-pointer hover:bg-green/20 hover:text-gray"
+                          className="py-3 px-[18px] border border-green text-green rounded-xl text-base font-medium transition mont-text mt-5 cursor-pointer hover:bg-green hover:text-white"
                         >
                           {calcLoading
                             ? "Calculating..."

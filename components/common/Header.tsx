@@ -381,9 +381,9 @@ const hasBgImage = useMemo(() => {
             <Image
               src={`${settings.dark_logo}`}
               alt="Logo"
-              height={80}
+              height={0}
               width={0}
-              style={{ width: "auto", height: "auto" }}
+              style={{ width: "100%", height: "100%" }}
               priority
             />
           )}

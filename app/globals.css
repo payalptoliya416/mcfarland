@@ -18,7 +18,7 @@ body {
   --color-lightgreen: #FFEFCC;
   --color-para: #4d4d4d;
   --color-text-gray: #62615F;
-  --color-light-gray: #FFF;
+  --color-light-gray: #d1d1d1;
   --color-header: #FFFBF3;
   --color-secgray: #373737;
   --color-seclightgray: #7A7A7A;
@@ -62,11 +62,11 @@ body {
 }
 
 select option:checked {
-  background-color: #027b66 !important;
+  background-color: #FFAD01 !important;
   color: #fff !important;
 }
 select option:checked {
-  background-color: #027b66 !important;
+  background-color: #FFAD01 !important;
   color: white !important;
 }
 

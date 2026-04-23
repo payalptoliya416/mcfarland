@@ -12,6 +12,8 @@ import { FaFilePdf } from "react-icons/fa6";
 import PaymentSlipModal from "@/adminpanel/PaymentSlipModal";
 import { TooltipWrapper } from "@/adminpanel/TooltipWrapper";
 import { IoReceiptSharp } from "react-icons/io5";
+import { HiOutlineTrash } from "react-icons/hi2";
+import ConfirmModal from "@/components/tables/ConfirmDialog";
 
 /* ================= TYPES ================= */
 export type OrderRow = {
@@ -64,6 +66,8 @@ export default function AdminOrder() {
     paymentSlipStatus?: "Pending" | "Approve" | "Decline";
   }>({ open: false });
 
+    const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   /* ================= FETCH ================= */
   const fetchOrders = async () => {
     try {
@@ -254,7 +258,7 @@ export default function AdminOrder() {
                 <FaFilePdf size={20} />
               </button>
             </TooltipWrapper>
-                    <TooltipWrapper
+           <TooltipWrapper
             content={
               row.contractUrl && row.contractUrl.trim() !== ""
                 ? "View Contract"
@@ -276,7 +280,6 @@ export default function AdminOrder() {
               <FaFilePdf size={20} />
             </button>
           </TooltipWrapper>
-
             <TooltipWrapper
               content={
                 isDisabled
@@ -306,12 +309,31 @@ export default function AdminOrder() {
               </button>
             </TooltipWrapper>
 
+          {/* <TooltipWrapper content="Delete machinery">
+            <HiOutlineTrash
+              className="text-[#DD3623] cursor-pointer"
+              size={18}
+              onClick={() => setDeleteId(row.id)}
+            />
+          </TooltipWrapper> */}
             
           </div>
         );
       },
     },
   ];
+
+    const confirmDelete = async () => {
+    if (!deleteId) return;
+
+    try {
+      setDeleteLoading(true);
+      // await handleDelete(deleteId);
+      setDeleteId(null); 
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
 
   return (
     <div className="space-y-5 bg-white border border-border rounded-[14px] p-3 sm:p-5">
@@ -380,6 +402,18 @@ export default function AdminOrder() {
         onClose={() => setSlipModal({ open: false })}
         onUpdated={fetchOrders}
       />
+
+      <ConfirmModal
+              open={deleteId !== null}
+              title="Delete Order"
+              description="Are you sure you want to delete this order? This action cannot be undone."
+              confirmText="Yes, Delete"
+              loadingText="Deleting..."
+              confirmVariant="danger"
+              loading={deleteLoading}
+              onConfirm={confirmDelete}
+              onClose={() => setDeleteId(null)}
+            />
     </div>
   );
 }
