@@ -68,6 +68,11 @@ const STEPS: StepItem[] = [
   { key: "Delivered", title: "Delivered" },
 ];
 
+const CANCELLED_STEP: StepItem = {
+  key: "Cancelled" as DeliveryStatus,
+  title: "Cancelled",
+}
+
 const formatDateTime = (date: string) =>
   new Date(date).toLocaleString("en-US", {
     month: "short",
@@ -266,13 +271,24 @@ export default function MyBuyOrders() {
             </h2>
           </div>
         )}
+        
         <div className="space-y-6">
           {orders.map((data) => {
-            // const filteredSteps =
-            //   data.type_text === "Bidding"
-            //     ? STEPS
-            //     : STEPS.filter((s) => s.key !== "Awaiting Invoice");
-            const filteredSteps = STEPS;
+            const isCancelled = data.delivery_status_text === "Cancelled";
+
+            const filteredSteps: StepItem[] = isCancelled
+            ? [...STEPS, CANCELLED_STEP]
+            : STEPS;
+
+          //   const baseStep = getCurrentStepFromTimeline(
+          //   data.delivery_timeline,
+          //   STEPS
+          // );
+
+          // const filteredSteps: StepItem[] = isCancelled
+          //   ? [...STEPS.slice(0, baseStep + 1), CANCELLED_STEP]
+          //   : STEPS;
+
             const step = getCurrentStepFromTimeline(
               data.delivery_timeline,
               filteredSteps,
@@ -392,6 +408,11 @@ export default function MyBuyOrders() {
                   {filteredSteps.map((s, idx) => {
                     const completed =
                       s.key === "Settle Payment" ? isConfirmed : step >= idx;
+                  //  const completed = isCancelled
+                  // ? s.key === "Cancelled" || step >= idx
+                  // : s.key === "Settle Payment"
+                  //   ? isConfirmed
+                  //   : step >= idx;
 
                     const item =
                       s.key === "Settle Payment"

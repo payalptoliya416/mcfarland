@@ -338,8 +338,13 @@ const inventorySubmenu: NavItem[] = useMemo(() => {
   useEffect(() => {
     setLoggedIn(isLoggedIn());
   }, [pathname]);
+const [currentPath, setCurrentPath] = useState("");
 
-const currentPath = pathname; 
+useEffect(() => {
+  if (pathname) {
+    setCurrentPath(pathname);
+  }
+}, [pathname]);
 
 const hasBgImage = useMemo(() => {
   if (!currentPath) return false;
@@ -350,6 +355,7 @@ const hasBgImage = useMemo(() => {
 
   return (
     currentPath.startsWith("/inventory") ||
+    currentPath.startsWith("/verify-account/") ||
     currentPath.startsWith("/verify-account") ||
     currentPath.startsWith("/signup") ||
     currentPath.startsWith("/confirmation") ||
@@ -370,7 +376,7 @@ const hasBgImage = useMemo(() => {
     w-full z-50 relative
     ${
       hasBgImage
-        ? "bg-[url(/assets/header-bg-new.png)] bg-no-repeat bg-top bg-cover lg:bg-[length:100%_100%]"
+        ? "bg-[url('/assets/header-bg-new.png')] bg-no-repeat bg-top bg-cover lg:bg-[length:100%_100%]"
         : "bg-transparent"
     }
   `}

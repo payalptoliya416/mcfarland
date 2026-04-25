@@ -81,7 +81,6 @@ function SignaturePadAgreement() {
   const [submitting, setSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [data, setData] = useState<WonBid | null>(null);
-  const [loading, setLoading] = useState(true);
   const isAlreadySigned =
     data?.status === "Signed" ||
     data?.status === "Send" ||
@@ -99,8 +98,6 @@ function SignaturePadAgreement() {
       }
     } catch (error) {
       console.error(error);
-    } finally {
-      setLoading(false);
     }
   };
 

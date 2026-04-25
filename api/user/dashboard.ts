@@ -30,6 +30,11 @@ export interface RecentBuyOrderData {
    invoice_url?: string;
 }
 
+export interface MachineryDetails {
+  id: number;
+  name: string;
+}
+
 export interface DashboardData {
   user_info: UserInfo;
   total_bids_placed: number;
@@ -38,6 +43,9 @@ export interface DashboardData {
   items_purchased: number;
   recent_bids: RecentBid[];
   recent_buy_orders: RecentBuyOrderData[];
+
+   is_won?: number;
+  machinery_details?: MachineryDetails;
 }
 
 export interface DashboardResponse {

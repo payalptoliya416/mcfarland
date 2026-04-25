@@ -9,6 +9,7 @@ import Image from "next/image"
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { FaCheckCircle } from "react-icons/fa";
 import { FaFilePdf } from "react-icons/fa6";
 
 function RecentBidCard({ row }: any) {
@@ -90,6 +91,10 @@ const [recentOrders, setRecentOrders] = useState<RecentBuyOrder[]>([]);
 const [loading, setLoading] = useState<boolean>(true);
 const [redirectLoading, setRedirectLoading] = useState(false);
 const router = useRouter();
+const [showNotification, setShowNotification] = useState(true);
+const [wonData, setWonData] = useState<any>(null);
+const [showInvoiceNotification, setShowInvoiceNotification] = useState(true);
+
 const fetchDashboard = async () => {
   try {
     setLoading(true);
@@ -98,6 +103,10 @@ const fetchDashboard = async () => {
     if (!res.success) return;
 
     const data = res.data;
+
+    if (data.is_won === 1 && data.machinery_details) {
+      setWonData(data.machinery_details);
+    }
 
     /* DASHBOARD CARDS */
     setCards([
@@ -176,10 +185,75 @@ if (loading) {
   return (
     <>
     {redirectLoading && (
-  <div className="fixed inset-0 bg-white/70 backdrop-blur-sm z-50 flex items-center justify-center">
-    <Loader />
-  </div>
-)}
+    <div className="fixed inset-0 bg-white/70 backdrop-blur-sm z-50 flex items-center justify-center">
+      <Loader />
+    </div>
+    )}
+    {wonData && showNotification && (
+      <div className="mb-5 container-custom">
+        <div
+          className="flex items-center justify-between gap-4 bg-[#EAFBF3] border border-[#2DBE60] rounded-xl px-4 py-4 cursor-pointer hover:shadow-md transition max-w-max w-full mx-auto mt-5 relative"
+        >
+          <div className="flex items-center gap-3">
+          <div>
+            <FaCheckCircle size={26} className="text-[#2DBE60]"/>
+          </div>
+            <p className="text-sm sm:text-base text-[#14532D]">
+              Congratulations! You’ve won the auction. <Link   href={`/user/won-bids/signaturepad?id=${wonData.id}`}
+              onClick={() => setRedirectLoading(true)}
+              className="font-extrabold cursor-pointer">click here</Link> to review and sign your sale agreement.
+            </p>
+          </div>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowNotification(false);
+              }}
+              className="text-[#2DBE60] hover:bg-[#DCFCE7] rounded-full w-7 h-7 flex items-center justify-center transition cursor-pointer"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+    {wonData?.pdf_url && showInvoiceNotification && (
+      <div className="mb-5 container-custom">
+        <div
+          className="flex items-center justify-between gap-4 bg-[#EAFBF3] border border-[#2DBE60] rounded-xl px-4 py-4 cursor-pointer hover:shadow-md transition max-w-max w-full mx-auto mt-3 relative"
+        >
+          <div className="flex items-center gap-3">
+            <div>
+              <FaFilePdf size={26} className="text-[#2DBE60]" />
+            </div>
+
+            <p className="text-sm sm:text-base text-[#14532D]">
+              Your sale agreement has been successfully signed and approved.{" "}
+              <span
+                onClick={() => window.open(wonData.pdf_url, "_blank")}
+                className="font-extrabold cursor-pointer underline"
+              >
+                click here
+              </span>{" "}
+              to view your invoice.
+            </p>
+          </div>
+
+          {/* ✅ Close button (same as congratulations) */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowInvoiceNotification(false);
+            }}
+            className="text-[#2DBE60] hover:bg-[#DCFCE7] rounded-full w-7 h-7 flex items-center justify-center transition cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
+      </div>
+    )}
+
     <section className="py-[25px]">
       <div className="container-custom mx-auto">
         <h1 className="text-secgray text-[22px] sm:text-[26px] font-bold mb-[15px]">
@@ -261,7 +335,7 @@ if (loading) {
                                   <tbody>
                                 {recentBids.length === 0 ? (
                                   <tr className="border-t border-border even:bg-[#F9F9F9]">
-                                    <td colSpan={3} className="px-[15px] py-[18px] text-sm text-secgray border-r border-border whitespace-nowrap text-center">
+                                    <td colSpan={3} className="px-[15px] py-4 text-sm text-secgray border-r border-border whitespace-nowrap text-center">
                                       No recent bids found
                                     </td>
                                   </tr>
@@ -305,7 +379,7 @@ if (loading) {
                     {isMobile ? (
                     <div className="space-y-3">
                       {recentOrders.length === 0 ? (
-                        <p className="text-center text-sm text-gray-400">
+                        <p className="text-center text-sm text-secgray">
                           No recent orders found
                         </p>
                       ) : (
@@ -336,7 +410,7 @@ if (loading) {
                                   <tbody>
                                 {recentOrders.length === 0 ? (
                                   <tr  className="border-t border-border even:bg-[#F9F9F9]">
-                                    <td colSpan={3} className="text-center py-6 text-sm text-gray-400">
+                                    <td colSpan={4} className="text-center py-4 text-sm text-secgray">
                                       No recent orders found
                                     </td>
                                   </tr>
