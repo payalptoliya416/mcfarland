@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getSettingsByKeysFooter } from "@/api/categoryActions";
 import Image from "next/image";
+import { useSettings } from "@/contexts/SettingsContext";
 import {
   FaTachometerAlt,
   FaBoxes,
@@ -38,19 +39,11 @@ export default function AdminSidebar({
   onNavigateStart?: () => void;
 }) {
   const pathname = usePathname();
-  const [settings, setSettings] = useState<any>(null);
+  const { settings } = useSettings();
   const router = useRouter();
   useEffect(() => {
     menu.forEach((item) => {
       router.prefetch(item.href);
-    });
-  }, []);
-
-  useEffect(() => {
-    getSettingsByKeysFooter().then((res) => {
-      if (res.success) {
-        setSettings(res.data);
-      }
     });
   }, []);
 

@@ -9,6 +9,7 @@ interface SettingsContextType {
   companyName: string;
   phoneNumber: string;
   isLoading: boolean;
+  refreshSettings: () => Promise<void>;
 }
 
 const SettingsContext = createContext<SettingsContextType>({
@@ -16,6 +17,7 @@ const SettingsContext = createContext<SettingsContextType>({
   companyName: "",
   phoneNumber: "",
   isLoading: true,
+  refreshSettings: async () => {},
 });
 
 export const useSettings = () => {
@@ -32,27 +34,28 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   const [settings, setSettings] = useState<SettingsData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchSettings = async () => {
-      try {
-        const res = await getSettingsByKeysFooter();
-        if (res.success && res.data) {
-          setSettings(res.data);
-        }
-      } catch (error) {
-        console.error("Failed to fetch settings:", error);
-      } finally {
-        setIsLoading(false);
+  const fetchSettings = async () => {
+    try {
+      const res = await getSettingsByKeysFooter();
+      if (res.success && res.data) {
+        setSettings(res.data);
       }
-    };
+    } catch (error) {
+      console.error("Failed to fetch settings:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchSettings();
   }, []);
+
   const companyName = settings?.company_name || "";
   const phoneNumber = settings?.phone_no || "";
 
   return (
-    <SettingsContext.Provider value={{ settings, companyName, isLoading ,  phoneNumber }}>
+    <SettingsContext.Provider value={{ settings, companyName, isLoading, phoneNumber, refreshSettings: fetchSettings }}>
       {children}
     </SettingsContext.Provider>
   );

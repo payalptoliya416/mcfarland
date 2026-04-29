@@ -2,6 +2,7 @@
 
 import { isLoggedIn } from "@/api/authToken";
 import { Category } from "@/api/data";
+import { getSettingsByKeysFooter } from "@/api/categoryActions";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -152,9 +153,10 @@ const inventoryGroups: Record<string, string[]> = {
   "Farm Tractors": [],
 };
 
+
 function Header({
   categories,
-  settings,
+  settings: settingsProp,
 }: {
   categories: Category[];
   settings: any;
@@ -165,11 +167,21 @@ function Header({
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [loggedIn, setLoggedIn] = useState(false);
   const router = useRouter();
-  // const [categories, setCategories] = useState<Category[]>([]);
   const [resetKey, setResetKey] = useState(0);
   const [activeGroup, setActiveGroup] = useState<string | null>(null);
   const [clickedGroup, setClickedGroup] = useState<string | null>(null);
-const [isNavigating, setIsNavigating] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  // Client-side fetch to ensure logo URL works on live (same pattern as AdminSidebar)
+  const [settings, setSettings] = useState<any>(settingsProp);
+
+  useEffect(() => {
+    getSettingsByKeysFooter().then((res) => {
+      if (res.success && res.data) {
+        setSettings(res.data);
+      }
+    });
+  }, []);
 useEffect(() => {
   setIsNavigating(false);
 }, [pathname]);
@@ -385,9 +397,9 @@ const hasBgImage = useMemo(() => {
         <Link href="/">
           {settings?.dark_logo && (
             <img
-          src={settings.dark_logo}
-          alt="Logo"
-        />
+              src={settings.dark_logo}
+              alt="Logo"
+            />
           )}
         </Link>
         <ul className="hidden lg:flex justify-center items-center gap-8 md:gap-12">
@@ -620,7 +632,7 @@ const hasBgImage = useMemo(() => {
           <Link href="/">
             {settings?.dark_logo && (
               <Image
-                src={`${settings.dark_logo}`}
+                src={settings.dark_logo}
                 alt="Logo"
                 height={100}
                 width={100}

@@ -64,11 +64,9 @@ function Footer() {
             <div className="col-span-12 lg:col-span-4 mb-10 lg:mb-0">
               <Link href="/">
                 {settings?.white_logo && (
-                  <Image
+                  <img
                     src={`${settings.white_logo}`}
                     alt={settings.company_name}
-                    height={90}
-                    width={178}
                     className="mb-[30px]"
                   />
                 )}
@@ -218,7 +216,7 @@ function Footer() {
                     </div>
                   </div>
                   <h3 className="text-light-gray group-hover:text-white">
-                    {settings?.company_name} {settings?.address}
+                    {settings?.company_name} , {settings?.address}
                   </h3>
                 </div>
               </a>

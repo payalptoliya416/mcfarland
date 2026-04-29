@@ -14,6 +14,7 @@ import {
 import Loader from "@/components/common/Loader";
 import toast from "react-hot-toast";
 import QuillEditor from "@/adminpanel/QuillEditor";
+import { useSettings } from "@/contexts/SettingsContext";
 
 type SettingsFormValues = {
   companyName: string;
@@ -85,8 +86,8 @@ export const Schema = Yup.object({
 });
 
 export default function CompanySettingUI() {
+  const { refreshSettings } = useSettings();
   const [data, setData] = useState<AdminSettingsData | null>(null);
-  const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [cancelLoading, setCancelLoading] = useState(false);
 
@@ -168,6 +169,7 @@ export default function CompanySettingUI() {
       if (res.success) {
         toast.success(res.message || "Settings updated successfully");
         await fetchSettings();
+        await refreshSettings(); // update sidebar logo instantly
       }
     } catch (e) {
       toast.error("Update failed");

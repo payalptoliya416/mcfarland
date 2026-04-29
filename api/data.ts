@@ -68,6 +68,7 @@ export interface SettingsData {
   linkedin: string;
   logo: string;
   white_logo: string;
+  dark_logo: string;
 }
 
 export interface SettingsResponse {
