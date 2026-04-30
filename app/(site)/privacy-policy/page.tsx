@@ -10,7 +10,7 @@ function PrivacyPolicy() {
   {
     title: "1. Introduction",
     desc: [
-      `This Privacy Policy explains how ${companyName}, LLC (Reg nº: 201702410607), having its registered address at 529 BROOKSIDE AVENUE, REDLANDS, CA 92373 (“Company”, “we”, “our”, or “us”) collects, uses, discloses, and safeguards your information when you use our website.`,
+      `This Privacy Policy explains how ${companyName}, LLC (Reg nº: 20151800734), having its registered address at 529 BROOKSIDE AVENUE, REDLANDS, CA 92373 (“Company”, “we”, “our”, or “us”) collects, uses, discloses, and safeguards your information when you use our website.`,
       "By accessing or using our website, you agree to the terms of this Privacy Policy.",
     ],
   },
@@ -99,7 +99,7 @@ function PrivacyPolicy() {
     desc: [
       "If you have any questions about this Privacy Policy, you may contact:",
       `${companyName}, LLC`,
-      "Reg nº: 201702410607",
+      "Reg nº: 20151800734",
       "529 BROOKSIDE AVENUE",
       "REDLANDS, CA 92373",
       "You may also contact us through the Contact Us page on this website.",

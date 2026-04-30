@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useSettings } from "@/contexts/SettingsContext";
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
@@ -43,18 +42,18 @@ function Footer() {
               Join thousands of satisfied customers who trust {companyName}
               for industrial and agricultural machinery.
             </p>
-            <button
-              onClick={() => handleRedirect("/inventory")}
+           <Link
+              href="/inventory"
               className="group relative overflow-hidden text-gray bg-white py-[14px] px-[22px] rounded-lg 
-                      text-base leading-[16px] font-semibold mont-text border-none transition-all duration-300"
+                        text-base leading-[16px] font-semibold mont-text border-none transition-all duration-300 inline-block"
             >
               <span className="relative z-10">Start Now</span>
 
               <span
                 className="absolute inset-0 bg-green/20 translate-x-[-100%] 
-                        group-hover:translate-x-[100%] transition-all duration-500"
+                          group-hover:translate-x-[100%] transition-all duration-500"
               ></span>
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -264,7 +263,7 @@ function Footer() {
               >
                   mcfarland-equipment.com
               </a>{" "}
-              is owned by MCFARLAND-EQUIPMENT, LLC Reg nº : (201702410607) -
+              is owned by MCFARLAND-EQUIPMENT, LLC Reg nº : (20151800734) -
               Copyright {new Date().getFullYear()} © All Rights Reserved
             </p>
             <p className="text-light-gray text-base font-normal">
