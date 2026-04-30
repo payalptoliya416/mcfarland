@@ -6,13 +6,13 @@ import { useSettings } from "@/contexts/SettingsContext";
 
 
 function TermsCondition() {
-    const { companyName } = useSettings();
+    const { companyName ,settings } = useSettings();
     const termsData = [
   {
     title: "15. Contact Information",
     desc: [
       `If you have any questions regarding these Terms & Conditions, you may contact ${companyName}, LLC at:`,
-      `Registered Address: 529 BROOKSIDE AVENUE, REDLANDS, CA 92373.`,
+      `Registered Address: ${ settings?.address }.`,
       `Reg nº: 20151800734.`,
       `You may also contact us through the Contact Us page on this website.`,
     ],
@@ -138,7 +138,7 @@ function TermsCondition() {
               Please read these Terms & Conditions carefully before using this
               website. This website is owned and operated by{" "}
               <strong> {companyName}, LLC</strong>, Reg nº: (20151800734),
-              Reg Address: 529 BROOKSIDE AVENUE, REDLANDS, CA 92373.
+              Reg Address:  { settings?.address }.
             </p>
 
             <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-10">

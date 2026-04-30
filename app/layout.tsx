@@ -31,7 +31,7 @@ const sfPro = localFont({
 });
 
 export const metadata: Metadata = {
-  title: `${process.env.NEXT_PUBLIC_TITLE}`,
+  title: `Mcfarland Equipment Sales & Auctions`,
   description: "",
   icons: {
     icon: "/favicon-new.png",
@@ -123,7 +123,7 @@ export default function RootLayout({
             Chat with us
           </a>
         </noscript>
-        
+
         <SettingsProvider>
           {children}
           <ToastProvider />

@@ -4,13 +4,13 @@ import AboutUsHero from "@/components/about-us/AboutUsHero";
 import { useSettings } from "@/contexts/SettingsContext";
 
 function PrivacyPolicy() {
-  const { companyName } = useSettings();
+  const { companyName , settings } = useSettings();
 
   const privacyData = [
   {
     title: "1. Introduction",
     desc: [
-      `This Privacy Policy explains how ${companyName}, LLC (Reg nº: 20151800734), having its registered address at 529 BROOKSIDE AVENUE, REDLANDS, CA 92373 (“Company”, “we”, “our”, or “us”) collects, uses, discloses, and safeguards your information when you use our website.`,
+      `This Privacy Policy explains how ${companyName}, LLC (Reg nº: 20151800734), having its registered address at  ${ settings?.address } (“Company”, “we”, “our”, or “us”) collects, uses, discloses, and safeguards your information when you use our website.`,
       "By accessing or using our website, you agree to the terms of this Privacy Policy.",
     ],
   },
@@ -100,8 +100,7 @@ function PrivacyPolicy() {
       "If you have any questions about this Privacy Policy, you may contact:",
       `${companyName}, LLC`,
       "Reg nº: 20151800734",
-      "529 BROOKSIDE AVENUE",
-      "REDLANDS, CA 92373",
+      `${ settings?.address }`,
       "You may also contact us through the Contact Us page on this website.",
     ],
   },
