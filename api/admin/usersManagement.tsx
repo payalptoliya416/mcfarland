@@ -19,7 +19,7 @@ export interface UserApiItem {
   zip_code?: string;
 
   status: number; // 1 | 0
-  is_license: number; // backend ma 2 aave chhe etle number rakho
+  is_license: number; 
 
   license_status?: number | null;
   status_text: string;

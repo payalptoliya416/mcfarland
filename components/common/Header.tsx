@@ -153,7 +153,6 @@ const inventoryGroups: Record<string, string[]> = {
   "Farm Tractors": [],
 };
 
-
 function Header({
   categories,
   settings: settingsProp,
@@ -204,16 +203,21 @@ useEffect(() => {
       .replace(/^-+|-+$/g, "");
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [disableHover, setDisableHover] = useState(false);
-const handleNavigate = (url: string) => {
-  if (pathname !== url) {
-    setIsNavigating(true);
-    router.push(url);
 
-    setTimeout(() => {
-      setIsNavigating(false);
-    }, 2000); 
-  }
-};
+  const handleNavigate = (url: string) => {
+    if (pathname !== url) {
+      setIsNavigating(true);
+      router.push(url);
+
+      setTimeout(() => {
+        setIsNavigating(false);
+      }, 2000); 
+    }
+  };
+
+  const isAuthPage =
+  pathname === "/signup" || pathname === "/user/signin";
+  
   useEffect(() => {
     function close(e: MouseEvent) {
       if (!(e.target as HTMLElement).closest(".dropdown-parent")) {
@@ -402,7 +406,7 @@ const hasBgImage = useMemo(() => {
             />
           )}
         </Link>
-        <ul className="hidden lg:flex justify-center items-center gap-8 md:gap-12">
+        <ul className="hidden lg:flex justify-center items-center gap-5 xl:gap-12">
           {navItems.map((item) => (
             <li
               key={item.path}
@@ -590,12 +594,43 @@ const hasBgImage = useMemo(() => {
             Dashboard
           </button>
         ) : (
-          <button
-              onClick={() => handleNavigate("/user/signin")}
-            className="hidden lg:block text-green bg-white py-2 px-4 md:py-3 md:px-6 rounded-lg font-semibold hover:bg-orange hover:text-white transition cursor-pointer"
-          >
-            Sign In
-          </button>
+         <div className="hidden lg:flex gap-3 items-center">
+
+            {/* Sign In (Outline - light) */}
+            <Link
+               href="/user/signin"
+              className="
+                px-3 xl:px-5 py-2 xl:py-2.5 rounded-lg 
+                border border-white/40 
+                text-white font-medium
+                hover:border-orange hover:text-orange
+                transition duration-200
+                backdrop-blur-sm
+                cursor-pointer
+              "
+            >
+              Sign In
+            </Link>
+
+            {/* Sign Up (Primary highlight) */}
+            {!pathname.startsWith("/signup") && (
+            <Link
+               href="/signup"
+               onClick={() => setIsNavigating(true)}
+              className="
+                px-3 xl:px-5 py-2 xl:py-2.5 rounded-lg 
+                bg-gradient-to-r from-orange to-yellow-400
+                text-white font-semibold
+                shadow-md
+                hover:opacity-90
+                transition duration-200
+                cursor-pointer
+              "
+            >
+              Sign Up
+            </Link>
+             )}
+          </div>
         )}
 
         <button
@@ -675,6 +710,7 @@ const hasBgImage = useMemo(() => {
               Dashboard
             </Link>
           ) : (
+            <div className="">
             <Link
               href="/user/signin"
               className="
@@ -686,6 +722,18 @@ const hasBgImage = useMemo(() => {
             >
               Sign In
             </Link>
+            <Link
+              href="/signup"
+              className="
+              mt-2 block text-center text-green bg-white border border-green 
+              py-3 px-6 rounded-lg font-semibold 
+              transition-all duration-300 
+              hover:bg-orange hover:text-white hover:border-orange
+            "
+            >
+              Sign Up
+            </Link>
+            </div>
           )}
         </div>
       </div>

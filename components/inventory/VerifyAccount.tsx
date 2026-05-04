@@ -23,15 +23,9 @@ export default function VerifyAccount() {
   const searchParams = useSearchParams();
   const returnUrl = searchParams.get("returnUrl") || "/";
   const [verifying, setVerifying] = useState(false);
-
-  // useEffect(() => {
-  //   getUserProfile().then((res) => {
-  //     if (res.status) setProfile(res.data);
-  //   });
-  // }, []);
-
   const requiresBack = REQUIRES_BACK;
   const [country, setCountry] = useState<string | null>(null);
+  const [hasSubmitted, setHasSubmitted] = useState(false);
 
   useEffect(() => {
     const loadProfileAndCountry = async () => {
@@ -62,37 +56,59 @@ export default function VerifyAccount() {
     loadProfileAndCountry();
   }, []);
 
+  // useEffect(() => {
+  //   const originalPath = window.location.pathname;
+
+  //   const blockAnchorNavigation = (event: MouseEvent) => {
+  //     const target = event.target as HTMLElement | null;
+  //     if (!target) return;
+
+  //     const anchor = target.closest("a");
+  //     if (anchor) {
+  //       event.preventDefault();
+  //       event.stopPropagation();
+  //       toast("Complete verification first before navigating away.");
+  //     }
+  //   };
+
+  //   const onPopState = () => {
+  //     if (window.location.pathname !== originalPath) {
+  //       window.history.pushState(null, "", originalPath);
+  //     }
+  //   };
+
+  //   document.body.classList.add("verify-account-block-navigation");
+  //   document.addEventListener("click", blockAnchorNavigation, true);
+  //   window.addEventListener("popstate", onPopState);
+
+  //   return () => {
+  //     document.body.classList.remove("verify-account-block-navigation");
+  //     document.removeEventListener("click", blockAnchorNavigation, true);
+  //     window.removeEventListener("popstate", onPopState);
+  //   };
+  // }, []);
+
+    const fetchProfile = async () => {
+    try {
+      const res = await getUserProfile();
+      if (res.status) {
+         setProfile(res.data); 
+      }
+    } catch (error) {
+      console.error("Profile fetch failed", error);
+    } 
+  };
+
+  useEffect(()=>{
+    fetchProfile();
+  },[]);
+
   useEffect(() => {
-    const originalPath = window.location.pathname;
-
-    const blockAnchorNavigation = (event: MouseEvent) => {
-      const target = event.target as HTMLElement | null;
-      if (!target) return;
-
-      const anchor = target.closest("a");
-      if (anchor) {
-        event.preventDefault();
-        event.stopPropagation();
-        toast("Complete verification first before navigating away.");
-      }
-    };
-
-    const onPopState = () => {
-      if (window.location.pathname !== originalPath) {
-        window.history.pushState(null, "", originalPath);
-      }
-    };
-
-    document.body.classList.add("verify-account-block-navigation");
-    document.addEventListener("click", blockAnchorNavigation, true);
-    window.addEventListener("popstate", onPopState);
-
-    return () => {
-      document.body.classList.remove("verify-account-block-navigation");
-      document.removeEventListener("click", blockAnchorNavigation, true);
-      window.removeEventListener("popstate", onPopState);
-    };
-  }, []);
+  const submitted = localStorage.getItem("license_submitted");
+  if (submitted === "true") {
+    setHasSubmitted(true);
+  }
+}, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -136,7 +152,9 @@ export default function VerifyAccount() {
       }
       setUploading(false);
       setVerifying(true);
-      
+      setHasSubmitted(true);
+      localStorage.setItem("license_submitted", "true");
+
       if (typeof window !== "undefined") {
         (window as any).dataLayer = (window as any).dataLayer || [];
         (window as any).dataLayer.push({
@@ -147,14 +165,55 @@ export default function VerifyAccount() {
       }
       
       await new Promise((resolve) => setTimeout(resolve, 30000));
+      setTimeout(async () => {
       await getLicenseStatus();
+      await fetchProfile();
+
       router.push(returnUrl);
+    }, 5000);
+
     } catch (err: any) {
       toast.error(err.message || "Upload failed");
       setUploading(false);
       setVerifying(false);
     }
   };
+
+  const getLicenseMessageConfig = (isLicense: number) => {
+    switch (isLicense) {
+      case 0: // Pending
+        return {
+          type: "pending",
+          bg: "bg-[#FFF8E6] border border-[#FFE1A3] text-[#A26A00]",
+          message:
+            "Your license is under verification. Please wait while we review your document.",
+        };
+
+      case 1: // Verified
+        return {
+          type: "verified",
+          bg: "bg-[#E8F8EE] border border-[#BFE8D1] text-[#2E7D32]",
+          message:
+            "Your license has been verified successfully. You can now complete purchases.",
+        };
+
+      case 2: // Declined
+        return {
+          type: "declined",
+          bg: "bg-[#FFECEC] border border-[#FFBABA] text-[#D32F2F]",
+          message:
+            "Your license could not be verified. Please review the details and resubmit.",
+        };
+
+      default:
+        return {
+          type: "unverified",
+          bg: "bg-[#F2F2F2] border border-[#E0E0E0] text-[#616161]",
+          message: "Please upload your license document for verification.",
+        };
+    }
+  };
+
 
   return (
     <div className="my-[110px] flex justify-center px-4">
@@ -167,16 +226,42 @@ export default function VerifyAccount() {
             This step is mandatory. You must complete identity verification before continuing.
           </p>
         </div>
-          {verifying && (
-            <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-              <div className="bg-white p-8 rounded-xl text-center shadow-xl">
-                <div className="animate-spin rounded-full h-12 w-12 border-4 border-orange border-t-transparent mx-auto mb-4"></div>
-                <p className="text-lg font-semibold">
-                  Verifying your license...
-                </p>
-              </div>
-            </div>
+          {verifying && profile && (
+            (() => {
+              const config = getLicenseMessageConfig(profile.is_license);
+
+              return (
+                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+                  <div className="bg-white p-8 rounded-xl text-center shadow-xl max-w-[500px] w-full mx-3">
+                    
+                    <div className="animate-spin rounded-full h-12 w-12 border-4 border-orange border-t-transparent mx-auto mb-4"></div>
+
+                    <p className="text-lg font-semibold mb-2">
+                      Verifying your license...
+                    </p>
+
+                    <div className={`p-3 rounded-lg text-sm ${config.bg}`}>
+                      {config.message}
+                    </div>
+
+                  </div>
+                </div>
+              );
+            })()
           )}
+
+      {hasSubmitted && profile && (
+          (() => {
+            const config = getLicenseMessageConfig(profile.is_license);
+
+            return (
+              <div className={`mb-5 px-4 py-2 rounded-lg text-sm flex items-start gap-3 ${config.bg}`}>
+                  <p className="font-medium capitalize">{config.type} : {config.message}</p>
+              </div>
+            );
+          })()
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <UploadBox
