@@ -125,6 +125,12 @@ export type DeliveryTimelineItem = {
   date: string;
   status_code: number; 
 };
+export interface OrderTrackingItem {
+  id: number;
+  tracking_date: string;
+  city: string;
+  status: string;
+}
 export interface OrderApiItem {
   id: number;
   auction_id: string;
@@ -154,7 +160,10 @@ export interface OrderApiItem {
   delivery_status_text: string;
   delivery_contact: string | null;
   delivery_timeline: DeliveryTimelineItem[];
-    payment_slip_url?: string | null;
+  payment_slip_url?: string | null;
+
+
+  order_tracking?: OrderTrackingItem[];
 }
 
 export interface Pagination {

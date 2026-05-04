@@ -326,7 +326,7 @@ const handlePlaceBid = async () => {
       <button
         onClick={handlePlaceBid}
         disabled={bidLoading || !!error || licenseBlocked}
-        className={`w-full py-[15px] rounded-lg text-base leading-[16px] font-medium mb-[15px] flex justify-center items-center gap-[10px] mont-text transition-all duration-300 mt-4 ${
+        className={`w-full py-[15px] rounded-lg text-base leading-[16px] font-medium mb-[15px] flex justify-center items-center gap-[10px] mont-text transition-all duration-300 mt-4 cursor-pointer ${
           licenseBlocked
             ? "bg-gray-300 text-balck cursor-not-allowed"
             : "bg-green text-balck hover:brightness-110 hover:bg-green/90"
@@ -361,7 +361,7 @@ const handlePlaceBid = async () => {
       <button
         onClick={handleBuyNow}
         disabled={buyLoading || licenseBlocked}
-        className={`w-full py-[15px] rounded-lg text-base leading-[16px] font-medium flex justify-center items-center gap-[10px] border mont-text transition-all duration-300 ${
+        className={`w-full py-[15px] rounded-lg text-base leading-[16px] font-medium flex justify-center items-center gap-[10px] border mont-text transition-all duration-300 cursor-pointer ${
           licenseBlocked
             ? "bg-gray-100 text-balck border-gray-300 cursor-not-allowed"
             : "bg-white text-balck border-green hover:bg-green hover:text-white"

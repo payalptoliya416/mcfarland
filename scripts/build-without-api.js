@@ -37,6 +37,14 @@ try {
     fs.rmSync(apiRoutesDir, { recursive: true, force: true });
   }
 
+  // Run sitemap generation before build
+  console.log("🗺️  Generating sitemap...");
+  try {
+    execSync('node scripts/generate-sitemap.js', { stdio: 'inherit', cwd: path.join(__dirname, '..') });
+  } catch (e) {
+    console.warn("⚠️  Sitemap generation failed, continuing build...");
+  }
+
   // Run Next.js build
   execSync('next build', { stdio: 'inherit', cwd: path.join(__dirname, '..') });
 

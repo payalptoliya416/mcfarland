@@ -3,5 +3,5 @@
 import { Toaster } from "react-hot-toast";
 
 export default function ToastProvider() {
-  return <Toaster position="top-center" reverseOrder={false} containerStyle={{zIndex: '99999'}} />;
+  return <Toaster position="top-center" reverseOrder={false} containerStyle={{zIndex: '9999999999'}} />;
 }

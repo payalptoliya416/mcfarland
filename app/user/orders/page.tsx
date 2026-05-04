@@ -55,6 +55,12 @@ const statusToStep: Record<string, number> = {
   Delivered: 8,
   Cancelled: 9,
 };
+type TrackingRow = {
+  id?: number; 
+  date: string;
+  city: string;
+  status: string;
+};
 
 const STEPS: StepItem[] = [
   { key: "Order Submitted", title: "Order Submitted" },
@@ -124,6 +130,10 @@ export default function MyBuyOrders() {
   const [sortBy, setSortBy] = useState("id");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [totalPages, setTotalPages] = useState(1);
+  const [showTrackingModal, setShowTrackingModal] = useState(false);
+  const [rows, setRows] = useState<TrackingRow[]>([
+    { date: "", city: "", status: ""},
+  ]);
 
   const fetchOrders = async () => {
     try {
@@ -145,8 +155,27 @@ export default function MyBuyOrders() {
           return;
         }
 
-        setOrders(res.data.map(mapOrderApiToUI));
+        const mappedOrders = res.data.map((order: any) => {
+          return {
+            ...order,
+            trackingRows: order.order_tracking?.map((t: any) => ({
+              date: t.tracking_date?.split(" ")[0] || "",
+              city: t.city || "",
+              status: t.status || "",
+            })) || [],
+          };
+        });
+
+        setOrders(mappedOrders);
         setTotalPages(res.pagination.last_page);
+
+        if (mappedOrders.length > 0) {
+          setRows(
+            mappedOrders[0].trackingRows.length > 0
+              ? mappedOrders[0].trackingRows
+              : [{ date: "", city: "", status: "" }]
+          );
+        }
       }
     } catch (err) {
       console.error("Failed to fetch orders", err);
@@ -158,6 +187,15 @@ export default function MyBuyOrders() {
   useEffect(() => {
     fetchOrders();
   }, [page, perPage, search, sortBy, sortOrder]);
+
+  const openTrackingModal = (order: any) => {
+  setRows(
+    order.trackingRows?.length > 0
+      ? order.trackingRows
+      : []
+  );
+  setShowTrackingModal(true);
+};
 
   const fileToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -259,6 +297,7 @@ export default function MyBuyOrders() {
   const isAfterSettle = selectedStep > selectedConfirmationIndex;
 
   return (
+    <>
     <section className="py-11 sm:py-[60px]">
       <div className="container-custom mx-auto">
         <h1 className="text-secgray text-[26px] font-bold mb-6">
@@ -468,23 +507,34 @@ export default function MyBuyOrders() {
                         </div>
                         <div
                           key={s.key}
-                          onClick={() => {
-                              if (s.key === "Settle Payment" && step <= confirmationIndex) {
-                              setSelectedOrderId(data.id!);
-                              setSelectedOrderNumber(data.order_id);
-                              setOpenConfirmationModal(true);
-                              setPaymentFile(null);
-                            }
-                          }}
-                          className={`flex items-start gap-4
+                         onClick={() => {
+
+                  if (s.key === "Settle Payment" && step <= confirmationIndex) {
+                    setSelectedOrderId(data.id!);
+                    setSelectedOrderNumber(data.order_id);
+                    setOpenConfirmationModal(true);
+                    setPaymentFile(null);
+                  }
+
+                  // ✅ Tracking modal (Shipping Started / In Transit)
+                  if (s.key === "Shipping Started" || s.key === "In Transit") {
+                    openTrackingModal(data);
+                  }
+                }}
+                          className={`flex items-start gap-4 mb-2
                           lg:flex-col lg:items-center
-                          ${s.key === "Settle Payment" ? "cursor-pointer group" : ""}`}
+                                          ${
+                  s.key === "Settle Payment" ||
+                  s.key === "Shipping Started" 
+                    ? "cursor-pointer group hover:scale-105 transition"
+                    : ""
+                }`}
                         >
                           <div className="relative flex flex-col items-center">
                             <div
                               className={`w-[36px] h-[36px] rounded-full flex items-center justify-center transition
                                 ${
-                                  s.key === "Settle Payment"
+                                  s.key === "Settle Payment" ||  s.key === "Shipping Started"
                                     ? "bg-[#E6F4F1] group-hover:scale-110 group-hover:ring-1 group-hover:ring-green"
                                     : completed
                                       ? "bg-lightgreen"
@@ -541,6 +591,11 @@ export default function MyBuyOrders() {
                               </p>
                             )}
 
+                               {(s.key === "Shipping Started") && (
+                                <p className="text-xs text-green mt-1">
+                                  Click to view tracking details
+                                </p>
+                              )}
                             <div className="block lg:hidden">
                               {s.key === "Sales Agreement" &&
                                 data.contract_url &&
@@ -827,5 +882,74 @@ export default function MyBuyOrders() {
         </div>
       )}
     </section>
+     {showTrackingModal && (
+      <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[999999999]">
+        
+        <div className="bg-white rounded-2xl shadow-xl w-[620px] px-6 py-5 mx-2">
+    
+          {/* HEADER */}
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">
+            Add Tracking Details
+          </h2>
+    
+          {/* ROWS */}
+          <div className="space-y-4 overflow-y-auto">
+  {rows.length === 0 ? (
+    <p className="text-gray-500 text-center py-5">
+      No tracking data found
+    </p>
+  ) : (
+    rows.map((row, index) => (
+      <div key={index} className="flex items-start gap-4">
+        
+        {/* 🔥 LEFT TIMELINE */}
+        <div className="flex flex-col items-center">
+          {/* DOT */}
+          <h3 className="mt-2.5">{index+1}</h3>
+
+        </div>
+
+        {/* RIGHT CONTENT */}
+        <div className="flex items-center gap-3 flex-wrap">
+          
+          {/* STATUS */}
+          <input
+            value={row.status}
+            disabled
+            className="h-10 px-3 border border-gray-100 rounded-lg text-sm bg-gray-100 w-[150px]"
+          />
+
+          {/* DATE */}
+          <input
+            type="date"
+            value={row.date}
+            disabled
+            className="h-10 px-3 border border-gray-100 rounded-lg text-sm bg-gray-100"
+          />
+
+          {/* CITY */}
+          <input
+            value={row.city}
+            disabled
+            className="h-10 px-3 border border-gray-100 rounded-lg text-sm bg-gray-100"
+          />
+        </div>
+      </div>
+    ))
+  )}
+</div>
+  
+          <div className="flex justify-end gap-3 mt-4">
+            <button
+              onClick={() => setShowTrackingModal(false)}
+              className="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 cursor-pointer"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+    </>
   );
 }

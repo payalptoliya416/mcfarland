@@ -6,6 +6,8 @@
     "dev": "next dev",
     "build": "node scripts/build-without-api.js",
     "build:original": "next build",
+    "build:with-sitemap": "node scripts/generate-sitemap.js && next build",
+    "sitemap": "node scripts/generate-sitemap.js",
     "start": "next start",
     "export": "next export",
     "lint": "eslint"

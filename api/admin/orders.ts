@@ -68,6 +68,34 @@ type DeleteOrderResponse = {
 };
 /* ================= SERVICE ================= */
 
+type AddTrackingResponse = {
+  status: boolean;
+  message: string;
+  data: {
+    id: number;
+    order_id: number;
+    tracking_date: string;
+    city: string;
+    status: string;
+  };
+};
+
+export type TrackingItem = {
+  id: number;
+  order_id: number;
+  tracking_date: string;
+  city: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type GetTrackingResponse = {
+  status: boolean;
+  message: string;
+  data: TrackingItem[];
+};
+
 export const adminOrdersService = {
   list: (payload: OrderQueryPayload) =>
     adminApi<OrderApiResponse>("/orders", {
@@ -89,5 +117,36 @@ export const adminOrdersService = {
       method: "POST",
       body: JSON.stringify({ order_id: id }),
     }),
+
+  addTracking: (payload: {
+    order_id: number;
+    tracking_date: string;
+    city: string;
+    status: string;
+  }) =>
+    adminApi<AddTrackingResponse>("/orders/tracking/add", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }),
+    getTracking: (payload: { order_id: number }) =>
+  adminApi<GetTrackingResponse>("/orders/tracking", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  }),
+  deleteTracking: (payload: { id: number }) =>
+  adminApi<{ success: boolean; message: string }>("/orders/tracking/delete", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  }),
+  updateTracking: (payload: {
+  id: number;
+  tracking_date: string;
+  city: string;
+  status: string;
+}) =>
+  adminApi<{ status: boolean; message: string }>("/orders/tracking/update", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  }),
 };
 
