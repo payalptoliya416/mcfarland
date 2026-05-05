@@ -382,15 +382,24 @@ const handleDelete = async (id: number) => {
       </div>
 
       {/* MOBILE VIEW */}
-      <div className="block xl:hidden space-y-4">
-        {data.map((order) => (
+     <div className="block xl:hidden space-y-4">
+      {loading ? (
+        <p className="text-center text-gray-500 py-5">Loading...</p>
+      ) : data.length === 0 ? (
+        <div className="text-center py-5">
+          <p className="text-gray-500 text-sm">
+            {noDataMessage || "No orders found"}
+          </p>
+        </div>
+      ) : (
+        data.map((order) => (
           <OrderMobileCard
             key={order.id}
             order={order}
             onUpdated={fetchOrders}
             onView={() => router.push(`/admin/orders/view?id=${order.id}`)}
             onEdit={() => router.push(`/admin/orders/edit?id=${order.id}`)}
-            onDelete={() => console.log("delete")}
+            onDelete={() => setDeleteId(order.id)}
             onOpenPaymentSlip={(order) =>
               setSlipModal({
                 open: true,
@@ -400,8 +409,9 @@ const handleDelete = async (id: number) => {
               })
             }
           />
-        ))}
-      </div>
+        ))
+      )}
+    </div>
 
       {/* DESKTOP VIEW */}
       <div className="hidden xl:block">

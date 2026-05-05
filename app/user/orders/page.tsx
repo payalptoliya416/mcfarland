@@ -297,7 +297,15 @@ export default function MyBuyOrders() {
   );
 
   const isAfterSettle = selectedStep > selectedConfirmationIndex;
+const formatDate = (dateStr: string) => {
+  const date = new Date(dateStr);
 
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).replace(" ", " ").replace(",", ",");
+};
   return (
     <>
     <section className="py-11 sm:py-[60px]">
@@ -888,7 +896,7 @@ export default function MyBuyOrders() {
   <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[999999999]">
 
     {/* MODAL BOX */}
-    <div className="relative bg-white rounded-2xl shadow-xl w-[620px] max-h-[90vh] flex flex-col px-6 py-5 mx-2">
+    <div className="relative bg-white rounded-2xl shadow-xl w-[620px] max-h-[90vh] flex flex-col px-3 sm:px-6 py-5 mx-2">
 
       {/* HEADER */}
       <div className="flex justify-between items-center mb-4 shrink-0">
@@ -922,12 +930,10 @@ export default function MyBuyOrders() {
                 <div className="flex flex-col items-center">
                   
                   <FaCircle
-                    className={`text-xs ${
-                      row.status === "Delivered"
-                        ? "text-green-500"
-                        : "text-blue-500"
-                    }`}
-                  />
+                className={`text-xs ${
+                  isLast ? "text-green-500" : "text-gray-400"
+                }`}
+              />
 
                   {!isLast && (
                     <div className="w-[2px] flex-1 bg-gray-300 mt-1" />
@@ -935,21 +941,39 @@ export default function MyBuyOrders() {
                 </div>
 
                 {/* RIGHT CONTENT */}
-                <div className="flex-1 bg-gray-50 rounded-lg p-3 border border-gray-200">
-
+                <div
+                  className={`flex-1 rounded-lg p-3 border ${
+                    isLast
+                      ? "bg-green-50 border-green-300"
+                      : "bg-gray-50 border-gray-200"
+                  }`}
+                >
                   <div className="flex justify-between items-center">
-                    <h3 className="font-medium text-gray-800">
+                     <div className="flex items-center gap-2">
+                    <span
+                      className={`text-xs px-2 py-1 rounded-lg font-medium
+                        ${
+                          row.status === "Delivered"
+                            ? "bg-green-100 text-green-700"
+                            : row.status === "In Transit"
+                            ? "bg-blue-100 text-blue-700"
+                            : "bg-gray-200 text-gray-700"
+                        }
+                      `}
+                    >
                       {row.status}
-                    </h3>
-
+                    </span>
+                     </div>
                     <span className="text-xs text-gray-500">
-                      {row.date}
+                     {formatDate(row.date)}
                     </span>
                   </div>
 
                   <p className="text-sm text-gray-600 mt-1 flex items-center gap-1">
                     <MdLocationOn className="text-gray-500" />
-                    {row.city}
+                    <span className="font-medium text-gray-800">
+                      {row.city}
+                    </span>
                   </p>
 
                 </div>
@@ -970,7 +994,7 @@ export default function MyBuyOrders() {
       </div>
     </div>
   </div>
-)}
+  )}
     </>
   );
 }

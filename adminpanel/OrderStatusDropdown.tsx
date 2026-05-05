@@ -558,7 +558,7 @@ const addRow = () => {
                 onChange={(e) =>
                   handleChangeRow(index, "status", e.target.value)
                 }
-                className={`h-10 px-2 border rounded-lg text-sm w-full
+                className={`h-10 px-2 border rounded-lg text-sm w-full focus:outline-none
                   ${errors.includes(index) ? "border-red-500" : "border-gray-300"}
                   ${!row.isNew ? "bg-gray-100" : ""}
                 `}
@@ -576,7 +576,7 @@ const addRow = () => {
                 onChange={(e) =>
                   handleChangeRow(index, "date", e.target.value)
                 }
-                className={`h-10 px-3 border rounded-lg text-sm w-full
+                className={`h-10 px-3 border rounded-lg text-sm w-full focus:outline-none
                   ${errors.includes(index) ? "border-red-500" : "border-gray-300"}
                   ${!row.isNew ? "bg-gray-100" : ""}
                 `}
@@ -590,7 +590,7 @@ const addRow = () => {
                 onChange={(e) =>
                   handleChangeRow(index, "city", e.target.value)
                 }
-                className={`h-10 px-3 border rounded-lg text-sm w-full
+                className={`h-10 px-3 border rounded-lg text-sm w-full focus:outline-none
                   ${errors.includes(index) ? "border-red-500" : "border-gray-300"}
                   ${!row.isNew ? "bg-gray-100" : ""}
                 `}
@@ -605,7 +605,7 @@ const addRow = () => {
                     className="text-red-500 text-xl"
                   >
                     {deletingId === row.id ? (
-                      <span className="w-4 h-4 border-2 border-red-400 border-t-transparent rounded-full animate-spin inline-block" />
+                      <span className="w-4 h-4 border-2 border-red-400 border-t-transparent rounded-full animate-spin inline-block cursor-pointer" />
                     ) : (
                       <MdDelete size={22} />
                     )}
@@ -626,7 +626,6 @@ const addRow = () => {
                   </button>
                 )}
               </div>
-
             </div>
           ))
         )}
@@ -644,7 +643,7 @@ const addRow = () => {
 
         <button
           onClick={() => setShowTrackingModal(false)}
-          className="w-full sm:w-auto px-5 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100"
+          className="w-full sm:w-auto px-5 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 cursor-pointer"
         >
           Cancel
         </button>
@@ -652,10 +651,10 @@ const addRow = () => {
         <button
           onClick={handleSubmit}
           disabled={saving}
-          className={`w-full sm:w-auto px-5 py-2 rounded-lg text-white
+          className={`w-full sm:w-auto px-5 py-2 rounded-lg text-white 
             ${saving 
               ? "bg-gray-400 cursor-not-allowed" 
-              : "bg-gradient-to-r from-[#F59E0B] to-[#FBBF24]"
+              : "bg-gradient-to-r from-[#F59E0B] to-[#FBBF24] cursor-pointer"
             }
           `}
         >

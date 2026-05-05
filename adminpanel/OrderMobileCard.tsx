@@ -3,6 +3,7 @@
 import { FaFilePdf } from "react-icons/fa6";
 import OrderStatusDropdown from "./OrderStatusDropdown";
 import { IoReceiptSharp } from "react-icons/io5";
+import { HiOutlineTrash } from "react-icons/hi2";
 
 type Props = {
   order: any;
@@ -151,13 +152,17 @@ export default function OrderMobileCard({
         </button>
       </div>
       {/* Actions */}
-      {/* <div className="flex justify-end gap-4 pt-4 border-t border-border">
-        <button onClick={onEdit}><BiEdit /></button>
-        <button onClick={onView}><BiEdit /></button>
-        <button onClick={onDelete} className="text-red-500">
-          <HiOutlineTrash />
+      <div className="flex justify-end gap-4 pt-4 border-t border-border">
+
+        {/* Delete */}
+        <button
+          onClick={onDelete}
+          className="flex items-center gap-1 text-red-500 font-medium cursor-pointer"
+        >
+          <HiOutlineTrash size={18} />
+          Delete
         </button>
-      </div> */}
+</div>
     </div>
   );
 }
