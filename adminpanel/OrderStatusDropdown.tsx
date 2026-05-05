@@ -6,6 +6,7 @@ import { FiChevronDown } from "react-icons/fi";
 import toast from "react-hot-toast";
 import { adminOrdersService, TrackingItem } from "@/api/admin/orders";
 import { MdDelete } from "react-icons/md";
+import { IoClose } from "react-icons/io5";
 
 type OrderStatus =
   | "Order Submitted"
@@ -256,7 +257,7 @@ const addRow = () => {
     ]);
 
   } catch (err: any) {
-    toast.error(err?.message || "Failed to fetch tracking");
+    toast.error(err?.message);
   } finally {
     setLoading(false);
   }
@@ -512,123 +513,146 @@ const addRow = () => {
           document.body,
         )}
 
-      {showTrackingModal && (
-      <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[999999999]">
-<div className="relative bg-white rounded-2xl shadow-xl w-[620px] px-6 py-5 mx-2">
-        {isDelivered && (
-  <div className="absolute inset-0 z-50 cursor-not-allowed" />
-)}
-          {/* HEADER */}
-          <h2 className="text-lg font-semibold text-gray-800 mb-4">
-            Add Tracking Details
-          </h2>
+  {showTrackingModal && (
+  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[999999999] p-3 sm:p-4">
 
-          {/* ROWS */}
-      <div className="space-y-3 overflow-y-auto">
-    {
-      loading ? (
-        <div className="flex justify-center items-center py-10">
-          <div className="w-6 h-6 border-2 border-gray-300 border-t-[#F59E0B] rounded-full animate-spin" />
-        </div>
-      ) : (
-          rows.map((row, index) => (
-      <div key={index} className="flex items-center gap-3">
+    {/* MODAL */}
+    <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-[620px] max-h-[90vh] flex flex-col px-4 sm:px-6 py-5">
 
-        <select
-          value={row.status}
-          disabled={false}
-          onChange={(e) =>
-            handleChangeRow(index, "status", e.target.value)
-          }
-          className={`h-10 px-2 border rounded-lg text-sm
-            ${errors.includes(index) ? "border-red-500" : "border-gray-300"}
-            ${!row.isNew ? "bg-gray-100" : ""}
-          `}
-        >
-          <option value="">Select Status</option>
-          <option value="Send">Send</option>
-          <option value="In Transit">In Transit</option>
-          <option value="Delivered">Delivered</option>
-        </select>
+      {/* DISABLED OVERLAY */}
+      {isDelivered && (
+        <div className="absolute inset-0 z-50 cursor-not-allowed bg-white/60 rounded-2xl" />
+      )}
 
-        <input
-          type="date"
-          value={row.date}
-          disabled={false}
-          onChange={(e) =>
-            handleChangeRow(index, "date", e.target.value)
-          }
-          className={`h-10 px-3 border rounded-lg text-sm
-            ${errors.includes(index) ? "border-red-500" : "border-gray-300"}
-            ${!row.isNew ? "bg-gray-100" : ""}
-          `}
-        />
+      {/* CLOSE BUTTON */}
+      <button
+        onClick={() => setShowTrackingModal(false)}
+        className="absolute -top-10 right-2 sm:right-0 w-9 h-9 flex items-center justify-center 
+                   rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 text-lg"
+      >
+        <IoClose />
+      </button>
 
-        <input
-          type="text"
-          value={row.city}
-          placeholder="City"
-          disabled={false}
-          onChange={(e) =>
-            handleChangeRow(index, "city", e.target.value)
-          }
-          className={`h-10 px-3 border rounded-lg text-sm
-            ${errors.includes(index) ? "border-red-500" : "border-gray-300"}
-            ${!row.isNew ? "bg-gray-100" : ""}
-          `}
-        />
+      {/* HEADER */}
+      <h2 className="text-base sm:text-lg font-semibold text-gray-800 mb-4">
+        Add Tracking Details
+      </h2>
 
-        {!row.isNew ? (
-          <button
-          onClick={() => handleDeleteTracking(row.id!)}
-          disabled={deletingId === row.id}
-          className="text-red-500 text-xl cursor-pointer"
-        >
-          {deletingId === row.id ? (
-            <span className="w-4 h-4 border-2 border-red-400 border-t-transparent rounded-full animate-spin inline-block" />
-          ) : (
-            <MdDelete size={24} />
-          )}
-        </button>
-        ) : index === rows.length - 1 ? (
-          <button
-            onClick={addRow}
-            className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#F59E0B] text-white text-lg"
-          >
-            +
-          </button>
-        ) : (
-          <button
-            onClick={() => removeRow(index)}
-            className="w-10 h-10 flex items-center justify-center rounded-lg bg-red-100 text-red-600 text-lg"
-          >
-            −
-          </button>
-        )}
+      {/* 🔥 SCROLL AREA */}
+      <div className="flex-1 min-h-0 overflow-y-auto space-y-3 pr-1">
 
-      </div>
-      ))
-      )
-      }
-      </div>
-        {formError && (
-          <div className="text-red-500 text-sm mb-2 text-center mt-3">
-            {formError}
+        {loading ? (
+          <div className="flex justify-center items-center py-10">
+            <div className="w-6 h-6 border-2 border-gray-300 border-t-[#F59E0B] rounded-full animate-spin" />
           </div>
-        )}
-          {/* FOOTER */}
-          <div className="flex justify-end gap-3 mt-4">
-            <button
-              onClick={() => setShowTrackingModal(false)}
-              className="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 cursor-pointer"
+        ) : (
+          rows.map((row, index) => (
+            <div
+              key={index}
+              className="flex flex-col sm:flex-row gap-2 sm:gap-3"
             >
-              Cancel
-            </button>
 
-            <button
+              {/* STATUS */}
+              <select
+                value={row.status}
+                onChange={(e) =>
+                  handleChangeRow(index, "status", e.target.value)
+                }
+                className={`h-10 px-2 border rounded-lg text-sm w-full
+                  ${errors.includes(index) ? "border-red-500" : "border-gray-300"}
+                  ${!row.isNew ? "bg-gray-100" : ""}
+                `}
+              >
+                <option value="">Select Status</option>
+                <option value="Send">Send</option>
+                <option value="In Transit">In Transit</option>
+                <option value="Delivered">Delivered</option>
+              </select>
+
+              {/* DATE */}
+              <input
+                type="date"
+                value={row.date}
+                onChange={(e) =>
+                  handleChangeRow(index, "date", e.target.value)
+                }
+                className={`h-10 px-3 border rounded-lg text-sm w-full
+                  ${errors.includes(index) ? "border-red-500" : "border-gray-300"}
+                  ${!row.isNew ? "bg-gray-100" : ""}
+                `}
+              />
+
+              {/* CITY */}
+              <input
+                type="text"
+                value={row.city}
+                placeholder="City"
+                onChange={(e) =>
+                  handleChangeRow(index, "city", e.target.value)
+                }
+                className={`h-10 px-3 border rounded-lg text-sm w-full
+                  ${errors.includes(index) ? "border-red-500" : "border-gray-300"}
+                  ${!row.isNew ? "bg-gray-100" : ""}
+                `}
+              />
+
+              {/* ACTION BUTTON */}
+              <div className="flex justify-end sm:justify-center">
+                {!row.isNew ? (
+                  <button
+                    onClick={() => row.id && handleDeleteTracking(row.id)}
+                    disabled={deletingId === row.id}
+                    className="text-red-500 text-xl"
+                  >
+                    {deletingId === row.id ? (
+                      <span className="w-4 h-4 border-2 border-red-400 border-t-transparent rounded-full animate-spin inline-block" />
+                    ) : (
+                      <MdDelete size={22} />
+                    )}
+                  </button>
+                ) : index === rows.length - 1 ? (
+                  <button
+                    onClick={addRow}
+                    className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#F59E0B] text-white text-lg"
+                  >
+                    +
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => removeRow(index)}
+                    className="w-10 h-10 flex items-center justify-center rounded-lg bg-red-100 text-red-600 text-lg"
+                  >
+                    −
+                  </button>
+                )}
+              </div>
+
+            </div>
+          ))
+        )}
+      </div>
+
+      {/* ERROR */}
+      {formError && (
+        <div className="text-red-500 text-sm mt-3 text-center">
+          {formError}
+        </div>
+      )}
+
+      {/* FOOTER */}
+      <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 mt-4">
+
+        <button
+          onClick={() => setShowTrackingModal(false)}
+          className="w-full sm:w-auto px-5 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100"
+        >
+          Cancel
+        </button>
+
+        <button
           onClick={handleSubmit}
           disabled={saving}
-          className={`px-5 py-2 rounded-lg text-white cursor-pointer
+          className={`w-full sm:w-auto px-5 py-2 rounded-lg text-white
             ${saving 
               ? "bg-gray-400 cursor-not-allowed" 
               : "bg-gradient-to-r from-[#F59E0B] to-[#FBBF24]"
@@ -637,10 +661,11 @@ const addRow = () => {
         >
           {saving ? "Saving..." : "Submit"}
         </button>
-          </div>
-        </div>
+
       </div>
-    )}
+    </div>
+  </div>
+)}
     </>
   );
 }

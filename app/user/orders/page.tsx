@@ -11,12 +11,14 @@ import {
 import Loader from "@/components/common/Loader";
 import { formatPrice } from "@/hooks/formate";
 import { IoCallOutline } from "react-icons/io5";
-import Accordion from "@/api/user/Accordion";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { FaFilePdf } from "react-icons/fa6";
 import { FiUploadCloud } from "react-icons/fi";
 import { FaRegImage } from "react-icons/fa";
 import { useSettings } from "@/contexts/SettingsContext";
+import { IoClose } from "react-icons/io5";
+import { FaCircle } from "react-icons/fa";
+import { MdLocationOn } from "react-icons/md";
 /* ================= TYPES ================= */
 
 type OrderData = {
@@ -882,74 +884,93 @@ export default function MyBuyOrders() {
         </div>
       )}
     </section>
-     {showTrackingModal && (
-      <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[999999999]">
-        
-        <div className="bg-white rounded-2xl shadow-xl w-[620px] px-6 py-5 mx-2">
-    
-          {/* HEADER */}
-          <h2 className="text-lg font-semibold text-gray-800 mb-4">
-            Add Tracking Details
-          </h2>
-    
-          {/* ROWS */}
-          <div className="space-y-4 overflow-y-auto">
-  {rows.length === 0 ? (
-    <p className="text-gray-500 text-center py-5">
-      No tracking data found
-    </p>
-  ) : (
-    rows.map((row, index) => (
-      <div key={index} className="flex items-start gap-4">
-        
-        {/* 🔥 LEFT TIMELINE */}
-        <div className="flex flex-col items-center">
-          {/* DOT */}
-          <h3 className="mt-2.5">{index+1}</h3>
+  {showTrackingModal && (
+  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[999999999]">
 
-        </div>
+    {/* MODAL BOX */}
+    <div className="relative bg-white rounded-2xl shadow-xl w-[620px] max-h-[90vh] flex flex-col px-6 py-5 mx-2">
 
-        {/* RIGHT CONTENT */}
-        <div className="flex items-center gap-3 flex-wrap">
-          
-          {/* STATUS */}
-          <input
-            value={row.status}
-            disabled
-            className="h-10 px-3 border border-gray-100 rounded-lg text-sm bg-gray-100 w-[150px]"
-          />
+      {/* HEADER */}
+      <div className="flex justify-between items-center mb-4 shrink-0">
+        <h2 className="text-lg font-semibold text-gray-800">
+          Tracking Details
+        </h2>
 
-          {/* DATE */}
-          <input
-            type="date"
-            value={row.date}
-            disabled
-            className="h-10 px-3 border border-gray-100 rounded-lg text-sm bg-gray-100"
-          />
-
-          {/* CITY */}
-          <input
-            value={row.city}
-            disabled
-            className="h-10 px-3 border border-gray-100 rounded-lg text-sm bg-gray-100"
-          />
-        </div>
+        <button
+          onClick={() => setShowTrackingModal(false)}
+          className="text-gray-500 hover:text-black text-2xl cursor-pointer"
+        >
+          <IoClose />
+        </button>
       </div>
-    ))
-  )}
-</div>
-  
-          <div className="flex justify-end gap-3 mt-4">
-            <button
-              onClick={() => setShowTrackingModal(false)}
-              className="px-5 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 cursor-pointer"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
+
+      {/* 🔥 SCROLL AREA */}
+      <div className="flex-1 min-h-0 overflow-y-auto pr-2 space-y-6">
+
+        {rows.length === 0 ? (
+          <p className="text-gray-500 text-center py-5">
+            No tracking data found
+          </p>
+        ) : (
+          rows.map((row, index) => {
+            const isLast = index === rows.length - 1;
+
+            return (
+              <div key={index} className="flex gap-2">
+
+                {/* LEFT TIMELINE */}
+                <div className="flex flex-col items-center">
+                  
+                  <FaCircle
+                    className={`text-xs ${
+                      row.status === "Delivered"
+                        ? "text-green-500"
+                        : "text-blue-500"
+                    }`}
+                  />
+
+                  {!isLast && (
+                    <div className="w-[2px] flex-1 bg-gray-300 mt-1" />
+                  )}
+                </div>
+
+                {/* RIGHT CONTENT */}
+                <div className="flex-1 bg-gray-50 rounded-lg p-3 border border-gray-200">
+
+                  <div className="flex justify-between items-center">
+                    <h3 className="font-medium text-gray-800">
+                      {row.status}
+                    </h3>
+
+                    <span className="text-xs text-gray-500">
+                      {row.date}
+                    </span>
+                  </div>
+
+                  <p className="text-sm text-gray-600 mt-1 flex items-center gap-1">
+                    <MdLocationOn className="text-gray-500" />
+                    {row.city}
+                  </p>
+
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
-    )}
+
+      {/* FOOTER */}
+      <div className="flex justify-end mt-5 shrink-0">
+        <button
+          onClick={() => setShowTrackingModal(false)}
+          className="px-5 py-2 rounded-lg bg-black text-white hover:bg-gray-800 cursor-pointer"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     </>
   );
 }
