@@ -64,6 +64,8 @@ export default function OrderStatusDropdown({
   const [deletingId, setDeletingId] = useState<number | null>(null);
 const [selectedStatus, setSelectedStatus] = useState<OrderStatus | null>(null);
 const isDelivered = value === "Delivered";
+const [activeTab, setActiveTab] = useState<"form" | "table">("form");
+const todayDate = new Date().toISOString().split("T")[0];
   /* ================= STATUS CONFIG ================= */
   const statusConfig: Record<
     OrderStatus,
@@ -221,11 +223,27 @@ const addRow = () => {
   });
 };
 
-  const removeRow = (index: number) => {
-    const updated = [...rows];
+ const removeRow = (index: number) => {
+  setRows((prev) => {
+    const updated = [...prev];
+
     updated.splice(index, 1);
-    setRows(updated);
-  };
+
+    // 🔥 minimum 1 row always
+    if (updated.length === 0) {
+      return [
+        {
+          date: "",
+          city: "",
+          status: "",
+          isNew: true,
+        },
+      ];
+    }
+
+    return updated;
+  });
+};
 
     const handleChangeRow = <K extends keyof TrackingRow>(
       index: number,
@@ -369,24 +387,40 @@ const addRow = () => {
         }
     };
 
-    const handleDeleteTracking = async (id: number) => {
-    if (deletingId) return; // 🔥 block multiple clicks
+   const handleDeleteTracking = async (id: number) => {
+  if (deletingId) return;
 
-    try {
-      setDeletingId(id);
+  try {
+    setDeletingId(id);
 
-      const res = await adminOrdersService.deleteTracking({ id });
+    const res = await adminOrdersService.deleteTracking({ id });
 
-      toast.success(res.message || "Deleted successfully");
+    toast.success(res.message || "Deleted successfully");
 
-      setRows((prev) => prev.filter((r) => r.id !== id));
+    setRows((prev) => {
+      const filtered = prev.filter((r) => r.id !== id);
 
-    } catch (err: any) {
-      toast.error(err?.message || "Failed to delete");
-    } finally {
-      setDeletingId(null);
-    }
-  };
+      // 🔥 always keep one empty row
+      if (filtered.length === 0) {
+        return [
+          {
+            date: "",
+            city: "",
+            status: "",
+            isNew: true,
+          },
+        ];
+      }
+
+      return filtered;
+    });
+
+  } catch (err: any) {
+    toast.error(err?.message || "Failed to delete");
+  } finally {
+    setDeletingId(null);
+  }
+};
 
   return (
     <>
@@ -513,156 +547,736 @@ const addRow = () => {
           document.body,
         )}
 
-  {showTrackingModal && (
-  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[999999999] p-3 sm:p-4">
+{/* ================= TRACKING MODAL ================= */}
+{showTrackingModal && (
+  <div className="fixed inset-0 z-[999999999] bg-black/50 backdrop-blur-[2px] flex items-center justify-center p-2 sm:p-3">
 
-    {/* MODAL */}
-    <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-[620px] max-h-[90vh] flex flex-col px-4 sm:px-6 py-5">
+    <div className="relative bg-white w-full max-w-[940px] h-[85vh] sm:h-[82vh] rounded-[24px] shadow-2xl overflow-hidden flex flex-col">
 
-      {/* DISABLED OVERLAY */}
-      {isDelivered && (
-        <div className="absolute inset-0 z-50 cursor-not-allowed bg-white/60 rounded-2xl" />
-      )}
-
-      {/* CLOSE BUTTON */}
-      <button
-        onClick={() => setShowTrackingModal(false)}
-        className="absolute -top-10 right-2 sm:right-0 w-9 h-9 flex items-center justify-center 
-                   rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 text-lg"
-      >
-        <IoClose />
-      </button>
-
-      {/* HEADER */}
-      <h2 className="text-base sm:text-lg font-semibold text-gray-800 mb-4">
-        Add Tracking Details
-      </h2>
-
-      {/* 🔥 SCROLL AREA */}
-      <div className="flex-1 min-h-0 overflow-y-auto space-y-3 pr-1">
-
-        {loading ? (
-          <div className="flex justify-center items-center py-10">
-            <div className="w-6 h-6 border-2 border-gray-300 border-t-[#F59E0B] rounded-full animate-spin" />
-          </div>
-        ) : (
-          rows.map((row, index) => (
-            <div
-              key={index}
-              className="flex flex-col sm:flex-row gap-2 sm:gap-3"
-            >
-
-              {/* STATUS */}
-              <select
-                value={row.status}
-                onChange={(e) =>
-                  handleChangeRow(index, "status", e.target.value)
-                }
-                className={`h-10 px-2 border rounded-lg text-sm w-full focus:outline-none
-                  ${errors.includes(index) ? "border-red-500" : "border-gray-300"}
-                  ${!row.isNew ? "bg-gray-100" : ""}
-                `}
-              >
-                <option value="">Select Status</option>
-                <option value="Send">Send</option>
-                <option value="In Transit">In Transit</option>
-                <option value="Delivered">Delivered</option>
-              </select>
-
-              {/* DATE */}
-              <input
-                type="date"
-                value={row.date}
-                onChange={(e) =>
-                  handleChangeRow(index, "date", e.target.value)
-                }
-                className={`h-10 px-3 border rounded-lg text-sm w-full focus:outline-none
-                  ${errors.includes(index) ? "border-red-500" : "border-gray-300"}
-                  ${!row.isNew ? "bg-gray-100" : ""}
-                `}
-              />
-
-              {/* CITY */}
-              <input
-                type="text"
-                value={row.city}
-                placeholder="City"
-                onChange={(e) =>
-                  handleChangeRow(index, "city", e.target.value)
-                }
-                className={`h-10 px-3 border rounded-lg text-sm w-full focus:outline-none
-                  ${errors.includes(index) ? "border-red-500" : "border-gray-300"}
-                  ${!row.isNew ? "bg-gray-100" : ""}
-                `}
-              />
-
-              {/* ACTION BUTTON */}
-              <div className="flex justify-end sm:justify-center">
-                {!row.isNew ? (
-                  <button
-                    onClick={() => row.id && handleDeleteTracking(row.id)}
-                    disabled={deletingId === row.id}
-                    className="text-red-500 text-xl"
-                  >
-                    {deletingId === row.id ? (
-                      <span className="w-4 h-4 border-2 border-red-400 border-t-transparent rounded-full animate-spin inline-block cursor-pointer" />
-                    ) : (
-                      <MdDelete size={22} />
-                    )}
-                  </button>
-                ) : index === rows.length - 1 ? (
-                  <button
-                    onClick={addRow}
-                    className="w-10 h-10 flex items-center justify-center rounded-lg bg-[#F59E0B] text-white text-lg"
-                  >
-                    +
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => removeRow(index)}
-                    className="w-10 h-10 flex items-center justify-center rounded-lg bg-red-100 text-red-600 text-lg"
-                  >
-                    −
-                  </button>
-                )}
-              </div>
-            </div>
-          ))
-        )}
-      </div>
-
-      {/* ERROR */}
-      {formError && (
-        <div className="text-red-500 text-sm mt-3 text-center">
-          {formError}
-        </div>
-      )}
-
-      {/* FOOTER */}
-      <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 mt-4">
+      {/* ================= HEADER ================= */}
+      <div className="border-b border-gray-100 px-4 sm:px-5 py-3 sm:py-4 shrink-0">
 
         <button
           onClick={() => setShowTrackingModal(false)}
-          className="w-full sm:w-auto px-5 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 cursor-pointer"
+          className="absolute top-3 right-3 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition"
+        >
+          <IoClose size={18} className="text-gray-700" />
+        </button>
+
+        <h2 className="text-[22px] sm:text-[28px] font-bold text-[#1E293B] leading-tight">
+          Tracking Management
+        </h2>
+
+      </div>
+
+      {/* ================= TABS ================= */}
+      <div className="px-4 sm:px-5 pt-2 shrink-0">
+
+        <div className="flex items-center gap-4 border-b border-gray-100 overflow-x-auto no-scrollbar">
+
+          <button
+            onClick={() => setActiveTab("form")}
+            className={`
+              relative pb-2.5 text-[14px] font-semibold whitespace-nowrap transition cursor-pointer
+              ${
+                activeTab === "form"
+                  ? "text-[#F59E0B]"
+                  : "text-gray-500 hover:text-gray-700"
+              }
+            `}
+          >
+            Add Tracking
+
+            {activeTab === "form" && (
+              <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
+            )}
+          </button>
+
+          <button
+            onClick={() => setActiveTab("table")}
+            className={`
+              relative pb-2.5 text-[14px] font-semibold whitespace-nowrap transition cursor-pointer
+              ${
+                activeTab === "table"
+                  ? "text-[#F59E0B]"
+                  : "text-gray-500 hover:text-gray-700"
+              }
+            `}
+          >
+            Tracking History
+
+            {activeTab === "table" && (
+              <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
+            )}
+          </button>
+
+        </div>
+
+      </div>
+
+      {/* ================= BODY ================= */}
+      <div className="flex-1 overflow-hidden">
+
+      {/* ========================================================= */}
+{/* ======================= FORM TAB ======================== */}
+{/* ========================================================= */}
+
+{activeTab === "form" && (
+
+  <div className="h-full overflow-y-auto px-4 sm:px-5 py-3">
+
+    {loading ? (
+
+      <div className="flex items-center justify-center h-[220px]">
+        <div className="w-7 h-7 border-[3px] border-[#F59E0B] border-t-transparent rounded-full animate-spin" />
+      </div>
+
+    ) : (
+
+      <div className="space-y-2.5">
+
+        {/* ================= TOP ACTION ================= */}
+        <div className="flex items-center justify-between">
+
+          <div className="text-[13px] font-semibold text-[#1E293B]">
+            Tracking Entries ({rows.length})
+          </div>
+
+          <button
+            onClick={addRow}
+            className="
+              h-9 px-3 rounded-xl
+              bg-[#F59E0B] hover:bg-[#df9300]
+              text-white text-[13px] font-medium
+              flex items-center gap-1.5
+              transition
+            "
+          >
+            <span className="text-[18px] leading-none">+</span>
+            Add
+          </button>
+
+        </div>
+
+        {/* ================= LIST ================= */}
+        <div className="space-y-2">
+
+         {rows.filter(Boolean).map((row, index) => (
+
+            <div
+              key={index}
+              className="
+                border border-gray-200
+                rounded-2xl
+                bg-white
+                p-2.5
+              "
+            >
+
+              {/* DESKTOP */}
+              <div className="hidden md:grid md:grid-cols-12 gap-2 items-end">
+
+                {/* NUMBER */}
+                <div className="md:col-span-1">
+
+                  <div
+                    className="
+                      h-10 rounded-xl
+                      bg-[#FFF4DE]
+                      text-[#F59E0B]
+                      text-[13px] font-semibold
+                      flex items-center justify-center
+                    "
+                  >
+                    #{index + 1}
+                  </div>
+
+                </div>
+
+                {/* STATUS */}
+                <div className="md:col-span-3">
+
+                  <label className="text-[11px] text-gray-600 block mb-1">
+                    Status
+                  </label>
+
+                  <select
+                    value={row.status}
+                    onChange={(e) =>
+                      handleChangeRow(index, "status", e.target.value)
+                    }
+                    className={`
+                      h-10 rounded-xl border bg-white
+                      px-3 text-[13px] w-full
+                      focus:outline-none focus:ring-2 focus:ring-[#F59E0B]/20
+                      ${
+                        errors.includes(index)
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }
+                    `}
+                  >
+                    <option value="">Select Status</option>
+                    <option value="Send">Send</option>
+                    <option value="In Transit">In Transit</option>
+                    <option value="Delivered">Delivered</option>
+                  </select>
+
+                </div>
+
+                {/* DATE */}
+                <div className="md:col-span-3">
+
+                  <label className="text-[11px] text-gray-600 block mb-1">
+                    Date
+                  </label>
+
+                  <input
+                    type="date"
+                     min={todayDate}
+                    value={row.date}
+                    onChange={(e) =>
+                      handleChangeRow(index, "date", e.target.value)
+                    }
+                    className={`
+                      h-10 rounded-xl border bg-white
+                      px-3 text-[13px] w-full
+                      focus:outline-none focus:ring-2 focus:ring-[#F59E0B]/20
+                      ${
+                        errors.includes(index)
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }
+                    `}
+                  />
+
+                </div>
+
+                {/* CITY */}
+                <div className="md:col-span-4">
+
+                  <label className="text-[11px] text-gray-600 block mb-1">
+                    City
+                  </label>
+
+                  <input
+                    type="text"
+                    value={row.city}
+                    placeholder="Enter City"
+                    onChange={(e) =>
+                      handleChangeRow(index, "city", e.target.value)
+                    }
+                    className={`
+                      h-10 rounded-xl border bg-white
+                      px-3 text-[13px] w-full
+                      focus:outline-none focus:ring-2 focus:ring-[#F59E0B]/20
+                      ${
+                        errors.includes(index)
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }
+                    `}
+                  />
+
+                </div>
+
+                {/* DELETE */}
+                <div className="md:col-span-1">
+
+                  <button
+                    onClick={() => {
+                      if (!row.isNew && row.id) {
+                        handleDeleteTracking(row.id);
+                      } else {
+                        removeRow(index);
+                      }
+                    }}
+                    className="
+                      h-10 w-full rounded-xl
+                      bg-red-50 hover:bg-red-100
+                      flex items-center justify-center
+                      transition
+                    "
+                  >
+                    <MdDelete
+                      size={24}
+                      className="text-red-500"
+                    />
+                  </button>
+
+                </div>
+
+              </div>
+
+              {/* MOBILE */}
+              <div className="md:hidden space-y-2.5">
+
+                <div className="flex items-center justify-between">
+
+                  <div
+                    className="
+                      h-8 px-3 rounded-lg
+                      bg-[#FFF4DE]
+                      text-[#F59E0B]
+                      text-[12px] font-semibold
+                      flex items-center
+                    "
+                  >
+                    Tracking #{index + 1}
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      if (!row.isNew && row.id) {
+                        handleDeleteTracking(row.id);
+                      } else {
+                        removeRow(index);
+                      }
+                    }}
+                    className="
+                      w-8 h-8 rounded-lg
+                      bg-red-50 hover:bg-red-100
+                      flex items-center justify-center
+                    "
+                  >
+                    <MdDelete
+                      size={15}
+                      className="text-red-500"
+                    />
+                  </button>
+
+                </div>
+
+                <div className="space-y-2">
+
+                  <select
+                    value={row.status}
+                    onChange={(e) =>
+                      handleChangeRow(index, "status", e.target.value)
+                    }
+                    className={`
+                      h-10 rounded-xl border bg-white
+                      px-3 text-[13px] w-full
+                      focus:outline-none
+                      ${
+                        errors.includes(index)
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }
+                    `}
+                  >
+                    <option value="">Select Status</option>
+                    <option value="Send">Send</option>
+                    <option value="In Transit">In Transit</option>
+                    <option value="Delivered">Delivered</option>
+                  </select>
+
+                  <input
+                    type="date"
+                     min={todayDate}
+                    value={row.date}
+                    onChange={(e) =>
+                      handleChangeRow(index, "date", e.target.value)
+                    }
+                    className={`
+                      h-10 rounded-xl border bg-white
+                      px-3 text-[13px] w-full
+                      focus:outline-none
+                      ${
+                        errors.includes(index)
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }
+                    `}
+                  />
+
+                  <input
+                    type="text"
+                    value={row.city}
+                    placeholder="Enter City"
+                    onChange={(e) =>
+                      handleChangeRow(index, "city", e.target.value)
+                    }
+                    className={`
+                      h-10 rounded-xl border bg-white
+                      px-3 text-[13px] w-full
+                      focus:outline-none
+                      ${
+                        errors.includes(index)
+                          ? "border-red-500"
+                          : "border-gray-300"
+                      }
+                    `}
+                  />
+
+                </div>
+
+              </div>
+
+            </div>
+
+          ))}
+
+        </div>
+
+        {/* ERROR */}
+        {formError && (
+          <div className="text-[13px] text-red-500 font-medium">
+            {formError}
+          </div>
+        )}
+
+      </div>
+
+    )}
+
+  </div>
+
+)}
+
+        {/* ========================================================= */}
+        {/* ====================== TABLE TAB ======================== */}
+        {/* ========================================================= */}
+
+        {activeTab === "table" && (
+
+          <div className="h-full overflow-y-auto px-4 sm:px-5 py-3">
+
+            <div className="border border-gray-200 rounded-2xl overflow-hidden bg-white">
+
+              {/* DESKTOP TABLE */}
+              <div className="hidden md:block overflow-x-auto">
+
+                <table className="w-full min-w-[700px]">
+
+                  <thead className="bg-[#FFF8EA] border-b border-gray-200">
+
+                    <tr>
+
+                      <th className="px-4 py-3 text-left text-[13px] font-semibold text-[#334155]">
+                        #
+                      </th>
+
+                      <th className="px-4 py-3 text-left text-[13px] font-semibold text-[#334155]">
+                        Status
+                      </th>
+
+                      <th className="px-4 py-3 text-left text-[13px] font-semibold text-[#334155]">
+                        Date
+                      </th>
+
+                      <th className="px-4 py-3 text-left text-[13px] font-semibold text-[#334155]">
+                        City
+                      </th>
+
+                      <th className="px-4 py-3 text-center text-[13px] font-semibold text-[#334155]">
+                        Actions
+                      </th>
+
+                    </tr>
+
+                  </thead>
+
+                  <tbody>
+
+                    {rows.filter((r) => !r.isNew).length === 0 ? (
+
+                      <tr>
+                        <td
+                          colSpan={5}
+                          className="py-16 text-center text-gray-400 text-sm"
+                        >
+                          No tracking records available
+                        </td>
+                      </tr>
+
+                    ) : (
+
+                      rows
+                        .filter((r) => !r.isNew)
+                        .map((row, index) => (
+
+                          <tr
+                            key={row.id}
+                            className="border-b border-gray-100 hover:bg-gray-50 transition"
+                          >
+
+                            <td className="px-4 py-3 text-[13px] text-gray-700">
+                              {index + 1}
+                            </td>
+
+                            <td className="px-4 py-3">
+
+                              <span
+                                className={`
+                                  inline-flex items-center
+                                  px-2.5 py-1 rounded-xl
+                                  text-xs font-semibold
+                                  ${
+                                    row.status === "Delivered"
+                                      ? "bg-green-100 text-green-700"
+                                      : row.status === "In Transit"
+                                        ? "bg-blue-100 text-blue-700"
+                                        : "bg-orange-100 text-orange-700"
+                                  }
+                                `}
+                              >
+                                {row.status}
+                              </span>
+
+                            </td>
+
+                            <td className="px-4 py-3 text-[13px] text-gray-700">
+                              {row.date}
+                            </td>
+
+                            <td className="px-4 py-3 text-[13px] text-gray-700">
+                              {row.city}
+                            </td>
+
+                            <td className="px-4 py-3">
+
+                              <div className="flex justify-center">
+
+                                <button
+                                  onClick={() =>
+                                    row.id && handleDeleteTracking(row.id)
+                                  }
+                                  className="
+                                    w-8 h-8 rounded-lg
+                                    bg-red-50 hover:bg-red-100
+                                    flex items-center justify-center
+                                    transition
+                                  "
+                                >
+                                  <MdDelete
+                                    size={15}
+                                    className="text-red-500"
+                                  />
+                                </button>
+
+                              </div>
+
+                            </td>
+
+                          </tr>
+
+                        ))
+
+                    )}
+
+                  </tbody>
+
+                </table>
+
+              </div>
+
+              {/* MOBILE CARD VIEW */}
+              <div className="md:hidden p-2.5 space-y-2.5">
+
+                {rows.filter((r) => !r.isNew).length === 0 ? (
+
+                  <div className="py-12 text-center text-sm text-gray-400">
+                    No tracking records available
+                  </div>
+
+                ) : (
+
+                  rows
+                    .filter((r) => !r.isNew)
+                    .map((row, index) => (
+
+                      <div
+                        key={row.id}
+                        className="border border-gray-200 rounded-2xl p-3 bg-gray-50"
+                      >
+
+                        <div className="flex items-start justify-between">
+
+                          <span
+                            className={`
+                              inline-flex items-center
+                              px-2.5 py-1 rounded-full
+                              text-xs font-semibold
+                              ${
+                                row.status === "Delivered"
+                                  ? "bg-green-100 text-green-700"
+                                  : row.status === "In Transit"
+                                    ? "bg-blue-100 text-blue-700"
+                                    : "bg-orange-100 text-orange-700"
+                              }
+                            `}
+                          >
+                            {row.status}
+                          </span>
+
+                          <button
+                            onClick={() =>
+                              row.id && handleDeleteTracking(row.id)
+                            }
+                            className="
+                              w-8 h-8 rounded-lg
+                              bg-red-50 hover:bg-red-100
+                              flex items-center justify-center
+                            "
+                          >
+                            <MdDelete
+                              size={15}
+                              className="text-red-500"
+                            />
+                          </button>
+
+                        </div>
+
+                        <div className="mt-3 space-y-2">
+
+                          <div className="flex justify-between gap-3">
+                            <span className="text-[11px] text-gray-500">
+                              Date
+                            </span>
+
+                            <span className="text-[13px] font-medium text-gray-700">
+                              {row.date}
+                            </span>
+                          </div>
+
+                          <div className="flex justify-between gap-3">
+                            <span className="text-[11px] text-gray-500">
+                              City
+                            </span>
+
+                            <span className="text-[13px] font-medium text-gray-700">
+                              {row.city}
+                            </span>
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    ))
+
+                )}
+
+              </div>
+
+              {/* PAGINATION */}
+              <div className="border-t border-gray-100 px-3 py-2.5 flex items-center justify-center sm:justify-between flex-wrap sm:flex-nowrap gap-2 bg-white">
+
+                <div className="text-[13px] text-gray-500">
+                  1 – {rows.filter((r) => !r.isNew).length} of{" "}
+                  {rows.filter((r) => !r.isNew).length} results
+                </div>
+
+                <div className="flex items-center gap-2">
+
+                  <select
+                    className="
+                      h-8 px-2 rounded-lg border border-gray-200
+                      text-[13px] text-gray-600 bg-white
+                      focus:outline-none
+                    "
+                  >
+                    <option>10</option>
+                    <option>25</option>
+                    <option>50</option>
+                  </select>
+
+                  <div className="flex items-center gap-1">
+
+                    <button
+                      className="
+                        w-8 h-8 rounded-lg border border-gray-200
+                        flex items-center justify-center
+                        text-gray-400 hover:bg-gray-50
+                      "
+                    >
+                      «
+                    </button>
+
+                    <button
+                      className="
+                        w-8 h-8 rounded-lg border border-gray-200
+                        flex items-center justify-center
+                        text-gray-400 hover:bg-gray-50
+                      "
+                    >
+                      ‹
+                    </button>
+
+                    <div className="px-2 text-[13px] font-medium text-gray-700">
+                      1 / 1
+                    </div>
+
+                    <button
+                      className="
+                        w-8 h-8 rounded-lg border border-gray-200
+                        flex items-center justify-center
+                        text-gray-400 hover:bg-gray-50
+                      "
+                    >
+                      ›
+                    </button>
+
+                    <button
+                      className="
+                        w-8 h-8 rounded-lg border border-gray-200
+                        flex items-center justify-center
+                        text-gray-400 hover:bg-gray-50
+                      "
+                    >
+                      »
+                    </button>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        )}
+
+      </div>
+
+      {/* ================= FOOTER ================= */}
+      <div className="border-t border-gray-100 px-4 sm:px-5 py-3 flex items-center justify-end gap-2 shrink-0">
+
+        <button
+          onClick={() => setShowTrackingModal(false)}
+          className="
+            h-10 px-4 rounded-xl border border-gray-300
+            text-[13px] font-medium text-gray-700
+            hover:bg-gray-100 transition
+          "
         >
           Cancel
         </button>
 
-        <button
-          onClick={handleSubmit}
-          disabled={saving}
-          className={`w-full sm:w-auto px-5 py-2 rounded-lg text-white 
-            ${saving 
-              ? "bg-gray-400 cursor-not-allowed" 
-              : "bg-gradient-to-r from-[#F59E0B] to-[#FBBF24] cursor-pointer"
-            }
-          `}
-        >
-          {saving ? "Saving..." : "Submit"}
-        </button>
+        {activeTab === "form" && (
+          <button
+            onClick={handleSubmit}
+            disabled={saving}
+            className={`
+              h-10 px-5 rounded-xl text-[13px] font-semibold text-white transition
+              ${
+                saving
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-gradient-to-r from-[#F59E0B] to-[#FFB800] hover:opacity-90"
+              }
+            `}
+          >
+            {saving ? "Saving..." : "Save Tracking"}
+          </button>
+        )}
 
       </div>
+
     </div>
+
   </div>
 )}
     </>

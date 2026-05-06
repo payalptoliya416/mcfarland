@@ -53,7 +53,7 @@ export default function RootLayout({
        <html lang="en" suppressHydrationWarning>
       <head>
        {/* Google Tag Manager */}
-      <Script id="gtm-script" strategy="beforeInteractive">
+      {/* <Script id="gtm-script" strategy="beforeInteractive">
         {`
           (function(w,d,s,l,i){w[l]=w[l]||[];
           w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
@@ -64,7 +64,7 @@ export default function RootLayout({
           f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','GTM-TVSS7MPH');
         `}
-      </Script>
+      </Script> */}
       {/* End Google Tag Manager */}
 
           {/* ✅ LiveChat Script */}
@@ -106,14 +106,14 @@ export default function RootLayout({
         suppressHydrationWarning
       >
       {/* Google Tag Manager (noscript) */}
-      <noscript>
+      {/* <noscript>
         <iframe
           src="https://www.googletagmanager.com/ns.html?id=GTM-TVSS7MPH"
           height="0"
           width="0"
           style={{ display: "none", visibility: "hidden" }}
         />
-      </noscript>
+      </noscript> */}
       {/* End Google Tag Manager (noscript) */}
 
         <noscript>
