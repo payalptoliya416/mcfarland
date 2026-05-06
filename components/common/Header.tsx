@@ -5,7 +5,7 @@ import { Category } from "@/api/data";
 import { getSettingsByKeysFooter } from "@/api/categoryActions";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { HiBars3BottomRight, HiMiniMinus, HiMiniPlus } from "react-icons/hi2";
 import { IoIosArrowDown } from "react-icons/io";
@@ -161,6 +161,9 @@ function Header({
   settings: any;
 }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const query = searchParams.toString();
+  const returnUrl = query ? `${pathname}?${query}` : pathname;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -215,8 +218,23 @@ useEffect(() => {
     }
   };
 
-  const isAuthPage =
-  pathname === "/signup" || pathname === "/user/signin";
+  // Click-time auth URL builder — reads window.location at click, no stale state
+  const getAuthUrl = (base: "/user/signin" | "/signup"): string => {
+    if (typeof window === "undefined") return base;
+    const currentPathname = window.location.pathname.replace(/\/$/, "");
+    const params = new URLSearchParams(window.location.search);
+    const existingReturnUrl = params.get("returnUrl"); // auto-decoded
+    const onAuthPage =
+      currentPathname === "/signup" || currentPathname.startsWith("/user/signin");
+    const destination = onAuthPage && existingReturnUrl
+      ? existingReturnUrl
+      : !onAuthPage
+        ? window.location.pathname + window.location.search
+        : "";
+    return destination && destination !== "/" && destination !== "/user"
+      ? `${base}?returnUrl=${encodeURIComponent(destination)}`
+      : base;
+  };
   
   useEffect(() => {
     function close(e: MouseEvent) {
@@ -597,8 +615,8 @@ const hasBgImage = useMemo(() => {
          <div className="hidden lg:flex gap-3 items-center">
 
             {/* Sign In (Outline - light) */}
-            <Link
-               href="/user/signin"
+            <button
+              onClick={() => handleNavigate(getAuthUrl("/user/signin"))}
               className="
                 px-3 xl:px-5 py-2 xl:py-2.5 rounded-lg 
                 border border-white/40 
@@ -610,13 +628,12 @@ const hasBgImage = useMemo(() => {
               "
             >
               Sign In
-            </Link>
+            </button>
 
             {/* Sign Up (Primary highlight) */}
             {!pathname.startsWith("/signup") && (
-            <Link
-               href="/signup"
-               onClick={() => setIsNavigating(true)}
+            <button
+               onClick={() => { setIsNavigating(true); handleNavigate(getAuthUrl("/signup")); }}
               className="
                 px-3 xl:px-5 py-2 xl:py-2.5 rounded-lg 
                 bg-gradient-to-r from-orange to-yellow-400
@@ -628,7 +645,7 @@ const hasBgImage = useMemo(() => {
               "
             >
               Sign Up
-            </Link>
+            </button>
              )}
           </div>
         )}
@@ -711,28 +728,28 @@ const hasBgImage = useMemo(() => {
             </Link>
           ) : (
             <div className="">
-            <Link
-              href="/user/signin"
+            <button
+              onClick={() => handleNavigate(getAuthUrl("/user/signin"))}
               className="
               mt-6 block text-center text-green bg-white border border-green 
-              py-3 px-6 rounded-lg font-semibold 
+              py-3 px-6 rounded-lg font-semibold w-full
               transition-all duration-300 
               hover:bg-orange hover:text-white hover:border-orange
             "
             >
               Sign In
-            </Link>
-            <Link
-              href="/signup"
+            </button>
+            <button
+              onClick={() => handleNavigate(getAuthUrl("/signup"))}
               className="
               mt-2 block text-center text-green bg-white border border-green 
-              py-3 px-6 rounded-lg font-semibold 
+              py-3 px-6 rounded-lg font-semibold w-full
               transition-all duration-300 
               hover:bg-orange hover:text-white hover:border-orange
             "
             >
               Sign Up
-            </Link>
+            </button>
             </div>
           )}
         </div>

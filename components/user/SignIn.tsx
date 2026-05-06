@@ -30,6 +30,7 @@ export default function SignInForm(): JSX.Element {
 
   const rawReturnUrl = searchParams.get("returnUrl");
   const returnUrl = rawReturnUrl ? decodeURIComponent(rawReturnUrl) : "/user";
+
   // Variants
   const cardVariant = {
     hidden: { opacity: 0, y: 60 },
@@ -300,7 +301,7 @@ export default function SignInForm(): JSX.Element {
             className="text-center text-lightblack mt-[25px] text-lg  mont-text font-semibold"
           >
             Don't have an account?{" "}
-            <Link href="/signup" className="text-green">
+            <Link href={`/signup${rawReturnUrl ? `?returnUrl=${rawReturnUrl}` : ""}`} className="text-green">
               Create account
             </Link>
           </motion.p>

@@ -10,6 +10,8 @@ import { registerUser } from "@/api/services";
 import { setToken } from "@/api/authToken";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { getCountryFromAddress } from "@/api/geoapify";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 // Validation Schema
 const CreateAccountSchema = Yup.object().shape({
@@ -39,7 +41,10 @@ marketing: Yup.boolean()
   .required(),
 });
 
-export default function CreateAccount(): JSX.Element {
+function CreateAccountInner(): JSX.Element {
+  const searchParams = useSearchParams();
+  const rawReturnUrl = searchParams.get("returnUrl");
+  const returnUrl = rawReturnUrl ? decodeURIComponent(rawReturnUrl) : null;
   // Animation Variants
   const cardVariant = {
     hidden: { opacity: 0, y: 80 },
@@ -102,7 +107,10 @@ const handleRegister = async (values: any, { resetForm }: any) => {
       }
 
       setTimeout(() => {
-        window.location.href = "/verify-account";
+        const verifyUrl = returnUrl
+          ? `/verify-account?returnUrl=${encodeURIComponent(returnUrl)}`
+          : "/verify-account";
+        window.location.href = verifyUrl;
       }, 800);
     }
  } catch (error: any) {
@@ -554,12 +562,20 @@ const handleRegister = async (values: any, { resetForm }: any) => {
             className="text-center text-lightblack mt-[30px]  mont-text font-semibold"
           >
             Already have an account?{" "}
-            <Link href="/user/signin" className="text-green">
+            <Link href={`/user/signin${rawReturnUrl ? `?returnUrl=${rawReturnUrl}` : ""}`} className="text-green">
               Sign in
             </Link>
           </motion.p>
         </motion.div>
       </div>
     </>
+  );
+}
+
+export default function CreateAccount() {
+  return (
+    <Suspense fallback={null}>
+      <CreateAccountInner />
+    </Suspense>
   );
 }

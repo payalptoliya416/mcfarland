@@ -2,6 +2,7 @@ import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import { getAllCategories, getSettingsByKeysFooter } from "@/api/categoryActions";
 import NavigationLoader from "@/components/common/NavigationLoader";
+import { Suspense } from "react";
 
 export default async function SiteLayout({
   children,
@@ -17,7 +18,9 @@ export default async function SiteLayout({
   return (
     <>
       <NavigationLoader />
-      <Header categories={categories} settings={settings} />
+      <Suspense fallback={null}>
+        <Header categories={categories} settings={settings} />
+      </Suspense>
       <main>{children}</main>
       <Footer />
     </>

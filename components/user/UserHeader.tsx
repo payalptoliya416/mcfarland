@@ -201,6 +201,24 @@ const handleMenuNavigate = (path: string) => {
   }, 0);
 };
 
+  // Click-time auth URL builder
+  const getAuthUrl = (base: "/user/signin" | "/signup"): string => {
+    if (typeof window === "undefined") return base;
+    const currentPathname = window.location.pathname.replace(/\/$/, "");
+    const params = new URLSearchParams(window.location.search);
+    const existingReturnUrl = params.get("returnUrl");
+    const onAuthPage =
+      currentPathname === "/signup" || currentPathname.startsWith("/user/signin");
+    const destination = onAuthPage && existingReturnUrl
+      ? existingReturnUrl
+      : !onAuthPage
+        ? window.location.pathname + window.location.search
+        : "";
+    return destination && destination !== "/" && destination !== "/user"
+      ? `${base}?returnUrl=${encodeURIComponent(destination)}`
+      : base;
+  };
+
   if (!isHeaderReady) {
     return <FullPageLoader />;
   }
@@ -265,12 +283,12 @@ const handleMenuNavigate = (path: string) => {
           {isSigninPage ? (
             <>
               <div>
-                <Link
-                  href="/signup"
+                <button
+                  onClick={() => onNavigate?.(getAuthUrl("/signup"))}
                   className="hidden lg:block text-gray bg-green py-[14px] px-[22px] rounded-lg text-base leading-[16px] cursor-pointer"
                 >
                   Sign Up
-                </Link>
+                </button>
                 <button
                   ref={buttonRef}
                   className="lg:hidden focus:outline-none"
@@ -406,12 +424,12 @@ const handleMenuNavigate = (path: string) => {
                 </li>
               ))}
 
-              <Link
-                href="/signup"
+              <button
+                onClick={() => { setIsMenuOpen(false); onNavigate?.(getAuthUrl("/signup")); }}
                 className="block lg:hidden text-white bg-green py-[14px] px-[22px] rounded-lg text-base leading-[16px] cursor-pointer text-center"
               >
                 Sign up
-              </Link>
+              </button>
             </ul>
           </div>
         </div>
