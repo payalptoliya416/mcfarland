@@ -12,6 +12,8 @@ import { FiEye, FiEyeOff } from "react-icons/fi";
 import { getCountryFromAddress } from "@/api/geoapify";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { sendSMS } from "@/api/sms/sendSMS";
+import { useSettings } from "@/contexts/SettingsContext";
 
 // Validation Schema
 const CreateAccountSchema = Yup.object().shape({
@@ -45,6 +47,8 @@ function CreateAccountInner(): JSX.Element {
   const searchParams = useSearchParams();
   const rawReturnUrl = searchParams.get("returnUrl");
   const returnUrl = rawReturnUrl ? decodeURIComponent(rawReturnUrl) : null;
+    const { companyName } = useSettings();
+  
   // Animation Variants
   const cardVariant = {
     hidden: { opacity: 0, y: 80 },
@@ -89,12 +93,39 @@ const handleRegister = async (values: any, { resetForm }: any) => {
       if (res.token) {
         setToken(res.token);
       }
+
     if (res.data) {
         localStorage.setItem("userdata", JSON.stringify(res.data));
         window.dispatchEvent(new Event("user-login"));
-      }
-      toast.success("Account Created Successfully!");
+      } 
+
+       toast.success(
+        "Account Created Successfully!"
+      );
+
       resetForm();
+
+       // SMS SEND
+      try {
+        const smsRes = await sendSMS({
+          phone: values.phone_no,
+          type: "registration",
+          companyName:
+           `${companyName}` ||
+            "McFarland Equipment Sales & Auctions",
+        });
+
+        console.log(
+          "SMS RESPONSE:",
+          smsRes
+        );
+
+      } catch (smsError) {
+        console.log(
+          "SMS ERROR:",
+          smsError
+        );
+      }
 
       if (typeof window !== "undefined") {
         (window as any).dataLayer = (window as any).dataLayer || [];
@@ -113,6 +144,7 @@ const handleRegister = async (values: any, { resetForm }: any) => {
         window.location.href = verifyUrl;
       }, 800);
     }
+    
  } catch (error: any) {
   let messages: string[] = [];
 

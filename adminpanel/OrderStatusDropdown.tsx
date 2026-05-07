@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 import { adminOrdersService, TrackingItem } from "@/api/admin/orders";
 import { MdDelete } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
+import { sendSMS } from "@/api/sms/sendSMS";
+import { useSettings } from "@/contexts/SettingsContext";
 
 type OrderStatus =
   | "Order Submitted"
@@ -21,6 +23,7 @@ type OrderStatus =
   | "Cancelled";
 
 type Props = {
+  phone: string;
   value: OrderStatus;
   orderId: number;
   orderType: "Checkout" | "Bidding";
@@ -38,6 +41,7 @@ type TrackingRow = {
 };
 
 export default function OrderStatusDropdown({
+  phone,
   value,
   orderId,
   orderType,
@@ -47,7 +51,7 @@ export default function OrderStatusDropdown({
 }: Props) {
   const [open, setOpen] = useState(false);
   const [pos, setPos] = useState({ top: 0, left: 0 });
-
+ const { companyName } = useSettings();
   const [updating, setUpdating] = useState(false); 
   const btnRef = useRef<HTMLButtonElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -348,13 +352,37 @@ const addRow = () => {
   if (
   selectedStatus === "Shipping Started" &&
   statusConfig[value].apiValue < statusConfig["Shipping Started"].apiValue
-) {
-  await adminOrdersService.updateStatus({
-    order_id: orderId,
-    status: statusConfig["Shipping Started"].apiValue,
-  });
-}
+  ) {
+    await adminOrdersService.updateStatus({
+      order_id: orderId,
+      status: statusConfig["Shipping Started"].apiValue,
+    });
 
+    try {
+
+      await sendSMS({
+        phone,
+        type: "shipping_started" as any,
+        companyName:
+          companyName ||
+"McFarland Equipment Sales & Auctions",
+      });
+
+      console.log(
+        "Shipping SMS Sent Successfully"
+      );
+
+    } catch (smsError) {
+
+      console.log(
+        "Shipping SMS Error:",
+        smsError
+      );
+
+    }
+
+  }
+    
     toast.success("Tracking updated");
 
     setShowTrackingModal(false); 
@@ -367,24 +395,6 @@ const addRow = () => {
   } finally {
     setSaving(false);
   }
-};
-
-    const handleUpdateTracking = async (row: TrackingRow) => {
-        try {
-          if (!row.id) return;
-
-          const res = await adminOrdersService.updateTracking({
-            id: row.id,
-            tracking_date: row.date,
-            city: row.city,
-            status: row.status,
-          });
-
-          toast.success(res.message || "Updated successfully");
-
-        } catch (err: any) {
-          toast.error(err?.message || "Failed to update");
-        }
     };
 
    const handleDeleteTracking = async (id: number) => {
@@ -792,7 +802,7 @@ const addRow = () => {
                       }
                     }}
                     className="
-                      h-10 w-full rounded-xl
+                      h-10 w-full rounded-xl cursor-pointer
                       bg-red-50 hover:bg-red-100
                       flex items-center justify-center
                       transition
@@ -834,7 +844,7 @@ const addRow = () => {
                       }
                     }}
                     className="
-                      w-8 h-8 rounded-lg
+                      w-8 h-8 rounded-lg cursor-pointer
                       bg-red-50 hover:bg-red-100
                       flex items-center justify-center
                     "
@@ -1043,7 +1053,7 @@ const addRow = () => {
                                     row.id && handleDeleteTracking(row.id)
                                   }
                                   className="
-                                    w-8 h-8 rounded-lg
+                                    w-8 h-8 rounded-lg cursor-pointer
                                     bg-red-50 hover:bg-red-100
                                     flex items-center justify-center
                                     transition
@@ -1115,7 +1125,7 @@ const addRow = () => {
                               row.id && handleDeleteTracking(row.id)
                             }
                             className="
-                              w-8 h-8 rounded-lg
+                              w-8 h-8 rounded-lg cursor-pointer
                               bg-red-50 hover:bg-red-100
                               flex items-center justify-center
                             "

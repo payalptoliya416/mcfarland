@@ -229,6 +229,7 @@ export default function AdminOrder() {
       header: "Status",
       render: (row) => (
         <OrderStatusDropdown
+          phone={row.phone}
           value={row.status}
           orderId={row.id}
            orderType={row.typeText as "Checkout" | "Bidding"}   
