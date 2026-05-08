@@ -79,7 +79,7 @@ export default function AdminSidebar({
       {/* MENU (SCROLLABLE) */}
       <nav className="flex-1 overflow-y-auto mt-[20px] px-[10px] pb-4">
         <div className="flex flex-col gap-[6px]">
-          {menu.map((item) => {
+          {menu.map((item,index) => {
             const Icon = item.icon;
             const normalize = (url: string) =>
               url.endsWith("/") ? url.slice(0, -1) : url;
@@ -92,6 +92,7 @@ export default function AdminSidebar({
 
             return (
               <div
+             key={index}
                 onClick={() => {
                   const normalize = (url: string) =>
                     url.endsWith("/") ? url.slice(0, -1) : url;

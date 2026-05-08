@@ -92,6 +92,7 @@ export default function OrderMobileCard({
       <div className="flex justify-between items-center">
         <span className="text-sm text-gray-500">Status</span>
         <OrderStatusDropdown
+          phone={order.phone}
           value={order.status}
           orderId={order.id}
           orderType={order.typeText as "Checkout" | "Bidding"}

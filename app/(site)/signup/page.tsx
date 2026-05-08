@@ -105,7 +105,6 @@ const handleRegister = async (values: any, { resetForm }: any) => {
 
       resetForm();
 
-       // SMS SEND
       try {
         const smsRes = await sendSMS({
           phone: values.phone_no,
@@ -114,11 +113,6 @@ const handleRegister = async (values: any, { resetForm }: any) => {
            `${companyName}` ||
             "McFarland Equipment Sales & Auctions",
         });
-
-        console.log(
-          "SMS RESPONSE:",
-          smsRes
-        );
 
       } catch (smsError) {
         console.log(

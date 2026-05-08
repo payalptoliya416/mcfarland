@@ -324,3 +324,15 @@ select option:checked {
   scrollbar-width: thin;
   scrollbar-color: #cbd5e1 transparent;
 }
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 20px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}

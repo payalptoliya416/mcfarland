@@ -88,6 +88,8 @@ export type TrackingItem = {
   status: string;
   created_at: string;
   updated_at: string;
+  lat? : number;
+  lng? : number;
 };
 
 export type GetTrackingResponse = {
@@ -122,7 +124,8 @@ export const adminOrdersService = {
     order_id: number;
     tracking_date: string;
     city: string;
-    status: string;
+    lat?: number;
+    lng?: number;
   }) =>
     adminApi<AddTrackingResponse>("/orders/tracking/add", {
       method: "POST",
@@ -142,7 +145,8 @@ export const adminOrdersService = {
   id: number;
   tracking_date: string;
   city: string;
-  status: string;
+ lat?: number;
+  lng?: number;
 }) =>
   adminApi<{ status: boolean; message: string }>("/orders/tracking/update", {
     method: "POST",

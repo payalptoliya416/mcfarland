@@ -66,8 +66,6 @@ export const sendSMS = async ({
 
     // VALIDATION
     if (!ACCOUNT_SID || !API_KEY || !API_SECRET || !FROM_NUMBER) {
-      console.log("Twilio environment variables missing");
-
       return {
         success: false,
       };
@@ -98,25 +96,18 @@ export const sendSMS = async ({
 
     const data: TwilioResponse = await response.json();
 
-    console.log("TWILIO SMS RESPONSE:", data);
-
     if (response.ok) {
-      console.log("SMS SENT SUCCESSFULLY");
-
       return {
         success: true,
         data,
       };
     }
 
-    console.log("SMS FAILED:", data.message || data.error_message);
-
     return {
       success: false,
       data,
     };
   } catch (error) {
-    console.log("SMS ERROR:", error);
 
     return {
       success: false,

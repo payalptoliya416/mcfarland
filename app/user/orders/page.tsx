@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import {
   DeliveryStatus,
   DeliveryTimelineItem,
-  OrderApiItem,
   orderService,
 } from "@/api/user/bids";
 import Loader from "@/components/common/Loader";
@@ -17,8 +16,9 @@ import { FiUploadCloud } from "react-icons/fi";
 import { FaRegImage } from "react-icons/fa";
 import { useSettings } from "@/contexts/SettingsContext";
 import { IoClose } from "react-icons/io5";
-import { FaCircle } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
+import { useJsApiLoader } from "@react-google-maps/api";
+import CommonGoogleMap from "@/adminpanel/CommonGoogleMap";
 /* ================= TYPES ================= */
 
 type OrderData = {
@@ -39,12 +39,16 @@ type OrderData = {
   payment_slip_url?: string | null;
   contract_url?: string;
 };
+
 type StepItem = {
   key: DeliveryStatus;
   title: string;
 };
+
 type UIStepStatus = DeliveryStatus | "Payment Confirmed";
+
 /* ================= HELPERS ================= */
+
 const statusToStep: Record<string, number> = {
   "Order Submitted": 0,
   "Sales Agreement": 1,
@@ -57,11 +61,14 @@ const statusToStep: Record<string, number> = {
   Delivered: 8,
   Cancelled: 9,
 };
+
 type TrackingRow = {
   id?: number; 
   date: string;
   city: string;
   status: string;
+  lat?: number;
+  lng?: number;
 };
 
 const STEPS: StepItem[] = [
@@ -106,25 +113,6 @@ export default function MyBuyOrders() {
   const [selectedOrderNumber, setSelectedOrderNumber] = useState<string | null>(
     null,
   );
-  const [noDataMessage, setNoDataMessage] = useState<string | null>(null);
-  const mapOrderApiToUI = (item: OrderApiItem): OrderData => ({
-    id: item.id,
-    order_id: item.order_id,
-    name: item.name,
-    first_image: item.first_image ?? "",
-    working_hours: item.working_hours,
-    weight: item.weight,
-    year: item.year,
-    price: item.price,
-    serial_no: item.serial_no,
-    delivery_contact: item.delivery_contact,
-    delivery_status_text: item.delivery_status_text as DeliveryStatus,
-    delivery_timeline: item.delivery_timeline,
-    invoice_url: item.invoice_url,
-    type_text: item.type_text as "Checkout" | "Bidding",
-    payment_slip_url: item.payment_slip_url ?? null,
-    contract_url: item.contract_url,
-  });
 
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
@@ -133,10 +121,46 @@ export default function MyBuyOrders() {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [totalPages, setTotalPages] = useState(1);
   const [showTrackingModal, setShowTrackingModal] = useState(false);
+  const [trackingTab, setTrackingTab] =
+  useState<"history" | "map">(
+    "history"
+  );
   const [rows, setRows] = useState<TrackingRow[]>([
     { date: "", city: "", status: ""},
   ]);
+  const { isLoaded } =
+  useJsApiLoader({
+    googleMapsApiKey:
+      process.env
+        .NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ||
+      "",
+  });
 
+  const [directions, setDirections] = useState<any>(null);
+  const [markers, setMarkers] = useState<any[]>([]);
+const today = new Date();
+
+const trackingRowsWithState =
+  rows.map((item) => {
+
+    const itemDate =
+      new Date(item.date);
+
+    let trackingState =
+      "normal";
+
+    if (
+      itemDate.toDateString() ===
+      today.toDateString()
+    ) {
+      trackingState = "current";
+    }
+
+    return {
+      ...item,
+      trackingState,
+    };
+  });
   const fetchOrders = async () => {
     try {
       setLoading(true);
@@ -153,18 +177,24 @@ export default function MyBuyOrders() {
         if (!res.data || res.data.length === 0) {
           setOrders([]);
           setTotalPages(1);
-          setNoDataMessage("No orders found");
           return;
         }
 
         const mappedOrders = res.data.map((order: any) => {
           return {
             ...order,
-            trackingRows: order.order_tracking?.map((t: any) => ({
-              date: t.tracking_date?.split(" ")[0] || "",
+           trackingRows:
+          order.order_tracking?.map(
+            (t: any) => ({
+              date:
+                t.tracking_date?.split(
+                  " "
+                )[0] || "",
               city: t.city || "",
-              status: t.status || "",
-            })) || [],
+              lat: Number(t.lat),
+              lng: Number(t.lng),
+            })
+          ) || [],
           };
         });
 
@@ -175,7 +205,7 @@ export default function MyBuyOrders() {
           setRows(
             mappedOrders[0].trackingRows.length > 0
               ? mappedOrders[0].trackingRows
-              : [{ date: "", city: "", status: "" }]
+              : [{ date: "", city: "" }]
           );
         }
       }
@@ -190,14 +220,27 @@ export default function MyBuyOrders() {
     fetchOrders();
   }, [page, perPage, search, sortBy, sortOrder]);
 
-  const openTrackingModal = (order: any) => {
-  setRows(
-    order.trackingRows?.length > 0
-      ? order.trackingRows
-      : []
-  );
-  setShowTrackingModal(true);
-};
+ const openTrackingModal =
+  async (order: any) => {
+
+    const trackingRows =
+      order.trackingRows?.length > 0
+        ? order.trackingRows
+        : [];
+  
+    setRows(trackingRows);
+
+    if (
+      trackingRows.length >= 2
+    ) {
+      await generateRoute(
+        trackingRows
+      );
+    }
+
+    setTrackingTab("history");
+    setShowTrackingModal(true);
+  };
 
   const fileToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
@@ -251,9 +294,6 @@ export default function MyBuyOrders() {
     }
   };
 
-  const isPdf = (url?: string | null) =>
-    !!url && url.toLowerCase().endsWith(".pdf");
-
   const isImage = (url?: string | null) =>
     !!url &&
     (url.toLowerCase().endsWith(".jpg") ||
@@ -297,15 +337,73 @@ export default function MyBuyOrders() {
   );
 
   const isAfterSettle = selectedStep > selectedConfirmationIndex;
-const formatDate = (dateStr: string) => {
-  const date = new Date(dateStr);
 
-  return date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).replace(" ", " ").replace(",", ",");
-};
+  const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+
+    return date.toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    }).replace(" ", " ").replace(",", ",");
+  };
+
+  const generateRoute = async (
+  trackingRows: TrackingRow[]
+) => {
+  try {
+
+    if (trackingRows.length < 2)
+      return;
+
+    const directionsService =
+      new google.maps.DirectionsService();
+
+    const origin = {
+      lat: trackingRows[0].lat!,
+      lng: trackingRows[0].lng!,
+    };
+
+    const destination = {
+      lat:
+        trackingRows[
+          trackingRows.length - 1
+        ].lat!,
+      lng:
+        trackingRows[
+          trackingRows.length - 1
+        ].lng!,
+    };
+
+    const waypoints = trackingRows
+      .slice(1, -1)
+      .map((row) => ({
+        location: {
+          lat: row.lat!,
+          lng: row.lng!,
+        },
+        stopover: true,
+      }));
+
+    const result =
+      await directionsService.route({
+        origin,
+        destination,
+        waypoints,
+        travelMode:
+          google.maps.TravelMode
+            .DRIVING,
+      });
+
+    setDirections(result);
+
+    setMarkers(trackingRows);
+
+  } catch (err) {
+    console.log(err);
+  }
+  };
+
   return (
     <>
     <section className="py-11 sm:py-[60px]">
@@ -328,16 +426,7 @@ const formatDate = (dateStr: string) => {
             const filteredSteps: StepItem[] = isCancelled
             ? [...STEPS, CANCELLED_STEP]
             : STEPS;
-
-          //   const baseStep = getCurrentStepFromTimeline(
-          //   data.delivery_timeline,
-          //   STEPS
-          // );
-
-          // const filteredSteps: StepItem[] = isCancelled
-          //   ? [...STEPS.slice(0, baseStep + 1), CANCELLED_STEP]
-          //   : STEPS;
-
+            
             const step = getCurrentStepFromTimeline(
               data.delivery_timeline,
               filteredSteps,
@@ -527,15 +616,14 @@ const formatDate = (dateStr: string) => {
                   }
 
                   // ✅ Tracking modal (Shipping Started / In Transit)
-                  if (s.key === "Shipping Started" || s.key === "In Transit") {
+                  if (s.key === "In Transit") {
                     openTrackingModal(data);
                   }
                 }}
                           className={`flex items-start gap-4 mb-2
                           lg:flex-col lg:items-center
                                           ${
-                  s.key === "Settle Payment" ||
-                  s.key === "Shipping Started" 
+                  s.key === "In Transit" 
                     ? "cursor-pointer group hover:scale-105 transition"
                     : ""
                 }`}
@@ -544,7 +632,7 @@ const formatDate = (dateStr: string) => {
                             <div
                               className={`w-[36px] h-[36px] rounded-full flex items-center justify-center transition
                                 ${
-                                  s.key === "Settle Payment" ||  s.key === "Shipping Started"
+                                  s.key === "Settle Payment" ||  s.key === "In Transit"
                                     ? "bg-[#E6F4F1] group-hover:scale-110 group-hover:ring-1 group-hover:ring-green"
                                     : completed
                                       ? "bg-lightgreen"
@@ -601,7 +689,7 @@ const formatDate = (dateStr: string) => {
                               </p>
                             )}
 
-                               {(s.key === "Shipping Started") && (
+                               {(s.key === "In Transit") && (
                                 <p className="text-xs text-green mt-1">
                                   Click to view tracking details
                                 </p>
@@ -660,10 +748,10 @@ const formatDate = (dateStr: string) => {
             );
           })}
         </div>
-        {/* PAGINATION */}
+
         {totalPages > 1 && (
           <div className="flex items-center gap-1 sm:gap-2 justify-center mt-10 flex-wrap">
-            {/* PREV */}
+         
             <button
               onClick={() => setPage((p) => Math.max(p - 1, 1))}
               disabled={page === 1}
@@ -676,7 +764,6 @@ const formatDate = (dateStr: string) => {
               <span className="hidden md:block">Back</span>
             </button>
 
-            {/* PAGE NUMBERS */}
             {(() => {
               let pages: (number | string)[] = [];
 
@@ -725,7 +812,6 @@ const formatDate = (dateStr: string) => {
               );
             })()}
 
-            {/* NEXT */}
             <button
               onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
               disabled={page === totalPages}
@@ -739,17 +825,19 @@ const formatDate = (dateStr: string) => {
             </button>
           </div>
         )}
+
       </div>
+      
       {openConfirmationModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4">
           <div
             className="
-        bg-white rounded-2xl shadow-xl w-full max-w-md
-        max-h-[90vh] overflow-y-auto
-        p-5 sm:p-6
-      "
+            bg-white rounded-2xl shadow-xl w-full max-w-md
+            max-h-[90vh] overflow-y-auto
+            p-5 sm:p-6
+          "
           >
-            {/* TITLE */}
+
             <h2 className="text-lg sm:text-xl font-semibold mb-2 text-gray-800">
               Order Confirmation
             </h2>
@@ -759,7 +847,6 @@ const formatDate = (dateStr: string) => {
               <span className="font-semibold"> #{selectedOrderNumber}</span>.
             </p>
 
-            {/* UPLOAD BOX */}
             {!orders.find((o) => o.id === selectedOrderId)?.payment_slip_url ? (
               /* ================= UPLOAD BOX ================= */
               <label className="block border-2 border-dashed border-gray-300 rounded-xl p-4 cursor-pointer hover:border-green transition">
@@ -892,13 +979,12 @@ const formatDate = (dateStr: string) => {
         </div>
       )}
     </section>
-  {showTrackingModal && (
+
+  {/* {showTrackingModal && (
   <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[999999999]">
 
-    {/* MODAL BOX */}
     <div className="relative bg-white rounded-2xl shadow-xl w-[620px] max-h-[90vh] flex flex-col px-3 sm:px-6 py-5 mx-2">
 
-      {/* HEADER */}
       <div className="flex justify-between items-center mb-4 shrink-0">
         <h2 className="text-lg font-semibold text-gray-800">
           Tracking Details
@@ -911,8 +997,6 @@ const formatDate = (dateStr: string) => {
           <IoClose />
         </button>
       </div>
-
-      {/* 🔥 SCROLL AREA */}
       <div className="flex-1 min-h-0 overflow-y-auto pr-2 space-y-6">
 
         {rows.length === 0 ? (
@@ -926,7 +1010,6 @@ const formatDate = (dateStr: string) => {
             return (
               <div key={index} className="flex gap-2">
 
-                {/* LEFT TIMELINE */}
                 <div className="flex flex-col items-center">
                   
                   <FaCircle
@@ -940,7 +1023,6 @@ const formatDate = (dateStr: string) => {
                   )}
                 </div>
 
-                {/* RIGHT CONTENT */}
                 <div
                   className={`flex-1 rounded-lg p-3 border ${
                     isLast
@@ -983,7 +1065,6 @@ const formatDate = (dateStr: string) => {
         )}
       </div>
 
-      {/* FOOTER */}
       <div className="flex justify-end mt-5 shrink-0">
         <button
           onClick={() => setShowTrackingModal(false)}
@@ -994,7 +1075,262 @@ const formatDate = (dateStr: string) => {
       </div>
     </div>
   </div>
-  )}
+  )} */}
+
+  {showTrackingModal && (
+
+  <div className="fixed inset-0 z-[999999999] bg-black/50 backdrop-blur-[2px] flex items-center justify-center p-2 sm:p-3">
+    <div className="relative bg-white w-full max-w-[880px] h-[82vh] rounded-[24px] shadow-2xl overflow-hidden flex flex-col">
+
+      {/* ================= HEADER ================= */}
+      <div className="border-b border-gray-100 px-4 sm:px-5 py-4 shrink-0">
+        <button
+          onClick={() => setShowTrackingModal(false)}
+          className="
+            absolute top-3 right-3
+            w-9 h-9 rounded-full
+            bg-gray-100 hover:bg-gray-200
+            flex items-center justify-center
+            transition cursor-pointer
+          "
+        >
+          <IoClose size={18} className="text-gray-700" />
+        </button>
+
+        <h2 className="text-[22px] sm:text-[28px] font-bold text-[#1E293B]">
+          Shipment Tracking
+        </h2>
+      </div>
+
+      {/* ================= TABS ================= */}
+      <div className="px-4 sm:px-5 pt-2 shrink-0">
+        <div className="flex items-center justify-start gap-2 border-b border-gray-100 overflow-x-auto no-scrollbar">
+          <button
+            onClick={() => setTrackingTab("history")}
+            className={`
+              relative pb-2.5 px-2
+              text-[14px] font-semibold
+              whitespace-nowrap transition cursor-pointer
+              ${
+                trackingTab === "history"
+                  ? "text-[#F59E0B]"
+                  : "text-gray-500 hover:text-gray-700"
+              }
+            `}
+          >
+            Tracking History
+
+            {trackingTab === "history" && (
+              <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
+            )}
+          </button>
+
+          <button
+            onClick={() => setTrackingTab("map")}
+            className={`
+              relative pb-2.5 px-2
+              text-[14px] font-semibold
+              whitespace-nowrap transition cursor-pointer
+              ${
+                trackingTab === "map"
+                  ? "text-[#F59E0B]"
+                  : "text-gray-500 hover:text-gray-700"
+              }
+            `}
+          >
+            Delivery Map
+
+            {trackingTab === "map" && (
+              <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
+            )}
+
+          </button>
+
+        </div>
+      </div>
+
+      {/* ================= BODY ================= */}
+      <div className="flex-1 overflow-hidden">
+
+        {/* ================= TRACKING HISTORY ====================== */}
+
+        {trackingTab === "history" && (
+
+          <div className="h-full overflow-y-auto px-4 sm:px-5 py-4">
+
+            <div className="mb-5">
+
+              <h3 className="text-[18px] font-semibold text-[#1E293B]">
+                Shipment Timeline
+              </h3>
+
+              <p className="text-[13px] text-gray-500 mt-1">
+                View complete shipment progress and delivery updates
+              </p>
+
+            </div>
+
+            {rows.length === 0 ? (
+
+              <div className="flex items-center justify-center h-[300px]">
+
+                <div className="text-center">
+
+                  <div className="text-[17px] font-semibold text-gray-700">
+                    No tracking records
+                  </div>
+
+                  <p className="text-sm text-gray-500 mt-1">
+                    Shipment tracking updates not available
+                  </p>
+
+                </div>
+
+              </div>
+
+            ) : (
+
+              <div className="space-y-3">
+
+                {trackingRowsWithState.map((row, index) => {
+
+                  const isLast =
+                    index === rows.length - 1;
+
+                  return (
+
+                    <div
+                      key={index}
+                      className="flex gap-3 relative"
+                    >
+
+                      {!isLast && (
+
+                        <div
+                          className={`
+                            absolute left-[11px] top-7
+                            w-[2px] h-[calc(100%-10px)]
+
+                            ${
+                              row.trackingState ===
+                              "current"
+                                ? "bg-green-500"
+
+                                : "bg-blue-500"
+                            }
+                          `}
+                        />
+
+                      )}
+
+                     <div
+                            className={`
+                              mt-1 w-[22px] h-[22px]
+                              rounded-full shrink-0
+                              border-[4px] border-white shadow-md
+                              z-10
+
+                              ${
+                                row.trackingState ===
+                                "current"
+                                  ? "bg-green-500"
+                                  : "bg-blue-500"
+                              }
+                            `}
+                          />
+
+                      <div
+                        className={`
+                          flex-1 rounded-2xl border p-4
+                          transition
+
+                          ${
+                            row.trackingState ===
+                            "current"
+                              ? "bg-green-50 border-green-200"
+                              : "bg-white border-gray-200"
+                          }
+                        `}
+                      >
+
+                        <div className="flex items-start justify-between gap-3 flex-wrap">
+
+                          <div>
+
+                            <div className="flex items-center gap-2 flex-wrap">
+
+                              <div className="text-[15px] font-semibold text-[#1E293B]">
+                                {row.city}
+                              </div>
+                            </div>
+
+                            <div className="flex items-center gap-1 mt-2 text-[13px] text-gray-500">
+
+                              <MdLocationOn className="text-gray-400" />
+
+                              <span>
+                                Shipment checkpoint reached
+                              </span>
+
+                            </div>
+
+                          </div>
+
+                          <div className="text-[12px] text-gray-500 font-medium">
+                            {formatDate(row.date)}
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  );
+
+                })}
+
+              </div>
+
+            )}
+
+          </div>
+
+        )}
+
+        {/* ====================== MAP TAB ========================== */}
+
+       {trackingTab === "map" && (
+          <div className="h-full p-2 md:p-4">
+            <CommonGoogleMap
+              isLoaded={isLoaded}
+              directions={directions}
+              markers={markers}
+              showTrackingPanel={true}
+            />
+          </div>
+        )}
+
+      </div>
+
+      {/* ================= FOOTER ================= */}
+      <div className="border-t border-gray-100 px-4 sm:px-5 py-3 flex items-center justify-end shrink-0">
+        <button
+          onClick={() => setShowTrackingModal(false)}
+          className="
+            h-10 px-5 rounded-xl
+            bg-[#111827]
+            text-white text-[13px] font-medium
+            hover:bg-black
+            transition cursor-pointer
+          "
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     </>
   );
 }

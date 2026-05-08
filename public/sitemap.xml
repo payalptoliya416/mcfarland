@@ -41,6 +41,16 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://mcfarland-equipment.com/inventory/graders/john-deere/772g-awd/052231</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/graders/john-deere/772g-awd-6x6/051837</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://mcfarland-equipment.com/inventory/skid-steer-loaders/caterpillar/259d3/094632</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
