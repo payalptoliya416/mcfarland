@@ -9,8 +9,8 @@ import { MdDelete } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
 import { sendSMS } from "@/api/sms/sendSMS";
 import { useSettings } from "@/contexts/SettingsContext";
-import {useJsApiLoader} from "@react-google-maps/api";
-import CommonGoogleMap from "./CommonGoogleMap";
+// import {useJsApiLoader} from "@react-google-maps/api";
+// import CommonGoogleMap from "./CommonGoogleMap";
 
 type OrderStatus =
   | "Order Submitted"
@@ -67,12 +67,12 @@ export default function OrderStatusDropdown({
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<OrderStatus | null>(null);
   const [activeTab, setActiveTab] = useState<"form" | "table" | "map">("form");
-  const { isLoaded } = useJsApiLoader({googleMapsApiKey:
-      process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
-  });
-  const [directions, setDirections] = useState<any>(null);
-  const [markers, setMarkers] = useState<any[]>([]);
-  const [showMobileTracking, setShowMobileTracking] =useState(true);
+  // const { isLoaded } = useJsApiLoader({googleMapsApiKey:
+  //     process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
+  // });
+  // const [directions, setDirections] = useState<any>(null);
+  // const [markers, setMarkers] = useState<any[]>([]);
+  // const [showMobileTracking, setShowMobileTracking] =useState(true);
   const todayDate = new Date().toISOString().split("T")[0];
 
   /* ================= STATUS CONFIG ================= */
@@ -132,168 +132,168 @@ export default function OrderStatusDropdown({
 
   const current = statusConfig[value] ?? statusConfig["Order Submitted"];
 
- const generateRoute = async () => {
-  try {
+//  const generateRoute = async () => {
+//   try {
 
-    if (markers.length < 2) return;
+//     if (markers.length < 2) return;
 
-    const sortedMarkers = [...markers].sort(
-      (a, b) =>
-        new Date(a.date).getTime() -
-        new Date(b.date).getTime()
-    );
+//     const sortedMarkers = [...markers].sort(
+//       (a, b) =>
+//         new Date(a.date).getTime() -
+//         new Date(b.date).getTime()
+//     );
 
-    const origin = {
-      lat: Number(sortedMarkers[0].lat),
-      lng: Number(sortedMarkers[0].lng),
-    };
+//     const origin = {
+//       lat: Number(sortedMarkers[0].lat),
+//       lng: Number(sortedMarkers[0].lng),
+//     };
 
-    const destination = {
-      lat: Number(
-        sortedMarkers[sortedMarkers.length - 1].lat
-      ),
-      lng: Number(
-        sortedMarkers[sortedMarkers.length - 1].lng
-      ),
-    };
+//     const destination = {
+//       lat: Number(
+//         sortedMarkers[sortedMarkers.length - 1].lat
+//       ),
+//       lng: Number(
+//         sortedMarkers[sortedMarkers.length - 1].lng
+//       ),
+//     };
 
-    const waypoints = sortedMarkers
-      .slice(1, -1)
-      .map((item) => ({
-        location: {
-          lat: Number(item.lat),
-          lng: Number(item.lng),
-        },
-        stopover: true,
-      }));
+//     const waypoints = sortedMarkers
+//       .slice(1, -1)
+//       .map((item) => ({
+//         location: {
+//           lat: Number(item.lat),
+//           lng: Number(item.lng),
+//         },
+//         stopover: true,
+//       }));
 
-    const directionsService =
-      new google.maps.DirectionsService();
+//     const directionsService =
+//       new google.maps.DirectionsService();
 
-    const result =
-      await directionsService.route({
-        origin,
-        destination,
-        waypoints,
-        optimizeWaypoints: false,
-        travelMode:
-          google.maps.TravelMode.DRIVING,
-      });
+//     const result =
+//       await directionsService.route({
+//         origin,
+//         destination,
+//         waypoints,
+//         optimizeWaypoints: false,
+//         travelMode:
+//           google.maps.TravelMode.DRIVING,
+//       });
 
-    setDirections(result);
+//     setDirections(result);
 
-  } catch (err) {
-    console.log("Route Error:", err);
-  }
-};
+//   } catch (err) {
+//     console.log("Route Error:", err);
+//   }
+// };
 
-  const validateLocation = async (
-    city: string
-  ) => {
+  // const validateLocation = async (
+  //   city: string
+  // ) => {
 
-    try {
+  //   try {
 
-      const geocoder =
-        new google.maps.Geocoder();
+  //     const geocoder =
+  //       new google.maps.Geocoder();
 
-      const result =
-        await geocoder.geocode({
-          address: city,
-        });
+  //     const result =
+  //       await geocoder.geocode({
+  //         address: city,
+  //       });
 
-      if (
-        !result.results ||
-        result.results.length === 0
-      ) {
-        return null;
-      }
+  //     if (
+  //       !result.results ||
+  //       result.results.length === 0
+  //     ) {
+  //       return null;
+  //     }
 
-      return result.results[0]
-        .formatted_address;
+  //     return result.results[0]
+  //       .formatted_address;
 
-    } catch {
-      return null;
-    }
+  //   } catch {
+  //     return null;
+  //   }
 
-  };
+  // };
 
-const generateMarkers = async () => {
+// const generateMarkers = async () => {
 
-  const geocoder = new google.maps.Geocoder();
+//   const geocoder = new google.maps.Geocoder();
 
-  const validRows = rows
-    .filter((r) => r.city)
-    .sort(
-      (a, b) =>
-        new Date(a.date).getTime() -
-        new Date(b.date).getTime()
-    );
+//   const validRows = rows
+//     .filter((r) => r.city)
+//     .sort(
+//       (a, b) =>
+//         new Date(a.date).getTime() -
+//         new Date(b.date).getTime()
+//     );
 
-  const locations = await Promise.all(
+//   const locations = await Promise.all(
 
-    validRows.map(async (row, index) => {
+//     validRows.map(async (row, index) => {
 
-      const res = await geocoder.geocode({
-        address: row.city,
-      });
+//       const res = await geocoder.geocode({
+//         address: row.city,
+//       });
 
-      const loc =
-        res.results?.[0]?.geometry.location;
+//       const loc =
+//         res.results?.[0]?.geometry.location;
 
-      const lat = loc?.lat();
-      const lng = loc?.lng();
+//       const lat = loc?.lat();
+//       const lng = loc?.lng();
 
-      // 🔥 rows ma pan set karo
-      return {
-        ...row,
-        index,
-        lat: Number(lat),
-        lng: Number(lng),
-      };
-    })
+//       // 🔥 rows ma pan set karo
+//       return {
+//         ...row,
+//         index,
+//         lat: Number(lat),
+//         lng: Number(lng),
+//       };
+//     })
 
-  );
+//   );
 
-  // 🔥 markers set
-  setMarkers(locations.filter((x) => x.lat && x.lng));
+//   // 🔥 markers set
+//   setMarkers(locations.filter((x) => x.lat && x.lng));
 
-  // 🔥 rows update karo
-  setRows((prev) =>
-    prev.map((r) => {
-      const found = locations.find(
-        (l) =>
-          l.city === r.city &&
-          l.date === r.date
-      );
+//   // 🔥 rows update karo
+//   setRows((prev) =>
+//     prev.map((r) => {
+//       const found = locations.find(
+//         (l) =>
+//           l.city === r.city &&
+//           l.date === r.date
+//       );
 
-      if (found) {
-        return {
-          ...r,
-          lat: found.lat,
-          lng: found.lng,
-        };
-      }
+//       if (found) {
+//         return {
+//           ...r,
+//           lat: found.lat,
+//           lng: found.lng,
+//         };
+//       }
 
-      return r;
-    })
-  );
-};
+//       return r;
+//     })
+//   );
+// };
 
-  useEffect(() => {
+//   useEffect(() => {
 
-  if (activeTab !== "map") return;
+//   if (activeTab !== "map") return;
 
-  generateMarkers();
+//   generateMarkers();
 
-}, [activeTab, rows]);
+// }, [activeTab, rows]);
 
-useEffect(() => {
+// useEffect(() => {
 
-  if (markers.length >= 2) {
-    generateRoute();
-  }
+//   if (markers.length >= 2) {
+//     generateRoute();
+//   }
 
-}, [markers]);
+// }, [markers]);
 
     /* ================= OPEN ================= */
   const openAccordion = () => {
@@ -525,23 +525,152 @@ const addRow = () => {
     }
   }, [showTrackingModal]);
 
-  const handleSubmit = async () => {
+//   const handleSubmit = async () => {
+//   if (saving) return;
+
+//   const newErrors: number[] = [];
+
+//   rows.forEach((r, i) => {
+//     if (r.isNew && !r.date && !r.city) return;
+
+//     if (!r.date.trim() || !r.city.trim()) {
+//       newErrors.push(i);
+//     }
+//   });
+
+//   if (newErrors.length > 0) {
+//     setErrors(newErrors);
+//     setFormError("Please fill all fields");
+//     return;
+//   }
+
+//   const hasValidRow = rows.some(
+//     (r) => r.date && r.city
+//   );
+
+//   if (!hasValidRow) {
+//     setFormError("Please add at least one tracking entry");
+//     return;
+//   }
+
+//   try {
+    
+//   setSaving(true);
+//   // await generateMarkers();
+
+//     const newRows = rows.filter(
+//       (r) => r.isNew && r.date && r.city 
+//     );
+
+//     const updateRows = rows.filter(
+//       (r) => !r.isNew && r.id && r.date && r.city
+//     );
+    
+//     for (const row of [
+//       ...newRows,
+//       ...updateRows,
+//     ]) {
+
+//   const formatted =
+//     await validateLocation(
+//       row.city
+//     );
+
+//   if (!formatted) {
+
+//     toast.error(
+//       `Invalid location: ${row.city}`
+//     );
+
+//     setSaving(false);
+
+//     return;
+//   }
+// }
+//     await Promise.all([
+//   ...newRows.map((row) =>
+//     adminOrdersService.addTracking({
+//       order_id: orderId,
+//       tracking_date: row.date,
+//       city: row.city,
+//       lat: row.lat,
+//       lng: row.lng,
+//     })  
+//   ),
+
+//   ...updateRows.map((row) =>
+//     adminOrdersService.updateTracking({
+//       id: row.id!,
+//       tracking_date: row.date,
+//       city: row.city,
+//       lat: row.lat,
+//       lng: row.lng,
+//     })
+//   ),
+// ]);
+
+//   if (
+//   selectedStatus === "Shipping Started" &&
+//   statusConfig[value].apiValue < statusConfig["Shipping Started"].apiValue
+//   ) {
+//     await adminOrdersService.updateStatus({
+//       order_id: orderId,
+//       status: statusConfig["Shipping Started"].apiValue,
+//     });
+
+//     try {
+
+//       await sendSMS({
+//         phone,
+//         type: "shipping_started" as any,
+//         companyName:
+//           companyName ||
+//         "McFarland Equipment Sales & Auctions",
+//       });
+
+//     } catch (smsError) {
+//     }
+//   }
+    
+//    toast.success(
+//   "Tracking updated successfully"
+// );
+
+// setActiveTab("table");
+
+//     await fetchTracking();
+//     setShowTrackingModal(true);
+//     setFormError("");
+
+//   } catch (err: any) {
+//     toast.error(err?.message || "Failed to save");
+//   } finally {
+//     setSaving(false);
+//   }
+//   };
+const handleSubmit = async () => {
+
   if (saving) return;
 
   const newErrors: number[] = [];
 
   rows.forEach((r, i) => {
+
     if (r.isNew && !r.date && !r.city) return;
 
     if (!r.date.trim() || !r.city.trim()) {
       newErrors.push(i);
     }
+
   });
 
   if (newErrors.length > 0) {
+
     setErrors(newErrors);
     setFormError("Please fill all fields");
+
     return;
+
   }
 
   const hasValidRow = rows.some(
@@ -549,106 +678,136 @@ const addRow = () => {
   );
 
   if (!hasValidRow) {
-    setFormError("Please add at least one tracking entry");
+
+    setFormError(
+      "Please add at least one tracking entry"
+    );
+
     return;
+
   }
 
   try {
-    
-  setSaving(true);
-  await generateMarkers();
+
+    setSaving(true);
 
     const newRows = rows.filter(
-      (r) => r.isNew && r.date && r.city 
+      (r) =>
+        r.isNew &&
+        r.date &&
+        r.city
     );
 
     const updateRows = rows.filter(
-      (r) => !r.isNew && r.id && r.date && r.city
-    );
-    
-    for (const row of [
-      ...newRows,
-      ...updateRows,
-    ]) {
-
-  const formatted =
-    await validateLocation(
-      row.city
+      (r) =>
+        !r.isNew &&
+        r.id &&
+        r.date &&
+        r.city
     );
 
-  if (!formatted) {
+    // ================= ADD TRACKING =================
 
-    toast.error(
-      `Invalid location: ${row.city}`
-    );
-
-    setSaving(false);
-
-    return;
-  }
-}
     await Promise.all([
-  ...newRows.map((row) =>
-    adminOrdersService.addTracking({
-      order_id: orderId,
-      tracking_date: row.date,
-      city: row.city,
-      lat: row.lat,
-      lng: row.lng,
-    })  
-  ),
 
-  ...updateRows.map((row) =>
-    adminOrdersService.updateTracking({
-      id: row.id!,
-      tracking_date: row.date,
-      city: row.city,
-      lat: row.lat,
-      lng: row.lng,
-    })
-  ),
-]);
+      ...newRows.map((row) =>
+        adminOrdersService.addTracking({
 
-  if (
-  selectedStatus === "Shipping Started" &&
-  statusConfig[value].apiValue < statusConfig["Shipping Started"].apiValue
-  ) {
-    await adminOrdersService.updateStatus({
-      order_id: orderId,
-      status: statusConfig["Shipping Started"].apiValue,
-    });
+          order_id: orderId,
+          tracking_date: row.date,
+          city: row.city,
+          status: "surat",
+          // Google map remove kari didhu che
+          // lat: null,
+          // lng: null,
 
-    try {
+        })
+      ),
 
-      await sendSMS({
-        phone,
-        type: "shipping_started" as any,
-        companyName:
-          companyName ||
-        "McFarland Equipment Sales & Auctions",
+      ...updateRows.map((row) =>
+        adminOrdersService.updateTracking({
+
+          id: row.id!,
+          tracking_date: row.date,
+          city: row.city,
+          status: "surat",
+          // Google map remove kari didhu che
+          // lat: null,
+          // lng: null,
+
+        })
+      ),
+
+    ]);
+
+    // ================= STATUS UPDATE =================
+
+    if (
+
+      selectedStatus ===
+        "Shipping Started" &&
+
+      statusConfig[value].apiValue <
+        statusConfig["Shipping Started"]
+          .apiValue
+
+    ) {
+
+      await adminOrdersService.updateStatus({
+
+        order_id: orderId,
+
+        status:
+          statusConfig[
+            "Shipping Started"
+          ].apiValue,
+
       });
 
-    } catch (smsError) {
-    }
-  }
-    
-   toast.success(
-  "Tracking updated successfully"
-);
+      try {
 
-setActiveTab("table");
+        await sendSMS({
+
+          phone,
+
+          type:
+            "shipping_started" as any,
+
+          companyName:
+            companyName ||
+            "McFarland Equipment Sales & Auctions",
+
+        });
+
+      } catch (smsError) {}
+
+    }
+
+    toast.success(
+      "Tracking updated successfully"
+    );
+
+    setActiveTab("table");
 
     await fetchTracking();
+
     setShowTrackingModal(true);
+
     setFormError("");
 
   } catch (err: any) {
-    toast.error(err?.message || "Failed to save");
-  } finally {
-    setSaving(false);
-  }
-  };
 
+    toast.error(
+      err?.message || "Failed to save"
+    );
+
+  } finally {
+
+    setSaving(false);
+
+  }
+
+};
    const handleDeleteTracking = async (id: number) => {
     if (deletingId) return;
 
@@ -824,7 +983,6 @@ setActiveTab("table");
             >
               <IoClose size={18} className="text-gray-700" />
             </button>
-
             <h2 className="text-[22px] sm:text-[28px] font-bold text-[#1E293B] leading-tight">
               Tracking Management
             </h2>
@@ -872,7 +1030,7 @@ setActiveTab("table");
                 )}
               </button>
 
-              <button
+              {/* <button
                 onClick={() => setActiveTab("map")}
                 className={`
                   relative pb-2.5 text-[14px] font-semibold whitespace-nowrap transition cursor-pointer
@@ -888,7 +1046,7 @@ setActiveTab("table");
                 {activeTab === "map" && (
                   <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
                 )}
-              </button>
+              </button> */}
             </div>
 
           </div>
@@ -1417,7 +1575,7 @@ setActiveTab("table");
 
             )}
 
-          {activeTab === "map" && (
+          {/* {activeTab === "map" && (
 
             <div className="h-full p-2 md:p-4 relative">
         {!isLoaded ? (
@@ -1497,7 +1655,6 @@ setActiveTab("table");
                       `}
                     />
 
-                    {/* CONTENT */}
                     <div className="pb-2 flex-1">
                       <div className="flex items-center justify-between gap-2">
                         <div className="text-[13px] font-semibold text-gray-800">
@@ -1519,7 +1676,7 @@ setActiveTab("table");
           </>
               )}
             </div>
-          )}
+          )} */}
           </div>
 
           {/* ================= FOOTER ================= */}

@@ -126,6 +126,7 @@ export const adminOrdersService = {
     city: string;
     lat?: number;
     lng?: number;
+    status?:string;
   }) =>
     adminApi<AddTrackingResponse>("/orders/tracking/add", {
       method: "POST",
@@ -147,6 +148,7 @@ export const adminOrdersService = {
   city: string;
  lat?: number;
   lng?: number;
+  status? : string;
 }) =>
   adminApi<{ status: boolean; message: string }>("/orders/tracking/update", {
     method: "POST",

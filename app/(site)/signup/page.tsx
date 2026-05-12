@@ -9,7 +9,6 @@ import toast from "react-hot-toast";
 import { registerUser } from "@/api/services";
 import { setToken } from "@/api/authToken";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { getCountryFromAddress } from "@/api/geoapify";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { sendSMS } from "@/api/sms/sendSMS";

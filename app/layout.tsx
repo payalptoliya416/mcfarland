@@ -3,7 +3,6 @@ import "./globals.css";
 import localFont from "next/font/local";
 import ToastProvider from "@/components/common/ToastProvider";
 import { SettingsProvider } from "@/contexts/SettingsContext";
-import MetadataUpdater from "@/components/common/MetadataUpdater";
 import Script from "next/script";
 // ---------------- MONT FONT ----------------
 const mont = localFont({
@@ -52,19 +51,29 @@ export default function RootLayout({
   return (
        <html lang="en" suppressHydrationWarning>
       <head>
-       {/* Google Tag Manager */}
-      {/* <Script id="gtm-script" strategy="beforeInteractive">
+      {/* Google Tag Manager */}
+      <Script id="gtm-script" strategy="beforeInteractive">
         {`
-          (function(w,d,s,l,i){w[l]=w[l]||[];
-          w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
-          var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-          j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;
-          f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer','GTM-TVSS7MPH');
+          (function(w,d,s,l,i){
+            w[l]=w[l]||[];
+            w[l].push({
+              'gtm.start': new Date().getTime(),
+              event:'gtm.js'
+            });
+
+            var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),
+            dl=l!='dataLayer' ? '&l='+l : '';
+
+            j.async=true;
+            j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+
+            f.parentNode.insertBefore(j,f);
+
+          })(window,document,'script','dataLayer','GTM-592KTNTX');
         `}
-      </Script> */}
+      </Script>
       {/* End Google Tag Manager */}
 
           {/* ✅ LiveChat Script */}
@@ -106,15 +115,18 @@ export default function RootLayout({
         suppressHydrationWarning
       >
       {/* Google Tag Manager (noscript) */}
-      {/* <noscript>
-        <iframe
-          src="https://www.googletagmanager.com/ns.html?id=GTM-TVSS7MPH"
-          height="0"
-          width="0"
-          style={{ display: "none", visibility: "hidden" }}
-        />
-      </noscript> */}
-      {/* End Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-592KTNTX"
+            height="0"
+            width="0"
+            style={{
+              display: "none",
+              visibility: "hidden",
+            }}
+          />
+        </noscript>
+        {/* End Google Tag Manager (noscript) */}
 
         <noscript>
           <a

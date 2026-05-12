@@ -17,8 +17,8 @@ import { FaRegImage } from "react-icons/fa";
 import { useSettings } from "@/contexts/SettingsContext";
 import { IoClose } from "react-icons/io5";
 import { MdLocationOn } from "react-icons/md";
-import { useJsApiLoader } from "@react-google-maps/api";
-import CommonGoogleMap from "@/adminpanel/CommonGoogleMap";
+// import { useJsApiLoader } from "@react-google-maps/api";
+// import CommonGoogleMap from "@/adminpanel/CommonGoogleMap";
 /* ================= TYPES ================= */
 
 type OrderData = {
@@ -121,23 +121,22 @@ export default function MyBuyOrders() {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [totalPages, setTotalPages] = useState(1);
   const [showTrackingModal, setShowTrackingModal] = useState(false);
-  const [trackingTab, setTrackingTab] =
-  useState<"history" | "map">(
-    "history"
-  );
-  const [rows, setRows] = useState<TrackingRow[]>([
-    { date: "", city: "", status: ""},
-  ]);
-  const { isLoaded } =
-  useJsApiLoader({
-    googleMapsApiKey:
-      process.env
-        .NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ||
-      "",
-  });
+  // const [trackingTab, setTrackingTab] =
+  // useState<"history" | "map">(
+  //   "history"
+  // );
+  const [trackingTab, setTrackingTab] = useState<"history">("history");
+  const [rows, setRows] = useState<TrackingRow[]>([{ date: "", city: "", status: ""},]);
+  // const { isLoaded } =
+  // useJsApiLoader({
+  //   googleMapsApiKey:
+  //     process.env
+  //       .NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ||
+  //     "",
+  // });
 
-  const [directions, setDirections] = useState<any>(null);
-  const [markers, setMarkers] = useState<any[]>([]);
+  // const [directions, setDirections] = useState<any>(null);
+  // const [markers, setMarkers] = useState<any[]>([]);
 const today = new Date();
 
 const trackingRowsWithState =
@@ -230,13 +229,13 @@ const trackingRowsWithState =
   
     setRows(trackingRows);
 
-    if (
-      trackingRows.length >= 2
-    ) {
-      await generateRoute(
-        trackingRows
-      );
-    }
+    // if (
+    //   trackingRows.length >= 2
+    // ) {
+    //   await generateRoute(
+    //     trackingRows
+    //   );
+    // }
 
     setTrackingTab("history");
     setShowTrackingModal(true);
@@ -348,61 +347,61 @@ const trackingRowsWithState =
     }).replace(" ", " ").replace(",", ",");
   };
 
-  const generateRoute = async (
-  trackingRows: TrackingRow[]
-) => {
-  try {
+//   const generateRoute = async (
+//   trackingRows: TrackingRow[]
+// ) => {
+//   try {
 
-    if (trackingRows.length < 2)
-      return;
+//     if (trackingRows.length < 2)
+//       return;
 
-    const directionsService =
-      new google.maps.DirectionsService();
+//     const directionsService =
+//       new google.maps.DirectionsService();
 
-    const origin = {
-      lat: trackingRows[0].lat!,
-      lng: trackingRows[0].lng!,
-    };
+//     const origin = {
+//       lat: trackingRows[0].lat!,
+//       lng: trackingRows[0].lng!,
+//     };
 
-    const destination = {
-      lat:
-        trackingRows[
-          trackingRows.length - 1
-        ].lat!,
-      lng:
-        trackingRows[
-          trackingRows.length - 1
-        ].lng!,
-    };
+//     const destination = {
+//       lat:
+//         trackingRows[
+//           trackingRows.length - 1
+//         ].lat!,
+//       lng:
+//         trackingRows[
+//           trackingRows.length - 1
+//         ].lng!,
+//     };
 
-    const waypoints = trackingRows
-      .slice(1, -1)
-      .map((row) => ({
-        location: {
-          lat: row.lat!,
-          lng: row.lng!,
-        },
-        stopover: true,
-      }));
+//     const waypoints = trackingRows
+//       .slice(1, -1)
+//       .map((row) => ({
+//         location: {
+//           lat: row.lat!,
+//           lng: row.lng!,
+//         },
+//         stopover: true,
+//       }));
 
-    const result =
-      await directionsService.route({
-        origin,
-        destination,
-        waypoints,
-        travelMode:
-          google.maps.TravelMode
-            .DRIVING,
-      });
+//     const result =
+//       await directionsService.route({
+//         origin,
+//         destination,
+//         waypoints,
+//         travelMode:
+//           google.maps.TravelMode
+//             .DRIVING,
+//       });
 
-    setDirections(result);
+//     setDirections(result);
 
-    setMarkers(trackingRows);
+//     setMarkers(trackingRows);
 
-  } catch (err) {
-    console.log(err);
-  }
-  };
+//   } catch (err) {
+//     console.log(err);
+//   }
+//   };
 
   return (
     <>
@@ -1125,7 +1124,7 @@ const trackingRowsWithState =
             )}
           </button>
 
-          <button
+          {/* <button
             onClick={() => setTrackingTab("map")}
             className={`
               relative pb-2.5 px-2
@@ -1144,7 +1143,7 @@ const trackingRowsWithState =
               <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
             )}
 
-          </button>
+          </button> */}
 
         </div>
       </div>
@@ -1300,7 +1299,7 @@ const trackingRowsWithState =
 
         {/* ====================== MAP TAB ========================== */}
 
-       {trackingTab === "map" && (
+       {/* {trackingTab === "map" && (
           <div className="h-full p-2 md:p-4">
             <CommonGoogleMap
               isLoaded={isLoaded}
@@ -1309,7 +1308,7 @@ const trackingRowsWithState =
               showTrackingPanel={true}
             />
           </div>
-        )}
+        )} */}
 
       </div>
 
