@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   getUserProfile,
   updateUserProfile,
@@ -11,20 +11,93 @@ import {
   UserProfileFormValues,
 } from "@/api/user/profile";
 import Loader from "@/components/common/Loader";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
-import { getLicenseStatus, uploadLicense, uploadLicenseData } from "@/api/user/license";
+import { getLicenseStatus, uploadLicense } from "@/api/user/license";
 import toast from "react-hot-toast";
 import { MdInfo } from "react-icons/md";
 import { UploadBox } from "@/components/inventory/UploadBox";
 import { getCountryFromAddress } from "@/api/geoapify";
+
+const getNorthAmericanPhoneDigits = (value = "") => {
+  const digits = value.replace(/\D/g, "");
+
+  if (digits.length <= 10) {
+    return digits;
+  }
+
+  if (digits.length === 11 && digits.startsWith("1")) {
+    return digits.slice(1);
+  }
+
+  return digits.slice(-10);
+};
+
+const formatNorthAmericanPhone = (value = "") => {
+  const digits = getNorthAmericanPhoneDigits(value);
+
+  if (digits.length <= 3) {
+    return digits;
+  }
+
+  if (digits.length <= 6) {
+    return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+  }
+
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+};
+
+const LICENSE_STATUS_CONFIG = {
+  Unverified: {
+    label: "Unverified",
+    bg: "bg-[#3C97FF] text-white",
+    icon: "/assets/p3.svg",
+  },
+
+  Pending: {
+    label: "Pending",
+    bg: "bg-[#F6C343] text-gray",
+    icon: "/assets/p4.svg",
+  },
+
+  Verified: {
+    label: "Verified",
+    bg: "bg-[#2DBE60]  text-white",
+    icon: "/assets/p1.svg",
+  },
+
+  Declined: {
+    label: "Declined",
+    bg: "bg-[#E53935]  text-white",
+    icon: "/assets/p2.svg",
+  },
+} as const;
+
+const LicenseStatusBadge = ({ status }: { status: string }) => {
+  const config =
+    LICENSE_STATUS_CONFIG[status as keyof typeof LICENSE_STATUS_CONFIG] ||
+    LICENSE_STATUS_CONFIG.Unverified;
+
+  return (
+    <span
+      className={`inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium ${config.bg}`}
+    >
+      <Image src={config.icon} alt={config.label} width={14} height={14} />
+      {config.label}
+    </span>
+  );
+};
 
 /* ================= VALIDATION ================= */
 const schema = Yup.object({
   firstName: Yup.string().required("First name is required"),
   lastName: Yup.string().required("Last name is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
-  phone: Yup.string().required("Phone number is required"),
+  phone: Yup.string()
+    .required("Phone number is required")
+    .test(
+      "north-american-phone",
+      "Enter a valid US/Canada phone number",
+      (value) => getNorthAmericanPhoneDigits(value).length === 10,
+    ),
   address: Yup.string().required("Address is required"),
   company: Yup.string().required("Company name is required"),
   city: Yup.string().required("City is required"),
@@ -64,7 +137,7 @@ export default function UserProfileForm() {
         }
 
         setCountry(geo.country_code);
-      } catch (err) {
+      } catch {
         setCountry("USA");
       }
     };
@@ -92,7 +165,10 @@ export default function UserProfileForm() {
   const handleProfileUpdate = async (values: UserProfileFormValues) => {
     try {
       setSaving(true);
-      const res = await updateUserProfile(values);
+      const res = await updateUserProfile({
+        ...values,
+        phone: formatNorthAmericanPhone(values.phone),
+      });
       if (res.status) {
         toast.success(res.message || "Profile updated successfully"); // ✅ SUCCESS
         await fetchProfile();
@@ -123,7 +199,7 @@ export default function UserProfileForm() {
     firstName: profile.first_name,
     lastName: profile.last_name,
     email: profile.email,
-    phone: profile.phone_no,
+    phone: formatNorthAmericanPhone(profile.phone_no),
     address: profile.address,
     company: profile.company_name,
     city: profile.city,
@@ -131,72 +207,11 @@ export default function UserProfileForm() {
     zip: profile.zip_code,
   };
 
-  const LICENSE_STATUS_CONFIG = {
-    Unverified: {
-      label: "Unverified",
-      bg: "bg-[#3C97FF] text-white",
-      icon: "/assets/p3.svg",
-    },
-
-    Pending: {
-      label: "Pending",
-      bg: "bg-[#F6C343] text-gray",
-      icon: "/assets/p4.svg",
-    },
-
-    Verified: {
-      label: "Verified",
-      bg: "bg-[#2DBE60]  text-white",
-      icon: "/assets/p1.svg",
-    },
-
-    Declined: {
-      label: "Declined",
-      bg: "bg-[#E53935]  text-white",
-      icon: "/assets/p2.svg",
-    },
-  } as const;
-
-  const licenseStatusMap: Record<number, keyof typeof LICENSE_STATUS_CONFIG> = {
-    0: "Unverified",
-    1: "Pending",
-    2: "Verified",
-    3: "Declined",
-  };
-
   const statusKey =
     (profile?.license_status as keyof typeof LICENSE_STATUS_CONFIG) ||
     "Unverified";
 
   const statusConfig = LICENSE_STATUS_CONFIG[statusKey];
-
-  const handleFileSelect =
-    (setter: (file: File | null) => void) =>
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-
-      const allowedTypes = [
-        "image/png",
-        "image/jpeg",
-        "image/jpg",
-        "application/pdf",
-      ];
-
-      if (!allowedTypes.includes(file.type)) {
-        toast.error("Only PDF, PNG, JPG, JPEG allowed");
-        e.target.value = "";
-        return;
-      }
-
-      if (file.size > 5 * 1024 * 1024) {
-        toast.error("File must be under 5MB");
-        e.target.value = "";
-        return;
-      }
-
-      setter(file);
-    };
 
   const getLicenseMessageConfig = (isLicense: number) => {
     switch (isLicense) {
@@ -231,21 +246,6 @@ export default function UserProfileForm() {
           message: "Please upload your license document for verification.",
         };
     }
-  };
-
-  const LicenseStatusBadge = ({ status }: { status: string }) => {
-    const config =
-      LICENSE_STATUS_CONFIG[status as keyof typeof LICENSE_STATUS_CONFIG] ||
-      LICENSE_STATUS_CONFIG.Unverified;
-
-    return (
-      <span
-        className={`inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium ${config.bg}`}
-      >
-        <Image src={config.icon} alt={config.label} width={14} height={14} />
-        {config.label}
-      </span>
-    );
   };
 
   const submitLicenseToNewAPI = async () => {
@@ -376,7 +376,7 @@ const res = await uploadLicense(formData);
               validationSchema={schema}
               onSubmit={handleProfileUpdate}
             >
-              {({ errors, touched, values, setFieldValue }: any) => (
+              {({ errors, touched, values, setFieldValue }) => (
                 <Form className="space-y-5">
                   {/* NAME */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -407,39 +407,19 @@ const res = await uploadLicense(formData);
                     <div>
                       <label className="input-label">Phone Number</label>
 
-                      <PhoneInput
-                        country="in"
+                      <input
+                        name="phone"
                         value={values.phone}
-                        onChange={(phone) => setFieldValue("phone", phone)}
-                        enableSearch
-                        countryCodeEditable={false}
-                        /* MAIN CONTAINER */
-                        containerClass="!w-full"
-                        /* INPUT FIELD */
-                        inputClass="
-                            !w-full
-                            !h-[51px]
-                            !pl-[60px]
-                            !pr-5
-                            !rounded-[10px]
-                            !border
-                            !border-border
-                            !text-sm
-                            focus:!outline-none
-                          "
-                        /* FLAG BUTTON */
-                        buttonClass="
-                            !border
-                            !border-border
-                            !rounded-l-[10px]
-                            !h-[51px]
-                            !w-[52px]
-                            !flex
-                            !items-center
-                            !justify-center
-                          "
-                        dropdownClass="!text-sm"
+                        onChange={(e) =>
+                          setFieldValue(
+                            "phone",
+                            formatNorthAmericanPhone(e.target.value),
+                          )
+                        }
+                        className="input-class"
                         placeholder="(000) 000-0000"
+                        inputMode="tel"
+                        autoComplete="tel"
                       />
                       {errors.phone && touched.phone && (
                         <p className="error">{errors.phone}</p>

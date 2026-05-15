@@ -47,6 +47,7 @@ export default function OrderStatusDropdown({
   phone,
   value,
   orderId,
+  orderType,
   onUpdated,
 }: Props) {
   const [open, setOpen] = useState(false);
@@ -413,6 +414,15 @@ export default function OrderStatusDropdown({
         status: statusConfig[status].apiValue,
       });
 
+      if (status === "Settle Payment") {
+        await sendSMS({
+          phone,
+          type: "settle_payment",
+          companyName: companyName || "McFarland Equipment Sales & Auctions",
+          orderType,
+        });
+      }
+
       toast.success("Order status updated");
 
       setOpen(false);
@@ -771,7 +781,7 @@ const handleSubmit = async () => {
           phone,
 
           type:
-            "shipping_started" as any,
+            "shipping_started",
 
           companyName:
             companyName ||

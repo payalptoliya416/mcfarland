@@ -9,6 +9,7 @@ interface SendSMSProps {
   phone: string;
   type: SmsType;
   companyName: string;
+  orderType?: "Bidding" | "Checkout";
 }
 
 interface TwilioResponse {
@@ -23,6 +24,7 @@ export const sendSMS = async ({
   phone,
   type,
   companyName,
+  orderType,
 }: SendSMSProps): Promise<{
   success: boolean;
   data?: TwilioResponse;
@@ -44,7 +46,12 @@ export const sendSMS = async ({
         break;
 
       case "settle_payment":
-        message = `Thank you for your purchase with ${companyName}! Your Won item is secured. Sign in to view your invoice and complete payment.`;
+        if (orderType === "Bidding") {
+          message = `Thank you for bidding with ${companyName}. Your winning item has been secured. Please sign in to review your invoice and complete payment.`;
+          break;
+        }
+
+        message = `Thank you for your purchase with ${companyName}. Your order has been secured. Please sign in to review your invoice and complete payment.`;
         break;
 
       case "shipping_started":

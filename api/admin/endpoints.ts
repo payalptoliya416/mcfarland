@@ -1,5 +1,5 @@
 export const ADMIN_API = {
-  LOGIN: "/login",
+  LOGIN: "/admin/login",
   LOGOUT: "/logout",
   PROFILE: "/profile",
 
