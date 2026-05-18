@@ -3,29 +3,6 @@ import { getAdminToken } from "./adminAuth";
 
 export const ADMIN_BASE_URL = process.env.NEXT_PUBLIC_ADMIN_BASE_URL;
 
-const withAdminPrefix = (endpoint: string) => {
-  if (/^https?:\/\//i.test(endpoint)) {
-    return endpoint;
-  }
-
-  const normalizedEndpoint = endpoint.startsWith("/")
-    ? endpoint
-    : `/${endpoint}`;
-
-  return normalizedEndpoint.startsWith("/admin/")
-    ? normalizedEndpoint
-    : `/admin${normalizedEndpoint}`;
-};
-
-const buildAdminUrl = (endpoint: string) => {
-  const adminEndpoint = withAdminPrefix(endpoint);
-
-  if (/^https?:\/\//i.test(adminEndpoint)) {
-    return adminEndpoint;
-  }
-
-  return `${ADMIN_BASE_URL?.replace(/\/$/, "")}${adminEndpoint}`;
-};
 
 export async function adminApi<T>(
   endpoint: string,
@@ -33,9 +10,8 @@ export async function adminApi<T>(
 ): Promise<T> {
   const token = getAdminToken();
   const isFormData = options.body instanceof FormData;
-  const url = buildAdminUrl(endpoint);
 
-  const res = await fetch(url, {
+  const res = await fetch(`${ADMIN_BASE_URL}${endpoint}`, {
     ...options,
     headers: {
       ...(isFormData ? {} : { "Content-Type": "application/json" }),

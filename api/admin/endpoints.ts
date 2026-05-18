@@ -1,9 +1,9 @@
 export const ADMIN_API = {
-  LOGIN: "/admin/login",
+  LOGIN: "/login",
   LOGOUT: "/logout",
   PROFILE: "/profile",
 
-  GET_CATEGORY_ALL :"/admin/categories",
+  GET_CATEGORY_ALL :"/categories",
   ADD_MASHINARY : "/machinery/store"
 };
 

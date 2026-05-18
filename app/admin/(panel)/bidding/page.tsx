@@ -155,6 +155,11 @@ export default function BiddingManagement() {
     {
       key: "bid_status",
       header: "Status",
+      sortable: true,
+      onSort: () => {
+      setSortBy("bid_status");
+      setSortOrder((p) => (p === "asc" ? "desc" : "asc"));
+    },
       render: (row) => {
         const statusMap: Record<string, string> = {
           active: "bg-[#34C759] text-white", // Green

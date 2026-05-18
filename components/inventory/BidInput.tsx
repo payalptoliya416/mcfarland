@@ -204,6 +204,11 @@ const handlePlaceBid = async () => {
 
     toast.success(MESSAGES.BID_SUCCESS);
     onBidSuccess();
+
+    setTimeout(() => {
+      router.push("/user");
+    }, 800);
+
   } catch (err: any) {
     if (isAuthError(err)) {
       router.push(`/user/signin?returnUrl=${encodeURIComponent(returnUrl)}`);

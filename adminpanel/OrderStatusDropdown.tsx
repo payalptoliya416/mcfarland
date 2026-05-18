@@ -708,14 +708,6 @@ const handleSubmit = async () => {
         r.city
     );
 
-    const updateRows = rows.filter(
-      (r) =>
-        !r.isNew &&
-        r.id &&
-        r.date &&
-        r.city
-    );
-
     // ================= ADD TRACKING =================
 
     await Promise.all([
@@ -724,20 +716,6 @@ const handleSubmit = async () => {
         adminOrdersService.addTracking({
 
           order_id: orderId,
-          tracking_date: row.date,
-          city: row.city,
-          status: "surat",
-          // Google map remove kari didhu che
-          // lat: null,
-          // lng: null,
-
-        })
-      ),
-
-      ...updateRows.map((row) =>
-        adminOrdersService.updateTracking({
-
-          id: row.id!,
           tracking_date: row.date,
           city: row.city,
           status: "surat",
@@ -1147,6 +1125,7 @@ const handleSubmit = async () => {
 
                               <input
                                 type="date"
+                                disabled={!row.isNew}
                                 min={todayDate}
                                 value={row.date}
                                 onChange={(e) =>
@@ -1175,6 +1154,7 @@ const handleSubmit = async () => {
 
                               <input
                                 type="text"
+                                disabled={!row.isNew}
                                 value={row.city}
                                 placeholder="Ex: Dallas, Texas, USA"
                                 onChange={(e) =>
@@ -1264,6 +1244,7 @@ const handleSubmit = async () => {
                             <div className="space-y-2">
                               <input
                                 type="date"
+                                 disabled={!row.isNew}
                                 min={todayDate}
                                 value={row.date}
                                 onChange={(e) =>
@@ -1283,6 +1264,7 @@ const handleSubmit = async () => {
 
                               <input
                                 type="text"
+                                disabled={!row.isNew}
                                 value={row.city}
                                 placeholder="Enter City"
                                 onChange={(e) =>
