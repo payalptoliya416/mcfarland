@@ -33,6 +33,7 @@ export interface RecentBuyOrderData {
 export interface MachineryDetails {
   id: number;
   name: string;
+  pdf_url?: string;
 }
 
 export interface DashboardData {
@@ -43,8 +44,8 @@ export interface DashboardData {
   items_purchased: number;
   recent_bids: RecentBid[];
   recent_buy_orders: RecentBuyOrderData[];
-
-   is_won?: number;
+  is_won?: number;
+  is_checkout?: boolean;
   machinery_details?: MachineryDetails;
 }
 

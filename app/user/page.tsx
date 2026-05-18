@@ -93,6 +93,7 @@ const [redirectLoading, setRedirectLoading] = useState(false);
 const router = useRouter();
 const [showNotification, setShowNotification] = useState(true);
 const [wonData, setWonData] = useState<any>(null);
+const [isCheckout, setIsCheckout] = useState<boolean>(false);
 const [showInvoiceNotification, setShowInvoiceNotification] = useState(true);
 
 const fetchDashboard = async () => {
@@ -103,6 +104,8 @@ const fetchDashboard = async () => {
     if (!res.success) return;
 
     const data = res.data;
+
+    setIsCheckout(Boolean(data.is_checkout));
 
     if (data.is_won === 1 && data.machinery_details) {
       setWonData(data.machinery_details);
@@ -189,7 +192,7 @@ if (loading) {
       <Loader />
     </div>
     )}
-    {wonData && showNotification && (
+    {wonData && showNotification && !isCheckout && (
       <div className="mb-5 container-custom">
         <div
           className="flex items-center justify-between gap-4 bg-[#EAFBF3] border border-[#2DBE60] rounded-xl px-4 py-4 cursor-pointer hover:shadow-md transition max-w-max w-full mx-auto mt-5 relative"
