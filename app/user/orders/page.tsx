@@ -16,9 +16,7 @@ import { FiUploadCloud } from "react-icons/fi";
 import { FaRegImage } from "react-icons/fa";
 import { useSettings } from "@/contexts/SettingsContext";
 import { IoClose } from "react-icons/io5";
-import { MdLocationOn } from "react-icons/md";
-// import { useJsApiLoader } from "@react-google-maps/api";
-// import CommonGoogleMap from "@/adminpanel/CommonGoogleMap";
+import DeliveryMap from "@/adminpanel/DeliveryMap";
 /* ================= TYPES ================= */
 
 type OrderData = {
@@ -66,7 +64,6 @@ type TrackingRow = {
   id?: number; 
   date: string;
   city: string;
-  status: string;
   lat?: number;
   lng?: number;
 };
@@ -116,27 +113,15 @@ export default function MyBuyOrders() {
 
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
-  const [search, setSearch] = useState(""); // 👈 important
+  const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("id");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [totalPages, setTotalPages] = useState(1);
   const [showTrackingModal, setShowTrackingModal] = useState(false);
-  // const [trackingTab, setTrackingTab] =
-  // useState<"history" | "map">(
-  //   "history"
-  // );
-  const [trackingTab, setTrackingTab] = useState<"history">("history");
-  const [rows, setRows] = useState<TrackingRow[]>([{ date: "", city: "", status: ""},]);
-  // const { isLoaded } =
-  // useJsApiLoader({
-  //   googleMapsApiKey:
-  //     process.env
-  //       .NEXT_PUBLIC_GOOGLE_MAPS_API_KEY ||
-  //     "",
-  // });
 
-  // const [directions, setDirections] = useState<any>(null);
-  // const [markers, setMarkers] = useState<any[]>([]);
+  const [trackingTab, setTrackingTab] = useState<"history" | "map">("history");
+  const [rows, setRows] = useState<TrackingRow[]>([{ date: "", city: ""},]);
+
 const today = new Date();
 
 const trackingRowsWithState =
@@ -145,14 +130,22 @@ const trackingRowsWithState =
     const itemDate =
       new Date(item.date);
 
+    const todayDate =
+      new Date(today);
+
     let trackingState =
-      "normal";
+      "pending";
 
     if (
       itemDate.toDateString() ===
-      today.toDateString()
+      todayDate.toDateString()
     ) {
       trackingState = "current";
+    }
+    else if (
+      itemDate < todayDate
+    ) {
+      trackingState = "completed";
     }
 
     return {
@@ -160,6 +153,7 @@ const trackingRowsWithState =
       trackingState,
     };
   });
+
   const fetchOrders = async () => {
     try {
       setLoading(true);
@@ -228,14 +222,6 @@ const trackingRowsWithState =
         : [];
   
     setRows(trackingRows);
-
-    // if (
-    //   trackingRows.length >= 2
-    // ) {
-    //   await generateRoute(
-    //     trackingRows
-    //   );
-    // }
 
     setTrackingTab("history");
     setShowTrackingModal(true);
@@ -346,62 +332,6 @@ const trackingRowsWithState =
       year: "numeric",
     }).replace(" ", " ").replace(",", ",");
   };
-
-//   const generateRoute = async (
-//   trackingRows: TrackingRow[]
-// ) => {
-//   try {
-
-//     if (trackingRows.length < 2)
-//       return;
-
-//     const directionsService =
-//       new google.maps.DirectionsService();
-
-//     const origin = {
-//       lat: trackingRows[0].lat!,
-//       lng: trackingRows[0].lng!,
-//     };
-
-//     const destination = {
-//       lat:
-//         trackingRows[
-//           trackingRows.length - 1
-//         ].lat!,
-//       lng:
-//         trackingRows[
-//           trackingRows.length - 1
-//         ].lng!,
-//     };
-
-//     const waypoints = trackingRows
-//       .slice(1, -1)
-//       .map((row) => ({
-//         location: {
-//           lat: row.lat!,
-//           lng: row.lng!,
-//         },
-//         stopover: true,
-//       }));
-
-//     const result =
-//       await directionsService.route({
-//         origin,
-//         destination,
-//         waypoints,
-//         travelMode:
-//           google.maps.TravelMode
-//             .DRIVING,
-//       });
-
-//     setDirections(result);
-
-//     setMarkers(trackingRows);
-
-//   } catch (err) {
-//     console.log(err);
-//   }
-//   };
 
   return (
     <>
@@ -632,7 +562,7 @@ const trackingRowsWithState =
                               className={`w-[36px] h-[36px] rounded-full flex items-center justify-center transition
                                 ${
                                   s.key === "Settle Payment" ||  s.key === "In Transit"
-                                    ? "bg-[#E6F4F1] group-hover:scale-110 group-hover:ring-1 group-hover:ring-green"
+                                    ? "bg-[#E6F4F1] group-hover:scale-110 group-hover:ring-1 group-hover:ring-green  cursor-pointer"
                                     : completed
                                       ? "bg-lightgreen"
                                       : "bg-border"
@@ -979,357 +909,250 @@ const trackingRowsWithState =
       )}
     </section>
 
-  {/* {showTrackingModal && (
-  <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-[999999999]">
-
-    <div className="relative bg-white rounded-2xl shadow-xl w-[620px] max-h-[90vh] flex flex-col px-3 sm:px-6 py-5 mx-2">
-
-      <div className="flex justify-between items-center mb-4 shrink-0">
-        <h2 className="text-lg font-semibold text-gray-800">
-          Tracking Details
-        </h2>
-
-        <button
-          onClick={() => setShowTrackingModal(false)}
-          className="text-gray-500 hover:text-black text-2xl cursor-pointer"
-        >
-          <IoClose />
-        </button>
-      </div>
-      <div className="flex-1 min-h-0 overflow-y-auto pr-2 space-y-6">
-
-        {rows.length === 0 ? (
-          <p className="text-gray-500 text-center py-5">
-            No tracking data found
-          </p>
-        ) : (
-          rows.map((row, index) => {
-            const isLast = index === rows.length - 1;
-
-            return (
-              <div key={index} className="flex gap-2">
-
-                <div className="flex flex-col items-center">
-                  
-                  <FaCircle
-                className={`text-xs ${
-                  isLast ? "text-green-500" : "text-gray-400"
-                }`}
-              />
-
-                  {!isLast && (
-                    <div className="w-[2px] flex-1 bg-gray-300 mt-1" />
-                  )}
-                </div>
-
-                <div
-                  className={`flex-1 rounded-lg p-3 border ${
-                    isLast
-                      ? "bg-green-50 border-green-300"
-                      : "bg-gray-50 border-gray-200"
-                  }`}
-                >
-                  <div className="flex justify-between items-center">
-                     <div className="flex items-center gap-2">
-                    <span
-                      className={`text-xs px-2 py-1 rounded-lg font-medium
-                        ${
-                          row.status === "Delivered"
-                            ? "bg-green-100 text-green-700"
-                            : row.status === "In Transit"
-                            ? "bg-blue-100 text-blue-700"
-                            : "bg-gray-200 text-gray-700"
-                        }
-                      `}
-                    >
-                      {row.status}
-                    </span>
-                     </div>
-                    <span className="text-xs text-gray-500">
-                     {formatDate(row.date)}
-                    </span>
-                  </div>
-
-                  <p className="text-sm text-gray-600 mt-1 flex items-center gap-1">
-                    <MdLocationOn className="text-gray-500" />
-                    <span className="font-medium text-gray-800">
-                      {row.city}
-                    </span>
-                  </p>
-
-                </div>
-              </div>
-            );
-          })
-        )}
-      </div>
-
-      <div className="flex justify-end mt-5 shrink-0">
-        <button
-          onClick={() => setShowTrackingModal(false)}
-          className="px-5 py-2 rounded-lg bg-black text-white hover:bg-gray-800 cursor-pointer"
-        >
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
-  )} */}
-
   {showTrackingModal && (
+    <div className="fixed inset-0 z-[999999999] bg-black/50 backdrop-blur-[2px] flex items-center justify-center p-2 sm:p-3">
+      <div className="relative bg-white w-full max-w-[880px] h-[82vh] rounded-[24px] shadow-2xl overflow-hidden flex flex-col">
 
-  <div className="fixed inset-0 z-[999999999] bg-black/50 backdrop-blur-[2px] flex items-center justify-center p-2 sm:p-3">
-    <div className="relative bg-white w-full max-w-[880px] h-[82vh] rounded-[24px] shadow-2xl overflow-hidden flex flex-col">
-
-      {/* ================= HEADER ================= */}
-      <div className="border-b border-gray-100 px-4 sm:px-5 py-4 shrink-0">
-        <button
-          onClick={() => setShowTrackingModal(false)}
-          className="
-            absolute top-3 right-3
-            w-9 h-9 rounded-full
-            bg-gray-100 hover:bg-gray-200
-            flex items-center justify-center
-            transition cursor-pointer
-          "
-        >
-          <IoClose size={18} className="text-gray-700" />
-        </button>
-
-        <h2 className="text-[22px] sm:text-[28px] font-bold text-[#1E293B]">
-          Shipment Tracking
-        </h2>
-      </div>
-
-      {/* ================= TABS ================= */}
-      <div className="px-4 sm:px-5 pt-2 shrink-0">
-        <div className="flex items-center justify-start gap-2 border-b border-gray-100 overflow-x-auto no-scrollbar">
+        {/* ================= HEADER ================= */}
+        <div className="border-b border-gray-100 px-4 sm:px-5 py-4 shrink-0">
           <button
-            onClick={() => setTrackingTab("history")}
-            className={`
-              relative pb-2.5 px-2
-              text-[14px] font-semibold
-              whitespace-nowrap transition cursor-pointer
-              ${
-                trackingTab === "history"
-                  ? "text-[#F59E0B]"
-                  : "text-gray-500 hover:text-gray-700"
-              }
-            `}
+            onClick={() => setShowTrackingModal(false)}
+            className="
+              absolute top-3 right-3
+              w-9 h-9 rounded-full
+              bg-gray-100 hover:bg-gray-200
+              flex items-center justify-center
+              transition cursor-pointer
+            "
           >
-            Tracking History
-
-            {trackingTab === "history" && (
-              <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
-            )}
+            <IoClose size={18} className="text-gray-700" />
           </button>
 
-          {/* <button
-            onClick={() => setTrackingTab("map")}
-            className={`
-              relative pb-2.5 px-2
-              text-[14px] font-semibold
-              whitespace-nowrap transition cursor-pointer
-              ${
-                trackingTab === "map"
-                  ? "text-[#F59E0B]"
-                  : "text-gray-500 hover:text-gray-700"
-              }
-            `}
-          >
-            Delivery Map
-
-            {trackingTab === "map" && (
-              <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
-            )}
-
-          </button> */}
-
+          <h2 className="text-[22px] sm:text-[28px] font-bold text-[#1E293B]">
+            Shipment Tracking
+          </h2>
         </div>
-      </div>
 
-      {/* ================= BODY ================= */}
-      <div className="flex-1 overflow-hidden">
+        {/* ================= TABS ================= */}
+        <div className="px-4 sm:px-5 pt-2 shrink-0">
+          <div className="flex items-center justify-start gap-2 border-b border-gray-100 overflow-x-auto no-scrollbar">
+            <button
+              onClick={() => setTrackingTab("history")}
+              className={`
+                relative pb-2.5 px-2
+                text-[14px] font-semibold
+                whitespace-nowrap transition cursor-pointer
+                ${
+                  trackingTab === "history"
+                    ? "text-[#F59E0B]"
+                    : "text-gray-500 hover:text-gray-700"
+                }
+              `}
+            >
+              Tracking History
 
-        {/* ================= TRACKING HISTORY ====================== */}
+              {trackingTab === "history" && (
+                <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
+              )}
+            </button>
 
-        {trackingTab === "history" && (
+            <button
+              onClick={() => setTrackingTab("map")}
+              className={`
+                relative pb-2.5 px-2
+                text-[14px] font-semibold
+                whitespace-nowrap transition cursor-pointer
+                ${
+                  trackingTab === "map"
+                    ? "text-[#F59E0B]"
+                    : "text-gray-500 hover:text-gray-700"
+                }
+              `}
+            >
+              Delivery Map
 
-          <div className="h-full overflow-y-auto px-4 sm:px-5 py-4">
+              {trackingTab === "map" && (
+                <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
+              )}
 
-            <div className="mb-5">
+            </button>
 
-              <h3 className="text-[18px] font-semibold text-[#1E293B]">
-                Shipment Timeline
-              </h3>
+          </div>
+        </div>
 
-              <p className="text-[13px] text-gray-500 mt-1">
-                View complete shipment progress and delivery updates
-              </p>
+        {/* ================= BODY ================= */}
+        <div className="flex-1 overflow-y-auto min-h-0">
 
-            </div>
+          {/* ================= TRACKING HISTORY ====================== */}
 
-            {rows.length === 0 ? (
+          {trackingTab === "history" && (
 
-              <div className="flex items-center justify-center h-[300px]">
+            <div className="h-full px-4 sm:px-5 py-4">
 
-                <div className="text-center">
+              <div className="mb-5">
 
-                  <div className="text-[17px] font-semibold text-gray-700">
-                    No tracking records
-                  </div>
+                <h3 className="text-[18px] font-semibold text-[#1E293B]">
+                  Shipment Timeline
+                </h3>
 
-                  <p className="text-sm text-gray-500 mt-1">
-                    Shipment tracking updates not available
-                  </p>
-
-                </div>
+                <p className="text-[13px] text-gray-500 mt-1">
+                  View complete shipment progress and delivery updates
+                </p>
 
               </div>
 
-            ) : (
+              {rows.length === 0 ? (
 
-              <div className="space-y-3">
+                <div className="flex items-center justify-center h-[300px]">
 
-                {trackingRowsWithState.map((row, index) => {
+                  <div className="text-center">
 
-                  const isLast =
-                    index === rows.length - 1;
+                    <div className="text-[17px] font-semibold text-gray-700">
+                      No tracking records
+                    </div>
 
-                  return (
+                    <p className="text-sm text-gray-500 mt-1">
+                      Shipment tracking updates not available
+                    </p>
 
-                    <div
-                      key={index}
-                      className="flex gap-3 relative"
-                    >
+                  </div>
 
-                      {!isLast && (
+                </div>
+
+              ) : (
+
+                <div className="space-y-3">
+
+                  {trackingRowsWithState.map((row, index) => {
+
+                    const isLast =
+                      index === rows.length - 1;
+
+                    return (
+
+                      <div
+                        key={index}
+                        className="flex gap-3 relative"
+                      >
+
+                        {!isLast && (
+
+                          <div
+                            className={`
+                              absolute left-[11px] top-7
+                              w-[2px] h-[calc(100%-10px)]
+
+                              ${
+                              row.trackingState === "completed"
+                                ? "bg-green-500"
+
+                                : row.trackingState === "current"
+                                ? "bg-blue-500"
+
+                                : "bg-gray-300"
+                            }
+                            `}
+                          />
+
+                        )}
+
+                      <div
+                              className={`
+                                mt-1 w-[22px] h-[22px]
+                                rounded-full shrink-0
+                                border-[4px] border-white shadow-md
+                                z-10
+
+                                ${
+                                row.trackingState === "completed"
+                                  ? "bg-green-500"
+
+                                  : row.trackingState === "current"
+                                  ? "bg-blue-500"
+
+                                  : "bg-gray-300"
+                                }
+                              `}
+                            />
 
                         <div
                           className={`
-                            absolute left-[11px] top-7
-                            w-[2px] h-[calc(100%-10px)]
+                            flex-1 rounded-2xl border p-4
+                            transition
 
                             ${
                               row.trackingState ===
                               "current"
-                                ? "bg-green-500"
-
-                                : "bg-blue-500"
+                                ? "bg-green-50 border-green-200"
+                                : "bg-white border-gray-200"
                             }
                           `}
-                        />
+                        >
 
-                      )}
+                          <div className="flex items-start justify-between gap-3 flex-wrap">
 
-                     <div
-                            className={`
-                              mt-1 w-[22px] h-[22px]
-                              rounded-full shrink-0
-                              border-[4px] border-white shadow-md
-                              z-10
+                            <div>
 
-                              ${
-                                row.trackingState ===
-                                "current"
-                                  ? "bg-green-500"
-                                  : "bg-blue-500"
-                              }
-                            `}
-                          />
+                              <div className="flex items-center gap-2 flex-wrap">
 
-                      <div
-                        className={`
-                          flex-1 rounded-2xl border p-4
-                          transition
-
-                          ${
-                            row.trackingState ===
-                            "current"
-                              ? "bg-green-50 border-green-200"
-                              : "bg-white border-gray-200"
-                          }
-                        `}
-                      >
-
-                        <div className="flex items-start justify-between gap-3 flex-wrap">
-
-                          <div>
-
-                            <div className="flex items-center gap-2 flex-wrap">
-
-                              <div className="text-[15px] font-semibold text-[#1E293B]">
-                                {row.city}
+                                <div className="text-[15px] font-semibold text-[#1E293B]">
+                                  {row.city}
+                                </div>
                               </div>
                             </div>
 
-                            <div className="flex items-center gap-1 mt-2 text-[13px] text-gray-500">
-
-                              <MdLocationOn className="text-gray-400" />
-
-                              <span>
-                                Shipment checkpoint reached
-                              </span>
-
+                            <div className="text-[12px] text-gray-500 font-medium">
+                              {formatDate(row.date)}
                             </div>
 
-                          </div>
-
-                          <div className="text-[12px] text-gray-500 font-medium">
-                            {formatDate(row.date)}
                           </div>
 
                         </div>
 
                       </div>
 
-                    </div>
+                    );
 
-                  );
+                  })}
 
-                })}
+                </div>
 
-              </div>
+              )}
 
-            )}
+            </div>
 
-          </div>
+          )}
 
-        )}
+          {/* ====================== MAP TAB ========================== */}
 
-        {/* ====================== MAP TAB ========================== */}
-
-       {/* {trackingTab === "map" && (
-          <div className="h-full p-2 md:p-4">
-            <CommonGoogleMap
-              isLoaded={isLoaded}
-              directions={directions}
-              markers={markers}
-              showTrackingPanel={true}
+        {trackingTab === "map" && (
+        <div className="h-full px-4 sm:px-5 py-4 relative">
+          {rows.filter((r) => r.lat && r.lng).length > 0 ? (
+            <DeliveryMap
+              trackingData={rows.map((r) => ({
+                city: r.city,
+                date: r.date,
+                lat: r.lat,
+                lng: r.lng,
+              }))}
             />
-          </div>
-        )} */}
-
-      </div>
-
-      {/* ================= FOOTER ================= */}
-      <div className="border-t border-gray-100 px-4 sm:px-5 py-3 flex items-center justify-end shrink-0">
-        <button
-          onClick={() => setShowTrackingModal(false)}
-          className="
-            h-10 px-5 rounded-xl
-            bg-[#111827]
-            text-white text-[13px] font-medium
-            hover:bg-black
-            transition cursor-pointer
-          "
-        >
-          Close
-        </button>
+          ) : (
+            <div
+              className="
+                h-full flex items-center justify-center
+                border border-gray-200 rounded-2xl
+                bg-white text-gray-400 text-sm
+              "
+            >
+              No tracking map data available
+            </div>
+          )}
+        </div>
+      )}
+        </div>
       </div>
     </div>
-  </div>
-)}
+  )}
     </>
   );
 }

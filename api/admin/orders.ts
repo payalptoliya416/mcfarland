@@ -120,14 +120,16 @@ export const adminOrdersService = {
       body: JSON.stringify({ order_id: id }),
     }),
 
-  addTracking: (payload: {
+ addTracking: (payload: {
+  trackings: {
     order_id: number;
     tracking_date: string;
     city: string;
-    lat?: number;
-    lng?: number;
-    status?:string;
-  }) =>
+    lat?: number | null;
+    lng?: number | null;
+    status?: string;
+  }[];
+}) =>
     adminApi<AddTrackingResponse>("/orders/tracking/add", {
       method: "POST",
       body: JSON.stringify(payload),

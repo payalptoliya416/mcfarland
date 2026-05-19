@@ -46,7 +46,7 @@ export default function BidInput({
   machineryId,
   onBidSuccess,
   buyNow,
-    categoryName,
+  categoryName,
   make,
   model,
   auction_id,

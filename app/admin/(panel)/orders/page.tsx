@@ -247,7 +247,7 @@ export default function AdminOrder() {
           row.paymentSlipStatus === "Pending" && !row.paymentSlipUrl;
 
         return (
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-start gap-4">
             <TooltipWrapper content="Invoice">
               <button
                 disabled={!row.invoiceUrl}
@@ -311,7 +311,6 @@ export default function AdminOrder() {
                 <IoReceiptSharp size={20} />
               </button>
             </TooltipWrapper>
-
           <TooltipWrapper content="Delete Order">
             <HiOutlineTrash
               className="text-[#DD3623] cursor-pointer"
@@ -319,7 +318,33 @@ export default function AdminOrder() {
               onClick={() => setDeleteId(row.id)}
             />
           </TooltipWrapper>
-            
+             {(row.status === "In Transit" ||
+            row.status === "Delivered" ||
+            row.status === "Cancelled") && (
+
+                  <TooltipWrapper content="View Tracking">
+
+                    <OrderStatusDropdown
+                      trackingViewOnly
+                      phone={row.phone}
+                      value={row.status}
+                      orderId={row.id}
+                      orderType={
+                        row.typeText as
+                        "Checkout" | "Bidding"
+                      }
+                      paymentSlipStatus={
+                        row.paymentSlipStatus
+                      }
+                      paymentSlipUrl={
+                        row.paymentSlipUrl
+                      }
+                      onUpdated={fetchOrders}
+                    />
+
+                  </TooltipWrapper>
+
+             )}
           </div>
         );
       },

@@ -151,6 +151,42 @@ export default function OrderMobileCard({
           <IoReceiptSharp size={18} />
           Payment Receipt
         </button>
+        {(order.status === "In Transit" ||
+ order.status === "Delivered" ||
+ order.status === "Cancelled") && (
+
+            <div className="flex items-center gap-2">
+
+              <OrderStatusDropdown
+                trackingViewOnly
+                phone={order.phone}
+                value={order.status}
+                orderId={order.id}
+                orderType={
+                  order.typeText as
+                  "Checkout" | "Bidding"
+                }
+                paymentSlipStatus={
+                  order.paymentSlipStatus
+                }
+                paymentSlipUrl={
+                  order.paymentSlipUrl
+                }
+                onUpdated={onUpdated}
+              />
+
+              <span
+                className="
+                  text-sm font-medium
+                  text-blue-600
+                "
+              >
+                Tracking
+              </span>
+
+            </div>
+
+          )}
       </div>
       {/* Actions */}
       <div className="flex justify-end gap-4 pt-4 border-t border-border">
