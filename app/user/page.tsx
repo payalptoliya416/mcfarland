@@ -192,7 +192,7 @@ if (loading) {
       <Loader />
     </div>
     )}
-    {wonData && showNotification && !isCheckout && (
+    {wonData && showNotification && !isCheckout &&  (
       <div className="mb-5 container-custom">
         <div
           className="flex items-center justify-between gap-4 bg-[#EAFBF3] border border-[#2DBE60] rounded-xl px-4 py-4 cursor-pointer hover:shadow-md transition max-w-max w-full mx-auto mt-5 relative"

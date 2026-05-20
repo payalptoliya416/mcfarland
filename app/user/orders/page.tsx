@@ -223,7 +223,7 @@ const trackingRowsWithState =
   
     setRows(trackingRows);
 
-    setTrackingTab("history");
+    setTrackingTab("map");
     setShowTrackingModal(true);
   };
 
@@ -936,27 +936,8 @@ const trackingRowsWithState =
         {/* ================= TABS ================= */}
         <div className="px-4 sm:px-5 pt-2 shrink-0">
           <div className="flex items-center justify-start gap-2 border-b border-gray-100 overflow-x-auto no-scrollbar">
-            <button
-              onClick={() => setTrackingTab("history")}
-              className={`
-                relative pb-2.5 px-2
-                text-[14px] font-semibold
-                whitespace-nowrap transition cursor-pointer
-                ${
-                  trackingTab === "history"
-                    ? "text-[#F59E0B]"
-                    : "text-gray-500 hover:text-gray-700"
-                }
-              `}
-            >
-              Tracking History
-
-              {trackingTab === "history" && (
-                <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
-              )}
-            </button>
-
-            <button
+            
+              <button
               onClick={() => setTrackingTab("map")}
               className={`
                 relative pb-2.5 px-2
@@ -975,6 +956,26 @@ const trackingRowsWithState =
                 <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
               )}
 
+            </button>
+            
+            <button
+              onClick={() => setTrackingTab("history")}
+              className={`
+                relative pb-2.5 px-2
+                text-[14px] font-semibold
+                whitespace-nowrap transition cursor-pointer
+                ${
+                  trackingTab === "history"
+                    ? "text-[#F59E0B]"
+                    : "text-gray-500 hover:text-gray-700"
+                }
+              `}
+            >
+              Tracking History
+
+              {trackingTab === "history" && (
+                <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
+              )}
             </button>
 
           </div>
