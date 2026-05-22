@@ -98,6 +98,7 @@ export default function VerifyAccount() {
 
     try {
       setUploading(true);
+  setVerifying(true);
 
       const formData = new FormData();
       formData.append("front", frontFile);
@@ -133,12 +134,24 @@ export default function VerifyAccount() {
       }
       
       await new Promise((resolve) => setTimeout(resolve, 30000));
-      setTimeout(async () => {
-      await getLicenseStatus();
-      await fetchProfile();
 
-      router.push(returnUrl);
-    }, 5000);
+     setTimeout(async () => {
+    await getLicenseStatus();
+    await fetchProfile();
+    const updatedProfile = await getUserProfile();
+
+    if (updatedProfile?.status) {
+      setProfile(updatedProfile.data);
+
+      if (updatedProfile.data.is_license === 1) {
+        router.push(returnUrl);
+      } else {
+        setVerifying(false);
+      }
+    } else {
+      setVerifying(false);
+    }
+  }, 5000);
 
     } catch (err: any) {
       toast.error(err.message || "Upload failed");

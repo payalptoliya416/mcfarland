@@ -120,16 +120,16 @@ export const adminOrdersService = {
       body: JSON.stringify({ order_id: id }),
     }),
 
- addTracking: (payload: {
-  trackings: {
-    order_id: number;
-    tracking_date: string;
-    city: string;
-    lat?: number | null;
-    lng?: number | null;
-    status?: string;
-  }[];
-}) =>
+    addTracking: (payload: {
+      trackings: {
+        order_id: number;
+        tracking_date: string;
+        city: string;
+        lat?: number | null;
+        lng?: number | null;
+        status?: string;
+      }[];
+    }) =>
     adminApi<AddTrackingResponse>("/orders/tracking/add", {
       method: "POST",
       body: JSON.stringify(payload),
@@ -144,17 +144,25 @@ export const adminOrdersService = {
     method: "POST",
     body: JSON.stringify(payload),
   }),
-  updateTracking: (payload: {
-  id: number;
-  tracking_date: string;
-  city: string;
- lat?: number;
-  lng?: number;
-  status? : string;
-}) =>
+    updateTracking: (payload: {
+    id: number;
+    tracking_date: string;
+    city: string;
+  lat?: number;
+    lng?: number;
+    status? : string;
+  }) =>
   adminApi<{ status: boolean; message: string }>("/orders/tracking/update", {
     method: "POST",
     body: JSON.stringify(payload),
   }),
+  generateInvoice: (payload: { order_id: number }) =>
+  adminApi<{ success: boolean; message: string }>(
+    "/orders/regenerate-invoice",
+    {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }
+  ),
 };
 

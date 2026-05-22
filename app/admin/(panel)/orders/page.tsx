@@ -12,9 +12,10 @@ import { FaFilePdf } from "react-icons/fa6";
 import PaymentSlipModal from "@/adminpanel/PaymentSlipModal";
 import { TooltipWrapper } from "@/adminpanel/TooltipWrapper";
 import { IoReceiptSharp } from "react-icons/io5";
-import { HiOutlineTrash } from "react-icons/hi2";
+import { HiArrowPath, HiOutlineTrash } from "react-icons/hi2";
 import ConfirmModal from "@/components/tables/ConfirmDialog";
 import toast from "react-hot-toast";
+import { MdReceiptLong } from "react-icons/md";
 
 /* ================= TYPES ================= */
 export type OrderRow = {
@@ -66,6 +67,8 @@ export default function AdminOrder() {
     slipUrl?: string;
     paymentSlipStatus?: "Pending" | "Approve" | "Decline";
   }>({ open: false });
+  const [regenerateId, setRegenerateId] = useState<number | null>(null);
+const [regenerateLoading, setRegenerateLoading] = useState(false);
 
     const [deleteId, setDeleteId] = useState<number | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -120,6 +123,35 @@ export default function AdminOrder() {
     fetchOrders();
   }, [search, page, perPage, sortBy, sortOrder]);
 
+  const confirmRegenerateInvoice = async () => {
+  if (!regenerateId) return;
+
+  try {
+    setRegenerateLoading(true);
+
+    const res = await adminOrdersService.generateInvoice({
+      order_id: regenerateId,
+    });
+
+    if (res?.success) {
+      toast.success(
+        res.message || "Invoice regenerated successfully"
+      );
+
+      await fetchOrders();
+      setRegenerateId(null);
+    } else {
+      toast.error(
+        res?.message || "Failed to regenerate invoice"
+      );
+    }
+  } catch (error) {
+    toast.error("Failed to regenerate invoice");
+  } finally {
+    setRegenerateLoading(false);
+  }
+};
+
   /* ================= COLUMNS ================= */
   const columns: Column<OrderRow>[] = [
     {
@@ -171,7 +203,6 @@ export default function AdminOrder() {
         <span className="py-1 rounded-md text-xs">{r.orderDate}</span>
       ),
     },
-
     {
       key: "orderAmount",
       header: "Order Amount",
@@ -247,105 +278,88 @@ export default function AdminOrder() {
           row.paymentSlipStatus === "Pending" && !row.paymentSlipUrl;
 
         return (
-          <div className="flex items-center justify-start gap-4">
-            <TooltipWrapper content="Invoice">
-              <button
-                disabled={!row.invoiceUrl}
-                onClick={() => window.open(row.invoiceUrl!, "_blank")}
-                className={`${
-                  row.invoiceUrl
-                    ? "text-green transition cursor-pointer"
-                    : "text-green cursor-not-allowed"
-                }`}
-              >
-                <FaFilePdf size={20} />
-              </button>
-            </TooltipWrapper>
-           <TooltipWrapper
-            content={
-              row.contractUrl && row.contractUrl.trim() !== ""
-                ? "View Contract"
-                : "Contract Not Available"
-            }
-          >
+         <div className="flex items-center justify-start gap-4">
+
+        {/* Invoice */}
+        {row.invoiceUrl && (
+          <TooltipWrapper content="Invoice">
             <button
-              disabled={!row.contractUrl || row.contractUrl.trim() === ""}
-              onClick={() => {
-                if (!row.contractUrl || row.contractUrl.trim() === "") return;
-                window.open(row.contractUrl, "_blank");
-              }}
-              className={`transition ${
-                row.contractUrl && row.contractUrl.trim() !== ""
-                  ? "text-[#EDB423] hover:text-[#EDB423] cursor-pointer"
-                  : "text-gray-400 cursor-not-allowed"
-              }`}
+              onClick={() => window.open(row.invoiceUrl!, "_blank")}
+              className="text-green transition cursor-pointer"
             >
               <FaFilePdf size={20} />
             </button>
           </TooltipWrapper>
-            <TooltipWrapper
-              content={
-                isDisabled
-                  ? "Payment Receipt not uploaded yet"
-                  : "View payment Receipt"
-              }
+        )}
+
+        {/* Contract */}
+        {row.contractUrl && row.contractUrl.trim() !== "" && (
+          <TooltipWrapper content="View Contract">
+            <button
+              onClick={() => window.open(row.contractUrl, "_blank")}
+              className="text-[#EDB423] hover:text-[#EDB423] cursor-pointer transition"
             >
-              <button
-                disabled={isDisabled}
-                onClick={() =>
-                  !isDisabled &&
-                  setSlipModal({
-                    open: true,
-                    orderId: row.id,
-                    slipUrl: row.paymentSlipUrl,
-                    paymentSlipStatus: row.paymentSlipStatus,
-                  })
-                }
-                className={`
-                  ${
-                    isDisabled
-                      ? "text-orange cursor-not-allowed"
-                      : "text-orange cursor-pointer"
-                  }`}
-              >
-                <IoReceiptSharp size={20} />
-              </button>
-            </TooltipWrapper>
-          <TooltipWrapper content="Delete Order">
-            <HiOutlineTrash
-              className="text-[#DD3623] cursor-pointer"
-              size={20}
-              onClick={() => setDeleteId(row.id)}
+              <FaFilePdf size={20} />
+            </button>
+          </TooltipWrapper>
+        )}
+
+        {/* Payment Receipt */}
+        {!isDisabled && (
+          <TooltipWrapper content="View payment Receipt">
+            <button
+              onClick={() =>
+                setSlipModal({
+                  open: true,
+                  orderId: row.id,
+                  slipUrl: row.paymentSlipUrl,
+                  paymentSlipStatus: row.paymentSlipStatus,
+                })
+              }
+              className="text-orange cursor-pointer"
+            >
+              <IoReceiptSharp size={20} />
+            </button>
+          </TooltipWrapper>
+        )}
+
+        {/* Delete */}
+        <TooltipWrapper content="Delete Order">
+          <HiOutlineTrash
+            className="text-[#DD3623] cursor-pointer"
+            size={20}
+            onClick={() => setDeleteId(row.id)}
+          />
+        </TooltipWrapper>
+
+        {/* Tracking */}
+        {(row.status === "In Transit" ||
+          row.status === "Delivered" ||
+          row.status === "Cancelled") && (
+          <TooltipWrapper content="View Tracking">
+            <OrderStatusDropdown
+              trackingViewOnly
+              phone={row.phone}
+              value={row.status}
+              orderId={row.id}
+              orderType={row.typeText as "Checkout" | "Bidding"}
+              paymentSlipStatus={row.paymentSlipStatus}
+              paymentSlipUrl={row.paymentSlipUrl}
+              onUpdated={fetchOrders}
             />
           </TooltipWrapper>
-             {(row.status === "In Transit" ||
-            row.status === "Delivered" ||
-            row.status === "Cancelled") && (
-
-                  <TooltipWrapper content="View Tracking">
-
-                    <OrderStatusDropdown
-                      trackingViewOnly
-                      phone={row.phone}
-                      value={row.status}
-                      orderId={row.id}
-                      orderType={
-                        row.typeText as
-                        "Checkout" | "Bidding"
-                      }
-                      paymentSlipStatus={
-                        row.paymentSlipStatus
-                      }
-                      paymentSlipUrl={
-                        row.paymentSlipUrl
-                      }
-                      onUpdated={fetchOrders}
-                    />
-
-                  </TooltipWrapper>
-
-             )}
-          </div>
+        )} 
+     {row.typeText === "Checkout" && row.invoiceUrl && (
+  <TooltipWrapper content="Regenerate Invoice">
+    <button
+      onClick={() => setRegenerateId(row.id)}
+      className="text-blue-500 hover:text-blue-600 cursor-pointer transition"
+    >
+      <HiArrowPath size={20} />
+    </button>
+  </TooltipWrapper>
+)}
+      </div>
         );
       },
     },
@@ -474,6 +488,16 @@ const handleDelete = async (id: number) => {
               onConfirm={confirmDelete}
               onClose={() => setDeleteId(null)}
             />
+            <ConfirmModal
+            open={regenerateId !== null}
+            title="Regenerate Invoice"
+            description="Are you sure you want to regenerate this invoice?"
+            confirmText="Yes, Regenerate"
+            loadingText="Regenerating..."
+            loading={regenerateLoading}
+            onConfirm={confirmRegenerateInvoice}
+            onClose={() => setRegenerateId(null)}
+          />
     </div>
   );
 }

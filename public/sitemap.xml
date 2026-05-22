@@ -41,6 +41,36 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://mcfarland-equipment.com/inventory/harvesters/john-deere/x9-1100-signature-edition-rwa-combine/063530</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/harvesters/john-deere/s770-sts-combine/062353</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/harvesters/john-deere/s760-combine/060550</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/harvesters/trebro/autostack-ii-sod-harvester/052410</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/harvesters/john-deere/cs690-rwa-cotton-stripper/052121</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/harvesters/john-deere/9660-sts-combine/051329</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://mcfarland-equipment.com/inventory/harvesters/john-deere/7300-forage-harvester/154410</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>

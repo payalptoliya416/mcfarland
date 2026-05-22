@@ -80,6 +80,7 @@ function UserHeader({ onNavigate }: { onNavigate?: (url: string) => void }) {
     setOpen(false);
     clearToken();
     localStorage.removeItem("userdata");
+    localStorage.removeItem("license_submitted");
     router.push("/user/signin");
   };
 
