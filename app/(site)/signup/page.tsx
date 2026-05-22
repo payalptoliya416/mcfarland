@@ -503,13 +503,14 @@ const handleRegister = async (values: any, { resetForm }: any) => {
 
                       <span>
                         I agree to the{" "}
-                        <span className="text-green font-semibold">
+                      <Link href="/terms-condition" className="text-green font-semibold">
                           Terms of Service
-                        </span>{" "}
+                      </Link>
+                      {" "}
                         and{" "}
-                        <span className="text-green font-semibold">
+                        <Link href="/privacy-policy" className="text-green font-semibold">
                           Privacy Policy
-                        </span>
+                        </Link>
                       </span>
                     </label>
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 function UserFooter() {
   return (
-    <div className="bg-gray ">
+    <div className="bg-gray">
       <div className="py-12 container-custom mx-auto grid grid-cols-12 gap-4 lg:gap-5 sm:gap-1 items-center">
         <div className="text-center md:text-left col-span-12 xl:col-span-8">
           <p className="text-light-gray text-base font-normal text-center lg:text-left mb-3 lg:mb-0">
@@ -21,7 +21,7 @@ function UserFooter() {
           </p>
         </div>
         <div className="text-center md:text-left col-span-12 xl:col-span-4 flex items-center justify-center xl:justify-end gap-5 flex-col lg:flex-row">
-          <div className="flex justify-center items-center">
+          <div className="flex justify-center items-center">  
             <Link
               href="/terms-condition"
               className="text-light-gray text-base leading-[16px] font-normal"

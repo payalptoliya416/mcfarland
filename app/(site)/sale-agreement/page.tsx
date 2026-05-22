@@ -144,6 +144,7 @@ function SaleAgreement() {
       try {
         const contractPayload = {
           machinery_id: parsed.machinery_id,
+          is_bid: false,
           billing_details: parsed.billing_details,
           shipping_details: parsed.shipping_details,
         };
@@ -184,8 +185,6 @@ function SaleAgreement() {
       toast.error("Please draw your signature first");
       return;
     }
-    const dataUrl = sigRef.current.getTrimmedCanvas().toDataURL("image/png");
-
     setIsSignatureSaved(true);
     toast.success("Signature saved successfully");
   };

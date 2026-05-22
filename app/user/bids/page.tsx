@@ -210,7 +210,7 @@ export default function Bids() {
 
     return (
       <span
-        className={`px-[22px] py-2 w-[85px] rounded-md text-sm leading-[14px] block ${
+        className={`px-[10px] py-2 w-[85px] rounded-md text-sm leading-[14px] block ${
           statusStyles[status] || "bg-gray-300 text-black"
         }`}
       >

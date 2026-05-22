@@ -30,7 +30,6 @@ export async function adminApi<T>(
 
   if (!res.ok) {
     let message = "Invalid email or password";
-
     // If backend sends message → use it
     if (data?.message) {
       if (typeof data.message === "string") {
@@ -43,8 +42,13 @@ export async function adminApi<T>(
       }
     }
 
-    throw new Error(message);
-  }
+    const customError = new Error(message) as any;
+
+    customError.data = data;
+    customError.status = res.status;
+
+    throw customError;
+    }
 
   return data as T;
 }

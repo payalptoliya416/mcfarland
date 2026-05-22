@@ -9,7 +9,7 @@ function TermsCondition() {
     const { companyName ,settings } = useSettings();
     const termsData = [
   {
-    title: "15. Contact Information",
+    title: "1. Contact Information",
     desc: [
       `If you have any questions regarding these Terms & Conditions, you may contact ${companyName}, LLC at:`,
       `Registered Address: ${ settings?.address }.`,

@@ -230,6 +230,7 @@ function SignaturePadAgreement() {
         setContractLoading(true);
         const contractPayload = {
           machinery_id: wonBidData.machinery_id,
+          is_bid: true,
           billing_details: wonBidData.billing_details,
           shipping_details: wonBidData.shipping_details,
         };

@@ -93,6 +93,7 @@ export const getUserDetails = (): Promise<UserDetailsResponse> => {
 
 export interface SaleAgreementRequest {
   machinery_id: number;
+  is_bid: boolean;
   billing_details: {
     legal_company_name: string;
     street_and_number: string;

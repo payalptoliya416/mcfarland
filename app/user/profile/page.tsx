@@ -258,19 +258,19 @@ export default function UserProfileForm() {
       setUploading(true);
 
      const formData = new FormData();
-formData.append("front", frontFile);
+    formData.append("front", frontFile);
 
-if (backFile) {
-  formData.append("back", backFile);
-}
+    if (backFile) {
+      formData.append("back", backFile);
+    }
 
-formData.append("docType", "DRIVERS");
+    formData.append("docType", "DRIVERS");
 
-if (country) {
-  formData.append("country", country);
-}
+    if (country) {
+      formData.append("country", country);
+    }
 
-const res = await uploadLicense(formData);
+    const res = await uploadLicense(formData);
 
       if (!res?.status) {
         toast.error(res?.message || "License upload failed");
@@ -300,9 +300,10 @@ const res = await uploadLicense(formData);
       await new Promise((resolve) => setTimeout(resolve, 30000));
 
       await getLicenseStatus();
-    } catch (err) {
+      await fetchProfile();
+     } catch (err: any) {
       console.error("License upload error:", err);
-      toast.error("Something went wrong while uploading license");
+      toast.error(err.message || "Something went wrong while uploading license");
     } finally {
       setUploading(false);
       setVerifying(false);

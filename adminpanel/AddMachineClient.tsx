@@ -268,8 +268,15 @@ const handleVideoUpload = async (
       ...urls,
     ]);
 
-    // ✅ UI preview
     setVideos((prev) => [...prev, ...files]);
+   } catch (error: any) {
+    const message =
+      error?.data?.errors?.["videos.0"]?.[0] ||
+      error?.data?.message ||
+      "Video upload failed";
+
+    toast.error(message);
+
   } finally {
     setVideoLoading(false);
   }
@@ -844,84 +851,65 @@ const UploadBox = ({
       }}
     >
       <input
-  ref={refInput}
-  type="file"
-  hidden
-  multiple
-  accept={accept}
-  disabled={loading}
-  // onChange={(e) => {
-  //   if (!e.target.files || e.target.files.length === 0) return;
+        ref={refInput}
+        type="file"
+        hidden
+        multiple
+        accept={accept}
+        disabled={loading}
 
-  //   const allowedTypes =
-  //     fileType === "image"
-  //       ? ["image/jpeg", "image/png"]
-  //       : ["video/mp4", "video/quicktime", "video/x-matroska"];
+        onChange={(e) => {
+        if (!e.target.files || e.target.files.length === 0) return;
 
-  //   const maxSize = maxSizeMB * 1024 * 1024;
+        const allowedTypes =
+          fileType === "image"
+            ? ["image/jpeg", "image/png", "image/webp"]
+            : ["video/mp4", "video/quicktime", "video/x-matroska"];
 
-  //   const files = Array.from(e.target.files).filter(
-  //     (file) =>
-  //       allowedTypes.includes(file.type) &&
-  //       file.size <= maxSize
-  //   );
+        const maxSize = maxSizeMB * 1024 * 1024;
 
-  //   if (files.length === 0) return;
-  //   onChange(files);
-  // }}
-  onChange={(e) => {
-  if (!e.target.files || e.target.files.length === 0) return;
+        const validFiles: File[] = [];
+        let hasOversize = false;
+        let hasInvalidType = false;
 
-  const allowedTypes =
-    fileType === "image"
-      ? ["image/jpeg", "image/png", "image/webp"]
-      : ["video/mp4", "video/quicktime", "video/x-matroska"];
+        Array.from(e.target.files).forEach((file) => {
+          if (!allowedTypes.includes(file.type)) {
+            hasInvalidType = true;
+            return;
+          }
 
-  const maxSize = maxSizeMB * 1024 * 1024;
+          if (file.size > maxSize) {
+            hasOversize = true;
+            return;
+          }
 
-  const validFiles: File[] = [];
-  let hasOversize = false;
-  let hasInvalidType = false;
+          validFiles.push(file);
+        });
 
-  Array.from(e.target.files).forEach((file) => {
-    if (!allowedTypes.includes(file.type)) {
-      hasInvalidType = true;
-      return;
-    }
+        if (hasInvalidType) {
+          toast.error(
+            fileType === "video"
+              ? "Only MP4, MOV or MKV videos are allowed"
+              : "Only JPG, PNG or WEBP images are allowed"
+          );
+        }
 
-    if (file.size > maxSize) {
-      hasOversize = true;
-      return;
-    }
+        if (hasOversize) {
+          toast.error(
+            `${fileType === "video" ? "Video" : "Image"} size must be less than ${maxSizeMB}MB`
+          );
+        }
 
-    validFiles.push(file);
-  });
+        if (validFiles.length === 0) {
+          e.target.value = "";
+          return;
+        }
 
-  if (hasInvalidType) {
-    toast.error(
-      fileType === "video"
-        ? "Only MP4, MOV or MKV videos are allowed"
-        : "Only JPG, PNG or WEBP images are allowed"
-    );
-  }
-
-  if (hasOversize) {
-    toast.error(
-      `${fileType === "video" ? "Video" : "Image"} size must be less than ${maxSizeMB}MB`
-    );
-  }
-
-  if (validFiles.length === 0) {
-    e.target.value = "";
-    return;
-  }
-
-  onChange(validFiles);
-  e.target.value = "";
-}}
-/>
-
-
+        onChange(validFiles);
+        e.target.value = "";
+      }}
+      />
+      
       {/* 🔄 LOADER */}
       {loading ? (
         <div className="flex flex-col items-center gap-3">

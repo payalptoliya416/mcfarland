@@ -55,39 +55,7 @@ export default function VerifyAccount() {
 
     loadProfileAndCountry();
   }, []);
-
-  // useEffect(() => {
-  //   const originalPath = window.location.pathname;
-
-  //   const blockAnchorNavigation = (event: MouseEvent) => {
-  //     const target = event.target as HTMLElement | null;
-  //     if (!target) return;
-
-  //     const anchor = target.closest("a");
-  //     if (anchor) {
-  //       event.preventDefault();
-  //       event.stopPropagation();
-  //       toast("Complete verification first before navigating away.");
-  //     }
-  //   };
-
-  //   const onPopState = () => {
-  //     if (window.location.pathname !== originalPath) {
-  //       window.history.pushState(null, "", originalPath);
-  //     }
-  //   };
-
-  //   document.body.classList.add("verify-account-block-navigation");
-  //   document.addEventListener("click", blockAnchorNavigation, true);
-  //   window.addEventListener("popstate", onPopState);
-
-  //   return () => {
-  //     document.body.classList.remove("verify-account-block-navigation");
-  //     document.removeEventListener("click", blockAnchorNavigation, true);
-  //     window.removeEventListener("popstate", onPopState);
-  //   };
-  // }, []);
-
+  
     const fetchProfile = async () => {
     try {
       const res = await getUserProfile();
