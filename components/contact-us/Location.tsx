@@ -48,6 +48,11 @@ function Location() {
       title: "Email Address",
       desc: settings.email,
     },
+    {
+      icon: "/assets/l4.svg",
+      title: "Working Hours",
+      desc: "9am - 4pm (MDT) Monday to Friday",
+    },
   ];
   
   return (
@@ -59,13 +64,13 @@ function Location() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px] items-stretch"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[30px] items-stretch"
           >
             {locations.map((item, i) => (
               <motion.div
                 key={i}
                 variants={cardVariant}
-                className="h-full flex justify-start items-center flex-col border border-border rounded-xl p-[30px] text-center bg-white"
+                className="h-full flex justify-start items-center flex-col border border-border rounded-xl p-[20px] 2xl:p-[30px] text-center bg-white"
               >
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8 }}
