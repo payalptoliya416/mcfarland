@@ -247,53 +247,90 @@ useEffect(() => {
     return () => document.removeEventListener("click", close);
   }, []);
 
-  // const inventorySubmenu: NavItem[] = Object.entries(inventoryGroups).map(
-  //   ([groupName, children]) => {
-  //     const matched = categories.filter((cat) =>
-  //       children.includes(cat.category_name),
-  //     );
+// const inventorySubmenu: NavItem[] = useMemo(() => {
+//   return Object.entries(inventoryGroups).map(
+//     ([groupName, children]) => {
+//       const matched = categories.filter((cat) =>
+//         children.includes(cat.category_name),
+//       );
 
-  //     return {
-  //       name: groupName,
-  //       path: "#",
-  //       submenu: matched.map((cat) => ({
-  //         name: cat.category_name,
-  //         path: `/inventory?category=${slugify(cat.category_name)}`,
-  //       })),
-  //     };
-  //   },
-  // );
+//       return {
+//         name: groupName,
+//         path: "#",
+//         submenu: matched.map((cat) => ({
+//           name: cat.category_name,
+//           path: `/inventory?category=${slugify(cat.category_name)}`,
+//         })),
+//       };
+//     },
+//   );
+// }, [categories]);
+
 const inventorySubmenu: NavItem[] = useMemo(() => {
-  return Object.entries(inventoryGroups).map(
-    ([groupName, children]) => {
-      const matched = categories.filter((cat) =>
-        children.includes(cat.category_name),
+  const groupedMenus: NavItem[] = [];
+
+  // track used categories
+  const usedCategories: string[] = [];
+
+  Object.entries(inventoryGroups).forEach(([groupName, children]) => {
+    // matched child categories
+    const matched = categories.filter((cat) =>
+      children.some(
+        (child) =>
+          child.toLowerCase() ===
+          cat.category_name.toLowerCase(),
+      ),
+    );
+
+    matched.forEach((cat) =>
+      usedCategories.push(cat.category_name.toLowerCase()),
+    );
+
+    // direct category like Telehandlers / Farm Tractors
+    const directCategory = categories.find(
+      (cat) =>
+        cat.category_name.toLowerCase() ===
+        groupName.toLowerCase(),
+    );
+
+    if (directCategory) {
+      usedCategories.push(
+        directCategory.category_name.toLowerCase(),
       );
+    }
 
-      return {
-        name: groupName,
-        path: "#",
-        submenu: matched.map((cat) => ({
-          name: cat.category_name,
-          path: `/inventory?category=${slugify(cat.category_name)}`,
-        })),
-      };
-    },
-  );
+    groupedMenus.push({
+      name: groupName,
+      path: `/inventory?category=${slugify(groupName)}`,
+      submenu:
+        matched.length > 0
+          ? matched.map((cat) => ({
+              name: cat.category_name,
+              path: `/inventory?category=${slugify(
+                cat.category_name,
+              )}`,
+            }))
+          : undefined,
+    });
+  });
+
+  // dynamically add new categories at bottom
+  const dynamicCategories: NavItem[] = categories
+    .filter(
+      (cat) =>
+        !usedCategories.includes(
+          cat.category_name.toLowerCase(),
+        ),
+    )
+    .map((cat) => ({
+      name: cat.category_name,
+      path: `/inventory?category=${slugify(
+        cat.category_name,
+      )}`,
+    }));
+
+  return [...groupedMenus, ...dynamicCategories];
 }, [categories]);
-
-  // const navItems: NavItem[] = [
-  //   { name: "Home", path: "/" },
-  //   {
-  //     name: "Inventory",
-  //     path: "/inventory",
-  //     submenu: inventorySubmenu,
-  //   },
-  //   { name: "About Us", path: "/about-us" },
-  //   { name: "Services", path: "/services" },
-  //   { name: "FAQ", path: "/faq" },
-  //   { name: "Contact Us", path: "/contact-us" },
-  // ];
 
     const navItems: NavItem[] = useMemo(() => [
     { name: "Home", path: "/" },
@@ -501,13 +538,13 @@ const hasBgImage = useMemo(() => {
                   `}
                 >
                   <ul className="py-3">
-                    {item.submenu?.map((group) => {
+                      {item.submenu?.map((group, index) => {
                       const hasSubmenu = (group.submenu?.length ?? 0) > 0;
                       const isOpen = activeGroup === group.name;
 
                       return (
                         <li
-                          key={group.name + group.path}
+                         key={`${group.name}-${group.path}-${index}`}
                           className="relative px-4 py-2 hover:bg-gray-50"
                           onMouseEnter={() => {
                             setActiveGroup(group.name);
@@ -525,16 +562,16 @@ const hasBgImage = useMemo(() => {
 
                               let url = "";
 
-                              if (hasSubmenu) {
-                                const categories = group.submenu
-                                  ?.map((sub) => sub.path.split("category=")[1])
-                                  .filter(Boolean)
-                                  .join(",");
+                            if (hasSubmenu) {
+                            const categories = group.submenu
+                              ?.map((sub) => sub.path.split("category=")[1])
+                              .filter(Boolean)
+                              .join(",");
 
-                                url = `/inventory?category=${categories}`;
-                              } else {
-                                url = `/inventory?category=${slugify(group.name)}`;
-                              }
+                            url = `/inventory?category=${categories}`;
+                          } else {
+                            url = group.path;
+                          }
 
                               setDisableHover(true);
                               setOpenDropdown(null);

@@ -41,6 +41,66 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://mcfarland-equipment.com/inventory/harvesters/john-deere/s680s-sts-rwa-combine/212153</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/harvesters/challenger/560e-rwa-combine/211825</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/harvesters/claas/jaguar-980-forage-harvester/211508</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/harvesters/case-ih/7130-afs-combine/211218</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/farm-tractors/new-holland/tv6070/210942</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/harvesters/case-ih/8230-afs-combine/210645</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/harvesters/john-deere/7350-prwd-forage-harvester/210024</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/harvesters/john-deere/9570-sts-rwa-combine/205758</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/farm-tractors/fendt/924-vario-mfwd/205405</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/harvesters/case-ih/2388-rwa-combine/205058</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/harvesters/claas/jaguar-980-forage-harvester/204621</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mcfarland-equipment.com/inventory/harvesters/john-deere/x9-1100-rwa-combine/204236</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://mcfarland-equipment.com/inventory/harvesters/john-deere/x9-1100-signature-edition-rwa-combine/063530</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -121,7 +181,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mcfarland-equipment.com/inventory/mini-excavators/yanmar/sv40/185517</loc>
+    <loc>https://mcfarland-equipment.com/inventory/mini-excavators/yanmar/sv40/180216</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -131,7 +191,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mcfarland-equipment.com/inventory/mini-excavators/case/cx17c/185127</loc>
+    <loc>https://mcfarland-equipment.com/inventory/mini-excavators/case/cx17c/154529</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -257,11 +317,6 @@
   </url>
   <url>
     <loc>https://mcfarland-equipment.com/inventory/mini-excavators/bobcat/e26/155430</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://mcfarland-equipment.com/inventory/mini-excavators/yanmar/sv40/155234</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -501,7 +556,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mcfarland-equipment.com/inventory/skid-steer-loaders/caterpillar/259d3/091646</loc>
+    <loc>https://mcfarland-equipment.com/inventory/skid-steer-loaders/caterpillar/259d3/045108</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -916,7 +971,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mcfarland-equipment.com/inventory/farm-tractors/john-deere/5055e-4wd/114618</loc>
+    <loc>https://mcfarland-equipment.com/inventory/farm-tractors/john-deere/5055e-4wd/153727</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -1226,7 +1281,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mcfarland-equipment.com/inventory/mini-excavators/bobcat/e35/090607</loc>
+    <loc>https://mcfarland-equipment.com/inventory/mini-excavators/bobcat/e35/154420</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2291,7 +2346,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mcfarland-equipment.com/inventory/backhoe-loaders/caterpillar/420fst/125038</loc>
+    <loc>https://mcfarland-equipment.com/inventory/backhoe-loaders/caterpillar/420fst/153232</loc>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
