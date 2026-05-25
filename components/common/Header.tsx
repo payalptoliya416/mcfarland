@@ -2,7 +2,10 @@
 
 import { isLoggedIn } from "@/api/authToken";
 import { Category } from "@/api/data";
-import { getSettingsByKeysFooter } from "@/api/categoryActions";
+import {
+  getAllCategories,
+  getSettingsByKeysFooter,
+} from "@/api/categoryActions";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -27,7 +30,7 @@ function MobileNavItem({
   resetKey,
   pathname,
   slugify,
-  handleNavigate
+  handleNavigate,
 }: {
   item: NavItem;
   router: any;
@@ -62,17 +65,16 @@ function MobileNavItem({
                 .join(",");
 
               handleNavigate(`/inventory?category=${categories}`);
-            
+
               closeMenu();
               return;
             }
             if (!hasChildren) {
-             
               let url = item.path;
               if (item.path === "#") {
                 url = `/inventory?category=${slugify(item.name)}`;
               }
-               handleNavigate(url);
+              handleNavigate(url);
               closeMenu();
               return;
             }
@@ -81,16 +83,16 @@ function MobileNavItem({
             closeMenu();
           }}
           className={`
-  flex-1 text-left py-2 px-2 font-medium rounded-md transition
-  ${
-    isActive
-      ? "text-orange font-semibold bg-orange/10"
-      : level === 0
-        ? "text-gray-800 text-base"
-        : "text-gray-600 text-sm"
-  }
-  hover:bg-orange/10 hover:text-orange cursor-pointer
-`}
+            flex-1 text-left py-2 px-2 font-medium rounded-md transition
+            ${
+              isActive
+                ? "text-orange font-semibold bg-orange/10"
+                : level === 0
+                  ? "text-gray-800 text-base"
+                  : "text-gray-600 text-sm"
+            }
+            hover:bg-orange/10 hover:text-orange cursor-pointer
+          `}
         >
           {item.name}
         </button>
@@ -173,9 +175,36 @@ function Header({
   const [activeGroup, setActiveGroup] = useState<string | null>(null);
   const [clickedGroup, setClickedGroup] = useState<string | null>(null);
   const [isNavigating, setIsNavigating] = useState(false);
+  const [headerCategories, setHeaderCategories] =
+    useState<Category[]>(categories);
 
   // Client-side fetch to ensure logo URL works on live (same pattern as AdminSidebar)
   const [settings, setSettings] = useState<any>(settingsProp);
+
+  useEffect(() => {
+    setHeaderCategories(categories);
+  }, [categories]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const refreshCategories = async () => {
+      try {
+        const res = await getAllCategories();
+        if (res?.success && res.data && isMounted) {
+          setHeaderCategories(res.data);
+        }
+      } catch {
+        // keep the current categories as a fallback
+      }
+    };
+
+    refreshCategories();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [pathname]);
 
   useEffect(() => {
     getSettingsByKeysFooter().then((res) => {
@@ -184,20 +213,23 @@ function Header({
       }
     });
   }, []);
-useEffect(() => {
-  setIsNavigating(false);
-}, [pathname]);
-useEffect(() => {
-  const handleComplete = () => {
+
+  useEffect(() => {
     setIsNavigating(false);
-  };
+  }, [pathname]);
 
-  window.addEventListener("popstate", handleComplete);
+  useEffect(() => {
+    const handleComplete = () => {
+      setIsNavigating(false);
+    };
 
-  return () => {
-    window.removeEventListener("popstate", handleComplete);
-  };
-}, []);
+    window.addEventListener("popstate", handleComplete);
+
+    return () => {
+      window.removeEventListener("popstate", handleComplete);
+    };
+  }, []);
+
   const slugify = (text: string) =>
     text
       .toLowerCase()
@@ -214,7 +246,7 @@ useEffect(() => {
 
       setTimeout(() => {
         setIsNavigating(false);
-      }, 2000); 
+      }, 2000);
     }
   };
 
@@ -225,17 +257,19 @@ useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const existingReturnUrl = params.get("returnUrl"); // auto-decoded
     const onAuthPage =
-      currentPathname === "/signup" || currentPathname.startsWith("/user/signin");
-    const destination = onAuthPage && existingReturnUrl
-      ? existingReturnUrl
-      : !onAuthPage
-        ? window.location.pathname + window.location.search
-        : "";
+      currentPathname === "/signup" ||
+      currentPathname.startsWith("/user/signin");
+    const destination =
+      onAuthPage && existingReturnUrl
+        ? existingReturnUrl
+        : !onAuthPage
+          ? window.location.pathname + window.location.search
+          : "";
     return destination && destination !== "/" && destination !== "/user"
       ? `${base}?returnUrl=${encodeURIComponent(destination)}`
       : base;
   };
-  
+
   useEffect(() => {
     function close(e: MouseEvent) {
       if (!(e.target as HTMLElement).closest(".dropdown-parent")) {
@@ -247,103 +281,84 @@ useEffect(() => {
     return () => document.removeEventListener("click", close);
   }, []);
 
-// const inventorySubmenu: NavItem[] = useMemo(() => {
-//   return Object.entries(inventoryGroups).map(
-//     ([groupName, children]) => {
-//       const matched = categories.filter((cat) =>
-//         children.includes(cat.category_name),
-//       );
+  const inventorySubmenu: NavItem[] = useMemo(() => {
+    const groupedMenus: NavItem[] = [];
 
-//       return {
-//         name: groupName,
-//         path: "#",
-//         submenu: matched.map((cat) => ({
-//           name: cat.category_name,
-//           path: `/inventory?category=${slugify(cat.category_name)}`,
-//         })),
-//       };
-//     },
-//   );
-// }, [categories]);
-
-const inventorySubmenu: NavItem[] = useMemo(() => {
-  const groupedMenus: NavItem[] = [];
-
-  // track used categories
-  const usedCategories: string[] = [];
-
-  Object.entries(inventoryGroups).forEach(([groupName, children]) => {
-    // matched child categories
-    const matched = categories.filter((cat) =>
-      children.some(
-        (child) =>
-          child.toLowerCase() ===
-          cat.category_name.toLowerCase(),
-      ),
-    );
-
-    matched.forEach((cat) =>
-      usedCategories.push(cat.category_name.toLowerCase()),
-    );
-
-    // direct category like Telehandlers / Farm Tractors
-    const directCategory = categories.find(
-      (cat) =>
-        cat.category_name.toLowerCase() ===
-        groupName.toLowerCase(),
-    );
-
-    if (directCategory) {
-      usedCategories.push(
-        directCategory.category_name.toLowerCase(),
-      );
-    }
-
-    groupedMenus.push({
-      name: groupName,
-      path: `/inventory?category=${slugify(groupName)}`,
-      submenu:
-        matched.length > 0
-          ? matched.map((cat) => ({
-              name: cat.category_name,
-              path: `/inventory?category=${slugify(
-                cat.category_name,
-              )}`,
-            }))
-          : undefined,
-    });
-  });
-
-  // dynamically add new categories at bottom
-  const dynamicCategories: NavItem[] = categories
-    .filter(
-      (cat) =>
-        !usedCategories.includes(
-          cat.category_name.toLowerCase(),
+    Object.entries(inventoryGroups).forEach(([groupName, children]) => {
+      const matched = headerCategories.filter((cat) =>
+        children.some(
+          (child) =>
+            child.trim().toLowerCase() ===
+            cat.category_name.trim().toLowerCase(),
         ),
-    )
-    .map((cat) => ({
-      name: cat.category_name,
-      path: `/inventory?category=${slugify(
-        cat.category_name,
-      )}`,
-    }));
+      );
 
-  return [...groupedMenus, ...dynamicCategories];
-}, [categories]);
+      const directCategory = headerCategories.find(
+        (cat) =>
+          cat.category_name.trim().toLowerCase() ===
+          groupName.trim().toLowerCase(),
+      );
 
-    const navItems: NavItem[] = useMemo(() => [
-    { name: "Home", path: "/" },
-    {
-      name: "Inventory",
-      path: "/inventory",
-      submenu: inventorySubmenu,
-    },
-    { name: "About Us", path: "/about-us" },
-    { name: "Services", path: "/services" },
-    { name: "FAQ", path: "/faq" },
-    { name: "Contact Us", path: "/contact-us" },
-  ], [inventorySubmenu]);
+      if (matched.length === 0 && !directCategory) {
+        return;
+      }
+
+      groupedMenus.push({
+        name: groupName,
+        path: `/inventory?category=${slugify(groupName)}`,
+        submenu:
+          matched.length > 0
+            ? matched.map((cat) => ({
+                name: cat.category_name,
+                path: `/inventory?category=${slugify(cat.category_name)}`,
+              }))
+            : undefined,
+      });
+    });
+
+    const dynamicCategories: NavItem[] = [];
+
+    headerCategories.forEach((cat) => {
+      const categoryName = cat.category_name.trim().toLowerCase();
+
+      const isGrouped = Object.entries(inventoryGroups).some(
+        ([groupName, children]) => {
+          if (groupName.trim().toLowerCase() === categoryName) {
+            return true;
+          }
+
+          return children.some(
+            (child) => child.trim().toLowerCase() === categoryName,
+          );
+        },
+      );
+
+      if (!isGrouped) {
+        dynamicCategories.push({
+          name: cat.category_name,
+          path: `/inventory?category=${slugify(cat.category_name)}`,
+        });
+      }
+    });
+
+    return [...groupedMenus, ...dynamicCategories];
+  }, [headerCategories, slugify]);
+
+  const navItems: NavItem[] = useMemo(
+    () => [
+      { name: "Home", path: "/" },
+      {
+        name: "Inventory",
+        path: "/inventory",
+        submenu: inventorySubmenu,
+      },
+      { name: "About Us", path: "/about-us" },
+      { name: "Services", path: "/services" },
+      { name: "FAQ", path: "/faq" },
+      { name: "Contact Us", path: "/contact-us" },
+    ],
+    [inventorySubmenu],
+  );
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -379,29 +394,6 @@ const inventorySubmenu: NavItem[] = useMemo(() => {
     setIsMenuOpen(false);
   }, [pathname]);
 
-  // const [settings, setSettings] = useState<any>(null);
-
-  // useEffect(() => {
-  //   getSettingsByKeysFooter().then((res) => {
-  //     if (res.success) {
-  //       setSettings(res.data);
-  //     }
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   const fetchCategories = async () => {
-  //     try {
-  //       const res = await getAllCategories();
-  //       if (res?.success) {
-  //         setCategories(res.data);
-  //       }
-  //     } catch (e) {}
-  // //   };
-
-  //   fetchCategories();
-  // }, []);
-
   const handleCloseMenu = () => {
     setIsMenuOpen(false);
     setResetKey((prev) => prev + 1);
@@ -409,41 +401,41 @@ const inventorySubmenu: NavItem[] = useMemo(() => {
   useEffect(() => {
     setLoggedIn(isLoggedIn());
   }, [pathname]);
-const [currentPath, setCurrentPath] = useState("");
+  const [currentPath, setCurrentPath] = useState("");
 
-useEffect(() => {
-  if (pathname) {
-    setCurrentPath(pathname);
-  }
-}, [pathname]);
+  useEffect(() => {
+    if (pathname) {
+      setCurrentPath(pathname);
+    }
+  }, [pathname]);
 
-const hasBgImage = useMemo(() => {
-  if (!currentPath) return false;
+  const hasBgImage = useMemo(() => {
+    if (!currentPath) return false;
 
-  if (currentPath === "/inventory" || currentPath === "/inventory/") {
-    return false;
-  }
+    if (currentPath === "/inventory" || currentPath === "/inventory/") {
+      return false;
+    }
 
-  return (
-    currentPath.startsWith("/inventory") ||
-    currentPath.startsWith("/verify-account/") ||
-    currentPath.startsWith("/verify-account") ||
-    currentPath.startsWith("/signup") ||
-    currentPath.startsWith("/confirmation") ||
-    currentPath.startsWith("/sale-agreement") ||
-    currentPath.startsWith("/checkout")
-  );
-}, [currentPath]);
+    return (
+      currentPath.startsWith("/inventory") ||
+      currentPath.startsWith("/verify-account/") ||
+      currentPath.startsWith("/verify-account") ||
+      currentPath.startsWith("/signup") ||
+      currentPath.startsWith("/confirmation") ||
+      currentPath.startsWith("/sale-agreement") ||
+      currentPath.startsWith("/checkout")
+    );
+  }, [currentPath]);
 
   return (
     <>
-    {isNavigating && (
-  <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white">
-  <Loader/>
-  </div>
-)}
-    <header
-      className={`
+      {isNavigating && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white">
+          <Loader />
+        </div>
+      )}
+      <header
+        className={`
     w-full z-50 relative
     ${
       hasBgImage
@@ -451,35 +443,30 @@ const hasBgImage = useMemo(() => {
         : "bg-transparent"
     }
   `}
-    >
-      <div className="container-custom mx-auto flex justify-between items-center pb-4 px-4 md:px-0">
-        <Link href="/">
-          {settings?.dark_logo && (
-            <img
-              src={settings.dark_logo}
-              alt="Logo"
-            />
-          )}
-        </Link>
-        <ul className="hidden lg:flex justify-center items-center gap-5 xl:gap-12">
-          {navItems.map((item) => (
-            <li
-              key={item.path}
-              className="relative dropdown-parent flex items-center gap-1"
-              onMouseEnter={() => {
-                if (disableHover) return;
-                setOpenDropdown(item.name);
-              }}
-              onMouseLeave={() => {
-                setOpenDropdown(null);
-                setActiveGroup(null);
-                setClickedGroup(null);
-              }}
-            >
-              <Link
-  href={item.path}
-                onClick={() =>handleNavigate(item.path)}
-                className={`text-base font-medium text-gray-700 hover:text-orange cursor-pointer relative
+      >
+        <div className="container-custom mx-auto flex justify-between items-center pb-4 px-4 md:px-0">
+          <Link href="/">
+            {settings?.dark_logo && <img src={settings.dark_logo} alt="Logo" />}
+          </Link>
+          <ul className="hidden lg:flex justify-center items-center gap-5 xl:gap-12">
+            {navItems.map((item) => (
+              <li
+                key={item.path}
+                className="relative dropdown-parent flex items-center gap-1"
+                onMouseEnter={() => {
+                  if (disableHover) return;
+                  setOpenDropdown(item.name);
+                }}
+                onMouseLeave={() => {
+                  setOpenDropdown(null);
+                  setActiveGroup(null);
+                  setClickedGroup(null);
+                }}
+              >
+                <Link
+                  href={item.path}
+                  onClick={() => handleNavigate(item.path)}
+                  className={`text-base font-medium text-gray-700 hover:text-orange cursor-pointer relative
                 after:content-[''] after:absolute after:-bottom-1
                 after:left-1/2 after:-translate-x-1/2
                 after:h-1 after:w-0
@@ -495,36 +482,36 @@ const hasBgImage = useMemo(() => {
                       : "text-gray-700 font-medium"
                 }
               `}
-              >
-                {item.name}
-              </Link>
-
-              {(item.submenu?.length ?? 0) > 0 && (
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation(); 
-                    e.preventDefault();
-                    setOpenDropdown(
-                      openDropdown === item.name ? null : item.name,
-                    );
-                  }}
-                  className={`hover:text-orange transition mt-1  ${
-                    item.path === "/"
-                      ? pathname === "/"
-                        ? "text-orange font-bold after:w-8"
-                        : "text-gray-700 font-medium"
-                      : pathname.startsWith(item.path)
-                        ? "text-orange font-bold after:w-8"
-                        : "text-gray-700 font-medium"
-                  }`}
                 >
-                  <IoIosArrowDown size={14} />
-                </button>
-              )}
+                  {item.name}
+                </Link>
 
-              {(item.submenu?.length ?? 0) > 0 && (
-                <div
-                  className={`
+                {(item.submenu?.length ?? 0) > 0 && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      setOpenDropdown(
+                        openDropdown === item.name ? null : item.name,
+                      );
+                    }}
+                    className={`hover:text-orange transition mt-1  ${
+                      item.path === "/"
+                        ? pathname === "/"
+                          ? "text-orange font-bold after:w-8"
+                          : "text-gray-700 font-medium"
+                        : pathname.startsWith(item.path)
+                          ? "text-orange font-bold after:w-8"
+                          : "text-gray-700 font-medium"
+                    }`}
+                  >
+                    <IoIosArrowDown size={14} />
+                  </button>
+                )}
+
+                {(item.submenu?.length ?? 0) > 0 && (
+                  <div
+                    className={`
                     absolute left-0 top-full mt-3 w-[250px]
                     bg-white shadow-xl rounded-xl z-[999]
                     transition-all duration-300
@@ -536,69 +523,71 @@ const hasBgImage = useMemo(() => {
                           : "opacity-0 invisible "
                     }
                   `}
-                >
-                  <ul className="py-3">
+                  >
+                    <ul className="py-3">
                       {item.submenu?.map((group, index) => {
-                      const hasSubmenu = (group.submenu?.length ?? 0) > 0;
-                      const isOpen = activeGroup === group.name;
+                        const hasSubmenu = (group.submenu?.length ?? 0) > 0;
+                        const isOpen = activeGroup === group.name;
 
-                      return (
-                        <li
-                         key={`${group.name}-${group.path}-${index}`}
-                          className="relative px-4 py-2 hover:bg-gray-50"
-                          onMouseEnter={() => {
-                            setActiveGroup(group.name);
-                          }}
-                          onMouseLeave={() => {
-                            if (clickedGroup !== group.name) {
-                              setActiveGroup(null);
-                            }
-                          }}
-                        >
-                          <button
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-
-                              let url = "";
-
-                            if (hasSubmenu) {
-                            const categories = group.submenu
-                              ?.map((sub) => sub.path.split("category=")[1])
-                              .filter(Boolean)
-                              .join(",");
-
-                            url = `/inventory?category=${categories}`;
-                          } else {
-                            url = group.path;
-                          }
-
-                              setDisableHover(true);
-                              setOpenDropdown(null);
-                              setActiveGroup(null);
-                              setClickedGroup(null);
-
-                             handleNavigate(url);
-                              setTimeout(() => setDisableHover(false), 300);
+                        return (
+                          <li
+                            key={`${group.name}-${group.path}-${index}`}
+                            className="relative px-4 py-2 hover:bg-gray-50"
+                            onMouseEnter={() => {
+                              setActiveGroup(group.name);
                             }}
-                            className="
+                            onMouseLeave={() => {
+                              if (clickedGroup !== group.name) {
+                                setActiveGroup(null);
+                              }
+                            }}
+                          >
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+
+                                let url = "";
+
+                                if (hasSubmenu) {
+                                  const categories = group.submenu
+                                    ?.map(
+                                      (sub) => sub.path.split("category=")[1],
+                                    )
+                                    .filter(Boolean)
+                                    .join(",");
+
+                                  url = `/inventory?category=${categories}`;
+                                } else {
+                                  url = group.path;
+                                }
+
+                                setDisableHover(true);
+                                setOpenDropdown(null);
+                                setActiveGroup(null);
+                                setClickedGroup(null);
+
+                                handleNavigate(url);
+                                setTimeout(() => setDisableHover(false), 300);
+                              }}
+                              className="
                                 w-full flex justify-between items-center
                                  text-gray-700 font-medium hover:text-orange cursor-pointer
                               "
-                          >
-                            {group.name}
+                            >
+                              {group.name}
+
+                              {hasSubmenu && (
+                                <MdChevronRight
+                                  size={20}
+                                  className="text-gray-400"
+                                />
+                              )}
+                            </button>
 
                             {hasSubmenu && (
-                              <MdChevronRight
-                                size={20}
-                                className="text-gray-400"
-                              />
-                            )}
-                          </button>
-
-                          {hasSubmenu && (
-                            <ul
-                              className={`
+                              <ul
+                                className={`
                                   absolute top-0 left-full ml-2
                                   w-[220px]
                                   bg-white shadow-xl rounded-xl
@@ -610,51 +599,50 @@ const hasBgImage = useMemo(() => {
                                       : "opacity-0 invisible"
                                   }
                                 `}
-                            >
-                              {group.submenu?.map((subItem) => (
-                                <li key={subItem.path}>
-                                  <button
-                                    onClick={() => {
-                                      setOpenDropdown(null);
-                                      setActiveGroup(null);
-                                      setClickedGroup(null);
-                                      handleNavigate(subItem.path);
-                                    }}
-                                    className="
+                              >
+                                {group.submenu?.map((subItem) => (
+                                  <li key={subItem.path}>
+                                    <button
+                                      onClick={() => {
+                                        setOpenDropdown(null);
+                                        setActiveGroup(null);
+                                        setClickedGroup(null);
+                                        handleNavigate(subItem.path);
+                                      }}
+                                      className="
                                         block w-full text-left py-2
                                         text-gray-700 font-medium hover:text-orange
                                       text-base cursor-pointer hover:bg-gray-50  px-4
                                       "
-                                  >
-                                    {subItem.name}
-                                  </button>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-        {loggedIn ? (
-          <button
-  onClick={() => handleNavigate("/user")}
-            className="hidden lg:block text-green bg-white py-2 px-4 md:py-3 md:px-6 rounded-lg font-semibold hover:bg-orange hover:text-white transition cursor-pointer"
-          >
-            Dashboard
-          </button>
-        ) : (
-         <div className="hidden lg:flex gap-3 items-center">
-
-            {/* Sign In (Outline - light) */}
+                                    >
+                                      {subItem.name}
+                                    </button>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+          {loggedIn ? (
             <button
-              onClick={() => handleNavigate(getAuthUrl("/user/signin"))}
-              className="
+              onClick={() => handleNavigate("/user")}
+              className="hidden lg:block text-green bg-white py-2 px-4 md:py-3 md:px-6 rounded-lg font-semibold hover:bg-orange hover:text-white transition cursor-pointer"
+            >
+              Dashboard
+            </button>
+          ) : (
+            <div className="hidden lg:flex gap-3 items-center">
+              {/* Sign In (Outline - light) */}
+              <button
+                onClick={() => handleNavigate(getAuthUrl("/user/signin"))}
+                className="
                 px-3 xl:px-5 py-2 xl:py-2.5 rounded-lg 
                 border border-white/40 
                 text-white font-medium
@@ -663,15 +651,18 @@ const hasBgImage = useMemo(() => {
                 backdrop-blur-sm
                 cursor-pointer
               "
-            >
-              Sign In
-            </button>
+              >
+                Sign In
+              </button>
 
-            {/* Sign Up (Primary highlight) */}
-            {!pathname.startsWith("/signup") && (
-            <button
-               onClick={() => { setIsNavigating(true); handleNavigate(getAuthUrl("/signup")); }}
-              className="
+              {/* Sign Up (Primary highlight) */}
+              {!pathname.startsWith("/signup") && (
+                <button
+                  onClick={() => {
+                    setIsNavigating(true);
+                    handleNavigate(getAuthUrl("/signup"));
+                  }}
+                  className="
                 px-3 xl:px-5 py-2 xl:py-2.5 rounded-lg 
                 bg-gradient-to-r from-orange to-yellow-400
                 text-white font-semibold
@@ -680,118 +671,118 @@ const hasBgImage = useMemo(() => {
                 transition duration-200
                 cursor-pointer
               "
-            >
-              Sign Up
-            </button>
-             )}
-          </div>
-        )}
+                >
+                  Sign Up
+                </button>
+              )}
+            </div>
+          )}
 
-        <button
-          ref={buttonRef}
-          className="lg:hidden focus:outline-none cursor-pointer"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          <HiBars3BottomRight size={36} />
-        </button>
-      </div>
+          <button
+            ref={buttonRef}
+            className="lg:hidden focus:outline-none cursor-pointer"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            <HiBars3BottomRight size={36} />
+          </button>
+        </div>
 
-      <div
-        ref={menuRef}
-        className={`lg:hidden ${isMenuOpen ? "block" : "hidden"}`}
-      >
         <div
-          className={`lg:hidden fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300
+          ref={menuRef}
+          className={`lg:hidden ${isMenuOpen ? "block" : "hidden"}`}
+        >
+          <div
+            className={`lg:hidden fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300
             ${
               isMenuOpen
                 ? "opacity-100 pointer-events-auto"
                 : "opacity-0 pointer-events-none"
             }
           `}
-          onClick={handleCloseMenu}
-        ></div>
-        <div
-          ref={menuRef}
-          className={`
+            onClick={handleCloseMenu}
+          ></div>
+          <div
+            ref={menuRef}
+            className={`
             lg:hidden fixed top-0 left-0 h-full w-[260px] bg-white shadow-xl z-[100]
             px-3 pb-8 pt-3 transition-transform duration-300 overflow-y-auto
             ${isMenuOpen ? "sidebar-open" : "sidebar-closed"}
           `}
-        >
-          <Link href="/">
-            {settings?.dark_logo && (
-              <Image
-                src={settings.dark_logo}
-                alt="Logo"
-                height={100}
-                width={100}
-                loading="eager"
-                priority
-              />
-            )}
-          </Link>
-          <button
-            onClick={handleCloseMenu}
-            className="absolute top-2 right-2 text-white text-2xl bg-orange rounded-full p-[2px] cursor-pointer"
           >
-            <IoClose size={20} />
-          </button>
+            <Link href="/">
+              {settings?.dark_logo && (
+                <Image
+                  src={settings.dark_logo}
+                  alt="Logo"
+                  height={100}
+                  width={100}
+                  loading="eager"
+                  priority
+                />
+              )}
+            </Link>
+            <button
+              onClick={handleCloseMenu}
+              className="absolute top-2 right-2 text-white text-2xl bg-orange rounded-full p-[2px] cursor-pointer"
+            >
+              <IoClose size={20} />
+            </button>
 
-          <ul className="flex flex-col gap-2 mt-6">
-            {navItems.map((item) => (
-              <MobileNavItem
-                key={item.path}
-                item={item}
-                router={router}
-                closeMenu={handleCloseMenu}
-                resetKey={resetKey}
-                pathname={pathname}
-                slugify={slugify}
-                handleNavigate={handleNavigate}
-              />
-            ))}
-          </ul>
-          {loggedIn ? (
-            <Link
-              href="/user"
-              className="
+            <ul className="flex flex-col gap-2 mt-6">
+              {navItems.map((item) => (
+                <MobileNavItem
+                  key={item.path}
+                  item={item}
+                  router={router}
+                  closeMenu={handleCloseMenu}
+                  resetKey={resetKey}
+                  pathname={pathname}
+                  slugify={slugify}
+                  handleNavigate={handleNavigate}
+                />
+              ))}
+            </ul>
+            {loggedIn ? (
+              <Link
+                href="/user"
+                className="
               mt-6 block text-center text-green bg-white border border-green 
               py-3 px-6 rounded-lg font-semibold 
               transition-all duration-300 
               hover:bg-orange hover:text-white hover:border-orange
             "
-            >
-              Dashboard
-            </Link>
-          ) : (
-            <div className="">
-            <button
-              onClick={() => handleNavigate(getAuthUrl("/user/signin"))}
-              className="
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <div className="">
+                <button
+                  onClick={() => handleNavigate(getAuthUrl("/user/signin"))}
+                  className="
               mt-6 block text-center text-green bg-white border border-green 
               py-3 px-6 rounded-lg font-semibold w-full
               transition-all duration-300 
               hover:bg-orange hover:text-white hover:border-orange
             "
-            >
-              Sign In
-            </button>
-            <button
-              onClick={() => handleNavigate(getAuthUrl("/signup"))}
-              className="
+                >
+                  Sign In
+                </button>
+                <button
+                  onClick={() => handleNavigate(getAuthUrl("/signup"))}
+                  className="
               mt-2 block text-center text-green bg-white border border-green 
               py-3 px-6 rounded-lg font-semibold w-full
               transition-all duration-300 
               hover:bg-orange hover:text-white hover:border-orange
             "
-            >
-              Sign Up
-            </button>
-            </div>
-          )}
+                >
+                  Sign Up
+                </button>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
     </>
   );
 }
