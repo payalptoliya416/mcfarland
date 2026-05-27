@@ -495,7 +495,7 @@ if (
 
     // ================= REFRESH =================
 
-    setActiveTab("table");
+    setActiveTab("map");
 
     await fetchTracking();
 
@@ -558,7 +558,7 @@ if (
       ) : (
         <button
           onClick={async () => {
-            setActiveTab("table");
+            setActiveTab("map");
 
             setShowTrackingModal(true);
 
@@ -716,6 +716,22 @@ if (
                 )}
 
                 <button
+                  onClick={() => setActiveTab("map")}
+                  className={`
+                  relative pb-2.5 text-[14px] font-semibold whitespace-nowrap transition cursor-pointer
+                  ${
+                    activeTab === "map"
+                      ? "text-[#F59E0B]"
+                      : "text-gray-500 hover:text-gray-700"
+                  }
+                `}
+                >
+                  Delivery Map
+                  {activeTab === "map" && (
+                    <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
+                  )}
+                </button>
+                <button
                   onClick={() => setActiveTab("table")}
                   className={`
                   relative pb-2.5 text-[14px] font-semibold whitespace-nowrap transition cursor-pointer
@@ -732,22 +748,6 @@ if (
                   )}
                 </button>
 
-                <button
-                  onClick={() => setActiveTab("map")}
-                  className={`
-                  relative pb-2.5 text-[14px] font-semibold whitespace-nowrap transition cursor-pointer
-                  ${
-                    activeTab === "map"
-                      ? "text-[#F59E0B]"
-                      : "text-gray-500 hover:text-gray-700"
-                  }
-                `}
-                >
-                  Delivery Map
-                  {activeTab === "map" && (
-                    <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
-                  )}
-                </button>
               </div>
             </div>
 
