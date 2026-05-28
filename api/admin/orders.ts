@@ -90,6 +90,7 @@ export type TrackingItem = {
   updated_at: string;
   lat? : number;
   lng? : number;
+  is_update?: boolean;
 };
 
 export type GetTrackingResponse = {
@@ -139,17 +140,30 @@ export const adminOrdersService = {
         method: "POST",
         body: JSON.stringify(payload),
       }),
-    updateTracking: (payload: {
+  updateTracking: (payload: {
+  updates?: {
     id: number;
+    tracking_date?: string;
+    city?: string;
+    lat?: number;
+    lng?: number;
+  }[];
+
+  new_trackings?: {
+    order_id: number;
     tracking_date: string;
     city: string;
     lat?: number;
     lng?: number;
-  }) =>
-  adminApi<{ status: boolean; message: string }>("/orders/tracking/update", {
-    method: "POST",
-    body: JSON.stringify(payload),
-  }),
+  }[];
+}) =>
+  adminApi<{ status: boolean; message: string }>(
+    "/orders/tracking/update",
+    {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }
+  ),
   generateInvoice: (payload: { order_id: number }) =>
   adminApi<{ success: boolean; message: string }>(
     "/orders/regenerate-invoice",

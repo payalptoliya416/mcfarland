@@ -350,15 +350,15 @@ const [regenerateLoading, setRegenerateLoading] = useState(false);
           </TooltipWrapper>
         )} 
      {row.typeText === "Checkout" && row.invoiceUrl && (
-  <TooltipWrapper content="Regenerate Invoice">
-    <button
-      onClick={() => setRegenerateId(row.id)}
-      className="text-blue-500 hover:text-blue-600 cursor-pointer transition"
-    >
-      <HiArrowPath size={20} />
-    </button>
-  </TooltipWrapper>
-)}
+      <TooltipWrapper content="Regenerate Invoice">
+        <button
+          onClick={() => setRegenerateId(row.id)}
+          className="text-blue-500 hover:text-blue-600 cursor-pointer transition"
+        >
+          <HiArrowPath size={20} />
+        </button>
+      </TooltipWrapper>
+    )}
       </div>
         );
       },

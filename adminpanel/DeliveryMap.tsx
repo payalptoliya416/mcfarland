@@ -22,6 +22,7 @@ type TrackingItem = {
   date: string;
   lat?: number;
   lng?: number;
+  is_update? : boolean;
 };
 
 type Props = {

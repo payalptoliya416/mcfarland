@@ -71,7 +71,8 @@ export default function OrderStatusDropdown({
   );
   const [activeTab, setActiveTab] = useState<"form" | "table" | "map">("form");
   const todayDate = new Date().toISOString().split("T")[0];
-const [trackingLocked, setTrackingLocked] = useState(false);
+  const [trackingLocked, setTrackingLocked] = useState(false);
+  const [hideTrackingForm, setHideTrackingForm] = useState(true);
   /* ================= STATUS CONFIG ================= */
   const statusConfig: Record<
     OrderStatus,
@@ -291,16 +292,28 @@ const [trackingLocked, setTrackingLocked] = useState(false);
         order_id: orderId,
       });
 
-      setRows(
-        res.data.map((item) => ({
-          id: item.id,
-          date: item.tracking_date.split(" ")[0],
-          city: item.city,
-          lat: Number(item.lat),
-          lng: Number(item.lng),
-          isNew: false,
-        })),
-      );
+      const trackingRows = res.data.map((item) => ({
+  id: item.id,
+  date: item.tracking_date.split(" ")[0],
+  city: item.city,
+  lat: Number(item.lat),
+  lng: Number(item.lng),
+  isNew: false,
+}));
+
+setRows(trackingRows);
+
+// ================= CHECK UPDATED =================
+
+const hasUpdatedTracking = res.data.some(
+  (item) => item.is_update === true
+);
+
+// true hoy to hide
+// false hoy to show
+
+setHideTrackingForm(hasUpdatedTracking);
+
     } catch (err: any) {
       toast.error(err?.message);
     }
@@ -312,80 +325,227 @@ const [trackingLocked, setTrackingLocked] = useState(false);
     }
   }, [showTrackingModal]);
 
-  const handleSubmit = async () => {
+//   const handleSubmit = async () => {
 
+//   if (saving) return;
+
+//   try {
+
+//     setSaving(true);
+
+//     await Promise.all(
+
+//       rows.map(async (row) => {
+
+//         if (!row.date || !row.city) return;
+
+//         // const coords =
+//         //   await getLatLngFromCity(
+//         //     row.city
+//         //   );
+
+//         // ================= UPDATE =================
+
+//         if (row.id) {
+
+//           // await adminOrdersService.updateTracking({
+
+//           //   id: row.id,
+
+//           //   tracking_date:
+//           //     row.date,
+
+//           //   city: row.city,
+
+//           //   lat: 12,
+
+//           //   lng: 21,
+//           //   // lat: coords.lat,
+
+//           //   // lng: coords.lng,
+
+//           // });
+        
+//           const updates = rows
+//             .filter((row) => row.id)
+//             .map((row) => ({
+//               id: row.id!,
+//               tracking_date: row.date,
+//               city: row.city,
+//               lat:  12,
+//               lng:  21,
+//             }));
+
+//           const new_trackings = rows
+//             .filter((row) => !row.id)
+//             .map((row) => ({
+//               order_id: orderId,
+//               tracking_date: row.date,
+//               city: row.city,
+//               lat:  12,
+//               lng:  21,
+//             }));
+
+//           await adminOrdersService.updateTracking({
+//             updates,
+//             new_trackings,
+//           });
+//         }
+
+//         // ================= ADD =================
+
+//         else {
+
+//           await adminOrdersService.addTracking({
+
+//             trackings: [
+//               {
+//                 order_id: orderId,
+
+//                 tracking_date:
+//                   row.date,
+
+//                 city: row.city,
+
+//                 lat: 21,
+
+//                 lng:12,
+//                 // lat: coords.lat,
+
+//                 // lng: coords.lng,
+//               },
+//             ],
+
+//           });
+
+//         }
+
+//       })
+
+//     );
+
+//     // ================= STATUS UPDATE =================
+
+//     if (
+//       selectedStatus &&
+//       statusConfig[value].apiValue <
+//         statusConfig[selectedStatus].apiValue
+//     ) {
+
+//       await adminOrdersService.updateStatus({
+
+//         order_id: orderId,
+
+//         status:
+//           statusConfig[selectedStatus]
+//             .apiValue,
+
+//       });
+
+//     }
+
+//     await fetchTracking();
+// setTrackingLocked(true);
+
+//     setActiveTab("map");
+
+//     toast.success(
+//       "Tracking saved successfully"
+//     );
+
+//   } catch (err: any) {
+
+//     toast.error(
+//       err?.message ||
+//       "Failed to save tracking"
+//     );
+
+//   } finally {
+
+//     setSaving(false);
+
+//   }
+
+// };
+
+const handleSubmit = async () => {
   if (saving) return;
 
   try {
-
     setSaving(true);
 
-    await Promise.all(
+    const validRows = await Promise.all(
+    rows
+    .filter((row) => row.date && row.city)
+    .map(async (row) => {
 
-      rows.map(async (row) => {
+      // ================= GET LAT LNG =================
 
-        if (!row.date || !row.city) return;
+      const coords =
+        await getLatLngFromCity(
+          row.city
+        );
 
-        // const coords =
-        //   await getLatLngFromCity(
-        //     row.city
-        //   );
+      return {
+        ...row,
+        lat: coords?.lat,
+        lng: coords?.lng,
+      };
+    })
+);
 
-        // ================= UPDATE =================
+    // ================= CHECK EXISTING =================
 
-        if (row.id) {
-
-          await adminOrdersService.updateTracking({
-
-            id: row.id,
-
-            tracking_date:
-              row.date,
-
-            city: row.city,
-
-            lat: 12,
-
-            lng: 21,
-            // lat: coords.lat,
-
-            // lng: coords.lng,
-
-          });
-
-        }
-
-        // ================= ADD =================
-
-        else {
-
-          await adminOrdersService.addTracking({
-
-            trackings: [
-              {
-                order_id: orderId,
-
-                tracking_date:
-                  row.date,
-
-                city: row.city,
-
-                lat: 21,
-
-                lng:12,
-                // lat: coords.lat,
-
-                // lng: coords.lng,
-              },
-            ],
-
-          });
-
-        }
-
-      })
-
+    const hasExistingTracking = validRows.some(
+      (row) => row.id
     );
+
+    // ================= FIRST TIME ADD =================
+
+    if (!hasExistingTracking) {
+
+      await adminOrdersService.addTracking({
+        trackings: validRows.map((row) => ({
+          order_id: orderId,
+          tracking_date: row.date,
+          city: row.city,
+           lat: row.lat,
+          lng:  row.lng,
+        })),
+      });
+
+    }
+
+    // ================= UPDATE =================
+
+    else {
+
+      const updates = validRows
+        .filter((row) => row.id)
+        .map((row) => ({
+          id: row.id!,
+          tracking_date: row.date,
+          city: row.city,
+          lat: row.lat,
+          lng: row.lng,
+        }));
+
+      const new_trackings = validRows
+        .filter((row) => !row.id)
+        .map((row) => ({
+          order_id: orderId,
+          tracking_date: row.date,
+          city: row.city,
+          lat: row.lat,
+          lng: row.lng,
+        }));
+
+      await adminOrdersService.updateTracking({
+        updates,
+        new_trackings,
+      });
+
+    }
 
     // ================= STATUS UPDATE =================
 
@@ -396,19 +556,17 @@ const [trackingLocked, setTrackingLocked] = useState(false);
     ) {
 
       await adminOrdersService.updateStatus({
-
         order_id: orderId,
-
         status:
           statusConfig[selectedStatus]
             .apiValue,
-
       });
 
     }
 
     await fetchTracking();
-setTrackingLocked(true);
+
+    setTrackingLocked(true);
 
     setActiveTab("map");
 
@@ -428,220 +586,9 @@ setTrackingLocked(true);
     setSaving(false);
 
   }
-
 };
 
-//   const handleSubmit = async () => {
-
-//   if (saving) return;
-
-//   const newErrors: number[] = [];
-//   const duplicateErrors: string[] = [];
-
-//   const dateSet = new Set<string>();
-//   const citySet = new Set<string>();
-
-//   rows.forEach((r, i) => {
-
-//     if (
-//       r.isNew &&
-//       !r.date.trim() &&
-//       !r.city.trim()
-//     ) {
-//       return;
-//     }
-
-//     // required validation
-//     if (
-//       !r.date.trim() ||
-//       !r.city.trim()
-//     ) {
-
-//       newErrors.push(i);
-
-//       return;
-
-//     }
-
-//     // duplicate date
-//     if (dateSet.has(r.date)) {
-
-//       duplicateErrors.push(
-//         `Duplicate date found: ${r.date}`
-//       );
-
-//     } else {
-
-//       dateSet.add(r.date);
-
-//     }
-
-//     // duplicate city
-//     const cityKey =
-//       r.city.trim().toLowerCase();
-
-//     if (citySet.has(cityKey)) {
-
-//       duplicateErrors.push(
-//         `Duplicate city found: ${r.city}`
-//       );
-
-//     } else {
-
-//       citySet.add(cityKey);
-
-//     }
-
-//   });
-
-//   // required field errors
-//   if (newErrors.length > 0) {
-
-//     setErrors(newErrors);
-
-//     setFormError(
-//       "Please fill all required fields"
-//     );
-
-//     return;
-
-//   }
-
-//   // duplicate validation
-//   if (duplicateErrors.length > 0) {
-
-//     setFormError(
-//       duplicateErrors[0]
-//     );
-
-//     return;
-
-//   }
-
-//   const hasValidRow = rows.some(
-//     (r) =>
-//       r.date.trim() &&
-//       r.city.trim()
-//   );
-
-//   if (!hasValidRow) {
-
-//     setFormError(
-//       "Please add at least one tracking entry"
-//     );
-
-//     return;
-
-//   }
-
-//   try {
-
-//     setSaving(true);
-
-//     const newRows = rows.filter(
-//       (r) =>
-//         r.isNew &&
-//         r.date &&
-//         r.city
-//     );
-
-//     // ================= GOOGLE LAT LNG =================
-
-//     const trackings =
-//       await Promise.all(
-
-//         newRows.map(async (row) => {
-
-//           const coords =
-//             await getLatLngFromCity(
-//               row.city
-//             );
-
-//           return {
-
-//             order_id: orderId,
-
-//             tracking_date:
-//               row.date,
-
-//             city: row.city,
-
-//             lat: coords.lat,
-
-//             lng: coords.lng,
-
-//           };
-
-//         })
-
-//       );
-
-//     // ================= PAYLOAD =================
-
-//     const payload = {
-//       trackings,
-//     };
-
-//     // ================= SAVE =================
-
-//     await adminOrdersService.addTracking(
-//       payload
-//     );
-//    // ================= STATUS UPDATE =================
-
-// if (
-//   selectedStatus &&
-//   statusConfig[value].apiValue <
-//     statusConfig[selectedStatus].apiValue
-// ) {
-//   await adminOrdersService.updateStatus({
-//     order_id: orderId,
-//     status: statusConfig[selectedStatus].apiValue,
-//   });
-
-//   // SMS only for Shipping Started
-//   if (selectedStatus === "Shipping Started") {
-//     try {
-//       await sendSMS({
-//         phone,
-//         type: "shipping_started",
-//         companyName:
-//           companyName ||
-//           "McFarland Equipment Sales & Auctions",
-//       });
-//     } catch (smsError) {}
-//   }
-// }
-
-//     // ================= REFRESH =================
-
-//     setActiveTab("map");
-
-//     await fetchTracking();
-
-//     setShowTrackingModal(true);
-
-//     setFormError("");
-
-//     toast.success(
-//       "Tracking added successfully"
-//     );
-
-//   } catch (err: any) {
-
-//     toast.error(
-//       err?.message ||
-//       "Failed to save"
-//     );
-
-//   } finally {
-
-//     setSaving(false);
-
-//   }
-
-// };
-  return (
+ return (
     <>
       {!trackingViewOnly ? (
         <button
@@ -816,7 +763,7 @@ setTrackingLocked(true);
             {/* ================= TABS ================= */}
             <div className="px-4 sm:px-5 pt-2 shrink-0">
               <div className="flex items-center gap-4 border-b border-gray-100 overflow-x-auto no-scrollbar">
-                {/* {!trackingViewOnly && ( */}
+              {!hideTrackingForm && (
                   <button
                     onClick={() => setActiveTab("form")}
                     className={`
@@ -833,7 +780,7 @@ setTrackingLocked(true);
                       <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
                     )}
                   </button>
-                {/* )} */}
+                )}
 
                 <button
                   onClick={() => setActiveTab("map")}
@@ -1240,7 +1187,9 @@ setTrackingLocked(true);
               >
                 Cancel
               </button>
-             {activeTab === "form" && !trackingLocked && (
+             {activeTab === "form" &&
+ !trackingLocked &&
+ !hideTrackingForm && (
                 <button
                   onClick={handleSubmit}
                   disabled={saving}
