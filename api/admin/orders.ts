@@ -135,22 +135,16 @@ export const adminOrdersService = {
       body: JSON.stringify(payload),
     }),
     getTracking: (payload: { order_id: number }) =>
-  adminApi<GetTrackingResponse>("/orders/tracking", {
-    method: "POST",
-    body: JSON.stringify(payload),
-  }),
-  deleteTracking: (payload: { id: number }) =>
-  adminApi<{ success: boolean; message: string }>("/orders/tracking/delete", {
-    method: "POST",
-    body: JSON.stringify(payload),
-  }),
+      adminApi<GetTrackingResponse>("/orders/tracking", {
+        method: "POST",
+        body: JSON.stringify(payload),
+      }),
     updateTracking: (payload: {
     id: number;
     tracking_date: string;
     city: string;
-  lat?: number;
+    lat?: number;
     lng?: number;
-    status? : string;
   }) =>
   adminApi<{ status: boolean; message: string }>("/orders/tracking/update", {
     method: "POST",

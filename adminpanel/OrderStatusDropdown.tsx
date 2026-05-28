@@ -71,7 +71,7 @@ export default function OrderStatusDropdown({
   );
   const [activeTab, setActiveTab] = useState<"form" | "table" | "map">("form");
   const todayDate = new Date().toISOString().split("T")[0];
-
+const [trackingLocked, setTrackingLocked] = useState(false);
   /* ================= STATUS CONFIG ================= */
   const statusConfig: Record<
     OrderStatus,
@@ -237,6 +237,7 @@ export default function OrderStatusDropdown({
   const handleStatusClick = (status: OrderStatus) => {
     if (status === "In Transit") {
       setSelectedStatus(status);
+      setTrackingLocked(false);
       setShowTrackingModal(true);
       return;
     }
@@ -315,203 +316,111 @@ export default function OrderStatusDropdown({
 
   if (saving) return;
 
-  const newErrors: number[] = [];
-  const duplicateErrors: string[] = [];
-
-  const dateSet = new Set<string>();
-  const citySet = new Set<string>();
-
-  rows.forEach((r, i) => {
-
-    if (
-      r.isNew &&
-      !r.date.trim() &&
-      !r.city.trim()
-    ) {
-      return;
-    }
-
-    // required validation
-    if (
-      !r.date.trim() ||
-      !r.city.trim()
-    ) {
-
-      newErrors.push(i);
-
-      return;
-
-    }
-
-    // duplicate date
-    if (dateSet.has(r.date)) {
-
-      duplicateErrors.push(
-        `Duplicate date found: ${r.date}`
-      );
-
-    } else {
-
-      dateSet.add(r.date);
-
-    }
-
-    // duplicate city
-    const cityKey =
-      r.city.trim().toLowerCase();
-
-    if (citySet.has(cityKey)) {
-
-      duplicateErrors.push(
-        `Duplicate city found: ${r.city}`
-      );
-
-    } else {
-
-      citySet.add(cityKey);
-
-    }
-
-  });
-
-  // required field errors
-  if (newErrors.length > 0) {
-
-    setErrors(newErrors);
-
-    setFormError(
-      "Please fill all required fields"
-    );
-
-    return;
-
-  }
-
-  // duplicate validation
-  if (duplicateErrors.length > 0) {
-
-    setFormError(
-      duplicateErrors[0]
-    );
-
-    return;
-
-  }
-
-  const hasValidRow = rows.some(
-    (r) =>
-      r.date.trim() &&
-      r.city.trim()
-  );
-
-  if (!hasValidRow) {
-
-    setFormError(
-      "Please add at least one tracking entry"
-    );
-
-    return;
-
-  }
-
   try {
 
     setSaving(true);
 
-    const newRows = rows.filter(
-      (r) =>
-        r.isNew &&
-        r.date &&
-        r.city
-    );
+    await Promise.all(
 
-    // ================= GOOGLE LAT LNG =================
+      rows.map(async (row) => {
 
-    const trackings =
-      await Promise.all(
+        if (!row.date || !row.city) return;
 
-        newRows.map(async (row) => {
+        // const coords =
+        //   await getLatLngFromCity(
+        //     row.city
+        //   );
 
-          const coords =
-            await getLatLngFromCity(
-              row.city
-            );
+        // ================= UPDATE =================
 
-          return {
+        if (row.id) {
 
-            order_id: orderId,
+          await adminOrdersService.updateTracking({
+
+            id: row.id,
 
             tracking_date:
               row.date,
 
             city: row.city,
 
-            lat: coords.lat,
+            lat: 12,
 
-            lng: coords.lng,
+            lng: 21,
+            // lat: coords.lat,
 
-          };
+            // lng: coords.lng,
 
-        })
+          });
 
-      );
+        }
 
-    // ================= PAYLOAD =================
+        // ================= ADD =================
 
-    const payload = {
-      trackings,
-    };
+        else {
 
-    // ================= SAVE =================
+          await adminOrdersService.addTracking({
 
-    await adminOrdersService.addTracking(
-      payload
+            trackings: [
+              {
+                order_id: orderId,
+
+                tracking_date:
+                  row.date,
+
+                city: row.city,
+
+                lat: 21,
+
+                lng:12,
+                // lat: coords.lat,
+
+                // lng: coords.lng,
+              },
+            ],
+
+          });
+
+        }
+
+      })
+
     );
-   // ================= STATUS UPDATE =================
 
-if (
-  selectedStatus &&
-  statusConfig[value].apiValue <
-    statusConfig[selectedStatus].apiValue
-) {
-  await adminOrdersService.updateStatus({
-    order_id: orderId,
-    status: statusConfig[selectedStatus].apiValue,
-  });
+    // ================= STATUS UPDATE =================
 
-  // SMS only for Shipping Started
-  if (selectedStatus === "Shipping Started") {
-    try {
-      await sendSMS({
-        phone,
-        type: "shipping_started",
-        companyName:
-          companyName ||
-          "McFarland Equipment Sales & Auctions",
+    if (
+      selectedStatus &&
+      statusConfig[value].apiValue <
+        statusConfig[selectedStatus].apiValue
+    ) {
+
+      await adminOrdersService.updateStatus({
+
+        order_id: orderId,
+
+        status:
+          statusConfig[selectedStatus]
+            .apiValue,
+
       });
-    } catch (smsError) {}
-  }
-}
 
-    // ================= REFRESH =================
+    }
+
+    await fetchTracking();
+setTrackingLocked(true);
 
     setActiveTab("map");
 
-    await fetchTracking();
-
-    setShowTrackingModal(true);
-
-    setFormError("");
-
     toast.success(
-      "Tracking added successfully"
+      "Tracking saved successfully"
     );
 
   } catch (err: any) {
 
     toast.error(
       err?.message ||
-      "Failed to save"
+      "Failed to save tracking"
     );
 
   } finally {
@@ -521,6 +430,217 @@ if (
   }
 
 };
+
+//   const handleSubmit = async () => {
+
+//   if (saving) return;
+
+//   const newErrors: number[] = [];
+//   const duplicateErrors: string[] = [];
+
+//   const dateSet = new Set<string>();
+//   const citySet = new Set<string>();
+
+//   rows.forEach((r, i) => {
+
+//     if (
+//       r.isNew &&
+//       !r.date.trim() &&
+//       !r.city.trim()
+//     ) {
+//       return;
+//     }
+
+//     // required validation
+//     if (
+//       !r.date.trim() ||
+//       !r.city.trim()
+//     ) {
+
+//       newErrors.push(i);
+
+//       return;
+
+//     }
+
+//     // duplicate date
+//     if (dateSet.has(r.date)) {
+
+//       duplicateErrors.push(
+//         `Duplicate date found: ${r.date}`
+//       );
+
+//     } else {
+
+//       dateSet.add(r.date);
+
+//     }
+
+//     // duplicate city
+//     const cityKey =
+//       r.city.trim().toLowerCase();
+
+//     if (citySet.has(cityKey)) {
+
+//       duplicateErrors.push(
+//         `Duplicate city found: ${r.city}`
+//       );
+
+//     } else {
+
+//       citySet.add(cityKey);
+
+//     }
+
+//   });
+
+//   // required field errors
+//   if (newErrors.length > 0) {
+
+//     setErrors(newErrors);
+
+//     setFormError(
+//       "Please fill all required fields"
+//     );
+
+//     return;
+
+//   }
+
+//   // duplicate validation
+//   if (duplicateErrors.length > 0) {
+
+//     setFormError(
+//       duplicateErrors[0]
+//     );
+
+//     return;
+
+//   }
+
+//   const hasValidRow = rows.some(
+//     (r) =>
+//       r.date.trim() &&
+//       r.city.trim()
+//   );
+
+//   if (!hasValidRow) {
+
+//     setFormError(
+//       "Please add at least one tracking entry"
+//     );
+
+//     return;
+
+//   }
+
+//   try {
+
+//     setSaving(true);
+
+//     const newRows = rows.filter(
+//       (r) =>
+//         r.isNew &&
+//         r.date &&
+//         r.city
+//     );
+
+//     // ================= GOOGLE LAT LNG =================
+
+//     const trackings =
+//       await Promise.all(
+
+//         newRows.map(async (row) => {
+
+//           const coords =
+//             await getLatLngFromCity(
+//               row.city
+//             );
+
+//           return {
+
+//             order_id: orderId,
+
+//             tracking_date:
+//               row.date,
+
+//             city: row.city,
+
+//             lat: coords.lat,
+
+//             lng: coords.lng,
+
+//           };
+
+//         })
+
+//       );
+
+//     // ================= PAYLOAD =================
+
+//     const payload = {
+//       trackings,
+//     };
+
+//     // ================= SAVE =================
+
+//     await adminOrdersService.addTracking(
+//       payload
+//     );
+//    // ================= STATUS UPDATE =================
+
+// if (
+//   selectedStatus &&
+//   statusConfig[value].apiValue <
+//     statusConfig[selectedStatus].apiValue
+// ) {
+//   await adminOrdersService.updateStatus({
+//     order_id: orderId,
+//     status: statusConfig[selectedStatus].apiValue,
+//   });
+
+//   // SMS only for Shipping Started
+//   if (selectedStatus === "Shipping Started") {
+//     try {
+//       await sendSMS({
+//         phone,
+//         type: "shipping_started",
+//         companyName:
+//           companyName ||
+//           "McFarland Equipment Sales & Auctions",
+//       });
+//     } catch (smsError) {}
+//   }
+// }
+
+//     // ================= REFRESH =================
+
+//     setActiveTab("map");
+
+//     await fetchTracking();
+
+//     setShowTrackingModal(true);
+
+//     setFormError("");
+
+//     toast.success(
+//       "Tracking added successfully"
+//     );
+
+//   } catch (err: any) {
+
+//     toast.error(
+//       err?.message ||
+//       "Failed to save"
+//     );
+
+//   } finally {
+
+//     setSaving(false);
+
+//   }
+
+// };
   return (
     <>
       {!trackingViewOnly ? (
@@ -696,7 +816,7 @@ if (
             {/* ================= TABS ================= */}
             <div className="px-4 sm:px-5 pt-2 shrink-0">
               <div className="flex items-center gap-4 border-b border-gray-100 overflow-x-auto no-scrollbar">
-                {!trackingViewOnly && (
+                {/* {!trackingViewOnly && ( */}
                   <button
                     onClick={() => setActiveTab("form")}
                     className={`
@@ -713,7 +833,7 @@ if (
                       <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
                     )}
                   </button>
-                )}
+                {/* )} */}
 
                 <button
                   onClick={() => setActiveTab("map")}
@@ -731,6 +851,7 @@ if (
                     <div className="absolute left-0 bottom-0 h-[2.5px] w-full rounded-full bg-[#F59E0B]" />
                   )}
                 </button>
+                
                 <button
                   onClick={() => setActiveTab("table")}
                   className={`
@@ -755,7 +876,8 @@ if (
             <div className="flex-1 overflow-hidden">
               {/* ======================= FORM TAB ======================== */}
 
-              {activeTab === "form" && !trackingViewOnly && (
+              {activeTab === "form" && (
+              // {activeTab === "form" && !trackingViewOnly && (
                 <div className="h-full flex flex-col overflow-hidden">
                   {/* ================= TOP BAR ================= */}
 
@@ -778,6 +900,7 @@ if (
                           Add shipment tracking updates
                         </div>
                       </div>
+{!trackingLocked && (
 
                       <button
                         onClick={addRow}
@@ -794,6 +917,7 @@ if (
                         <span className="text-[18px] leading-none">+</span>
                         Add
                       </button>
+)}
                     </div>
                   </div>
 
@@ -828,7 +952,8 @@ if (
 
                             <input
                               type="date"
-                              disabled={!row.isNew}
+                              // disabled={!row.isNew}
+                              disabled={trackingLocked}
                               min={todayDate}
                               value={row.date}
                               onChange={(e) =>
@@ -853,7 +978,8 @@ if (
 
                             <input
                               type="text"
-                              disabled={!row.isNew}
+                              // disabled={!row.isNew}
+                              disabled={trackingLocked}
                               value={row.city}
                               placeholder="Ex: Dallas, Texas, USA"
                               onChange={(e) =>
@@ -871,7 +997,7 @@ if (
 
                           {/* DELETE */}
 
-                          {row.isNew && !row.id && (
+                         {row.isNew && !row.id && !trackingLocked && (
                             <div className="md:col-span-1">
                               <button
                                 type="button"
@@ -1107,19 +1233,19 @@ if (
               <button
                 onClick={() => setShowTrackingModal(false)}
                 className="
-                h-10 px-4 rounded-xl border border-gray-300
+                h-10 px-4 rounded-xl border border-gray-300 cursor-pointer
                 text-[13px] font-medium text-gray-700
                 hover:bg-gray-100 transition
               "
               >
                 Cancel
               </button>
-              {activeTab === "form" && (
+             {activeTab === "form" && !trackingLocked && (
                 <button
                   onClick={handleSubmit}
                   disabled={saving}
                   className={`
-                  h-10 px-5 rounded-xl text-[13px] font-semibold text-white transition
+                  h-10 px-5 rounded-xl text-[13px] font-semibold text-white transition cursor-pointer
                   ${
                     saving
                       ? "bg-gray-400 cursor-not-allowed"
