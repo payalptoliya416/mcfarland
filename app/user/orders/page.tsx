@@ -370,6 +370,10 @@ const trackingRowsWithState =
               (s) => s.key === "Settle Payment",
             );
 
+            const paymentConfirmedIndex = filteredSteps.findIndex(
+            (s) => s.key === "Payment Confirmed",
+          );
+
             const SalesAgreementIndex = filteredSteps.findIndex(
               (s) => s.key === "Sales Agreement",
             );
@@ -513,7 +517,7 @@ const trackingRowsWithState =
                             )}
                           {s.key === "Settle Payment" &&
                             data.invoice_url &&
-                            step >= confirmationIndex && (
+                            step >= paymentConfirmedIndex && (
                               <div
                                 className="
                           mb-2
@@ -647,7 +651,7 @@ const trackingRowsWithState =
                                 )}
                               {s.key === "Settle Payment" &&
                                 data.invoice_url &&
-                                step >= confirmationIndex && (
+                                step >= paymentConfirmedIndex && (
                                   <div
                                     className="
                           mb-2

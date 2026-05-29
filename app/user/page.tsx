@@ -68,7 +68,14 @@ function RecentOrderCard({ row }: any) {
        <div className="flex justify-between items-center text-sm">
         <span className="text-gray-500">Invoice</span>
 
-        {row.invoice_url ? (
+        {row.invoice_url &&
+                                  [
+                                    "Payment Confirmed",
+                                    "Processing",
+                                    "Shipping Started",
+                                    "In Transit",
+                                    "Delivered",
+                                  ].includes(row.status) ? (
           <button
             onClick={() => window.open(row.invoice_url, "_blank")}
             className="text-green hover:scale-110 transition"
@@ -82,6 +89,18 @@ function RecentOrderCard({ row }: any) {
     </div>
   );
 }
+const statusToStep: Record<string, number> = {
+  "Order Submitted": 0,
+  "Sales Agreement": 1,
+  "Awaiting Invoice": 2,
+  "Settle Payment": 3,
+  "Payment Confirmed": 4,
+  Processing: 5,
+  "Shipping Started": 6,
+  "In Transit": 7,
+  Delivered: 8,
+  Cancelled: 9,
+};
 
 function Dashboard() {
   const isMobile = useIsMobile();
@@ -192,8 +211,12 @@ if (loading) {
       <Loader />
     </div>
     )}
-    {wonData && showNotification && !isCheckout &&  (
-      <div className="mb-5 container-custom">
+{wonData &&
+  (wonData?.order_status === null ||
+    wonData?.order_status === undefined) &&
+  showNotification &&
+  !isCheckout && (   
+       <div className="mb-5 container-custom">
         <div
           className="flex items-start lg:items-center justify-between gap-4 bg-[#EAFBF3] border border-[#2DBE60] rounded-xl px-4 py-4 cursor-pointer hover:shadow-md transition max-w-max w-full mx-auto mt-5 relative"
         >
@@ -221,7 +244,11 @@ if (loading) {
         </div>
       </div>
     )}
-    {wonData?.pdf_url && showInvoiceNotification && (
+
+   {wonData?.pdf_url &&
+  wonData?.order_status >= 4 &&
+  wonData?.order_status !== 9 &&
+  showInvoiceNotification && (
       <div className="mb-5 container-custom">
         <div
           className="flex items-center justify-between gap-4 bg-[#EAFBF3] border border-[#2DBE60] rounded-xl px-4 py-4 cursor-pointer hover:shadow-md transition max-w-max w-full mx-auto mt-3 relative"
@@ -456,7 +483,14 @@ if (loading) {
                                       })()}
                                     </td>
                                     <td className="px-[15px] py-[18px] text-sm whitespace-nowrap ">
-                                  {row.invoice_url ? (
+                                 {row.invoice_url &&
+                                  [
+                                    "Payment Confirmed",
+                                    "Processing",
+                                    "Shipping Started",
+                                    "In Transit",
+                                    "Delivered",
+                                  ].includes(row.status) ? (
                                     <button
                                       onClick={() => window.open(row.invoice_url, "_blank")}
                                       className="text-green hover:scale-110 transition cursor-pointer ml-4"
