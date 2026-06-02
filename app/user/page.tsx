@@ -12,6 +12,19 @@ import { useEffect, useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { FaFilePdf } from "react-icons/fa6";
 
+const statusClassMap: Record<string, string> = {
+  "Order Submitted": "bg-gray-500 text-white",
+  "Sales Agreement": "bg-blue-500 text-white",
+  "Awaiting Invoice": "bg-yellow-500 text-black",
+  "Settle Payment": "bg-orange-500 text-white",
+  "Payment Confirmed": "bg-green-500 text-white",
+  "Processing": "bg-[#FFCA42] text-black",
+  "Shipping Started": "bg-[#3C97FF] text-white",
+  "In Transit": "bg-[#8B5CF6] text-white",
+  "Delivered": "bg-[#2DBE60] text-white",
+  "Cancelled": "bg-[#E53935] text-white",
+};
+
 function RecentBidCard({ row }: any) {
   return (
     <div className="border border-border rounded-xl p-4 space-y-2 bg-white">
@@ -35,14 +48,7 @@ function RecentBidCard({ row }: any) {
 }
 
 function RecentOrderCard({ row }: any) {
-  const statusClassMap: any = {
-    "Processing": "bg-[#FFCA42] text-black",
-    "Shipping Started": "bg-[#3C97FF] text-white",
-    "In Transit": "bg-[#8B5CF6] text-white",
-    Delivered: "bg-[#2DBE60] text-white",
-    Cancelled: "bg-[#E53935] text-white",
-  };
-
+ 
   return (
     <div className="border border-border rounded-xl p-4 space-y-2 bg-white">
       <p className="font-semibold text-secgray">
@@ -70,11 +76,12 @@ function RecentOrderCard({ row }: any) {
 
         {row.invoice_url &&
                                   [
-                                    "Payment Confirmed",
-                                    "Processing",
-                                    "Shipping Started",
-                                    "In Transit",
-                                    "Delivered",
+                                   "Settle Payment",
+                                  "Payment Confirmed",
+                                  "Processing",
+                                  "Shipping Started",
+                                  "In Transit",
+                                  "Delivered",
                                   ].includes(row.status) ? (
           <button
             onClick={() => window.open(row.invoice_url, "_blank")}
@@ -103,7 +110,7 @@ const statusToStep: Record<string, number> = {
 };
 
 function Dashboard() {
-  const isMobile = useIsMobile();
+const isMobile = useIsMobile();
 const [cards, setCards] = useState<DashboardCard[]>([]);
 const [recentBids, setRecentBids] = useState<RecentBid[]>([]);
 const [recentOrders, setRecentOrders] = useState<RecentBuyOrder[]>([]);
@@ -246,7 +253,7 @@ if (loading) {
     )}
 
    {wonData?.pdf_url &&
-  wonData?.order_status >= 4 &&
+  wonData?.order_status >= 3 &&
   wonData?.order_status !== 9 &&
   showInvoiceNotification && (
       <div className="mb-5 container-custom">
@@ -459,19 +466,9 @@ if (loading) {
                                       </td>
                                       <td className="px-[15px] py-[18px] text-sm text-secgray whitespace-nowrap  border-r border-border">
                                       {(() => {
-                                        let statusClass = "bg-gray-400 text-white";
 
-                                        if (row.status === "Processing") {
-                                          statusClass = "bg-[#FFCA42] text-black";
-                                        } else if (row.status === "Shipping Started") {
-                                          statusClass = "bg-[#3C97FF] text-white";
-                                        } else if (row.status === "In Transit") {
-                                          statusClass = "bg-[#8B5CF6] text-white";
-                                        } else if (row.status === "Delivered") {
-                                          statusClass = "bg-[#2DBE60] text-white";
-                                        } else if (row.status === "Cancelled") {
-                                          statusClass = "bg-[#E53935] text-white";
-                                        }
+                                      const statusClass =
+                                      statusClassMap[row.status] || "bg-gray-400 text-white";
 
                                         return (
                                           <span
@@ -485,6 +482,7 @@ if (loading) {
                                     <td className="px-[15px] py-[18px] text-sm whitespace-nowrap ">
                                  {row.invoice_url &&
                                   [
+                                    "Settle Payment",
                                     "Payment Confirmed",
                                     "Processing",
                                     "Shipping Started",
