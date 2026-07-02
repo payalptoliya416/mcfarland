@@ -239,25 +239,36 @@ const userBadge = (status: string) =>
                                 </tr>
                             </thead>
     
-                            <tbody>
-                                {rows.map((row, index) => (
-                                <tr
+                           <tbody>
+                              {rows.length > 0 ? (
+                                rows.map((row, index) => (
+                                  <tr
                                     key={index}
                                     className="border-t border-border even:bg-[#F9F9F9]"
-                                >
+                                  >
                                     <td className="px-[15px] py-[18px] text-sm text-secgray border-r border-border whitespace-nowrap">
-                                    {row.name}
+                                      {row.name}
                                     </td>
                                     <td className="px-[15px] py-[18px] text-sm text-secgray border-r border-border whitespace-nowrap">
-                                    {row.totalBid}
+                                      {row.totalBid}
                                     </td>
                                     <td className="px-[15px] py-[18px] text-sm text-secgray whitespace-nowrap">
-                                    <span className="bg-border px-3 py-1 rounded-[4px] text-[13px]">
+                                      <span className="bg-border px-3 py-1 rounded-[4px] text-[13px]">
                                         {row.date}
-                                    </span>
+                                      </span>
                                     </td>
+                                  </tr>
+                                ))
+                              ) : (
+                                <tr>
+                                  <td
+                                    colSpan={3}
+                                    className="py-6 text-center text-gray-500"
+                                  >
+                                    No Data Found
+                                  </td>
                                 </tr>
-                                ))}
+                              )}
                             </tbody>
                             </table>
                          </div>
@@ -315,23 +326,34 @@ const userBadge = (status: string) =>
                                 </tr>
                             </thead>
     
-                            <tbody>
-                                {rowsData.map((row, index) => (
-                                <tr
+                           <tbody>
+                              {rowsData.length > 0 ? (
+                                rowsData.map((row, index) => (
+                                  <tr
                                     key={index}
                                     className="border-t border-border even:bg-[#F9F9F9]"
-                                >
+                                  >
                                     <td className="px-[15px] py-[18px] text-sm text-secgray border-r border-border whitespace-nowrap">
-                                    {row.machinery}
+                                      {row.machinery}
                                     </td>
                                     <td className="px-[15px] py-[18px] text-sm text-secgray border-r border-border whitespace-nowrap">
-                                    {row.user === "N/A" ? "" : row.user}
+                                      {row.user === "N/A" ? "" : row.user}
                                     </td>
                                     <td className="px-[15px] py-[18px] text-sm text-secgray whitespace-nowrap">
-                                    {row.price}
+                                      {row.price}
                                     </td>
+                                  </tr>
+                                ))
+                              ) : (
+                                <tr>
+                                  <td
+                                    colSpan={3}
+                                    className="py-6 text-center text-gray-500"
+                                  >
+                                    No Data Found
+                                  </td>
                                 </tr>
-                                ))}
+                              )}
                             </tbody>
                             </table>
                      </div>
@@ -402,50 +424,63 @@ const userBadge = (status: string) =>
           </tr>
         </thead>
 
-        <tbody>
-          {recentOrders.map((row, index) => (
-            <tr
-              key={index}
-              className="border-t border-border even:bg-[#F9F9F9]"
-            >
-              <td className="px-[15px] py-[18px] text-sm border-r border-border whitespace-nowrap">
-                {row.orderId}
-              </td>
-                <td className="px-[15px] py-[18px] text-sm border-r border-border whitespace-nowrap">
-                  <span
-                    className={`px-3 py-1 rounded text-xs font-medium`}
-                  >
-                    {row.type}
-                  </span>
-                </td>
-              <td className="px-[15px] py-[18px] text-sm border-r border-border whitespace-nowrap">
-                {row.userName}
-              </td>
+       <tbody>
+  {recentOrders.length > 0 ? (
+    recentOrders.map((row, index) => (
+      <tr
+        key={index}
+        className="border-t border-border even:bg-[#F9F9F9]"
+      >
+        <td className="px-[15px] py-[18px] text-sm border-r border-border whitespace-nowrap">
+          {row.orderId}
+        </td>
 
-              <td className="px-[15px] py-[18px] text-sm border-r border-border whitespace-nowrap">
-                {row.phone}
-              </td>
+        <td className="px-[15px] py-[18px] text-sm border-r border-border whitespace-nowrap">
+          <span className="px-3 py-1 rounded text-xs font-medium">
+            {row.type}
+          </span>
+        </td>
 
-              <td className="px-[15px] py-[18px] text-sm border-r border-border whitespace-nowrap">
-                <span className="bg-border px-3 py-1 rounded-[4px] text-[13px]">
-                  {row.date}
-                </span>
-              </td>
+        <td className="px-[15px] py-[18px] text-sm border-r border-border whitespace-nowrap">
+          {row.userName}
+        </td>
 
-              <td className="px-[15px] py-[18px] text-sm border-r border-border whitespace-nowrap">
-                {row.amount}
-              </td>
+        <td className="px-[15px] py-[18px] text-sm border-r border-border whitespace-nowrap">
+          {row.phone}
+        </td>
 
-              <td className="px-[15px] py-[18px] text-sm whitespace-nowrap">
-                <span
-                  className={`px-4 py-2 rounded-[6px] text-sm font-medium inline-block w-[160px] text-center ${orderBadge( row.status )}`}
-                >
-                  {row.status}
-                </span>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+        <td className="px-[15px] py-[18px] text-sm border-r border-border whitespace-nowrap">
+          <span className="bg-border px-3 py-1 rounded-[4px] text-[13px]">
+            {row.date}
+          </span>
+        </td>
+
+        <td className="px-[15px] py-[18px] text-sm border-r border-border whitespace-nowrap">
+          {row.amount}
+        </td>
+
+        <td className="px-[15px] py-[18px] text-sm whitespace-nowrap">
+          <span
+            className={`px-4 py-2 rounded-[6px] text-sm font-medium inline-block w-[160px] text-center ${orderBadge(
+              row.status
+            )}`}
+          >
+            {row.status}
+          </span>
+        </td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td
+        colSpan={7}
+        className="py-6 text-center text-gray-500"
+      >
+        No Data Found
+      </td>
+    </tr>
+  )}
+</tbody>
       </table>
     </div>
   )}
@@ -515,47 +550,63 @@ const userBadge = (status: string) =>
                             </tr>
                         </thead>
     
-                        <tbody>
-                            {recentManagement.map((row, index) => (
+                      <tbody>
+                        {recentManagement.length > 0 ? (
+                          recentManagement.map((row, index) => (
                             <tr
-                                key={index}
-                                className="border-t border-border even:bg-[#F9F9F9]"
+                              key={index}
+                              className="border-t border-border even:bg-[#F9F9F9]"
                             >
-                                <td className="px-[15px] py-[18px] text-sm text-secgray border-r border-border whitespace-nowrap">
+                              <td className="px-[15px] py-[18px] text-sm text-secgray border-r border-border whitespace-nowrap">
                                 {row.name}
-                                </td>
-                                <td className="px-[15px] py-[18px] text-sm text-secgray border-r border-border whitespace-nowrap">
+                              </td>
+
+                              <td className="px-[15px] py-[18px] text-sm text-secgray border-r border-border whitespace-nowrap">
                                 {row.email}
-                                </td>
-                                <td className="px-[15px] py-[18px] text-sm text-secgray border-r border-border whitespace-nowrap">
+                              </td>
+
+                              <td className="px-[15px] py-[18px] text-sm text-secgray border-r border-border whitespace-nowrap">
                                 {row.phone}
-                                </td>
-                                <td className="px-[15px] py-[18px] text-sm text-secgray border-r border-border whitespace-nowrap">
+                              </td>
+
+                              <td className="px-[15px] py-[18px] text-sm text-secgray border-r border-border whitespace-nowrap">
                                 <span className="bg-border px-3 py-1 rounded-[4px] text-[13px]">
-                                    {row.date}
+                                  {row.date}
                                 </span>
-                                </td>
-                                <td className="px-[15px] py-[18px] text-sm border-r border-border whitespace-nowrap">
+                              </td>
+
+                              <td className="px-[15px] py-[18px] text-sm border-r border-border whitespace-nowrap">
                                 <span
-                                    className={`px-4 py-2 rounded-[6px] text-sm font-medium inline-block w-[100px] text-center ${licenseBadge(
+                                  className={`px-4 py-2 rounded-[6px] text-sm font-medium inline-block w-[100px] text-center ${licenseBadge(
                                     row.licenseStatus
-                                    )}`}
+                                  )}`}
                                 >
-                                    {row.licenseStatus}
+                                  {row.licenseStatus}
                                 </span>
-                                </td>
-                                <td className="px-[15px] py-[18px] text-sm whitespace-nowrap">
+                              </td>
+
+                              <td className="px-[15px] py-[18px] text-sm whitespace-nowrap">
                                 <span
-                                    className={`px-4 py-2 rounded-[6px] text-sm font-medium inline-block w-[100px] text-center ${userBadge(
+                                  className={`px-4 py-2 rounded-[6px] text-sm font-medium inline-block w-[100px] text-center ${userBadge(
                                     row.userStatus
-                                    )}`}
+                                  )}`}
                                 >
-                                    {row.userStatus}
+                                  {row.userStatus}
                                 </span>
-                                </td>
+                              </td>
                             </tr>
-                            ))}
-                        </tbody>
+                          ))
+                        ) : (
+                          <tr>
+                            <td
+                              colSpan={6}
+                              className="py-6 text-center text-gray-500"
+                            >
+                              No Data Found
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
                         </table>
                       </div>
                   )}
