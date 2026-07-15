@@ -465,7 +465,7 @@ const trackingRowsWithState =
                   />
                   {/* ACTIVE LINE */}
                   <div
-                    className="hidden lg:block absolute top-[26px] h-[6px] bg-[#FFAD01] rounded -z-10 transition-all"
+                    className="hidden lg:block absolute top-[26px] h-[6px] bg-[#F2671C] rounded -z-10 transition-all"
                     style={{
                       left: `calc(50% / ${filteredSteps.length})`,
                       width: `calc(${Math.min(step, filteredSteps.length - 1)} * (100% / ${filteredSteps.length}))`,
@@ -570,7 +570,7 @@ const trackingRowsWithState =
                             >
                               <div
                                 className={`w-[22px] h-[22px] rounded-full ${
-                                  completed ? "bg-[#FFAD01]" : "bg-light-gray"
+                                  completed ? "bg-[#F2671C]" : "bg-light-gray"
                                 }`}
                               />
                             </div>
@@ -579,7 +579,7 @@ const trackingRowsWithState =
                             {idx !== filteredSteps.length - 1 && (
                               <div
                                 className={`lg:hidden w-[3px] h-13 lg:h-8 ${
-                                  completed ? "bg-[#FFAD01]" : "bg-[#E8E8E8]"
+                                  completed ? "bg-[#F2671C]" : "bg-[#E8E8E8]"
                                 }`}
                               />
                             )}

@@ -84,7 +84,7 @@ function WorkWithUs() {
             {items.map((item, i) => (
               <div
                 key={i}
-                className="bg-[linear-gradient(90deg,#FFAD0114,#FFAD0100)] p-5 rounded-xl flex gap-3 items-start"
+                className="bg-[linear-gradient(90deg,#F2671C14,#F2671C00)] p-5 rounded-xl flex gap-3 items-start"
               >
                 <div>
                   <Image

@@ -1,14 +1,28 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { useSettings } from "@/contexts/SettingsContext";
-import { FiTruck, FiRefreshCw, FiShield } from "react-icons/fi";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loader from "../common/Loader";
-
+import { ArrowRight } from "lucide-react";
+  const data = [
+    {
+      icon: '/assets/images/hero-icon3.svg',
+      title: "Delivery anywhere within the",
+      bold: "USA & Canada",
+    },
+    {
+      icon: '/assets/images/hero-icon1.svg',
+      title: "30-day hassle-free returns",
+    },
+    {
+      icon: '/assets/images/hero-icon1.svg',
+      title: "6 months warranty",
+    },
+  ];
+  
 function Hero() {
   const { companyName } = useSettings();
 const pathname = usePathname();
@@ -21,88 +35,92 @@ useEffect(() => {
   return (
     <>
     {isNavigating && (
-  <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white">
-    <Loader />
-  </div>
-)}
-    <section className="relative">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-        className="-mt-[136px] absolute top-0 left-0 w-full h-full lg:h-[750px] xl:lg:h-[770px] bg-[url(/assets/main-bg-test.png)] bg-no-repeat bg-top -z-10  bg-cover lg:bg-[length:100%_100%]"
-      ></motion.div>
-      <div className="container-custom mx-auto">
-        <div className="grid grid-cols-12 pt-10 sm:pt-20">
-          <motion.div
-            initial={{ opacity: 0, x: -60 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="col-span-12 lg:col-span-6"
-          >
-            <h4 className="text-gray text-lg xl:text-xl font-semibold mb-4 xl:mb-6 relative after:absolute after:top-3 after:left-0 after:bg-gray after:w-[15px] after:h-[2px] pl-5 after:rounded-full mont-text">
-              Welcome to {companyName.toUpperCase()}
-            </h4>
-            <h2 className="text-2xl sm:text-4xl xl:text-[50px] font-bold text-gray  sm:leading-[52px] xl:leading-[68px] mb-5 mont-text">
-              Reliable <span className="text-orange">Industrial</span> &{" "}
-              <span className="text-orange">Farm Equipment</span> Sales &
-              Auctions
-            </h2>
-            <p className="text-para text-base font-normal mb-5 leading-[26px]">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white">
+      <Loader />
+    </div>
+    )}
+       <section className="p-5 -mt-[145px] ">
+      <div
+        className="relative rounded-3xl overflow-hidden min-h-[600] bg-cover bg-center bg-[url(/assets/images/hero-bg.png)]"
+      >
+        <div className="relative z-10 flex items-center justify-center min-h-[720px]">
+          <div className="custom-container text-center text-white">
+            <div className="inline-flex items-center gap-2 rounded-[66px] bg-[#FCEBD242] px-5 py-[10px] mb-4 sm:mb-[30px]">
+              <span className="text-xl pl-2">•</span>
+
+              <span className="text-sm sm:text-base">
+                Welcome to {companyName.toUpperCase()}
+              </span>
+            </div>
+
+            <h1 className="mx-auto max-w-5xl text-center text-[28px] font-extrabold leading-[40px] sm:text-[42px] sm:leading-[52px] md:text-[48px] md:leading-[58px] lg:text-[60px] lg:leading-[72px] mb-5">
+              Reliable{" "}
+              <span className="text-primary">
+                Industrial <span className="text-white">&amp;</span>{" "}
+                <span className="block lg:inline"> Farm</span>
+                <br className="hidden lg:block" />
+                Equipment
+              </span>{" "}
+              <span className="block lg:inline">Sales &amp; Auctions</span>
+            </h1>
+
+            <p className="mx-auto max-w-[790px] px-4 text-center text-sm font-medium leading-6 text-white sm:text-base sm:leading-[26px] mb-5 sm:mb-[35px]">
               Buy or Bid on high-quality machinery, tractors, and tools from
               trusted sellers. Whether you're expanding your fleet or upgrading
-              your equipment, {companyName} has you covered.
+              your equipment, Mcfarland Equipment Sales & Auctions has you
+              covered.
             </p>
-            <div className="mt-6 flex flex-col gap-5">
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3 text-sm text-gray-800">
-                  <FiTruck className="text-base text-gray-700" />
-                  <span>
-                    Delivery anywhere within the <strong>USA & Canada</strong>
-                  </span>
-                </li>
-
-                <li className="flex items-center gap-3 text-sm text-gray-800">
-                  <FiRefreshCw className="text-base text-gray-700" />
-                  <span>
-                    <strong>30-day</strong> hassle-free returns
-                  </span>
-                </li>
-
-                <li className="flex items-center gap-3 text-sm text-gray-800">
-                  <FiShield className="text-base text-gray-700" />
-                  <span>
-                    <strong>6 months</strong> warranty
-                  </span>
-                </li>
-              </ul>
-              <Link
+          <Link 
                 href="/inventory"
-                 onClick={() => setIsNavigating(true)}
-                className="inline-flex w-fit items-center justify-center rounded-lg bg-gray px-7 py-3
-             font-semibold text-white mont-text transition-all duration-300 hover:bg-green/90 hover:shadow-md">
-                Browse Inventory
-              </Link>
+                 onClick={() => setIsNavigating(true)} className="inline-flex items-center justify-center gap-[10px] rounded-[62px] bg-primary px-[25px] py-3 font-semibold leading-none text-white text-lg">
+            Browse Inventory
+            <ArrowRight size={18} strokeWidth={2.5} />
+            </Link>
+          </div>
+        </div>
+
+      </div>
+         <div className="container-custom relative z-20 -mt-16 ">
+      <div className="rounded-[24px] bg-white shadow-xl py-5 px-5 xl:px-[50px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+          {data.map((item, index) => (
+            <div
+              key={index}
+              className={`
+        relative flex items-center gap-[10px] py-4
+
+        ${
+          index === 0
+            ? "md:pr-[47px]"
+            : index === data.length - 1
+              ? "xl:pl-[47px]"
+              : "md:px-[47px]"
+        }
+
+        ${
+          index !== data.length - 1
+            ? "md:after:absolute md:after:right-0 md:after:top-1/2 md:after:h-[50px] md:after:w-px md:after:-translate-y-1/2 md:after:bg-gradient-to-b md:after:from-transparent md:after:via-[#22201C] md:after:to-transparent"
+            : ""
+        }
+      `}
+            >
+              <div className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-[#FCE1D2]">
+                <img
+                  src={item.icon}
+                  alt={item.title}
+                  className="h-6 w-6 object-contain"
+                />
+              </div>
+
+              <p className="text-base font-medium text-[#393733]">
+                {item.title}{" "}
+                <span className="font-bold text-[#22201C]">{item.bold}</span>
+              </p>
             </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="col-span-12 lg:col-span-6 mt-10 2xl:mt-8  hero-img-margin"
-          >
-            <Image
-              src="/assets/zasi1.png"
-              alt="Hero"
-              width={749}
-              height={609}
-              loading="eager"
-              priority
-              className="w-full"
-            />
-          </motion.div>
+          ))}
         </div>
       </div>
+    </div>
     </section>
     </>
   );

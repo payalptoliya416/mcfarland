@@ -95,7 +95,7 @@ function TrustDriven() {
             {items.map((item, i) => (
               <div
                 key={i}
-                className="bg-[linear-gradient(90deg,#FFAD0114,#FFAD0100)] p-[16px] rounded-xl flex gap-3 items-center"
+                className="bg-[linear-gradient(90deg,#F2671C14,#F2671C00)] p-[16px] rounded-xl flex gap-3 items-center"
               >
                 <div>
                   <Image

@@ -32,45 +32,55 @@ function Footer() {
           <Loader />
         </div>
       )}
-      <section className="bg-[url(/assets/ready-bg2-new.png)] lg:bg-[url(/assets/ready-bg01-new .png)] 2xl:bg-[url(/assets/ready-bg-new.png)] bg-no-repeat w-full h-full mt-20 lg:mt-[110px] py-[60px] bg-position">
-        <div className="grid grid-cols-12 container-custom mx-auto">
-          <div className="col-span-12 sm:col-span-10 md:col-span-7 xl:col-span-5 2xl:col-span-4">
-            <h3 className="text-white text-3xl md:text-[38px] md:leading-[55px] font-bold mb-[15px] mont-text">
-              Ready to Buy or Sell Equipment Today?
-            </h3>
-            <p className=" text-white text-base leading-[26px] mb-[30px] pr-10">
-              Join thousands of satisfied customers who trust {companyName}
-              for industrial and agricultural machinery.
-            </p>
-           <Link
-              href="/inventory"
-              className="group relative overflow-hidden text-gray bg-white py-[14px] px-[22px] rounded-lg 
-                        text-base leading-[16px] font-semibold mont-text border-none transition-all duration-300 inline-block"
-            >
-              <span className="relative z-10">Start Now</span>
+     <section className="">
+        <div
+          className="relative overflow-hidden bg-no-repeat"
+          style={{
+            backgroundImage: `url(/assets/images/ready-banner.png)`,
+            backgroundSize: "100% 100%"
+          }}
+        >
 
-              <span
-                className="absolute inset-0 bg-green/20 translate-x-[-100%] 
-                          group-hover:translate-x-[100%] transition-all duration-500"
-              ></span>
+          {/* Content */}
+          <div className="relative z-10 flex min-h-[320px] flex-col items-center justify-center py-[50px] text-center">
+
+            <h2 className="mx-auto max-w-[760px] text-center font-nunito text-[30px] font-extrabold leading-[38px] text-white sm:text-[36px] sm:leading-[46px] lg:text-[42px] lg:leading-[52px]">
+            Ready to{" "}
+            <span className="text-primary">
+                Buy or Sell Equipment
+            </span>{" "}
+            Today?
+            </h2>
+
+            <p className="mt-[10px] max-w-[650px] font-nunito text-base font-medium leading-[28px] text-white/90">
+              Join thousands of satisfied customers who trust {companyName} for industrial and agricultural
+              machinery.
+            </p>
+
+            <Link href="/inventory"
+              className="mt-8 inline-flex items-center justify-center gap-[10px] rounded-[62px] bg-primary px-[25px] py-3 font-nunito text-base font-semibold leading-none text-white transition-all duration-300"
+            >
+              Start Now
+              <img src='/assets/images/btn-right-errow.svg' alt="Arrow" />
             </Link>
+
           </div>
         </div>
-      </section>
-      <footer className="bg-gray py-[50px] ">
+    </section>
+      <footer className="bg-[#1D1B1A]">
         <div className="container-custom mx-auto">
-          <div className="grid grid-cols-12 pb-[42px] border-b border-para">
-            <div className="col-span-12 lg:col-span-4 mb-10 lg:mb-0">
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.6fr] gap-y-10 gap-x-8 xl:gap-x-14 pb-[42px] border-b border-para py-[40px] ">
+            <div className="">
               <Link href="/">
                 {settings?.white_logo && (
                   <img
                     src={`${settings.white_logo}`}
                     alt={settings.company_name}
-                    className="mb-[30px]"
+                    className="mb-5"
                   />
                 )}
               </Link>
-              <p className="text-light-gray text-base leading-[26px] mb-[30px] w-full">
+              <p className="text-light-gray text-base leading-[26px] mb-[40px] w-full">
                 {settings?.company_name} is your trusted marketplace for buying,
                 selling, and auctioning quality industrial machinery, tractors,
                 and tools.
@@ -83,7 +93,7 @@ function Footer() {
                     className="group border border-border w-7 h-7 rounded-full flex justify-center items-center 
                transition-all duration-300 hover:border-green hover:bg-green/10 hover:scale-110"
                   >
-                    <FaFacebookF className="text-light-gray group-hover:text-green" />
+                   <img src="/assets/images/facebook.svg" alt="" />
                   </a>
                 )}
 
@@ -94,7 +104,7 @@ function Footer() {
                     className="group border border-border w-7 h-7 rounded-full flex justify-center items-center 
                transition-all duration-300 hover:border-green hover:bg-green/10 hover:scale-110"
                   >
-                    <FaXTwitter className="text-light-gray group-hover:text-green" />
+                      <img src="/assets/images/meta.svg" alt="" />
                   </a>
                 )}
 
@@ -105,7 +115,7 @@ function Footer() {
                     className="group border border-border w-7 h-7 rounded-full flex justify-center items-center 
                transition-all duration-300 hover:border-green hover:bg-green/10 hover:scale-110"
                   >
-                    <FaInstagram className="text-light-gray group-hover:text-green" />
+                    <img src="/assets/images/insta.svg" alt="" />
                   </a>
                 )}
 
@@ -116,12 +126,12 @@ function Footer() {
                     className="group border border-border w-7 h-7 rounded-full flex justify-center items-center 
                transition-all duration-300 hover:border-green hover:bg-green/10 hover:scale-110"
                   >
-                    <FaLinkedinIn className="text-light-gray group-hover:text-green" />
+                    <img src="/assets/images/linkdin.svg" alt="" />
                   </a>
                 )}
               </div>
             </div>
-            <div className="col-span-12 sm:col-span-6 lg:col-span-4 flex lg:justify-center mb-10 sm:mb-0">
+            <div className="lg:mx-auto">
               <div>
                 <h3 className="text-orange mb-5 text-lg leading-[18px] mont-text font-semibold">
                   Quick Links
@@ -180,8 +190,37 @@ function Footer() {
                 </ul>
               </div>
             </div>
+            <div className="lg:mx-auto">
+              <div>
+                <h3 className="text-orange mb-5 text-lg leading-[18px] mont-text font-semibold">
+                 Services
+                </h3>
 
-            <div className="col-span-12 sm:col-span-6 lg:col-span-4">
+                <ul className="space-y-[15px]">
+                  <li>
+                    <button
+                      onClick={() => handleRedirect("/terms-condition")}
+                      className="relative text-light-gray text-base leading-[16px] font-normal group cursor-pointer"
+                    >
+                    Terms & services
+                      <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-green transition-all duration-300 group-hover:w-full"></span>
+                    </button>
+                  </li>
+
+                  <li>
+                    <button
+                      onClick={() => handleRedirect("/privacy-policy")}
+                      className="relative text-light-gray text-base leading-[16px] font-normal group cursor-pointer"
+                    >
+                      Privacy policy
+                      <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-green transition-all duration-300 group-hover:w-full"></span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div>
               <h3 className="text-orange mb-5 text-lg leading-[18px] mont-text  font-semibold">
                 Contact Info
               </h3>
@@ -192,8 +231,8 @@ function Footer() {
               >
                 <div className="flex gap-3 items-center">
                   <div>
-                    <div className="flex justify-center items-center w-10 h-10 rounded-full bg-white/10 group-hover:bg-green">
-                      <IoCallOutline className="text-white" />
+                    <div className="flex justify-center items-center w-10 h-10 rounded-full bg-white/10 group-hover:bg-primary">
+                        <img src='/assets/images/call.svg' alt="Arrow" />
                     </div>
                   </div>
                   <h3 className="text-light-gray group-hover:text-white">
@@ -210,8 +249,8 @@ function Footer() {
               >
                 <div className="flex gap-3 items-center">
                   <div>
-                    <div className="flex justify-center items-center w-10 h-10 rounded-full bg-white/10 group-hover:bg-green">
-                      <GrLocation className="text-white" />
+                    <div className="flex justify-center items-center w-10 h-10 rounded-full bg-white/10 group-hover:bg-primary">
+                       <img src='/assets/images/location.svg' alt="Arrow" />
                     </div>
                   </div>
                   <h3 className="text-light-gray group-hover:text-white">
@@ -226,8 +265,8 @@ function Footer() {
               >
                 <div className="flex gap-3 items-center">
                   <div>
-                    <div className="flex justify-center items-center w-10 h-10 rounded-full bg-white/10 group-hover:bg-green">
-                      <LuMail className="text-white" />
+                    <div className="flex justify-center items-center w-10 h-10 rounded-full bg-white/10 group-hover:bg-primary">
+                        <img src='/assets/images/mail.svg' alt="Arrow" />
                     </div>
                   </div>
                   <h3 className="text-light-gray group-hover:text-white">
@@ -243,7 +282,7 @@ function Footer() {
                       className="flex justify-center items-center w-10 h-10 rounded-full bg-white/10
                      transition-all duration-300 group-hover:bg-green group-hover:scale-110"
                     >
-                      <IoTimeOutline className="text-white" />
+                        <img src='/assets/images/clock.svg' alt="Arrow" />
                     </div>
                   </div>
                   <h3 className="text-light-gray text-base transition-all duration-300 group-hover:text-white">
@@ -253,7 +292,7 @@ function Footer() {
               </div>
             </div>
           </div>
-          <div className="flex justify-center 2xl:justify-between items-center pt-5 flex-wrap gap-4 text-center">
+          <div className="flex justify-center items-center py-5 flex-wrap gap-4 text-center">
             <p className="text-light-gray text-base font-normal">
               <a
                 href={process.env.NEXT_PUBLIC_WEBSITE_URL}
@@ -261,18 +300,12 @@ function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                  mcfarland-equipment.com
+                eastline equipment auctions.com
               </a>{" "}
               is owned by MCFARLAND-EQUIPMENT, LLC Reg nº : (20151800734) -
               Copyright {new Date().getFullYear()} © All Rights Reserved
             </p>
-            <p className="text-light-gray text-base font-normal">
-              <Link href="/terms-condition" className="mr-1">
-                Terms & services
-              </Link>
-              <span className="mx-3 text-light-gray">|</span>
-              <Link href="/privacy-policy">Privacy policy</Link>
-            </p>
+          
           </div>
         </div>
       </footer>

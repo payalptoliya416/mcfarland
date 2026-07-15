@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import AdvantageCard from "./AdvantageCard";
+import { useSettings } from "@/contexts/SettingsContext";
 
 const chooseUsData = [
   {
@@ -30,86 +32,102 @@ const chooseUsData = [
   },
 ];
 
+interface Advantage {
+  id: number;
+  icon: string;
+  title: string;
+  description: string;
+}
+
+const advantages: Advantage[] = [
+  {
+    id: 1,
+    icon: '/assets/images/choose-icon1.svg',
+    title: "Trusted Marketplace",
+    description:
+      "Buy and sell with confidence through a platform built on transparency, reliability, and industry expertise.",
+  },
+  {
+    id: 2,
+    icon: '/assets/images/choose-icon2.svg',
+    title: "Verified Sellers",
+    description:
+      "Our network consists of trusted and verified sellers who meet strict quality standards.",
+  },
+  {
+    id: 3,
+    icon: '/assets/images/choose-icon3.svg',
+    title: "Nationwide Reach",
+    description:
+      "Access equipment opportunities across the USA & Canada through one centralized marketplace.",
+  },
+  {
+    id: 4,
+    icon: '/assets/images/choose-icon4.svg',
+    title: "Dedicated Support",
+    description:
+      "Our team is available throughout the buying process for a hassle-free experience.",
+  },
+];
+
 function ChooseUs() {
+   const { companyName } = useSettings();
   return (
-    <section className="bg-gray py-[60px]">
-      <div className="container-custom mx-auto">
-        
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-10"
-        >
-          <h2 className="text-3xl md:text-[38px] md:leading-[38px] font-bold text-white mont-text">
-            Why <span className="text-orange">Choose Us</span>
+    <>
+     <section
+      className="section-space bg-cover bg-center bg-no-repeat bg-[#1D1B1A]"
+      style={{
+        backgroundImage: `url(/assets/images/why-bg.png)`,
+      }}
+    >
+      <div className="container-custom">
+        {/* Heading */}
+
+        <div className="mx-auto text-center">
+          <span className="inline-flex items-center justify-center rounded-[66px] bg-[#F2671C] text-white px-5 py-[10px]  text-base font-semibold leading-4 text-primary">
+            Our Advantages
+          </span>
+
+          <h2 className="mt-[30px] text-center text-[30px] font-bold leading-[36px] text-white sm:text-[36px] sm:leading-[38px] lg:text-[42px] lg:leading-[40px]">
+            Why Choose <span className="text-primary">{companyName}?</span>
           </h2>
-        </motion.div>
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-[30px] items-center md:items-stretch">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.3 }}
-            variants={{
-              hidden: {},
-              visible: {
-                transition: { staggerChildren: 0.15 },
-              },
-            }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-[30px]"
-          >
-            {chooseUsData.map((item, i) => (
-              <motion.div
-                key={i}
-                variants={{
-                  hidden: { opacity: 0, y: 40 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: { duration: 0.7, ease: "easeOut" },
-                  },
-                }}
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 140, damping: 10 }}
-                className="border border-text-gray rounded-lg p-5 cursor-pointer bg-gray/20 backdrop-blur-sm"
-              >
-                <Image
-                  src={`/assets/${item.icon}`}
-                  alt="icon"
-                  width={40}
-                  height={40}
-                  className="mb-5"
-                />
-                <h3 className="text-light-gray text-xl leading-[20px] mb-[15px] font-semibold mont-text">
-                  {item.title}
-                </h3>
-                <p className="text-base leading-[26px] font-normal text-light-gray">
-                  {item.description}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
+        {/* Content */}
 
-          <motion.div
-           initial={{ opacity: 0, y: 120 }} 
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
-  className="flex justify-center" 
-          >
-            <Image
-              src="/assets/chooseus.png"
-              alt="chooseus"
-              width={550}
-              height={454}
-              className="w-full"
+        <div className="mt-10 grid items-center gap-10 lg:grid-cols-[420px_1fr]">
+          {/* Left */}
+
+          <div className="relative w-full max-w-md mx-auto">
+            <img
+              src="/assets/images/why-image.png"
+              alt="Why Choose"
+              className="w-full rounded-[30px] object-cover"
             />
-          </motion.div>
+
+            {/* Content */}
+            <div className="absolute bottom-4 left-4 right-4 bg-[#F2671CD9] rounded-[15px] p-[15px]">
+              <h3 className="text-white text-lg font-bold !leading-[18px]">
+                Premium Quality
+              </h3>
+
+              <p className="text-[#FFF8F4] text-sm sm:text-lg mt-[10px]">
+                Every listing reviewed & verified
+              </p>
+            </div>
+          </div>
+
+          {/* Right */}
+
+          <div className="grid gap-6 sm:grid-cols-2">
+            {advantages.map((item) => (
+              <AdvantageCard key={item.id} {...item} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
+    </>
   );
 }
 

@@ -191,7 +191,7 @@ export default function AdminHeader({
                           onClick={() =>
                             handleBreadcrumbNavigate("/admin/" + seg)
                           }
-                          className="cursor-pointer hover:text-[#FFAD01] font-medium flex items-center gap-1"
+                          className="cursor-pointer hover:text-[#F2671C] font-medium flex items-center gap-1"
                         >
                           {label}
 
@@ -448,7 +448,7 @@ export default function AdminHeader({
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-[#FFAD01] text-white py-2 rounded-full font-medium hover:opacity-90 transition cursor-pointer"
+                className="w-full bg-[#F2671C] text-white py-2 rounded-full font-medium hover:opacity-90 transition cursor-pointer"
               >
                 Update Password
               </button>

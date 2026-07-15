@@ -1,115 +1,81 @@
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
-import { GoArrowRight } from "react-icons/go";
 import { useSettings } from "@/contexts/SettingsContext";
+import { benefitsData } from "./benefitsData";
 
 function WhyBuy() {
   const { companyName } = useSettings();
   return (
     <>
-      <section className="container-custom mx-auto my-20 lg:my-[110px]">
-        {/* Heading */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-[38px] font-bold text-[#1D1C1A]">
-            Why buy from <span className="text-green">{companyName}</span>?
-          </h2>
-
-          <p className="text-sm text-gray-500 mt-2">
-            Easy & secure equipment transactions
-          </p>
-        </div>
-
-        {/* Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          <div className="lg:col-span-6">
-            <div className="relative h-full rounded-2xl overflow-hidden">
-              <img
-                src="/assets/why2.png"
-                alt="excavator"
-                className="w-full h-full object-contain rounded-2xl"
-              />
-            </div>
+       <section className="section-space">
+        <div className="container-custom">
+          <div className="mx-auto text-center">
+            {/* Badge */}
+            <span className="inline-flex rounded-full bg-[#F2671C] px-5 py-[10px] text-base !leading-[16px] font-semibold text-white">
+              Buyer Benefits
+            </span>
+            {/* Heading */}
+            <h2 className="mt-[30px] text-[30px] font-bold leading-[36px] text-[#22201C] sm:text-[36px] sm:leading-[40px] lg:text-[42px] lg:leading-[42px]">
+              Why Buy From{" "}
+              <span className="text-primary">{companyName}</span>{" "}
+             ?
+            </h2>
+            {/* Description */}
+              <p className="mx-auto mt-[15px] text-center text-base font-medium leading-[26px] text-[#4E4D49]">
+              We simplify equipment purchasing by providing accurate
+              information, secure transactions, and dependable logistics
+              support.
+            </p>
           </div>
-          <div className="lg:col-span-6">
-            <div className="h-full bg-[#E9E9E940] rounded-2xl p-6 flex flex-col">
-              <div className="w-[70px] h-[70px] flex items-center justify-center border border-border rounded-xl mb-6 bg-white">
-                <Image src="/assets/w2-new.svg" alt="" width={40} height={40} />
-              </div>
+         <div className="mt-10 space-y-8">
+            {benefitsData.map((item) => (
+                <div
+                key={item.id}
+                className="overflow-hidden rounded-[20px] bg-white p-6 shadow-[0_2px_35px_rgba(0,0,0,0.08)] lg:p-10"
+                >
+                <div
+                    className={`grid items-center gap-10 lg:grid-cols-2 ${
+                    item.imagePosition === "left" ? "lg:[&>*:first-child]:order-2" : ""
+                    }`}
+                >
+                    {/* Content */}
+                    <div
+                    className={item.imagePosition === "left" ? "lg:order-2" : ""}
+                    >
+                    <div className="flex h-[62px] w-[62px] items-center justify-center rounded-full bg-[#FCE1D2]">
+                        <img src={item.icon} alt={item.title} />
+                    </div>
 
-              <h3 className="text-lg font-bold mb-3 text-gray">
-                Secure & Transparent Payments
-              </h3>
+                    <h3 className="mt-5 text-[22px] font-bold leading-[30px] text-[#22201C] sm:text-[24px] sm:leading-[32px] lg:text-[26px] lg:leading-[26px]">
+                        {item.title}
+                    </h3>
 
-              <p className="text-text-gray text-base leading-[26px] mb-6 flex-grow">
-                Bid or Buy Now with complete confidence. All payments are securely
-                processed with full transparency, clear pricing, and absolutely no
-                hidden fees, ensuring a safe and reliable transaction every time.
-              </p>
+                    <p className="mt-5 max-w-[530px] text-[15px] font-medium leading-6 text-[#4E4D49] sm:text-base sm:leading-[26px]">
+                        {item.description}
+                    </p>
 
-              <Link
-                href="/about-us"
-                className="text-base font-bold text-gray flex items-center gap-2 hover:text-primary group"
-              >
-                Learn More
-                <span className="text-lg transition-transform group-hover:translate-x-1">
-                  <GoArrowRight />
-                </span>
-              </Link>
+                    <Link href="/about-us"
+                        className="mt-[30px] inline-flex items-center gap-[10px] rounded-[62px] bg-primary px-[25px] py-[12px] text-lg !leading-[18px] font-semibold text-white transition-all duration-300"
+                    >
+                        Learn More
+                        <img src='/assets/images/btn-right-errow.svg' alt="Arrow" />
+                    </Link>
+                    </div>
+
+                    {/* Image */}
+                    <div
+                    className={item.imagePosition === "left" ? "lg:order-1" : ""}
+                    >
+                    <img
+                        src={item.image}
+                        alt={item.title}
+                        className="h-full w-full rounded-[20px] object-cover"
+                    />
+                    </div>
+                </div>
+                </div>
+            ))}
             </div>
-          </div>
-          <div className="lg:col-span-6">
-            <div className="h-full bg-[#E9E9E940] rounded-2xl p-6 flex flex-col">
-              <div className="w-[70px] h-[70px] flex items-center justify-center border border-border rounded-xl mb-6 bg-white">
-                <Image src="/assets/w1-new.svg" alt="" width={40} height={40} />
-              </div>
-
-              <h3 className="text-lg font-bold mb-3 text-gray">
-                Fully Inspected Equipment
-              </h3>
-
-              <p className="text-text-gray text-base leading-[26px] mb-6 flex-grow">
-                We provide clear images, accurate details, and honest condition
-                information so you can buy with confidence.
-              </p>
-
-              <Link
-                href="/about-us"
-                className="text-base font-bold text-gray flex items-center gap-2 hover:text-primary group"
-              >
-                Learn More
-                <span className="text-lg transition-transform group-hover:translate-x-1">
-                  <GoArrowRight />
-                </span>
-              </Link>
-            </div>
-          </div>
-          <div className="lg:col-span-6">
-            <div className="h-full bg-[#E9E9E940] rounded-2xl p-6 flex flex-col">
-              <div className="w-[70px] h-[70px] flex items-center justify-center border border-border rounded-xl mb-6 bg-white">
-                <Image src="/assets/w3-new.svg" alt="" width={40} height={40} />
-              </div>
-
-              <h3 className="text-lg font-bold mb-3 text-gray">
-                Delivered to Your Location
-              </h3>
-
-              <p className="text-text-gray text-base leading-[26px] mb-6 flex-grow">
-                We handle logistics and transportation to ensure your equipment reaches
-                your jobsite safely.
-              </p>
-
-              <Link
-                href="/about-us"
-                className="text-base font-bold text-gray flex items-center gap-2 hover:text-primary group"
-              >
-                Learn More
-                <span className="text-lg transition-transform group-hover:translate-x-1">
-                  <GoArrowRight />
-                </span>
-              </Link>
-            </div>
-          </div>
         </div>
       </section>
     </>

@@ -412,7 +412,7 @@ if (loading) {
 
               <button
                 type="submit"
-                className="px-6 py-2 rounded-lg bg-[#FFAD01] text-white text-sm font-medium cursor-pointer"
+                className="px-6 py-2 rounded-lg bg-[#F2671C] text-white text-sm font-medium cursor-pointer"
               >
                 Update User
               </button>

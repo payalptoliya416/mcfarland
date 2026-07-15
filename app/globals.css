@@ -3,8 +3,99 @@
 @import "swiper/css/navigation";
 @import "swiper/css/thumbs";
 
-body {
-  font-family: var(--font-sfpro), sans-serif;
+
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("/fonts/nunito-sans-v19-latin-200.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("/fonts/nunito-sans-v19-latin-300.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("/fonts/nunito-sans-v19-latin-regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("/fonts/nunito-sans-v19-latin-500.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("/fonts/nunito-sans-v19-latin-600.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("/fonts/nunito-sans-v19-latin-700.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("/fonts/nunito-sans-v19-latin-800.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("/fonts/nunito-sans-v19-latin-900.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+.container-custom {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 16px;
+}
+
+@media (min-width: 640px) {
+  .container-custom {
+    max-width: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container-custom {
+    max-width: 720px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container-custom {
+    max-width: 960px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container-custom {
+    max-width: 1170px;
+    padding-inline: 0;
+  }
 }
 
 .mont-text {
@@ -12,13 +103,13 @@ body {
 }
 
 @theme {
-  --color-orange: #FFAD01;
+  --color-orange: #F2671C;
   --color-gray: #1D1C1A;
-  --color-green: #FFAD01;
+  --color-green: #F2671C;
   --color-lightgreen: #FFEFCC;
   --color-para: #4d4d4d;
   --color-text-gray: #62615F;
-  --color-light-gray: #d1d1d1;
+  --color-light-gray: #d2d1d1;
   --color-header: #FFFBF3;
   --color-secgray: #373737;
   --color-seclightgray: #7A7A7A;
@@ -27,11 +118,33 @@ body {
   --color-lightblack: #333333;
   --color-redmark: #ef4343;
   --color-lightyellow: #FFDE99;
+  --color-primary: #F2671C;
+}
+
+body {
+  font-family: "Nunito Sans", sans-serif;
 }
 
 @layer components {
   .input {
     @apply w-full px-5 py-3 rounded-[10px] border border-border focus:outline-none;
+  }
+}
+
+@utility section-space {
+  padding-top: 60px;
+  padding-bottom: 60px;
+
+  @media (width >= 1024px) {
+    padding-top: 110px;
+    padding-bottom: 110px;
+  }
+}
+@utility section-bottom {
+  padding-bottom: 60px;
+
+  @media (width >= 1024px) {
+    padding-bottom: 110px;
   }
 }
 
@@ -42,10 +155,10 @@ body {
   margin-bottom: 30px;
 }
 .gradient {
-  background: linear-gradient(180deg, #FFAD0100 0%, #FFAD01 50%, var(--color-orange) 100%);
+  background: linear-gradient(180deg, #F2671C00 0%, #F2671C 50%, var(--color-orange) 100%);
 }
 .bg-gradient {
-  background: linear-gradient(180deg, #FFAD0100 0%, #37373714 8%);
+  background: linear-gradient(180deg, #F2671C00 0%, #37373714 8%);
 }
 .gradient-btn {
   background: linear-gradient(-90deg, #FFCE67 0%, var(--color-green) 100%);
@@ -62,11 +175,11 @@ body {
 }
 
 select option:checked {
-  background-color: #FFAD01 !important;
+  background-color: #F2671C !important;
   color: #fff !important;
 }
 select option:checked {
-  background-color: #FFAD01 !important;
+  background-color: #F2671C !important;
   color: white !important;
 }
 
@@ -82,54 +195,6 @@ select option:checked {
 @media (min-width: 1024px) {
   .bg-position {
     background-size: 100% 100%;
-  }
-}
-/* global.css */
-.container-custom {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 100%;
-}
-
-@media (min-width: 640px) {
-  .container-custom {
-    max-width: 640px;
-  }
-}
-
-@media (min-width: 768px) {
-  .container-custom {
-    max-width: 768px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .container-custom {
-    max-width: 1024px;
-  }
-}
-
-@media (min-width: 1280px) {
-  .container-custom {
-    max-width: 1170px;
-  } 
-}
-
-@media (min-width: 1441px) {
-  .container-custom {
-    max-width: 1320px;
-  } 
-}
-
-@media (min-width: 1600px) {
-  .container-custom {
-    max-width: 1400px;
-  } 
-}
-
-@media (min-width: 1920px) {
-  .container-custom {
-    max-width: 1600px;
   }
 }
 
@@ -160,12 +225,6 @@ select option:checked {
   }
 }
 
-@media (max-width: 1439px) {
-  .container-custom {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
 /* ---loader--- */
 @keyframes wave {
   0%,
@@ -221,7 +280,7 @@ select option:checked {
   appearance: none;
   width: 16px;
   height: 16px;
-  background: #FFAD01;
+  background: #F2671C;
   border-radius: 999px;
   cursor: pointer;
   pointer-events: auto;

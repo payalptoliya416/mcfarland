@@ -444,11 +444,11 @@ function Header({
     }
   `}
       >
-        <div className="container-custom mx-auto flex justify-between items-center pb-4 px-4 md:px-0">
+        <div className="mx-auto flex justify-between items-center pb-4 pt-[40px] px-[60px]">
           <Link href="/">
             {settings?.dark_logo && <img src={settings.dark_logo} alt="Logo" />}
           </Link>
-          <ul className="hidden lg:flex justify-center items-center gap-5 xl:gap-12">
+          <ul className="hidden lg:flex justify-center items-center gap-5 xl:gap-[50px]">
             {navItems.map((item) => (
               <li
                 key={item.path}
@@ -466,20 +466,14 @@ function Header({
                 <Link
                   href={item.path}
                   onClick={() => handleNavigate(item.path)}
-                  className={`text-base font-medium text-gray-700 hover:text-orange cursor-pointer relative
-                after:content-[''] after:absolute after:-bottom-1
-                after:left-1/2 after:-translate-x-1/2
-                after:h-1 after:w-0
-                after:bg-[linear-gradient(180deg,#FFAD0100_0%,#FFAD01_50%,#FFAD0100_100%)]
-                after:transition-all after:duration-300
-                hover:after:w-8 hover:text-orange transition-all duration-300   ${
+                  className={`text-base font-medium text-orange hover:text-orange cursor-pointer transition-all duration-300   ${
                   item.path === "/"
                     ? pathname === "/"
                       ? "text-orange font-bold after:w-8"
-                      : "text-gray-700 font-medium"
+                      : "text-white font-medium"
                     : pathname.startsWith(item.path)
                       ? "text-orange font-bold after:w-8"
-                      : "text-gray-700 font-medium"
+                      : "text-white font-medium"
                 }
               `}
                 >
@@ -499,10 +493,10 @@ function Header({
                       item.path === "/"
                         ? pathname === "/"
                           ? "text-orange font-bold after:w-8"
-                          : "text-gray-700 font-medium"
+                          : "text-white font-medium"
                         : pathname.startsWith(item.path)
                           ? "text-orange font-bold after:w-8"
-                          : "text-gray-700 font-medium"
+                          : "text-white font-medium"
                     }`}
                   >
                     <IoIosArrowDown size={14} />
@@ -572,7 +566,7 @@ function Header({
                               }}
                               className="
                                 w-full flex justify-between items-center
-                                 text-gray-700 font-medium hover:text-orange cursor-pointer
+                                 text-white font-medium hover:text-orange cursor-pointer
                               "
                             >
                               {group.name}
@@ -611,7 +605,7 @@ function Header({
                                       }}
                                       className="
                                         block w-full text-left py-2
-                                        text-gray-700 font-medium hover:text-orange
+                                        text-white font-medium hover:text-orange
                                       text-base cursor-pointer hover:bg-gray-50  px-4
                                       "
                                     >
@@ -642,15 +636,7 @@ function Header({
               {/* Sign In (Outline - light) */}
               <button
                 onClick={() => handleNavigate(getAuthUrl("/user/signin"))}
-                className="
-                px-3 xl:px-5 py-2 xl:py-2.5 rounded-lg 
-                border border-white/40 
-                text-white font-medium
-                hover:border-orange hover:text-orange
-                transition duration-200
-                backdrop-blur-sm
-                cursor-pointer
-              "
+                 className="flex h-10 items-center justify-center rounded-[62px] border border-white px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-white hover:text-black cursor-pointer"
               >
                 Sign In
               </button>
@@ -662,15 +648,7 @@ function Header({
                     setIsNavigating(true);
                     handleNavigate(getAuthUrl("/signup"));
                   }}
-                  className="
-                px-3 xl:px-5 py-2 xl:py-2.5 rounded-lg 
-                bg-gradient-to-r from-orange to-yellow-400
-                text-white font-semibold
-                shadow-md
-                hover:opacity-90
-                transition duration-200
-                cursor-pointer
-              "
+                 className="flex h-10 items-center justify-center rounded-[62px] border border-primary bg-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer"
                 >
                   Sign Up
                 </button>
