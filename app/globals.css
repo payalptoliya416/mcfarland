@@ -104,7 +104,7 @@
 
 @theme {
   --color-orange: #F2671C;
-  --color-gray: #1D1C1A;
+  --color-gray: #1D1B1A;
   --color-green: #F2671C;
   --color-lightgreen: #FFEFCC;
   --color-para: #4B4947;
@@ -161,7 +161,7 @@ body {
   background: linear-gradient(180deg, #F2671C00 0%, #37373714 8%);
 }
 .gradient-btn {
-  background: linear-gradient(-90deg, #FFCE67 0%, var(--color-green) 100%);
+  background: linear-gradient(-90deg, #F2671C 0%, var(--color-green) 100%);
 }
 
 

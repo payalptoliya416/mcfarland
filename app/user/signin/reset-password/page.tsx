@@ -77,7 +77,7 @@ export default function ResetPassword(): JSX.Element {
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="rounded-r-[15px] rounded-[15px] lg:rounded-r-none p-10 col-span-12 lg:col-span-6 w-full shadow-[0_2px_35px_rgba(0,0,0,0.08)]"
+          className="rounded-r-[15px] rounded-[15px] lg:rounded-r-none p-5 md:p-10 col-span-12 lg:col-span-6 w-full shadow-[0_2px_35px_rgba(0,0,0,0.08)]"
         >
           {/* Title */}
           <h2 className="text-3xl md:text-[42px] md:leading-[42px] font-bold text-center text-gray mb-[15px]">
@@ -110,7 +110,7 @@ export default function ResetPassword(): JSX.Element {
                       name="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter new password"
-                     className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
+                     className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:border-green text-base placeholder:text-[#787675] sm:h-[52px]"
                     />
 
                     <span
@@ -143,7 +143,7 @@ export default function ResetPassword(): JSX.Element {
                       name="password_confirmation"
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="Confirm new password"
-                      className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
+                      className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:border-green text-base placeholder:text-[#787675] sm:h-[52px]"
                     />
 
                     <span

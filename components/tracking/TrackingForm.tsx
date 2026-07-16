@@ -41,7 +41,7 @@ export default function TrackingForm(): JSX.Element {
               placeholder="Tracking Number"
               className="
                 w-full mt-2 px-5 py-[18px] border border-border rounded-xl
-                outline-none focus:ring-2 focus:ring-green
+                outline-none focus:border-green
               "
             />
           </div>
@@ -55,7 +55,7 @@ export default function TrackingForm(): JSX.Element {
                 placeholder="Enter your email address"
                 className="
                   w-full mt-2 px-5 py-[18px] border border-border rounded-xl
-                  outline-none focus:ring-2 focus:ring-green
+                  outline-none focus:border-green
                 "
               />
             </div>
@@ -67,7 +67,7 @@ export default function TrackingForm(): JSX.Element {
                 placeholder="Enter your phone number"
                 className="
                   w-full mt-2 px-5 py-[18px] border border-border rounded-xl
-                  outline-none focus:ring-2 focus:ring-green
+                  outline-none focus:border-green
                 "
               />
             </div>

@@ -289,7 +289,7 @@ const handlePlaceBid = async () => {
 
   return (
     <div>
-      <label className="block mb-2 text-sm font-medium text-secgray">
+      <label className="block mb-2 text-base font-medium text-secgray">
         Place your bid
       </label>
       {licenseBlocked && (
@@ -298,7 +298,7 @@ const handlePlaceBid = async () => {
         </div>
       )}
 
-      <div className="flex items-stretch w-full rounded-xl overflow-hidden border border-lightgreen focus-within:ring-2 focus-within:ring-green">
+      <div className="flex items-stretch w-full rounded-xl overflow-hidden border border-[#F2671C]/60 focus-within:ring-2 focus-within:ring-green">
 
         {/* $ + INPUT */}
         <div className="relative flex-1">
@@ -331,10 +331,10 @@ const handlePlaceBid = async () => {
       <button
         onClick={handlePlaceBid}
         disabled={bidLoading || !!error || licenseBlocked}
-        className={`w-full py-[15px] rounded-lg text-base leading-[16px] font-medium mb-[15px] flex justify-center items-center gap-[10px] transition-all duration-300 mt-4 cursor-pointer ${
+        className={`w-full py-[15px] rounded-full text-base leading-[16px] font-medium mb-[15px] flex justify-center items-center gap-[10px] transition-all duration-300 mt-4 cursor-pointer ${
           licenseBlocked
             ? "bg-gray-300 text-balck cursor-not-allowed"
-            : "bg-green text-balck hover:brightness-110 hover:bg-green/90"
+            : "bg-green text-white hover:brightness-110 hover:bg-green/90"
         }`}
       >
         {bidLoading ? (
@@ -348,8 +348,8 @@ const handlePlaceBid = async () => {
           <Image
             src={
               bidLoading || !!error || licenseBlocked
-                ? "/assets/hammer2.png"
-                : "/assets/hammer.png"
+                ? "/assets/images/hammer.svg"
+                : "/assets/images/hammer.svg"
             }
             alt="icon"
             width={15}
@@ -360,16 +360,16 @@ const handlePlaceBid = async () => {
         )}
       </button>
 
-      <div className="text-center text-para text-lg leading-[18px] mb-[15px]">
+      <div className="text-center text-[#343231] text-lg leading-[18px] mb-[15px]">
         - OR -
       </div>
       <button
         onClick={handleBuyNow}
         disabled={buyLoading || licenseBlocked}
-        className={`w-full py-[15px] rounded-lg text-base leading-[16px] font-medium flex justify-center items-center gap-[10px] border transition-all duration-300 cursor-pointer ${
+        className={`w-full py-[15px] rounded-full text-base leading-[16px] font-medium flex justify-center items-center gap-[10px] border transition-all duration-300 cursor-pointer ${
           licenseBlocked
             ? "bg-gray-100 text-balck border-gray-300 cursor-not-allowed"
-            : "bg-white text-balck border-green hover:bg-green hover:text-white"
+            : "bg-white text-orange border-green hover:bg-green hover:text-white"
         }`}
       >
         {buyLoading ? (
@@ -381,8 +381,8 @@ const handlePlaceBid = async () => {
     <>
       <Image src={
               buyLoading || licenseBlocked
-                ? "/assets/bag-new2.png"
-                : "/assets/bag-new.png"
+                ? "/assets/images/bag-new.svg"
+                : "/assets/images/bag-new.svg"
             } alt="icon" width={15} height={15} />
       Buy Now for  {formatPrice(buyNow)}
     </>

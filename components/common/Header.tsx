@@ -437,7 +437,7 @@ function Header({
     w-full z-50 relative
     ${
       hasBgImage
-        ? "bg-[url('/assets/header-bg-new.png')] bg-no-repeat bg-top bg-cover lg:bg-[length:100%_100%]"
+        ? ""
         : "bg-transparent"
     }
   `}
@@ -470,7 +470,7 @@ function Header({
                 after:h-1 after:w-0
                 after:bg-[linear-gradient(180deg,#F2671C_0%,#F2671C_50%,#F2671C_100%)]
                 after:transition-all after:duration-300
-                hover:after:w-8 hover:text-orange transition-all duration-300   ${
+                hover:after:w-8 hover:text-orange transition-all duration-300  ${
                   item.path === "/"
                     ? pathname === "/"
                       ? "text-orange font-bold after:w-8"
@@ -570,7 +570,7 @@ function Header({
                               }}
                               className="
                                 w-full flex justify-between items-center
-                                 text-white font-medium hover:text-orange cursor-pointer
+                                  font-medium hover:text-orange cursor-pointer
                               "
                             >
                               {group.name}

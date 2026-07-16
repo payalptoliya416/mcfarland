@@ -227,7 +227,7 @@ const handleMenuNavigate = (path: string) => {
   return (
     <>
       <div className="border-b border-border">
-        <div className="container-custom mx-auto flex justify-between items-center py-5 sm:gap-2">
+        <div className="mx-auto flex justify-between items-center py-5 px-10 md:px-[60px]">
           <Link href="/">
             {settings?.dark_logo && (
               <Image

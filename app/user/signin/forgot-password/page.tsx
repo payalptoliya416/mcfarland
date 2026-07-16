@@ -94,7 +94,7 @@ const handleForgot = async (
         variants={cardVariant}
         initial="hidden"
         animate="show"
-         className="rounded-r-[15px] rounded-[15px] lg:rounded-r-none p-10 col-span-12 lg:col-span-6 w-full shadow-[0_2px_35px_rgba(0,0,0,0.08)]"
+         className="rounded-r-[15px] rounded-[15px] lg:rounded-r-none p-5 md:p-10 col-span-12 lg:col-span-6 w-full shadow-[0_2px_35px_rgba(0,0,0,0.08)]"
       >
         {/* Title */}
         <motion.h2
@@ -139,7 +139,7 @@ const handleForgot = async (
                     name="email"
                     type="email"
                     placeholder="Enter your email address"
-                     className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
+                     className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:border-green text-base placeholder:text-[#787675] sm:h-[52px]"
                   />
                   <ErrorMessage
                     name="email"

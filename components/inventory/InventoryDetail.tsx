@@ -429,7 +429,7 @@ if (loading || isRedirecting) {
           </div> */}
         </div>
         <div className="col-span-12 xl:col-span-5 order-1 xl:order-2">
-          <div className="border border-border p-5 rounded-[15px]">
+          <div className="shadow-[0_8px_35px_rgba(0,0,0,0.08)] p-5 rounded-[10px]">
             <div className="flex justify-between flex-wrap gap-2">
               <h4 className="text-orange text-lg xl:text-lg xl:mb-[15px]  relative after:absolute after:top-3 after:left-0 after:bg-orange after:w-[15px] after:h-[2px] pl-5 after:rounded-full font-semibold">
                 {data?.category?.category_name}
@@ -438,11 +438,11 @@ if (loading || isRedirecting) {
                 <strong>Auction ID</strong> : {data?.auction_id}
               </div>
             </div>
-            <h2 className="text-secgray text-[26px] sm:text-[28px] sm:leading-[38px] mb-[30px] font-semibold">
+            <h2 className="text-secgray text-[26px] sm:text-[28px] sm:leading-[38px] mb-5 font-semibold">
               {data?.name}
             </h2>
              <div className="block xl:hidden">  {data && <ProductSlider data={data} />}</div> 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-[17px] mb-[30px]">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-[17px] pb-[30px] mb-[30px] border-b border-[#D2D1D1]">
               {[
                 { label: "Days", value: timeLeft.days },
                 { label: "Hours", value: timeLeft.hours },
@@ -451,28 +451,28 @@ if (loading || isRedirecting) {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="border border-border rounded-[10px] p-3 2xl:p-4 flex flex-col items-center bg-[#E9E9E940]"
+                  className="rounded-full p-3 2xl:p-4 flex flex-col items-center bg-[#E9E9E94D] w-[90px] h-[90px]"
                 >
-                  <span className="text-xl 2xl:text-4xl 2xl:mb-[10px] 2xl:leading-[36px] font-semibold">
+                  <span className="text-xl 2xl:text-[30px] 2xl:mb-[7px] 2xl:leading-[36px] font-semibold text-[#343231]">
                     {item.value}
                   </span>
-                  <span className="text-text-gray text-sm mt-1">
+                  <span className="text-text-gray text-sm">
                     {item.label}
                   </span>
                 </div>
               ))}
             </div>
 
-            <div className="flex gap-[10px] items-center mb-[15px]">
-              <p className="text-secgray text-lg leading-[18px]">
+            <div className="flex gap-[10px] items-center mb-[18px]">
+              <p className="text-secgray text-base leading-[16px]">
                 Current bid:
               </p>
-              <p className="text-green text-[26px] leading-[26px] font-semibold">
+              <p className="text-green text-[22px] leading-[22px] font-semibold">
                 {formatPrice(data?.current_bid)}
               </p>
             </div>
-            <div className="flex items-center bg-[#FFEFCC] text-black border border-lightgreen px-4 py-3 rounded-xl gap-[10px] text-base mb-[30px]">
-              <Image src="/assets/fire-new.png" alt="icon" width={30} height={30} />
+            <div className="flex items-center bg-[#E9E9E980] text-[#1D1B1A] border border-[#D2D1D1] p-3 rounded-full gap-[10px] text-base mb-[30px]">
+              <Image src="/assets/images/fire-new.svg" alt="icon" width={30} height={30} />
               {offerCount === 1
                 ? "1 offer was received"
                 : `${offerCount} offers were received`}
@@ -659,13 +659,13 @@ if (loading || isRedirecting) {
               dangerouslySetInnerHTML={{ __html: data?.description ?? "" }}
             />
           </div>
-          <div className="border-t border-border my-[30px] block xl:hidden"></div>
+          <div className="border-t border-border my-[40px] block xl:hidden"></div>
             <div className="w-full space-y-5">
-              <h2 className="text-lg font-semibold text-gray mb-[10px]">
+              <h2 className="text-base font-semibold text-gray mb-[10px]">
                 Delivery cost calculator
               </h2>
 
-              <p className="text-text-gray text-nase leading-[26px] mb-[20px]">
+              <p className="text-text-gray text-base mb-[25px]">
                 We will deliver this equipment to your location. You can
                 estimate the cost below.
               </p>
@@ -676,12 +676,12 @@ if (loading || isRedirecting) {
                     <Image
                       src="/assets/location1.svg"
                       alt="icon"
-                      width={22}
-                      height={22}
+                      width={20}
+                      height={20}
                     />
                     <div className="border-l border-dashed border-gray h-10 mt-1"></div>
                   </div>
-                  <p className="font-semibold text-gray text-lg leading-[18px]">
+                  <p className="font-semibold text-gray text-base">
                     From our location
                   </p>
                 </div>
@@ -690,11 +690,11 @@ if (loading || isRedirecting) {
                     <Image
                       src="/assets/location2-new.svg"
                       alt="icon"
-                      width={22}
-                      height={22}
+                      width={20}
+                      height={20}
                     />
                   </div>
-                  <p className="font-semibold text-gray text-lg leading-[18px]">
+                  <p className="font-semibold text-gray text-base">
                     To your delivery location
                   </p>
                 </div>
@@ -720,7 +720,7 @@ if (loading || isRedirecting) {
                     <Form className="space-y-5">
                       {/* ZIP CODE INPUT */}
                       <div className="mb-[25px]">
-                        <label className="text-lightblack text-lg mb-2 block font-semibold">
+                        <label className="text-lightblack text-base mb-2 block font-semibold">
                           Zip code
                         </label>
 
@@ -728,7 +728,7 @@ if (loading || isRedirecting) {
                           name="zip"
                           type="text"
                           placeholder="Enter your zip code"
-                          className="w-full rounded-xl border border-border px-4 py-3 text-base outline-none focus:ring-2 focus:ring-green "
+                          className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:border-green text-base placeholder:text-[#787675] sm:h-[52px]"
                         />
                         {touched.zip && errors.zip && (
                           <p className="text-red-500 text-sm mt-1">
@@ -739,7 +739,7 @@ if (loading || isRedirecting) {
 
                       {/* COUNTRY DROPDOWN - HEADLESS UI LISTBOX */}
                       <div>
-                        <label className="text-lightblack text-lg mb-2 block font-semibold">
+                        <label className="text-lightblack text-base mb-2 block font-semibold">
                           Choose your country
                         </label>
                         <div ref={ref} className="relative mt-2">
@@ -748,10 +748,10 @@ if (loading || isRedirecting) {
                             type="button"
                             onClick={() => setOpen(!open)}
                             className="
-                            w-full rounded-xl border border-border
-                            px-[18px] py-3 text-sm text-left
-                            bg-white focus:ring-2 focus:ring-green
-                            flex items-center justify-between
+                            w-full border border-border
+                            px-5 py-2 md:py-3 sm:py-[18px] text-left
+                            bg-white focus:border-green
+                            flex items-center justify-between rounded-[50px] outline-none focus:border-green text-base placeholder:text-[#787675] sm:h-[52px] cursor-pointer
                           "
                           >
                             <span>{selectedCountry}</span>

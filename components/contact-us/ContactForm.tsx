@@ -171,7 +171,7 @@ export default function ContactForm(): JSX.Element {
             onChange={handleChange}
             placeholder="Enter your first name"
             required
-            className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
+            className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:border-green text-base placeholder:text-[#787675] sm:h-[52px]"
           />
         </motion.div>
 
@@ -186,7 +186,7 @@ export default function ContactForm(): JSX.Element {
             onChange={handleChange}
             placeholder="Enter your last name"
             required
-            className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
+            className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:border-green text-base placeholder:text-[#787675] sm:h-[52px]"
           />
         </motion.div>
 
@@ -202,7 +202,7 @@ export default function ContactForm(): JSX.Element {
             onChange={handleChange}
             placeholder="Enter your email address"
             required
-            className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
+            className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:border-green text-base placeholder:text-[#787675] sm:h-[52px]"
           />
         </motion.div>
 
@@ -217,7 +217,7 @@ export default function ContactForm(): JSX.Element {
             onChange={handleChange}
             placeholder="Enter your phone number"
             required
-            className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
+            className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:border-green text-base placeholder:text-[#787675] sm:h-[52px]"
           />
         </motion.div>
 
@@ -233,7 +233,7 @@ export default function ContactForm(): JSX.Element {
           placeholder="Write a message"
           rows={5}
           required
-          className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[20px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675]"
+          className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[20px] outline-none focus:border-green text-base placeholder:text-[#787675]"
         />
       </motion.div>
 

@@ -84,7 +84,7 @@ export default function VerifyOtp(): JSX.Element {
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-           className="rounded-r-[15px] rounded-[15px] lg:rounded-r-none p-10 col-span-12 lg:col-span-6 w-full shadow-[0_2px_35px_rgba(0,0,0,0.08)]"
+           className="rounded-r-[15px] rounded-[15px] lg:rounded-r-none p-5 md:p-10 col-span-12 lg:col-span-6 w-full shadow-[0_2px_35px_rgba(0,0,0,0.08)]"
         >
           {/* TITLE */}
           <h2 className="text-3xl md:text-[42px] md:leading-[42px] font-bold text-center text-gray mb-[15px]">
@@ -110,7 +110,7 @@ export default function VerifyOtp(): JSX.Element {
                 className="
                   w-13 h-13 border border-border rounded-lg 
                   text-center text-2xl font-semibold 
-                  outline-none focus:ring-2 focus:ring-green bg-white
+                  outline-none focus:border-green bg-white
                 "
               />
             ))}

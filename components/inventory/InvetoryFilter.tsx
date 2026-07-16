@@ -348,11 +348,11 @@ export default function InventoryFilter({}: {}) {
     control: (base: any) => ({
       ...base,
       width: "100%",
-      border: "1px solid #D1D5DB",
-      borderRadius: "0.5rem",
+      border: "1px solid #D2D1D1",
+      borderRadius: "41px",
       padding: "9px 10px",
-      fontSize: "14px",
-      color: "#374151",
+      fontSize: "16px",
+      color: "#4B4947",
       backgroundColor: "#ffffff",
       boxShadow: "none",
       "&:hover": {
@@ -424,21 +424,8 @@ export default function InventoryFilter({}: {}) {
         <div className="w-full grid lg:grid-cols-[280px_1fr] gap-6">
           {/* ================= LEFT SIDEBAR ================= */}
           <aside
-            // [calc(100vh-10px)]
-            className={`
-            custom-scroll
-            fixed lg:sticky
-            top-0 lg:top-[10px]
-            left-0
-            h-full lg:h-fit
-            w-[280px] lg:w-72
-            bg-white
-            border border-border
-            rounded-none lg:rounded-xl
-            p-[15px]
-            z-[999]
-            overflow-y-auto
-            transition-transform duration-300
+            className={`custom-scroll fixed lg:sticky top-0 lg:top-[10px] left-0 h-full lg:h-fit w-[280px] lg:w-72
+            bg-white shadow-[0_2px_35px_rgba(0,0,0,0.08)] rounded-none lg:rounded-[20px] px-[15px] py-5 z-[999] overflow-y-auto transition-transform duration-300
             ${
               openSidebar
                 ? "translate-x-0"
@@ -459,7 +446,7 @@ export default function InventoryFilter({}: {}) {
               <Disclosure defaultOpen>
                 {({ open }) => (
                   <>
-                    <Disclosure.Button className="w-full flex items-center justify-between mt-10 lg:mt-0">
+                    <Disclosure.Button className="w-full flex items-center justify-between mt-10 lg:mt-0 cursor-pointer">
                       <h2 className="font-semibold text-lg text-gray">
                         Filter by Category
                       </h2>
@@ -488,20 +475,31 @@ export default function InventoryFilter({}: {}) {
                                 className="flex items-center justify-between text-base cursor-pointer"
                               >
                                 <div className="flex items-center gap-3">
+                                 <label className="relative flex items-center gap-3 cursor-pointer select-none">
                                   <input
                                     type="checkbox"
-                                    checked={selectedCategories.includes(
-                                      item.id,
-                                    )}
-                                    onChange={() =>
-                                      handleCategoryChange(item.id)
-                                    }
-                                    className="w-5 h-5 rounded border-[2px] border-border"
+                                    checked={selectedCategories.includes(item.id)}
+                                    onChange={() => handleCategoryChange(item.id)}
+                                    className="peer appearance-none w-5 h-5 border border-border rounded-[6px] checked:bg-green checked:border-green transition cursor-pointer"
                                   />
+
+                                  {/* Custom Tick */}
+                                  <svg
+                                    className="absolute left-[2px] top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none hidden peer-checked:block"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="white"
+                                    strokeWidth="3"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                  >
+                                    <path d="M5 13l4 4L19 7" />
+                                  </svg>
 
                                   <span className="text-text-gray">
                                     {item.category_name}
                                   </span>
+                                </label>
                                 </div>
 
                                 <span className="text-text-gray">
@@ -606,7 +604,7 @@ export default function InventoryFilter({}: {}) {
                       <span>{max}</span>
                     </div>
                     <div className="w-full mb-5">
-                      <div className="relative w-full h-1 bg-[#FFDE99] rounded-full mt-4 ">
+                      <div className="relative w-full h-1 bg-[#E9E9E9] rounded-full mt-4 ">
                         <div
                           className="absolute h-[6px] bg-green rounded-full top-1/2 -translate-y-1/2"
                           style={{
@@ -669,7 +667,7 @@ export default function InventoryFilter({}: {}) {
                             setFromYear(num);
                             setFromInput(String(num));
                           }}
-                          className="w-full mt-1 border border-border rounded-lg py-2 px-3"
+                          className="w-full mt-1 border border-border rounded-[46px] py-2 px-3  focus:outline-none"
                         />
                       </div>
 
@@ -699,7 +697,7 @@ export default function InventoryFilter({}: {}) {
                             setToYear(num);
                             setToInput(String(num));
                           }}
-                          className="w-full mt-1 border border-border rounded-lg py-2 px-3"
+                          className="w-full mt-1 border border-border rounded-[46px] py-2 px-3 focus:outline-none"
                         />
                       </div>
                     </div>
@@ -741,19 +739,19 @@ export default function InventoryFilter({}: {}) {
               </motion.div>
 
               <div className="flex items-end sm:items-center gap-3 relative flex-col sm:flex-row">
-                <span className="text-sm font-medium text-gray">
+                <span className="text-lg font-medium text-gray">
                   Sort By:
                 </span>
                 <div className="relative">
                   {/* BUTTON */}
                   <button
                     onClick={() => setSortOpen((p) => !p)}
-                    className="border border-border rounded-lg px-3 py-2 text-sm 
-               text-text-gray flex items-center justify-between w-60 bg-white"
+                    className="border border-border rounded-[42px] px-3 py-2 text-base 
+               text-text-gray flex items-center justify-between w-[280px] bg-white"
                   >
                     {selectedSort.label}
                     <FaChevronDown
-                      className={`text-xs transition-transform ${
+                      className={`text-base transition-transform ${
                         sortOpen ? "rotate-180" : ""
                       }`}
                     />
@@ -805,44 +803,47 @@ export default function InventoryFilter({}: {}) {
                   const friendlyUrl = `/inventory/${categorySlug}/${makeSlug}/${modelSlug}/${auction_id}`;
 
                   return product.status === 2 ? (
-  // 🔴 SOLD (NOT CLICKABLE)
-  <div key={product.id} className="h-full">
-    <div className="h-full border border-border rounded-[10px] p-[15px] bg-white cursor-not-allowed flex flex-col">
-      <div className="w-full flex items-center justify-center border border-border bg-[#E9E9E926] relative group rounded-[12px]">
-        {product.first_image_url ? (
-          <div className="relative w-full aspect-[240/165] rounded-[12px] overflow-hidden">
-            <Image
-              src={product.first_image_url}
-              alt={product.name}
-              fill
-              className="object-cover"
-            />
-          </div>
-        ) : (
-          <div className="w-[216px] h-[123px]" />
-        )}
+                // 🔴 SOLD (NOT CLICKABLE)
+                <div key={product.id} className="h-full">
+                  <div className="h-full border border-border rounded-[10px] p-[15px] bg-white cursor-not-allowed flex flex-col">
+                    <div className="w-full flex items-center justify-center bg-[#E9E9E926] relative group rounded-[12px]">
+                      {product.first_image_url ? (
+                        <div className="relative w-full aspect-[240/163] rounded-[12px] overflow-hidden">
+                          <Image
+                            src={product.first_image_url}
+                            alt={product.name}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-[216px] h-[123px]" />
+                      )}
 
-        <div className="absolute border border-red-300 rounded-md py-2 px-4 text-red-600 bg-red-50 font-semibold text-sm left-1/2 bottom-0 -translate-x-1/2 -translate-y-3">
-          SOLD
-        </div>
-      </div>
+                      <div className="absolute border border-red-300 rounded-full py-1.5 px-4 text-red-600 bg-red-50 font-semibold text-sm left-1/2 bottom-0 -translate-x-1/2 -translate-y-3">
+                        SOLD
+                      </div>
+                    </div>
 
-      <div className="px-2 mt-[15px]">
-        <h3 className="text-lg mb-2">{product.name}</h3>
-        <p className="text-sm text-text-gray mb-4">
-          {product.year} • {product.working_hours} hrs
-        </p>
-        <p className="text-green font-semibold">
-          Bid Price: {formatPrice(product.bid_start_price)}
-        </p>
-        <p className="text-green font-bold">
-          Buy Price: {formatPrice(product.buy_now_price)}
-        </p>
-      </div>
-    </div>
-  </div>
+                    <div className="px-2 mt-[15px] flex flex-col justify-between h-full">
+                      <div>
+                      <h3 className="text-lg mb-2">{product.name}</h3>
+                      <p className="text-sm text-[#62605F] mb-[15px]">
+                        {product.year} • {product.working_hours} hrs
+                      </p>
+                      </div>
+                      <div>
+                      <p className="text-green font-semibold text-base">
+                        Bid Price: {formatPrice(product.bid_start_price)}
+                      </p>
+                      <p className="text-green font-bold text-base">
+                        Buy Price: {formatPrice(product.buy_now_price)}
+                      </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 ) : (
-                  // ✅ AVAILABLE (CLICKABLE)
                   <Link
                     key={product.id}
                     href={friendlyUrl}
@@ -850,10 +851,10 @@ export default function InventoryFilter({}: {}) {
                     className="block h-full"
                     onClick={() => setIsNavigating(true)}
                   >
-                    <div className="h-full border border-border rounded-[10px] p-[15px] bg-white cursor-pointer hover:shadow-md transition flex flex-col">
-                      <div className="w-full flex items-center justify-center border border-border bg-[#E9E9E926] relative group rounded-[12px]">
+                    <div className="h-full shadow-[0_2px_35px_rgba(0,0,0,0.08)] rounded-[10px] p-[15px] bg-white cursor-pointer hover:shadow-md transition flex flex-col">
+                      <div className="w-full flex items-center justify-center bg-[#E9E9E926] relative group rounded-[12px]">
                         {product.first_image_url && (
-                          <div className="relative w-full aspect-[240/165] rounded-[12px] overflow-hidden">
+                          <div className="relative w-full aspect-[240/163] rounded-[12px] overflow-hidden">
                             <Image
                               src={product.first_image_url}
                               alt={product.name}
@@ -863,22 +864,26 @@ export default function InventoryFilter({}: {}) {
                           </div>
                         )}
 
-                        <div className="absolute border border-border rounded-md py-2 px-4 text-green bg-white text-sm left-1/2 bottom-0 -translate-x-1/2 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:-translate-y-3 transition">
+                        <div className="absolute border border-border rounded-full py-1.5 px-4 text-green bg-white text-sm left-1/2 bottom-0 -translate-x-1/2 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:-translate-y-3 transition font-semibold">
                           BID OR BUY
                         </div>
                       </div>
 
-                      <div className="px-2 mt-[15px]">
+                      <div className="px-2 mt-[15px] flex flex-col justify-between h-full">
+                        <div>
                         <h3 className="text-lg mb-2">{product.name}</h3>
                         <p className="text-sm text-text-gray mb-4">
                           {product.year} • {product.working_hours} hrs
                         </p>
+                        </div>
+                        <div>
                         <p className="text-green font-semibold">
                           Bid Price: {formatPrice(product.bid_start_price)}
                         </p>
                         <p className="text-green font-bold">
                           Buy Price: {formatPrice(product.buy_now_price)}
                         </p>
+                        </div>
                       </div>
                     </div>
                   </Link>
@@ -891,13 +896,12 @@ export default function InventoryFilter({}: {}) {
                 <button
                   onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                   disabled={currentPage === 1}
-                  className={`flex items-center gap-2 w-8 sm:w-auto sm:px-3 justify-center py-2 border border-border cursor-pointer
-        rounded-md sm:rounded-xl text-text-gray transition-all h-8 sm:h-11 text-xs sm:text-base
-        ${
-          currentPage === 1
-            ? "opacity-40 cursor-not-allowed"
-            : "hover:bg-gray-100"
-        }`}
+                  className={`flex items-center gap-2 w-8 sm:w-auto sm:px-3 justify-center py-1 border border-border cursor-pointer rounded-[40px] !leading-[16px] text-text-gray transition-all h-8 sm:h-11 text-xs sm:text-base
+                  ${
+                    currentPage === 1
+                      ? "opacity-40 cursor-not-allowed"
+                      : "hover:bg-gray-100"
+                  }`}
                 >
                   <FaChevronLeft className="text-xs sm:text-sm" />
                   <span className="hidden md:block"> Back </span>
@@ -938,8 +942,8 @@ export default function InventoryFilter({}: {}) {
                       <button
                         key={page}
                         onClick={() => setCurrentPage(page as number)}
-                        className={`w-8 h-8 sm:w-11 sm:h-11 flex items-center justify-center  cursor-pointer
-             rounded-md sm:rounded-xl transition-all  text-xs sm:text-base
+                        className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center  cursor-pointer
+             rounded-full transition-all  text-xs sm:text-base
               ${
                 currentPage === page
                   ? "bg-green text-white"
@@ -958,14 +962,14 @@ export default function InventoryFilter({}: {}) {
                     setCurrentPage((p) => Math.min(p + 1, totalPages))
                   }
                   disabled={currentPage === totalPages}
-                  className={`flex items-center gap-2 justify-center py-2 border border-border cursor-pointer
-        rounded-md sm:rounded-xl text-text-gray transition-all h-8 sm:h-11 w-8 sm:w-auto sm:px-3  text-xs sm:text-base
-        ${
-          currentPage === totalPages
-            ? "opacity-40 cursor-not-allowed"
-            : "hover:bg-gray-100"
-        }`}
-                >
+                  className={`flex items-center gap-2 justify-center py-1 border border-border cursor-pointer
+                  rounded-[40px] text-text-gray transition-all h-8 sm:h-11 w-8 sm:w-auto sm:px-3 text-xs sm:text-base
+                 !leading-[16px] ${
+                      currentPage === totalPages
+                        ? "opacity-40 cursor-not-allowed"
+                        : "hover:bg-gray-100"
+                    }`}
+                  >
                   <span className="hidden md:block"> Next </span>
                   <FaChevronRight className="text-xs sm:text-sm" />
                 </button>

@@ -165,7 +165,7 @@ export default function VerifyAccount() {
       case 0: // Pending
         return {
           type: "pending",
-          bg: "bg-[#FFF8E6] border border-[#FFE1A3] text-[#A26A00]",
+          bg: "bg-[#FFF4EC] border border-[#F9C8A5] text-[#D96A1C]",
           message:
             "Your license is under verification. Please wait while we review your document.",
         };

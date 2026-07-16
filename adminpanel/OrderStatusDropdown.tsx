@@ -767,7 +767,7 @@ const handleSubmit = async () => {
                 h-10 rounded-xl border bg-white
                 px-3 text-[13px] w-full
                 focus:outline-none
-                focus:ring-2 focus:ring-[#F59E0B]/20
+                focus:ring-1 focus:ring-[#F59E0B]/20
                 ${errors.includes(index) ? "border-red-500" : "border-gray-300"}
               `}
                             />
@@ -793,7 +793,7 @@ const handleSubmit = async () => {
                 h-10 rounded-xl border bg-white
                 px-3 text-[13px] w-full
                 focus:outline-none
-                focus:ring-2 focus:ring-[#F59E0B]/20
+                focus:ring-1 focus:ring-[#F59E0B]/20
                 ${errors.includes(index) ? "border-red-500" : "border-gray-300"}
               `}
                             />
