@@ -238,7 +238,7 @@ if (loading || isRedirecting) {
         <div className="col-span-12 xl:col-span-7 order-2 xl:order-1">
        <div className="hidden xl:block">  {data && <ProductSlider data={data} />}</div> 
           <div className="w-full space-y-5 hidden xl:block">
-            <h2 className="text-[22px] font-semibold text-lightblack mb-[22px] mont-text">
+            <h2 className="text-[22px] font-semibold text-lightblack mb-[22px]">
               Overview
             </h2>
 
@@ -262,7 +262,7 @@ if (loading || isRedirecting) {
                   <p className="text-text-gray mb-[6px] text-base leading-[16px]">
                     Year
                   </p>
-                  <p className="text-gray font-semibold text-xl leading-[20px] mont-text">
+                  <p className="text-gray font-semibold text-xl leading-[20px]">
                     {data?.year}
                   </p>
                 </div>
@@ -286,7 +286,7 @@ if (loading || isRedirecting) {
                   <p className="text-text-gray mb-[6px] text-base leading-[16px]">
                     Weight
                   </p>
-                  <p className="text-gray font-semibold text-xl leading-[20px] mont-text">
+                  <p className="text-gray font-semibold text-xl leading-[20px]">
                     {data?.weight}
                   </p>
                 </div>
@@ -310,7 +310,7 @@ if (loading || isRedirecting) {
                   <p className="text-text-gray mb-[6px] text-base leading-[16px]">
                     Working Hours
                   </p>
-                  <p className="text-gray font-semibold text-xl leading-[20px] mont-text">
+                  <p className="text-gray font-semibold text-xl leading-[20px]">
                     {data?.working_hours}
                   </p>
                 </div>
@@ -340,7 +340,7 @@ if (loading || isRedirecting) {
                   <p className="text-text-gray mb-[6px] text-base leading-[16px]">
                     Fuel Type
                   </p>
-                  <p className="text-gray font-semibold text-xl leading-[20px] mont-text">
+                  <p className="text-gray font-semibold text-xl leading-[20px]">
                     {data?.fuel}
                   </p>
                 </div>
@@ -361,7 +361,7 @@ if (loading || isRedirecting) {
                   </div>
                 </div>
                 <div>
-                  <p className="text-gray mb-[6px] text-base leading-[16px] mont-text font-semibold">
+                  <p className="text-gray mb-[6px] text-base leading-[16px] font-semibold">
                     Condition{" "}
                   </p>
                   <button className="bg-[#1DAF50] text-[12px] leading-[12px] text-white text-sm px-2 py-[6px] rounded-md whitespace-nowrap block">
@@ -388,7 +388,7 @@ if (loading || isRedirecting) {
                   <p className="text-text-gray mb-[6px] text-base leading-[16px]">
                     Serial Number
                   </p>
-                  <p className="text-gray font-semibold text-base xl:text-xl leading-[20px] mont-text break-all">
+                  <p className="text-gray font-semibold text-base xl:text-xl leading-[20px] break-all">
                     {data?.serial_number}
                   </p>
                 </div>
@@ -397,7 +397,7 @@ if (loading || isRedirecting) {
             <div className="border-t border-border"></div>
           </div>
           <div className="mt-[30px] hidden xl:block">
-            <h3 className="mb-[15px] text-lightblack text-[22px] leading-[22px] mont-text font-semibold">
+            <h3 className="mb-[15px] text-lightblack text-[22px] leading-[22px] font-semibold">
               Description
             </h3>
             <div
@@ -407,10 +407,10 @@ if (loading || isRedirecting) {
           </div>
           {/* <div className="w-full space-y-4 pt-[15px]">
             <div className="flex justify-between items-center">
-              <h2 className="text-xl leading-[20px] font-semibold text-gray mont-text">
+              <h2 className="text-xl leading-[20px] font-semibold text-gray">
                 Specification
               </h2>
-              <p className="text-xl leading-[20px] font-semibold text-gray mont-text">
+              <p className="text-xl leading-[20px] font-semibold text-gray">
                 Details
               </p>
             </div>
@@ -431,14 +431,14 @@ if (loading || isRedirecting) {
         <div className="col-span-12 xl:col-span-5 order-1 xl:order-2">
           <div className="border border-border p-5 rounded-[15px]">
             <div className="flex justify-between flex-wrap gap-2">
-              <h4 className="text-orange text-lg xl:text-lg xl:mb-[15px]  relative after:absolute after:top-3 after:left-0 after:bg-orange after:w-[15px] after:h-[2px] pl-5 after:rounded-full mont-text font-semibold">
+              <h4 className="text-orange text-lg xl:text-lg xl:mb-[15px]  relative after:absolute after:top-3 after:left-0 after:bg-orange after:w-[15px] after:h-[2px] pl-5 after:rounded-full font-semibold">
                 {data?.category?.category_name}
               </h4>
               <div className="text-end mb-2 sm:mb-0">
                 <strong>Auction ID</strong> : {data?.auction_id}
               </div>
             </div>
-            <h2 className="text-secgray text-[26px] sm:text-[28px] sm:leading-[38px] mb-[30px] font-semibold mont-text">
+            <h2 className="text-secgray text-[26px] sm:text-[28px] sm:leading-[38px] mb-[30px] font-semibold">
               {data?.name}
             </h2>
              <div className="block xl:hidden">  {data && <ProductSlider data={data} />}</div> 
@@ -453,7 +453,7 @@ if (loading || isRedirecting) {
                   key={i}
                   className="border border-border rounded-[10px] p-3 2xl:p-4 flex flex-col items-center bg-[#E9E9E940]"
                 >
-                  <span className="text-xl 2xl:text-4xl 2xl:mb-[10px] 2xl:leading-[36px] font-semibold mont-text">
+                  <span className="text-xl 2xl:text-4xl 2xl:mb-[10px] 2xl:leading-[36px] font-semibold">
                     {item.value}
                   </span>
                   <span className="text-text-gray text-sm mt-1">
@@ -467,7 +467,7 @@ if (loading || isRedirecting) {
               <p className="text-secgray text-lg leading-[18px]">
                 Current bid:
               </p>
-              <p className="text-green text-[26px] leading-[26px] font-semibold mont-text">
+              <p className="text-green text-[26px] leading-[26px] font-semibold">
                 {formatPrice(data?.current_bid)}
               </p>
             </div>
@@ -492,7 +492,7 @@ if (loading || isRedirecting) {
             )}
             <div className="border-t border-border my-[30px]"></div>
             <div className="w-full space-y-5 block xl:hidden">
-              <h2 className="text-[22px] font-semibold text-lightblack mb-[22px] mont-text">
+              <h2 className="text-[22px] font-semibold text-lightblack mb-[22px]">
                 Overview
               </h2>
 
@@ -516,7 +516,7 @@ if (loading || isRedirecting) {
                     <p className="text-text-gray mb-[6px] text-base leading-[16px]">
                       Year
                     </p>
-                    <p className="text-gray font-semibold text-xl leading-[20px] mont-text">
+                    <p className="text-gray font-semibold text-xl leading-[20px]">
                       {data?.year}
                     </p>
                   </div>
@@ -540,7 +540,7 @@ if (loading || isRedirecting) {
                     <p className="text-text-gray mb-[6px] text-base leading-[16px]">
                       Weight
                     </p>
-                    <p className="text-gray font-semibold text-xl leading-[20px] mont-text">
+                    <p className="text-gray font-semibold text-xl leading-[20px]">
                       {data?.weight}
                     </p>
                   </div>
@@ -564,7 +564,7 @@ if (loading || isRedirecting) {
                     <p className="text-text-gray mb-[6px] text-base leading-[16px]">
                       Working Hours
                     </p>
-                    <p className="text-gray font-semibold text-xl leading-[20px] mont-text">
+                    <p className="text-gray font-semibold text-xl leading-[20px]">
                       {data?.working_hours}
                     </p>
                   </div>
@@ -594,7 +594,7 @@ if (loading || isRedirecting) {
                     <p className="text-text-gray mb-[6px] text-base leading-[16px]">
                       Fuel Type
                     </p>
-                    <p className="text-gray font-semibold text-xl leading-[20px] mont-text">
+                    <p className="text-gray font-semibold text-xl leading-[20px]">
                       {data?.fuel}
                     </p>
                   </div>
@@ -615,7 +615,7 @@ if (loading || isRedirecting) {
                     </div>
                   </div>
                   <div>
-                    <p className="text-gray mb-[6px] text-base leading-[16px] mont-text font-semibold">
+                    <p className="text-gray mb-[6px] text-base leading-[16px] font-semibold">
                       Condition{" "}
                     </p>
                     <button className="bg-[#1DAF50] text-[12px] leading-[12px] text-white text-sm px-2 py-[6px] rounded-md whitespace-nowrap block">
@@ -642,7 +642,7 @@ if (loading || isRedirecting) {
                     <p className="text-text-gray mb-[6px] text-base leading-[16px]">
                       Serial Number
                     </p>
-                    <p className="text-gray font-semibold text-base xl:text-xl leading-[20px] mont-text break-all">
+                    <p className="text-gray font-semibold text-base xl:text-xl leading-[20px] break-all">
                       {data?.serial_number}
                     </p>
                   </div>
@@ -651,7 +651,7 @@ if (loading || isRedirecting) {
               <div className="border-t border-border my-[30px]"></div>
             </div>
               <div className="mt-[30px] block xl:hidden">
-            <h3 className="mb-[15px] text-lightblack text-[22px] leading-[22px] mont-text font-semibold">
+            <h3 className="mb-[15px] text-lightblack text-[22px] leading-[22px] font-semibold">
               Description
             </h3>
             <div
@@ -661,7 +661,7 @@ if (loading || isRedirecting) {
           </div>
           <div className="border-t border-border my-[30px] block xl:hidden"></div>
             <div className="w-full space-y-5">
-              <h2 className="text-lg font-semibold text-gray mb-[10px] mont-text">
+              <h2 className="text-lg font-semibold text-gray mb-[10px]">
                 Delivery cost calculator
               </h2>
 
@@ -681,7 +681,7 @@ if (loading || isRedirecting) {
                     />
                     <div className="border-l border-dashed border-gray h-10 mt-1"></div>
                   </div>
-                  <p className="font-semibold text-gray text-lg leading-[18px] mont-text">
+                  <p className="font-semibold text-gray text-lg leading-[18px]">
                     From our location
                   </p>
                 </div>
@@ -694,7 +694,7 @@ if (loading || isRedirecting) {
                       height={22}
                     />
                   </div>
-                  <p className="font-semibold text-gray text-lg leading-[18px] mont-text">
+                  <p className="font-semibold text-gray text-lg leading-[18px]">
                     To your delivery location
                   </p>
                 </div>
@@ -720,7 +720,7 @@ if (loading || isRedirecting) {
                     <Form className="space-y-5">
                       {/* ZIP CODE INPUT */}
                       <div className="mb-[25px]">
-                        <label className="text-lightblack text-lg mb-2 block mont-text font-semibold">
+                        <label className="text-lightblack text-lg mb-2 block font-semibold">
                           Zip code
                         </label>
 
@@ -739,7 +739,7 @@ if (loading || isRedirecting) {
 
                       {/* COUNTRY DROPDOWN - HEADLESS UI LISTBOX */}
                       <div>
-                        <label className="text-lightblack text-lg mb-2 block mont-text font-semibold">
+                        <label className="text-lightblack text-lg mb-2 block font-semibold">
                           Choose your country
                         </label>
                         <div ref={ref} className="relative mt-2">
@@ -799,7 +799,7 @@ if (loading || isRedirecting) {
                         <button
                           type="submit"
                           disabled={calcLoading}
-                          className="py-3 px-[18px] border border-green text-green rounded-xl text-base font-medium transition mont-text mt-5 cursor-pointer hover:bg-green hover:text-white"
+                          className="py-3 px-[18px] border border-green text-green rounded-xl text-base font-medium transition mt-5 cursor-pointer hover:bg-green hover:text-white"
                         >
                           {calcLoading
                             ? "Calculating..."
@@ -814,13 +814,13 @@ if (loading || isRedirecting) {
 
               {/* Result */}
               <div className="pt-2 mb-0">
-                <p className="text-gray font-medium text-lg mb-[15px] mont-text">
+                <p className="text-gray font-medium text-lg mb-[15px]">
                   Delivery cost estimation
                 </p>
 
                 {deliveryCost !== null ? (
                   <>
-                    <p className="text-green font-bold text-[26px] mb-[5px] mont-text">
+                    <p className="text-green font-bold text-[26px] mb-[5px]">
                       {formatPrice(deliveryCost)}
                     </p>
 
@@ -861,7 +861,7 @@ if (loading || isRedirecting) {
                         className="w-[20px] h-auto -mt-2"
                       />
                     </span>
-                    <h3 className="text-lg font-semibold text-gray mb-[10px] leading-[18px] mont-text">
+                    <h3 className="text-lg font-semibold text-gray mb-[10px] leading-[18px]">
                       100% Secure Payment
                     </h3>
                   </div>
@@ -887,7 +887,7 @@ if (loading || isRedirecting) {
                         className="w-[20px] h-auto"
                       />
                     </span>
-                    <h3 className="text-lg font-semibold text-gray leading-[18px] mont-text">
+                    <h3 className="text-lg font-semibold text-gray leading-[18px]">
                       Money back guaranteed
                     </h3>
                   </div>

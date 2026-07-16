@@ -195,11 +195,36 @@ export default function VerifyAccount() {
     }
   };
 
-
   return (
-    <div className="my-[110px] flex justify-center px-4">
-      <div className="border rounded-[15px] p-[30px] max-w-[650px] w-full border-border">
-        <h3 className="text-3xl text-center mb-6 font-semibold">
+    <>
+      <section className="p-5 -mt-[145px]  pb-0">
+      <div
+        className="relative rounded-3xl overflow-hidden min-h-[410px] bg-cover bg-center bg-[url(/assets/images/verify-account.png)] flex justify-center items-center md:bg-[length:100%_100%] bg-no-repeat"
+      >
+        <div className="relative z-10 flex items-center justify-center min-h-[410px]">
+          <div className="custom-container text-center text-white">
+            <h1 className="mx-auto max-w-5xl text-center text-[28px] font-extrabold leading-[40px] sm:text-[42px] sm:leading-[52px] md:text-[48px] md:leading-[58px] lg:text-[60px] lg:leading-[72px] mb-5">
+            Verify  {" "}
+              <span className="text-primary">
+                Your Account
+              </span>{" "} 
+              Securely
+            </h1>
+
+            <p className="mx-auto max-w-[700px] px-4 text-center text-sm font-medium leading-6 text-white sm:text-base sm:leading-[26px]">
+         To ensure a safe and trusted marketplace experience, please upload your identification document to complete account verification before making a purchase.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <div className="section-space flex justify-center">
+      <div className="rounded-[15px] p-[30px] max-w-[594px] w-full shadow-[0_2px_35px_rgba(0,0,0,0.08)]">
+       <div className="flex justify-center mb-10">
+         <div  className="w-[98px] h-[98px] flex items-center justify-center bg-[url('/assets/images/border-bg.png')] bg-contain bg-center bg-no-repeat"><img src="/assets/images/verify-icon.svg" alt="" /></div>
+       </div>
+        <h3 className="text-[38px] text-center mb-[15px] font-semibold">
           Verify your <span className="text-orange">account</span>
         </h3>
         <div className="mb-6 rounded-lg p-1 text-orange">
@@ -243,7 +268,7 @@ export default function VerifyAccount() {
           })()
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-[30px]">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <UploadBox
               label="Upload the front of your Driver’s License"
@@ -270,7 +295,7 @@ export default function VerifyAccount() {
                 !frontFile ||
                 (requiresBack && !backFile)
               }
-              className={`px-6 py-3 rounded-lg text-white ${
+              className={`py-[14px] px-[25px] rounded-[62px] font-semibold text-base transition flex items-center justify-center gap-3 h-[42px] text-white bg-orange hover:opacity-90 cursor-pointer ${
                 uploading || !frontFile || (requiresBack && !backFile)
                   ? "bg-gray-400"
                   : "bg-green  cursor-pointer "
@@ -286,5 +311,6 @@ export default function VerifyAccount() {
         </form>
       </div>
     </div>
+    </>
   );
 }

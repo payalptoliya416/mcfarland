@@ -460,7 +460,7 @@ export default function InventoryFilter({}: {}) {
                 {({ open }) => (
                   <>
                     <Disclosure.Button className="w-full flex items-center justify-between mt-10 lg:mt-0">
-                      <h2 className="font-semibold text-lg text-gray mont-text">
+                      <h2 className="font-semibold text-lg text-gray">
                         Filter by Category
                       </h2>
 
@@ -525,7 +525,7 @@ export default function InventoryFilter({}: {}) {
               {({ open }) => (
                 <div>
                   <Disclosure.Button className="w-full flex items-center justify-between mb-4">
-                    <h2 className="font-semibold text-lg text-gray mont-text">
+                    <h2 className="font-semibold text-lg text-gray">
                       Filter by Make and Model
                     </h2>
                     <FaChevronDown
@@ -590,7 +590,7 @@ export default function InventoryFilter({}: {}) {
               {({ open }) => (
                 <div>
                   <Disclosure.Button className="w-full flex items-center justify-between mb-3">
-                    <h2 className="font-semibold text-lg text-gray mont-text">
+                    <h2 className="font-semibold text-lg text-gray">
                       Filter by Year
                     </h2>
                     <FaChevronDown
@@ -734,14 +734,14 @@ export default function InventoryFilter({}: {}) {
               >
                 <button
                   onClick={() => setOpenSidebar(true)}
-                  className="w-10 h-10 border border-border rounded-lg text-xl text-black mont-text font-semibold flex justify-center items-center"
+                  className="w-10 h-10 border border-border rounded-lg text-xl text-black font-semibold flex justify-center items-center"
                 >
                   <HiMiniBars3BottomLeft scale={28} />
                 </button>
               </motion.div>
 
               <div className="flex items-end sm:items-center gap-3 relative flex-col sm:flex-row">
-                <span className="text-sm font-medium text-gray mont-text">
+                <span className="text-sm font-medium text-gray">
                   Sort By:
                 </span>
                 <div className="relative">

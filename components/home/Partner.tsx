@@ -43,13 +43,15 @@ function Partner() {
     <>
       <section className="section-space">
       <div className="container-custom">
-
+        <h2 className="mb-10 text-[30px] font-extrabold leading-[36px] sm:text-[36px] sm:leading-[38px] lg:text-[42px] lg:leading-[52px] text-center">
+             <span className="text-primary">Partners</span> & Brands
+          </h2>
         <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
 
           {brandData.map((brand) => (
             <div
               key={brand.id}
-              className="flex h-[66px] items-center justify-center rounded-full bg-white px-8 shadow-[0_4px_25px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_35px_rgba(0,0,0,0.12)]"
+              className="flex h-[50px] lg:h-[66px] items-center justify-center rounded-full bg-white px-5 lg:px-8 shadow-[0_4px_25px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_35px_rgba(0,0,0,0.12)]"
             >
               <img
                 src={brand.logo}

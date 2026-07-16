@@ -16,8 +16,8 @@ function AboutUs() {
     <AboutUsHero/>
     <OurStory/>
     <HowWork/>
-    <ChooseUs/>
     <StatsSection/>
+    <ChooseUs/>
     <TrustDriven/>
     <OurCommentment/>
     <Partner/>

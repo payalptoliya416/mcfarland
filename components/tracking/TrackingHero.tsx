@@ -22,7 +22,7 @@ function TrackingHero() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.h2
-              className="text-3xl md:text-[42px] leading-[48px] md:leading-[60px] font-bold mb-5 mont-text"
+              className="text-3xl md:text-[42px] leading-[48px] md:leading-[60px] font-bold mb-5"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, ease: "easeOut" }}

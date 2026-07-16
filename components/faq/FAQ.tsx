@@ -1,73 +1,26 @@
 "use client";
-import Image from "next/image";
-import { motion } from "framer-motion";
 
 function FaqHero() {
   return (
-    <section className="relative -mt-36">
-      
-      {/* Background */}
+     <section className="p-5 -mt-[145px]  pb-0">
       <div
-        className="absolute top-0 left-0 w-full h-full xl:h-[500px] bg-[url(/assets/main-bg-test.png)] bg-no-repeat bg-top -z-10 bg-cover lg:bg-[length:100%_100%]"
-      ></div>
+        className="relative rounded-3xl overflow-hidden min-h-[410px] bg-cover bg-center bg-[url(/assets/images/faq-bg.png)] flex justify-center items-center md:bg-[length:100%_100%] bg-no-repeat"
+      >
+        <div className="relative z-10 pt-[161px] min-h-[410px]">
+          <div className="custom-container text-center text-white">
+            <h1 className="mx-auto max-w-5xl text-center text-[28px] font-extrabold leading-[40px] sm:text-[42px] sm:leading-[52px] md:text-[48px] md:leading-[58px] lg:text-[60px] lg:leading-[72px] mb-5">
+             Frequently{" "}
+              <span className="text-primary">
+                Asked Questions
+              </span>{" "}
+            </h1>
 
-      <div className="container-custom mx-auto">
-        <div className="grid grid-cols-12 pt-[150px] xl:pt-[100px] items-center">
-
-          {/* LEFT TEXT BLOCK */}
-          <motion.div
-            className="col-span-12 lg:col-span-6 mb-5 lg:mb-0"
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <motion.h2
-              className="text-3xl md:text-[42px] leading-[48px] md:leading-[60px] font-bold mb-5 mont-text"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-            >
-              Frequently <span className="text-orange">Asked Questions</span>
-            </motion.h2>
-
-            <motion.p
-              className="text-para textbase leading-[24px] font-normal"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-            >
-           Find quick answers to the most common queries below — or reach out to our team anytime.
-            </motion.p>
-          </motion.div>
-
-          {/* RIGHT IMAGE */}
-          <motion.div
-            className="col-span-12 lg:col-span-6"
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            viewport={{ once: true, amount: 0.3 }}
-          >
-            <div className="flex justify-end">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.7, ease: "easeOut" }}
-              >
-                <Image
-                  src="/assets/faq.png"
-                  alt="Hero"
-                   width={0}
-                  height={0}
-                  sizes="100vw"
-                  className="w-full h-auto max-w-[507px]"
-                />
-              </motion.div>
-            </div>
-          </motion.div>
-
+            <p className="mx-auto max-w-[790px] px-4 text-center text-sm font-medium leading-6 text-white sm:text-base sm:leading-[26px]">
+            Find quick answers to the most common queries below — or reach out to our team anytime.
+            </p>
+          </div>
         </div>
+
       </div>
     </section>
   );

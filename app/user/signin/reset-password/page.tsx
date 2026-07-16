@@ -8,6 +8,7 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import { resetPassword } from "@/api/services";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import Image from "next/image";
 
 const ResetPasswordSchema = Yup.object().shape({
   password: Yup.string()
@@ -69,21 +70,21 @@ export default function ResetPassword(): JSX.Element {
   };
 
   return (
-    <div className="container-custom mx-auto bg-[#F9F9F9] rounded-[14px] p-[20px] grid grid-cols-12 gap-5 min-h-[80vh] my-[60px]">
+     <div className="container-custom mx-auto bg-[#fff] rounded-[14px] p-[15px] grid grid-cols-12 section-space">
       {/* LEFT FORM CARD */}
       <div className="flex justify-center items-center col-span-12 lg:col-span-6 w-full">
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="w-full border border-border rounded-[15px] py-[55px] px-5 sm:px-[30px] bg-white"
+          className="rounded-r-[15px] rounded-[15px] lg:rounded-r-none p-10 col-span-12 lg:col-span-6 w-full shadow-[0_2px_35px_rgba(0,0,0,0.08)]"
         >
           {/* Title */}
-          <h2 className="text-[32px] font-bold text-center mb-[10px] mont-text">
+          <h2 className="text-3xl md:text-[42px] md:leading-[42px] font-bold text-center text-gray mb-[15px]">
             Reset <span className="text-orange">Password</span>
           </h2>
 
-          <p className="text-center text-text-gray mb-[30px]">
+          <p className="text-text-gray text-center mb-[25px] text-base">
             Create your new password to continue.
           </p>
 
@@ -100,7 +101,7 @@ export default function ResetPassword(): JSX.Element {
               <Form className="space-y-5">
                 {/* New Password */}
                 <div>
-                  <label className="text-lightblack font-medium mb-3 block text-lg mont-text">
+                  <label className="text-lightblack font-medium mb-3 block text-base">
                     New Password
                   </label>
 
@@ -109,7 +110,7 @@ export default function ResetPassword(): JSX.Element {
                       name="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter new password"
-                      className="w-full px-5 py-[14px] border border-border rounded-[10px] outline-none focus:ring-2 focus:ring-green"
+                     className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
                     />
 
                     <span
@@ -133,7 +134,7 @@ export default function ResetPassword(): JSX.Element {
 
                 {/* Confirm Password */}
                 <div>
-                  <label className="text-lightblack font-medium mb-3 block text-lg mont-text">
+                  <label className="text-lightblack font-medium mb-3 block text-base">
                     Confirm Password
                   </label>
 
@@ -142,7 +143,7 @@ export default function ResetPassword(): JSX.Element {
                       name="password_confirmation"
                       type={showConfirmPassword ? "text" : "password"}
                       placeholder="Confirm new password"
-                      className="w-full px-5 py-[14px] border border-border rounded-[10px] outline-none focus:ring-2 focus:ring-green"
+                      className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
                     />
 
                     <span
@@ -171,10 +172,9 @@ export default function ResetPassword(): JSX.Element {
                   type="submit"
                   disabled={loading}
                   className={`
-    w-full flex items-center justify-center gap-2
-    bg-green text-white py-[14px] rounded-lg text-lg font-semibold transition cursor-pointer
-    ${loading ? "opacity-70 cursor-not-allowed" : "hover:opacity-90"}
-  `}
+                  w-full py-[14px] rounded-[62px] font-semibold text-base transition flex items-center justify-center gap-3 h-[42px] text-white bg-orange hover:opacity-90 cursor-pointer
+                  ${loading ? "opacity-70 cursor-not-allowed" : "hover:opacity-90"}
+                `}
                 >
                   {loading ? (
                     <>
@@ -182,7 +182,7 @@ export default function ResetPassword(): JSX.Element {
                       Resetting...
                     </>
                   ) : (
-                    <>Reset Password →</>
+                    <>Reset Password <img src="/assets/images/btn-right-errow.svg" alt="" /></>
                   )}
                 </button>
               </Form>
@@ -190,39 +190,23 @@ export default function ResetPassword(): JSX.Element {
           </Formik>
 
           <p className="text-center mt-[25px] text-lg font-semibold mont-text">
-            <Link href="/user/signin" className="text-green">
-              ← Back to Signin
-            </Link>
+             <Link href="/user/signin" className="text-green flex justify-center items-center">
+             <span className="mr-1"><img src="/assets/images/left-arrow.svg" alt="" /></span> Back to Signin
+          </Link>
           </p>
         </motion.div>
       </div>
 
       {/* RIGHT PANEL IMAGE */}
-      <div
-        className="
-              relative 
-              col-span-12 lg:col-span-6 
-              w-full h-[300px] lg:h-full 
-              rounded-2xl overflow-hidden shadow-md
-              bg-cover bg-center
-            "
-        style={{ backgroundImage: "url('/assets/user-bg-new.png')" }}
-      >
-        {/* DARK OVERLAY (Improves readability) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-
-        {/* TEXT BLOCK */}
-        <div className="absolute bottom-4 left-4 right-4 lg:bottom-10 lg:left-10 lg:right-10 text-white">
-          <h2 className="text-2xl lg:text-[32px] font-bold leading-snug lg:leading-[48px] mb-[10px] mont-text">
-            Manage Your Equipment Deals with Confidence
-          </h2>
-
-          <p className="text-base lg:text-lg leading-[22px] lg:leading-[26px]">
-            Track bids, purchases, and deliveries – all from one simple
-            dashboard.
-          </p>
-        </div>
-      </div>
+      <div className="relative col-span-12 lg:col-span-6 rounded-r-[15px]">
+             <Image
+               src="/assets/images/signin.png"
+               alt="Sign In"
+               fill
+               className="object-cover rounded-r-[15px]"
+               priority
+             />
+           </div>
     </div>
   );
 }

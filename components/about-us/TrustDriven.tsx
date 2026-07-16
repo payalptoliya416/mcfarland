@@ -32,36 +32,7 @@ function TrustDriven() {
   return (
     <section className="container-custom mx-auto lg:mb-[110px] my-10 sm:my-20 lg:mt-[142px]">
       <div className="grid grid-cols-12 lg:gap-[30px] items-stretch mt-10">
-        {/* RIGHT TEXT + LIST */}
-          <motion.div
-          className="col-span-12 lg:col-span-6 h-full mb-5 lg:mb-0"
-          initial={{ opacity: 0, x: -60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="block lg:hidden">
-            <Image
-              src="/assets/mark.png"
-              alt="about"
-              width={575}
-              height={445}
-              className="w-full h-auto rounded-2xl object-cover"
-            />
-          </div>
-
-          {/* Desktop Fill Image */}
-          <div className="hidden lg:block relative w-full h-full rounded-2xl overflow-hidden">
-            <Image
-              src="/assets/mark.png"
-              alt="about"
-              fill
-              className="object-cover"
-            />
-          </div>
-        </motion.div>
-
-        <motion.div
+           <motion.div
           className="col-span-12 lg:col-span-6 mb-5 lg:mb-0"
           initial={{ opacity: 0, x: 60 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -69,7 +40,7 @@ function TrustDriven() {
           transition={{ duration: 0.8 }}
         >
           {/* Heading */}
-          <h2 className="text-[32px] sm:text-[38px] font-bold text-gray mb-[20px] mont-text">
+          <h2 className="mb-[25px] text-[30px] font-bold leading-[36px] sm:text-[36px] sm:leading-[38px] lg:text-[42px] lg:leading-[52px]">
             Built on <span className="text-orange">trust, driven </span> by
             experience
           </h2>
@@ -95,7 +66,7 @@ function TrustDriven() {
             {items.map((item, i) => (
               <div
                 key={i}
-                className="bg-[linear-gradient(90deg,#F2671C14,#F2671C00)] p-[16px] rounded-xl flex gap-3 items-center"
+                className="flex gap-3 items-center"
               >
                 <div>
                   <Image
@@ -107,13 +78,41 @@ function TrustDriven() {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold text-gray mont-text">
+                  <h3 className="text-base font-semibold text-lightblack">
                     {item.title}
                   </h3>
                 </div>
               </div>
             ))}
           </motion.div>
+        </motion.div>
+        {/* RIGHT TEXT + LIST */}
+          <motion.div
+          className="col-span-12 lg:col-span-6 h-full mb-5 lg:mb-0"
+          initial={{ opacity: 0, x: -60 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="block lg:hidden">
+            <Image
+              src="/assets/images/built.png"
+              alt="about"
+              width={575}
+              height={445}
+              className="w-full h-auto rounded-2xl object-cover"
+            />
+          </div>
+
+          {/* Desktop Fill Image */}
+          <div className="hidden lg:block relative w-full h-full overflow-hidden">
+            <Image
+              src="/assets/images/built.png"
+              alt="about"
+              fill
+              className=""
+            />
+          </div>
         </motion.div>
       
       </div>

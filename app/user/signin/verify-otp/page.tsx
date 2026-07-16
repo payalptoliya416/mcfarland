@@ -5,21 +5,22 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { verifyOtp } from "@/api/services";
+import Image from "next/image";
 
 export default function VerifyOtp(): JSX.Element {
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
   const [otpValues, setOtpValues] = useState(["", "", "", ""]);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    const savedEmail = localStorage.getItem("reset_email");
-    if (savedEmail) {
-      setEmail(savedEmail);
-    } else {
-      toast.error("Email not found! Please try again.");
-      window.location.href = "/user/signin/forgot-password";
-    }
-  }, []);
+  // useEffect(() => {
+  //   const savedEmail = localStorage.getItem("reset_email");
+  //   if (savedEmail) {
+  //     setEmail(savedEmail);
+  //   } else {
+  //     toast.error("Email not found! Please try again.");
+  //     window.location.href = "/user/signin/forgot-password";
+  //   }
+  // }, []);
   const handleChange = (value: string, index: number) => {
     if (!/^[0-9]?$/.test(value)) return;
 
@@ -76,32 +77,23 @@ export default function VerifyOtp(): JSX.Element {
   };
 
   return (
-    <div className="container-custom mx-auto bg-[#F9F9F9] rounded-[14px] p-[20px] grid grid-cols-12 gap-5 min-h-[80vh] my-[60px]">
+        <div className="container-custom mx-auto bg-[#fff] rounded-[14px] p-[15px] grid grid-cols-12 section-space">
       {/* LEFT SIDE CARD */}
       <div className="flex justify-center items-center col-span-12 lg:col-span-6 w-full">
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="w-full border border-border rounded-[15px] py-[55px] px-5 sm:px-[30px] bg-white"
+           className="rounded-r-[15px] rounded-[15px] lg:rounded-r-none p-10 col-span-12 lg:col-span-6 w-full shadow-[0_2px_35px_rgba(0,0,0,0.08)]"
         >
           {/* TITLE */}
-          <h2 className="text-[32px] font-bold text-center mb-[10px] mont-text">
+          <h2 className="text-3xl md:text-[42px] md:leading-[42px] font-bold text-center text-gray mb-[15px]">
             Verify <span className="text-orange">OTP</span>
           </h2>
 
-          <p className="text-center text-text-gray mb-[30px]">
+          <p className="text-text-gray text-center mb-[25px] text-base">
             Enter the 4-digit verification code sent to your email.
           </p>
-
-          {/* EMAIL INPUT */}
-          {/* <input
-            type="email"
-            placeholder="Enter your email"
-            className="w-full mb-6 px-5 py-[14px] border border-border rounded-lg outline-none focus:ring-2 focus:ring-green"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          /> */}
 
           {/* OTP INPUTS */}
           <div className="flex justify-center gap-3 mb-8">
@@ -116,7 +108,7 @@ export default function VerifyOtp(): JSX.Element {
                 onChange={(e) => handleChange(e.target.value, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
                 className="
-                  w-14 h-14 border border-border rounded-lg 
+                  w-13 h-13 border border-border rounded-lg 
                   text-center text-2xl font-semibold 
                   outline-none focus:ring-2 focus:ring-green bg-white
                 "
@@ -129,9 +121,7 @@ export default function VerifyOtp(): JSX.Element {
             onClick={handleSubmit}
             disabled={loading}
             className={`
-    w-full flex items-center justify-center gap-2
-    bg-green text-white py-[14px] rounded-lg 
-    text-lg font-semibold transition cursor-pointer
+     w-full py-[14px] rounded-[62px] font-semibold text-base transition flex items-center justify-center gap-3 h-[42px] text-white bg-orange hover:opacity-90 cursor-pointer
     ${loading ? "opacity-70 cursor-not-allowed" : "hover:opacity-90"}
   `}
           >
@@ -145,40 +135,24 @@ export default function VerifyOtp(): JSX.Element {
             )}
           </button>
 
-          <p className="text-center mt-[25px] text-lg font-semibold mont-text">
-            <Link href="/user/signin/forgot-password" className="text-green">
-              ← Back to Forgot Password
+          <p className="text-center mt-[25px] text-lg font-semibold">
+            <Link href="/user/signin/forgot-password" className="text-green flex justify-center items-center">
+              <span className="mr-1"><img src="/assets/images/left-arrow.svg" alt="" /></span>  Back to Forgot Password
             </Link>
           </p>
         </motion.div>
       </div>
 
       {/* RIGHT IMAGE */}
-      <div
-        className="
-              relative 
-              col-span-12 lg:col-span-6 
-              w-full h-[300px] lg:h-full 
-              rounded-2xl overflow-hidden shadow-md
-              bg-cover bg-center
-            "
-        style={{ backgroundImage: "url('/assets/user-bg-new.png')" }}
-      >
-        {/* DARK OVERLAY (Improves readability) */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
-
-        {/* TEXT BLOCK */}
-        <div className="absolute bottom-4 left-4 right-4 lg:bottom-10 lg:left-10 lg:right-10 text-white">
-          <h2 className="text-2xl lg:text-[32px] font-bold leading-snug lg:leading-[48px] mb-[10px] mont-text">
-            Manage Your Equipment Deals with Confidence
-          </h2>
-
-          <p className="text-base lg:text-lg leading-[22px] lg:leading-[26px]">
-            Track bids, purchases, and deliveries – all from one simple
-            dashboard.
-          </p>
-        </div>
-      </div>
+       <div className="relative col-span-12 lg:col-span-6 rounded-r-[15px]">
+                 <Image
+                   src="/assets/images/signin.png"
+                   alt="Sign In"
+                   fill
+                   className="object-cover rounded-r-[15px]"
+                   priority
+                 />
+               </div>
     </div>
   );
 }

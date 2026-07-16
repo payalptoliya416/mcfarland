@@ -1,6 +1,5 @@
 "use client";
-import Image from "next/image";
-import { motion } from "framer-motion";
+
 import { useSettings } from "@/contexts/SettingsContext";
 
 function ContactUs() {
@@ -8,79 +7,28 @@ function ContactUs() {
 
   return (
     <>
-      <section className="relative -mt-[136px]">
+    <section className="p-5 -mt-[145px]  pb-0">
+      <div
+        className="relative rounded-3xl overflow-hidden min-h-[410px] bg-cover bg-center bg-[url(/assets/images/contact-bg.png)] flex justify-center items-center md:bg-[length:100%_100%] bg-no-repeat"
+      >
+        <div className="relative z-10 pt-[132px] md:pt-[127px] pb-14 md:pb-[67px]">
+          <div className="custom-container text-center text-white">
+            <h1 className="mx-auto max-w-5xl text-center text-[28px] font-extrabold leading-[40px] sm:text-[42px] sm:leading-[52px] md:text-[48px] md:leading-[58px] lg:text-[60px] lg:leading-[72px] mb-5">
+             
+              <span className="text-primary">
+                Get in Touch 
+              </span>{" "}
+              <span className="block lg:inline">with {companyName}</span>
+            </h1>
 
-        {/* ⭐ Background Fade-in First */}
-        <motion.div
-          className="absolute top-0 left-0 w-full h-full xl:h-[500px] bg-[url(/assets/main-bg-test.png)] bg-no-repeat bg-top -z-10 bg-cover lg:bg-[length:100%_100%]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        ></motion.div>
-
-        <div className="container-custom mx-auto">
-          <div className="grid grid-cols-12 pt-[150px] xl:pt-[100px] items-center">
-
-            {/* ⭐ Content Animates AFTER Background */}
-            <motion.div
-              className="col-span-12 lg:col-span-6 mb-5 lg:mb-0"
-              initial={{ opacity: 0, x: -60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              <motion.h2
-                className="text-3xl md:text-[42px] leading-[48px] md:leading-[60px] font-bold mb-5 mont-text"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.4 }}
-              >
-                <span className="text-orange">Get in Touch </span>
-                with {companyName}
-              </motion.h2>
-
-              <motion.p
-                className="text-para textbase leading-[24px] font-normal"
-                initial={{ opacity: 0, y: 15 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.5, ease: "easeOut" }}
-              >
-                Buy or Bid on high-quality machinery, tractors, and tools from trusted
-                sellers. Whether you're expanding your fleet or upgrading your
-                equipment, {companyName} has you covered.
-              </motion.p>
-            </motion.div>
-
-            {/* Right Image */}
-            <motion.div
-              className="col-span-12 lg:col-span-6"
-              initial={{ opacity: 0, x: 60 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
-              viewport={{ once: true, amount: 0.3 }}
-            >
-              <div className="flex justify-end">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.7, ease: "easeOut", delay: 0.5 }}
-                  className="-mr-9"
-                >
-                  <Image
-                    src="/assets/contact.png"
-                    alt="Hero"
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    className="w-full h-auto max-w-[600px]"
-                  />
-                </motion.div>
-              </div>
-            </motion.div>
-
+            <p className="mx-auto max-w-[790px] px-4 text-center text-sm font-medium leading-6 text-white sm:text-base sm:leading-[26px]">
+            Buy or Bid on high-quality machinery, tractors, and tools from trusted sellers. Whether you're expanding your fleet or upgrading your equipment, {companyName} has you covered.
+            </p>
           </div>
         </div>
-      </section>
+
+      </div>
+    </section>
     </>
   );
 }

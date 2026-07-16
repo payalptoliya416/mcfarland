@@ -9,7 +9,7 @@ function Testimonial() {
   const { companyName } = useSettings();
 
   return (
-    <section className="bg-[#E9E9E940] py-[60px]">
+    <section className="section-space">
       <div className="container-custom mx-auto ">
       <div className="text-center">
          <span className="inline-flex rounded-full bg-[#F2671C] px-5 py-[10px] text-base !leading-[16px] font-semibold text-white">
@@ -35,7 +35,7 @@ function Testimonial() {
       />
 
       <p className="text-lg leading-[28px] text-[#4A4A4A] font-medium">
-        “Selling my machinery through Eastline Equipment Auctions was seamless.
+        “Selling my machinery through {companyName} was seamless.
         Their team handled everything professionally, and I received great
         value within days. Highly recommended!”
       </p>

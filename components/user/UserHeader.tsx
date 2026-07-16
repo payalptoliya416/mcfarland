@@ -226,8 +226,8 @@ const handleMenuNavigate = (path: string) => {
 
   return (
     <>
-      <div className="bg-[#FFFBF3]">
-        <div className="container-custom mx-auto flex justify-between items-center py-2 sm:gap-2">
+      <div className="border-b border-border">
+        <div className="container-custom mx-auto flex justify-between items-center py-5 sm:gap-2">
           <Link href="/">
             {settings?.dark_logo && (
               <Image
@@ -262,15 +262,15 @@ const handleMenuNavigate = (path: string) => {
                 after:h-1 after:w-0
                   after:bg-[linear-gradient(180deg,#F2671C00_0%,#F2671C_50%,#F2671C00_100%)]
                 after:transition-all after:duration-300
-                hover:after:w-8 hover:text-orange transition-all duration-300
+                hover:after:w-8 hover:text-orange transition-all duration-300 cursor-pointer
                 ${
                   item.path === "/"
                     ? pathname === "/"
                       ? "text-orange font-bold after:w-8"
-                      : "text-gray-700 font-medium"
+                      : "text-[#1D1B1A] font-medium"
                     : pathname.startsWith(item.path)
                       ? "text-orange font-bold after:w-8"
-                      : "text-gray-700 font-medium"
+                      : "text-[#1D1B1A] font-medium"
                 }
               `}
                     >
@@ -286,7 +286,7 @@ const handleMenuNavigate = (path: string) => {
               <div>
                 <button
                   onClick={() => onNavigate?.(getAuthUrl("/signup"))}
-                  className="hidden lg:block text-gray bg-green py-[14px] px-[22px] rounded-lg text-base leading-[16px] cursor-pointer"
+                  className="hidden lg:block text-white bg-green py-[12px] px-[25px] rounded-[62px] text-base leading-[16px] cursor-pointer h-[40px]"
                 >
                   Sign Up
                 </button>

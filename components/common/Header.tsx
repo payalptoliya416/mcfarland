@@ -418,8 +418,6 @@ function Header({
 
     return (
       currentPath.startsWith("/inventory") ||
-      currentPath.startsWith("/verify-account/") ||
-      currentPath.startsWith("/verify-account") ||
       currentPath.startsWith("/signup") ||
       currentPath.startsWith("/confirmation") ||
       currentPath.startsWith("/sale-agreement") ||
@@ -444,7 +442,7 @@ function Header({
     }
   `}
       >
-        <div className="mx-auto flex justify-between items-center pb-4 pt-[40px] px-[60px]">
+        <div className="mx-auto flex justify-between items-center pb-4 pt-[40px] px-10 md:px-[60px]">
           <Link href="/">
             {settings?.dark_logo && <img src={settings.dark_logo} alt="Logo" />}
           </Link>
@@ -466,7 +464,13 @@ function Header({
                 <Link
                   href={item.path}
                   onClick={() => handleNavigate(item.path)}
-                  className={`text-base font-medium text-orange hover:text-orange cursor-pointer transition-all duration-300   ${
+                  className={`text-base font-medium text-gray-700 hover:text-orange cursor-pointer relative
+                after:content-[''] after:absolute after:-bottom-1
+                after:left-1/2 after:-translate-x-1/2
+                after:h-1 after:w-0
+                after:bg-[linear-gradient(180deg,#F2671C_0%,#F2671C_50%,#F2671C_100%)]
+                after:transition-all after:duration-300
+                hover:after:w-8 hover:text-orange transition-all duration-300   ${
                   item.path === "/"
                     ? pathname === "/"
                       ? "text-orange font-bold after:w-8"
@@ -658,7 +662,7 @@ function Header({
 
           <button
             ref={buttonRef}
-            className="lg:hidden focus:outline-none cursor-pointer"
+            className="lg:hidden focus:outline-none cursor-pointer text-white"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <HiBars3BottomRight size={36} />

@@ -39,7 +39,7 @@ useEffect(() => {
       <Loader />
     </div>
     )}
-       <section className="p-5 -mt-[145px] ">
+       <section className="p-5 -mt-[145px]  pb-0">
       <div
         className="relative rounded-3xl overflow-hidden min-h-[600] bg-cover bg-center bg-[url(/assets/images/hero-bg.png)]"
       >

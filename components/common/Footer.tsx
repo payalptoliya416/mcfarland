@@ -42,7 +42,7 @@ function Footer() {
         >
 
           {/* Content */}
-          <div className="relative z-10 flex min-h-[320px] flex-col items-center justify-center py-[50px] text-center">
+          <div className="relative z-10 flex min-h-[320px] flex-col items-center justify-center py-[50px] text-center container-custom">
 
             <h2 className="mx-auto max-w-[760px] text-center font-nunito text-[30px] font-extrabold leading-[38px] text-white sm:text-[36px] sm:leading-[46px] lg:text-[42px] lg:leading-[52px]">
             Ready to{" "}
@@ -133,7 +133,7 @@ function Footer() {
             </div>
             <div className="lg:mx-auto">
               <div>
-                <h3 className="text-orange mb-5 text-lg leading-[18px] mont-text font-semibold">
+                <h3 className="text-orange mb-5 text-lg leading-[18px] font-semibold">
                   Quick Links
                 </h3>
 
@@ -192,7 +192,7 @@ function Footer() {
             </div>
             <div className="lg:mx-auto">
               <div>
-                <h3 className="text-orange mb-5 text-lg leading-[18px] mont-text font-semibold">
+                <h3 className="text-orange mb-5 text-lg leading-[18px] font-semibold">
                  Services
                 </h3>
 
@@ -221,7 +221,7 @@ function Footer() {
             </div>
 
             <div>
-              <h3 className="text-orange mb-5 text-lg leading-[18px] mont-text  font-semibold">
+              <h3 className="text-orange mb-5 text-lg leading-[18px]  font-semibold">
                 Contact Info
               </h3>
 

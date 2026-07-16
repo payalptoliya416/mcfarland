@@ -43,9 +43,10 @@ function HowWork() {
 
   return (
     <>
-     <section className="py-[70px] bg-[#E9E9E9]/30">
+     <section className="section-space">
+      <div className="bg-[#E9E9E9]/30 py-[70px]">
       <div className="container-custom">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-[30px]">
+        <div className="grid gap-8 lg:grid-cols-2 lg:gap-[30px]">
           <div>
             <span className="inline-flex rounded-full bg-[#F2671C] px-5 py-[10px] text-base !leading-[16px] font-semibold text-white">
               Process
@@ -66,10 +67,10 @@ function HowWork() {
             {processData.map((item) => (
               <div
                 key={item.id}
-               className="flex gap-[30px] border-b border-[#D3D2D2] py-[30px] first:pt-0 last:pb-0 last:border-none"
+               className="flex gap-[30px] border-b border-[#D3D2D2] py-5 lg:py-[30px] first:pt-0 last:pb-0 last:border-none"
               >
                 <div>
-                  <h3 className="text-[44px] font-semibold leading-none text-[#22201C]">
+                  <h3 className="text-3xl xl:text-[44px] font-semibold leading-none text-[#22201C]">
                     {item.id.toString().padStart(2, "0")}.
                   </h3>
                 </div>
@@ -87,6 +88,7 @@ function HowWork() {
             ))}
           </div>
         </div>
+      </div>
       </div>
     </section>
     </>

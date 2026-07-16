@@ -95,9 +95,7 @@ const faqData: Item[] = [
  
   return (
    <section className="section-bottom">
-      <div className="container-custom max-w-[900px]">
-
-        {/* Heading */}
+    <div className="container-custom mx-auto lg:!max-w-[838px]">
 
         <h2 className="mx-auto text-center text-[30px] font-extrabold leading-[36px] text-[#22201C] sm:text-[36px] sm:leading-[38px] lg:text-[42px] lg:leading-[40px]">
         Frequently{" "}
@@ -107,7 +105,7 @@ const faqData: Item[] = [
         </h2>
         {/* FAQ */}
 
-        <div className="mt-10 space-y-[31px]">
+        <div className="mt-10 space-y-5 lg:space-y-[31px]">
 
           {faqData.map((item) => {
             const isOpen = openId === item.id;
@@ -115,14 +113,14 @@ const faqData: Item[] = [
             return (
               <div
                 key={item.id}
-                className="overflow-hidden rounded-[20px] bg-white shadow-[0_2px_35px_rgba(0,0,0,0.08)] p-[23px] cursor-pointer"
+                className="overflow-hidden rounded-[20px] bg-white shadow-[0_2px_35px_rgba(0,0,0,0.08)] p-4 lg:p-[23px] cursor-pointer"
               >
                 <button
                   onClick={() => handleToggle(item.id)}
                   className="flex w-full items-center justify-between gap-5 text-left cursor-pointer"
                 >
                   <span
-                    className={`text-lg font-bold transition-colors ${
+                    className={`text-base lg:text-lg font-bold transition-colors ${
                       isOpen
                         ? "text-primary"
                         : "text-[#22201C]"

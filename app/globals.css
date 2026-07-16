@@ -107,15 +107,15 @@
   --color-gray: #1D1C1A;
   --color-green: #F2671C;
   --color-lightgreen: #FFEFCC;
-  --color-para: #4d4d4d;
-  --color-text-gray: #62615F;
+  --color-para: #4B4947;
+  --color-text-gray: #4B4947;
   --color-light-gray: #d2d1d1;
   --color-header: #FFFBF3;
   --color-secgray: #373737;
   --color-seclightgray: #7A7A7A;
   --color-lightgray: #909090;
-  --color-border: #E9E9E9;
-  --color-lightblack: #333333;
+  --color-border: #D2D1D1;
+  --color-lightblack: #1D1B1A;
   --color-redmark: #ef4343;
   --color-lightyellow: #FFDE99;
   --color-primary: #F2671C;
@@ -308,7 +308,7 @@ select option:checked {
   margin-bottom: 6px;
   font-size: 14px;
   font-weight: 500;
-  color: #333;
+  color: #1D1B1A;
 }
 .error {
   margin-top: 4px;

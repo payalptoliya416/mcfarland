@@ -17,73 +17,80 @@ const cardVariant = {
 
 function CoreServices() {
   return (
-    <section className="container-custom mx-auto my-20 lg:my-[110px]">
+    <section className="container-custom section-space">
 
       {/* Title Animation */}
       <div  className="text-center">
-        <h2 className="text-3xl md:text-[38px] md:leading-[38px] mb-10 lg:mb-20 font-bold text-gray mont-text">
+        <h2 className="text-3xl md:text-[42px] md:leading-[42px] mb-10 font-bold text-gray">
           Core <span className="text-orange">Services</span>
         </h2>
       </div>
 
       {/* Grid Animation */}
       <div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[30px] items-stretch"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[19px] items-stretch"
       >
-        {[
-          {
-            icon: "/assets/e1.svg",
-            title: "Equipment Sales",
-            desc: "Each listing includes specs, verified images, and fair pricing for confident purchases.",
-          },
-          {
-            icon: "/assets/e6.svg",
-            title: "Equipment Auctions",
-            desc: "Our system is transparent, real-time, and ensures fair competition so you always get the best value.",
-          },
-          {
-            icon: "/assets/e2.svg",
-            title: "Equipment Sourcing",
-            desc: "Our team finds the perfect machinery or tool for your needs through a trusted global seller network.",
-          },
-          {
-            icon: "/assets/e3.svg",
-            title: "Equipment Inspection",
-            desc: "We inspect every machine to ensure authenticity, accuracy, and reliable performance.",
-          },
-          {
-            icon: "/assets/e4.svg",
-            title: "Logistics & Tracking",
-            desc: "We provide safe machinery transport with real-time tracking for complete delivery assurance.",
-          },
-          {
-            icon: "/assets/e5.svg",
-            title: "Customer Support",
-            desc: "Buy from a wide selection of used and new industrial machines, tractors, and tools.",
-          },
-        ].map((service, index) => (
-          <motion.div
-            key={index}
-            variants={cardVariant}
-            className="h-full flex justify-center items-center flex-col border border-border rounded-xl p-[25px] text-center bg-white"
-          >
-            {/* Icon Animation */}
-            <motion.div
-              className="w-20 h-20 rounded-[10px] flex justify-center items-center mb-[30px] bg-green"
-              initial={{ scale: 0.8, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Image src={service.icon} alt="icon" width={40} height={40} />
-            </motion.div>
+      {[
+  {
+    icon: "/assets/images/service1.svg",
+    title: "Equipment Sales",
+    desc: "Each listing includes specs, verified images, and fair pricing for confident purchases.",
+  },
+  {
+    icon: "/assets/images/service2.svg",
+    title: "Equipment Auctions",
+    desc: "Our system is transparent, real-time, and ensures fair competition so you always get the best value.",
+  },
+  {
+    icon: "/assets/images/service3.svg",
+    title: "Equipment Sourcing",
+    desc: "Our team finds the perfect machinery or tool for your needs through a trusted global seller network.",
+  },
+  {
+    icon: "/assets/images/service4.svg",
+    title: "Equipment Inspection",
+    desc: "We inspect every machine to ensure authenticity, accuracy, and reliable performance.",
+  },
+  {
+    icon: "/assets/images/service5.svg",
+    title: "Logistics & Tracking",
+    desc: "We provide safe machinery transport with real-time tracking for complete delivery assurance.",
+  },
+  {
+    icon: "/assets/images/service6.svg",
+    title: "Customer Support",
+    desc: "Buy from a wide selection of used and new industrial machines, tractors, and tools.",
+  },
+      ].map((service, index) => (
+        <motion.div
+          key={index}
+          variants={cardVariant}
+          whileHover={{ y: -6 }}
+          transition={{ duration: 0.3 }}
+          className="relative overflow-hidden rounded-[15px] bg-white p-6 sm:p-[30px] shadow-[0_12px_40px_rgba(0,0,0,0.08)] min-h-[250px] flex flex-col"
+        >
+           <div className="absolute -top-13 -right-13 h-[154px] w-[154px] rounded-full bg-[#FFF3EC]" />
+          {/* Icon */}
+          <div className="relative z-10 mb-7 flex h-[66px] w-[66px] items-center justify-center rounded-full bg-[#FCE1D2]">
+            <Image
+              src={service.icon}
+              alt={service.title}
+              width={26}
+              height={26}
+            />
+          </div>
 
-            <h3 className="text-gray mb-[10px] text-xl leading-[20px] font-semibold mont-text">
-              {service.title}
-            </h3>
+          {/* Title */}
+          <h3 className="relative z-10 mb-[10px] text-lg !leading-[18px] font-bold text-lightblack">
+            {service.title}
+          </h3>
 
-            <p className="text-text-gray text-base font-normal">{service.desc}</p>
-          </motion.div>
-        ))}
+          {/* Description */}
+          <p className="relative z-10 text-base !leading-[26px] font-medium text-para">
+            {service.desc}
+          </p>
+        </motion.div>
+      ))}
       </div>
     </section>
   );

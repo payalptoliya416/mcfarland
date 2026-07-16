@@ -8,59 +8,26 @@ function AboutUsHero() {
   const { companyName } = useSettings();
 
   return (
-    <section className="relative -mt-[136px]">
-      {/* Background */}
-      <motion.div
-        className="absolute top-0 left-0 w-full h-full xl:h-[500px] bg-[url(/assets/main-bg-test.png)] bg-no-repeat bg-top -z-10 bg-cover lg:bg-[length:100%_100%]"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      />
+    <section className="p-5 -mt-[145px] pb-0">
+      <div
+        className="relative rounded-3xl overflow-hidden min-h-[410px] bg-cover bg-center bg-[url(/assets/images/about-hero.png)] flex justify-center items-center md:bg-[length:100%_100%] bg-no-repeat"
+      >
+        <div className="relative z-10 pt-[132px] md:pt-[127px] pb-14 md:pb-[67px]">
+          <div className="container-custom text-center text-white">
+            <h1 className="mx-auto max-w-4xl text-center text-[28px] font-extrabold leading-[40px] sm:text-[42px] sm:leading-[52px] md:text-[48px] md:leading-[58px] lg:text-[60px] lg:leading-[72px] mb-5">
+            Your {" "}
+              <span className="text-primary">
+                 Trusted Partner 
+              </span>{" "} 
+             in Equipment Sales
+            </h1>
 
-      <div className="container-custom mx-auto">
-        <div className="grid grid-cols-12 pt-[150px] md:pt-[120px] items-center">
-
-          {/* LEFT CONTENT */}
-          <motion.div
-            className="col-span-12 lg:col-span-6 mb-5 lg:mb-0"
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut" }}
-          >
-            <h2 className="text-3xl md:text-[42px] leading-[48px] md:leading-[60px] font-bold mb-5 mont-text">
-              Your<span className="text-orange"> Trusted Partner </span>{" "}
-              in Equipment Sales
-            </h2>
-
-            <p className="text-para textbase leading-[24px] font-normal">
-              {companyName} connects buyers and sellers with reliable industrial
-              machinery, tractors, and tools through seamless buying, selling, and
-              bidding experiences.
+            <p className="mx-auto max-w-[700px] px-4 text-center text-sm font-medium leading-6 text-white sm:text-base sm:leading-[26px]">
+             {companyName} connects buyers and sellers with reliable industrial machinery, tractors, and tools through seamless buying, selling, and bidding experiences.
             </p>
-          </motion.div>
-
-          {/* RIGHT IMAGE */}
-          <motion.div
-            className="col-span-12 lg:col-span-6"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
-          >
-            <div className="flex justify-end">
-              <motion.div>
-                <Image
-                  src="/assets/about-hero.png"
-                  alt="Hero"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  className="w-full h-auto max-w-[530px]"
-                  loading="eager" priority
-                />
-              </motion.div>
-            </div>
-          </motion.div>
+          </div>
         </div>
+
       </div>
     </section>
   );

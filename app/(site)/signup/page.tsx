@@ -13,6 +13,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { sendSMS } from "@/api/sms/sendSMS";
 import { useSettings } from "@/contexts/SettingsContext";
+import Image from "next/image";
 
 // Validation Schema
 const CreateAccountSchema = Yup.object().shape({
@@ -164,19 +165,19 @@ const handleRegister = async (values: any, { resetForm }: any) => {
 
   return (
     <>
-      <div className="w-full flex justify-center px-4 my-14">
-        <motion.div
+     <div className="container-custom mx-auto bg-[#fff] rounded-[14px] p-[15px] grid grid-cols-12 section-space">
+         <motion.div
           variants={cardVariant}
           initial="hidden"
           animate="show"
-          className="max-w-[900px] w-full border border-border rounded-[15px] p-[30px] bg-white"
+          className="rounded-r-[15px] rounded-[15px] lg:rounded-r-none p-10 col-span-12 lg:col-span-6 w-full shadow-[0_2px_35px_rgba(0,0,0,0.08)]"
         >
           {/* Title */}
           <motion.h2
             initial={{ opacity: 0, scale: 0.92 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="text-3xl md:text-[38px] font-bold text-center text-gray mb-[15px] leading-[38px]  mont-text"
+             className="text-3xl md:text-[42px] md:leading-[42px] font-bold text-center text-gray mb-[15px]"
           >
             Create Your <span className="text-orange">Account</span>
           </motion.h2>
@@ -186,7 +187,7 @@ const handleRegister = async (values: any, { resetForm }: any) => {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="text-text-gray text-center mb-[30px]"
+             className="text-text-gray text-center mb-[25px] text-base"
           >
             Buy, sell, or bid on high-quality industrial machinery with
             confidence.
@@ -226,13 +227,13 @@ const handleRegister = async (values: any, { resetForm }: any) => {
                   >
                     {/* First Name */}
                     <div>
-                      <label className="text-lightblack font-medium text-lg mb-3  mont-text">
+                      <label className="text-lightblack font-medium mb-3 block text-base">
                         First Name <sup className="text-redmark">*</sup>
                       </label>
                       <Field
                         name="first_name"
                         placeholder="Enter your first name"
-                        className="w-full mt-2 px-5 py-[13px] border border-border rounded-[10px] outline-none focus:ring-2 focus:ring-green"
+                        className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
                       />
                       <ErrorMessage
                         name="first_name"
@@ -243,13 +244,13 @@ const handleRegister = async (values: any, { resetForm }: any) => {
 
                     {/* Last Name */}
                     <div>
-                      <label className="text-lightblack font-medium text-lg mb-3  mont-text">
+                      <label className="text-lightblack font-medium mb-3 block text-base">
                         Last Name <sup className="text-redmark">*</sup>
                       </label>
                       <Field
                         name="last_name"
                         placeholder="Enter your last name"
-                        className="w-full mt-2 px-5 py-[13px] border border-border rounded-[10px] outline-none focus:ring-2 focus:ring-green"
+                        className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
                       />
                       <ErrorMessage
                         name="last_name"
@@ -266,14 +267,14 @@ const handleRegister = async (values: any, { resetForm }: any) => {
                   >
                     {/* Email */}
                     <div>
-                      <label className="text-lightblack font-medium text-lg mb-3  mont-text">
+                      <label className="text-lightblack font-medium mb-3 block text-base">
                         Email Address <sup className="text-redmark">*</sup>
                       </label>
                       <Field
                         name="email"
                         type="email"
                         placeholder="Enter your email address"
-                        className="w-full mt-2 px-5 py-[13px] border border-border rounded-[10px] outline-none focus:ring-2 focus:ring-green"
+                        className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
                       />
                       <ErrorMessage
                         name="email"
@@ -284,13 +285,13 @@ const handleRegister = async (values: any, { resetForm }: any) => {
 
                     {/* Phone */}
                     <div>
-                      <label className="text-lightblack font-medium text-lg mb-3  mont-text">
+                      <label className="text-lightblack font-medium mb-3 block text-base">
                         Phone Number <sup className="text-redmark">*</sup>
                       </label>
                       <Field
                         name="phone_no"
                         placeholder="Enter your phone number"
-                        className="w-full mt-2 px-5 py-[13px] border border-border rounded-[10px] outline-none focus:ring-2 focus:ring-green"
+                        className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
                       />
                       <ErrorMessage
                         name="phone_no"
@@ -302,13 +303,13 @@ const handleRegister = async (values: any, { resetForm }: any) => {
 
                   {/* Address */}
                   <motion.div variants={itemVariant}>
-                    <label className="text-lightblack font-medium text-lg mb-3  mont-text">
+                    <label className="text-lightblack font-medium mb-3 block text-base">
                       Address <sup className="text-redmark">*</sup>
                     </label>
                     <Field
                       name="address"
                       placeholder="Enter your address"
-                      className="w-full mt-2 px-5 py-[13px] border border-border rounded-[10px] outline-none focus:ring-2 focus:ring-green"
+                      className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
                     />
                     <ErrorMessage
                       name="address"
@@ -323,13 +324,13 @@ const handleRegister = async (values: any, { resetForm }: any) => {
                     className="grid grid-cols-1 md:grid-cols-2 gap-6"
                   >
                     <div>
-                      <label className="text-lightblack font-medium text-lg mb-3  mont-text">
+                      <label className="text-lightblack font-medium mb-3 block text-base">
                         Company Name
                       </label>
                       <Field
                         name="company_name"
                         placeholder="Optional"
-                        className="w-full mt-2 px-5 py-[13px] border border-border rounded-[10px] outline-none focus:ring-2 focus:ring-green"
+                        className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
                       />
                       <ErrorMessage
                         name="company_name"
@@ -339,13 +340,13 @@ const handleRegister = async (values: any, { resetForm }: any) => {
                     </div>
 
                     <div>
-                      <label className="text-lightblack font-medium text-lg mb-3  mont-text">
+                      <label className="text-lightblack font-medium mb-3 block text-base">
                         City <sup className="text-redmark">*</sup>
                       </label>
                       <Field
                         name="city"
                         placeholder="Enter City"
-                        className="w-full mt-2 px-5 py-[13px] border border-border rounded-[10px] outline-none focus:ring-2 focus:ring-green"
+                        className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
                       />
                       <ErrorMessage
                         name="city"
@@ -362,14 +363,14 @@ const handleRegister = async (values: any, { resetForm }: any) => {
                   >
                     {/* State */}
                     <div>
-                      <label className="text-lightblack font-medium text-lg mb-3 mont-text">
+                      <label className="text-lightblack font-medium text-lg mb-3">
                         State <sup className="text-redmark">*</sup>
                       </label>
 
                       <Field
                         name="state"
                         placeholder="Enter your state"
-                        className="w-full mt-2 px-5 py-[13px] border border-border rounded-xl outline-none focus:ring-2 focus:ring-green"
+                        className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
                       />
 
                       <ErrorMessage
@@ -381,14 +382,14 @@ const handleRegister = async (values: any, { resetForm }: any) => {
 
                     {/* Zip */}
                     <div>
-                      <label className="text-lightblack font-medium text-lg mb-3 mont-text">
+                      <label className="text-lightblack font-medium text-lg mb-3">
                         Zip Code <sup className="text-redmark">*</sup>
                       </label>
                       <Field
                         name="zip_code"
                         placeholder="Enter zip code"
                         autoComplete="postal-code"
-                        className="w-full mt-2 px-5 py-[13px] border border-border rounded-xl outline-none focus:ring-2 focus:ring-green"
+                        className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
                       />
                       <ErrorMessage
                         name="zip_code"
@@ -405,23 +406,23 @@ const handleRegister = async (values: any, { resetForm }: any) => {
                   >
                     {/* Password */}
                     <div className="">
-                      <label className="text-lightblack font-medium text-lg mb-2 mont-text">
+                      <label className="text-lightblack font-medium text-lg mb-2">
                         Password <sup className="text-redmark">*</sup>
                       </label>
                       <div className="relative mt-3">
                         <Field
                           name="password"
                           type={showPassword ? "text" : "password"}
-                          placeholder="Enter your password"
+                          placeholder="Password"
                           autoComplete="new-password"
-                          className="w-full px-5 py-[13px] border border-border rounded-xl outline-none focus:ring-2 focus:ring-green pr-12"
+                          className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
                         />
 
                         {/* Eye Icon */}
                         <button
                           type="button"
                           onClick={() => setShowPassword((p) => !p)}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer"
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A5A4A3] hover:text-gray-700 cursor-pointer"
                         >
                           {showPassword ? (
                             <FiEyeOff size={20} />
@@ -440,23 +441,23 @@ const handleRegister = async (values: any, { resetForm }: any) => {
 
                     {/* Confirm Password */}
                     <div className="">
-                      <label className="text-lightblack font-medium text-lg mb-2 mont-text">
+                      <label className="text-lightblack font-medium text-lg mb-2">
                         Confirm Password <sup className="text-redmark">*</sup>
                       </label>
                       <div className="relative mt-3">
                         <Field
                           name="password_confirmation"
                           type={showConfirmPassword ? "text" : "password"}
-                          placeholder="Enter your confirm password"
+                          placeholder="Confirm password"
                           autoComplete="new-password"
-                          className="w-full px-5 py-[13px] border border-border rounded-xl outline-none focus:ring-2 focus:ring-green pr-12"
+                          className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:ring-2 focus:ring-green text-base placeholder:text-[#787675] sm:h-[52px]"
                         />
 
                         {/* Eye Icon */}
                         <button
                           type="button"
                           onClick={() => setShowConfirmPassword((p) => !p)}
-                          className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 cursor-pointer"
+                          className="absolute right-4 top-1/2 -translate-y-1/2 text-[#A5A4A3] hover:text-gray-700 cursor-pointer"
                         >
                           {showConfirmPassword ? (
                             <FiEyeOff size={20} />
@@ -477,7 +478,7 @@ const handleRegister = async (values: any, { resetForm }: any) => {
                   {/* Checkboxes */}
                   <motion.div variants={itemVariant} className="space-y-[22px]">
                     {/* TERMS CHECKBOX */}
-                    <label className="flex items-start gap-3 text-para cursor-pointer select-none mb-1">
+                    <label className="flex items-start gap-3 text-[#4D4D4D] cursor-pointer select-none mb-1">
                       {/* Custom Checkbox Wrapper */}
                       <div className="relative">
                         <Field
@@ -491,10 +492,10 @@ const handleRegister = async (values: any, { resetForm }: any) => {
 
                         {/* Tick icon */}
                         <svg
-                          className="
-          absolute left-[3px] top-[2px] w-4 h-4 hidden peer-checked:block 
-          pointer-events-none fill-none stroke-white stroke-[3px]
-        "
+                            className="
+                        absolute left-[3px] top-[2px] w-4 h-4 hidden peer-checked:block 
+                        pointer-events-none fill-none stroke-white stroke-[3px]
+                      "
                           viewBox="0 0 24 24"
                         >
                           <path d="M5 13l4 4L19 7" />
@@ -521,7 +522,7 @@ const handleRegister = async (values: any, { resetForm }: any) => {
                     />
 
                     {/* MARKETING CHECKBOX */}
-                    <label className="flex items-start gap-3 text-para cursor-pointer select-none mb-1">
+                    <label className="flex items-start gap-3 text-[#4D4D4D] cursor-pointer select-none mb-1">
                       {/* Custom Checkbox Wrapper */}
                       <div className="relative">
                         <Field
@@ -557,12 +558,12 @@ const handleRegister = async (values: any, { resetForm }: any) => {
                     type="submit"
                     disabled={loading}
                     className={`
-                    w-full py-[13px] rounded-lg font-semibold text-lg leading-[18px] text-white cursor-pointer
-                    transition flex items-center justify-center gap-2
+                    w-full py-[14px] rounded-[62px] font-semibold text-base
+                          transition flex items-center justify-center gap-3 h-[42px] text-white
                     ${
                       loading
                         ? "bg-green/70 cursor-not-allowed"
-                        : "bg-green hover:opacity-90"
+                        : "bg-green hover:opacity-90 cursor-pointer"
                     }
                   `}
                   >
@@ -572,7 +573,9 @@ const handleRegister = async (values: any, { resetForm }: any) => {
                         Creating Account...
                       </>
                     ) : (
-                      "Create Account"
+                     <> 
+                     Create Account <img src="/assets/images/btn-right-errow.svg" alt="" />
+                     </> 
                     )}
                   </button>
                 </Form>
@@ -585,7 +588,7 @@ const handleRegister = async (values: any, { resetForm }: any) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.6 }}
-            className="text-center text-lightblack mt-[30px]  mont-text font-semibold"
+          className="text-center text-lightblack mt-[30px] text-base xl:text-xl font-semibold"
           >
             Already have an account?{" "}
             <Link href={`/user/signin${rawReturnUrl ? `?returnUrl=${rawReturnUrl}` : ""}`} className="text-green">
@@ -593,7 +596,16 @@ const handleRegister = async (values: any, { resetForm }: any) => {
             </Link>
           </motion.p>
         </motion.div>
-      </div>
+        <div className="relative col-span-12 lg:col-span-6 rounded-r-[15px]">
+                <Image
+                  src="/assets/images/create-account.png"
+                  alt="Sign In"
+                  fill
+                  className="object-cover rounded-r-[15px]"
+                  priority
+                />
+        </div>
+     </div>
     </>
   );
 }

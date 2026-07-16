@@ -5,6 +5,7 @@ import { FaMinus } from "react-icons/fa6";
 import { BiPlus } from "react-icons/bi";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSettings } from "@/contexts/SettingsContext";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface FAQ {
   question: string;
@@ -91,9 +92,9 @@ export default function FAQSection(): JSX.Element {
 
 
   return (
-    <div className="container-custom">
+    <div className="container-custom section-space">
       <motion.div
-        className="w-full max-w-[900px] mx-auto my-20 lg:my-[110px]"
+        className="w-full mx-auto max-w-[900px] space-y-[31px]"
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.3 }}
@@ -105,51 +106,55 @@ export default function FAQSection(): JSX.Element {
             <motion.div
               key={i}
               variants={itemVariant}
-              className="mb-4"
+              className="overflow-hidden rounded-[20px] bg-white shadow-[0_2px_35px_rgba(0,0,0,0.08)]  p-4 lg:p-[23px] cursor-pointer"
             >
               {/* Question Button */}
               <button
                 onClick={() => toggle(i)}
                 className={`
-                  w-full flex justify-between items-center px-5 py-4 rounded-xl border cursor-pointer
-                  transition-all text-left font-semibold text-lg mont-text
-                  ${isOpen
-                    ? "bg-green text-white border-green"
-                    : "bg-white text-gray border-gray-300"
-                  }
+              flex w-full items-center justify-between gap-5 text-left cursor-pointer
                 `}
               >
-                {faq.question}
-
-                {/* Icon Animation */}
+                <span
+                    className={`text-base lg:text-lg  font-bold transition-colors ${
+                      isOpen
+                        ? "text-primary"
+                        : "text-[#22201C]"
+                    }`}
+                  >
+                   {faq.question}
+                  </span>
                 <motion.span
-                  animate={{ rotate: isOpen ? 180 : 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  {isOpen ? (
-                    <FaMinus className="text-white" size={18} />
-                  ) : (
-                    <BiPlus className="text-gray" size={22} />
-                  )}
-                </motion.span>
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="shrink-0"
+          >
+            <ChevronDown
+              size={22}
+              className={isOpen ? "text-primary" : "text-[#22201C]"}
+            />
+          </motion.span>
               </button>
 
               {/* Answer Animation */}
-              <AnimatePresence mode="wait">
-                {isOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.35, ease: "easeOut" }}
-                    className="overflow-hidden"
-                  >
-                    <div className="p-5 text-text-gray bg-white rounded-b-xl text-base leading-[26px]">
-                      {faq.answer}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+             <AnimatePresence initial={false}>
+  {isOpen && (
+    <motion.div
+      initial={{ height: 0, opacity: 0 }}
+      animate={{ height: "auto", opacity: 1 }}
+      exit={{ height: 0, opacity: 0 }}
+      transition={{
+        height: { duration: 0.35, ease: "easeInOut" },
+        opacity: { duration: 0.25 },
+      }}
+      className="overflow-hidden"
+    >
+      <p className="mt-[13px] text-base font-medium leading-[26px] text-[#22201C]">
+        {faq.answer}
+      </p>
+    </motion.div>
+  )}
+</AnimatePresence>
             </motion.div>
           );
         })}

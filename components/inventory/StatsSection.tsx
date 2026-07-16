@@ -32,11 +32,12 @@ export default function StatsSection(): JSX.Element {
           stats.forEach((stat, index) => {
             let start = 0;
             const end = stat.value;
-            const duration = 1500; // 1.5s
+            const duration = 1500;
             const increment = end / (duration / 20);
 
             const counter = setInterval(() => {
               start += increment;
+
               if (start >= end) {
                 start = end;
                 clearInterval(counter);
@@ -51,7 +52,7 @@ export default function StatsSection(): JSX.Element {
           });
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.4 }
     );
 
     observer.observe(element);
@@ -60,24 +61,33 @@ export default function StatsSection(): JSX.Element {
   }, []);
 
   return (
-    <div
-      ref={sectionRef}
-      className="bg-[#E9E9E940] py-12 md:py-[70px] w-full"
-    >
-      <div className="container-custom mx-auto grid grid-cols-2 md:grid-cols-4 text-center gap-8 px-4">
+    <section ref={sectionRef} className="container-custom section-bottom">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-[19px]">
 
         {stats.map((stat, index) => (
-          <div key={stat.id} className="flex flex-col items-center">
-            <p className="text-4xl md:leading-[50px] md:text-[40px] font-bold text-gray mb-[15px] mont-text">
-              {counts[index]}{stat.id === 1 ? "+" : ""}
-            </p>
-            <p className="text-para text-sm md:text-lg">
-              {stat.label}
-            </p>
+          <div
+            key={stat.id}
+            className="relative overflow-hidden rounded-[20px] bg-white px-5 lg:px-[25px] py-6 lg:py-10 shadow-[0_10px_40px_rgba(0,0,0,0.08)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_18px_50px_rgba(0,0,0,0.12)]"
+          >
+            {/* Top Right Circle */}
+            <div className="absolute -top-11 -right-11 h-[124px] w-[124px] rounded-full bg-[#FFF3EC]" />
+
+            <div className="relative z-10">
+              <h3 className="text-3xl sm:text-[50px] leading-none font-bold text-lightblack">
+                {counts[index]}
+                {stat.id === 1 && "+"}
+              </h3>
+
+              <div className="mt-[15px] mb-[15px] h-[3px] w-10 rounded-full bg-primary" />
+
+              <p className="text-base leading-[16px] text-para">
+                {stat.label}
+              </p>
+            </div>
           </div>
         ))}
 
       </div>
-    </div>
+    </section>
   );
 }
