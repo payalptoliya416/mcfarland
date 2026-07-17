@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { getAdminToken } from "@/api/admin/adminAuth";
 import Loader from "@/components/common/Loader";
 import AdminSidebar from "@/adminpanel/AdminSidebar";
@@ -14,10 +14,8 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [ready, setReady] = useState(false);
-  const [pageLoading, setPageLoading] = useState(false);
 
   useEffect(() => {
     const token = getAdminToken();
@@ -28,10 +26,6 @@ export default function AdminLayout({
       setReady(true);
     }
   }, [router]);
-
-  useEffect(() => {
-    setPageLoading(false);
-  }, [pathname]);
 
   if (!ready) {
     return (
@@ -45,7 +39,7 @@ export default function AdminLayout({
     <SettingsProvider>
       <div className="flex min-h-screen overflow-x-hidden bg-[#F9F9F9]">
         <div className="hidden lg:block py-5 pl-5">
-          <AdminSidebar onNavigateStart={() => setPageLoading(true)} />
+          <AdminSidebar onNavigateStart={() => {}} />
         </div>
 
         {sidebarOpen && (
@@ -58,7 +52,7 @@ export default function AdminLayout({
               <AdminSidebar
                 mobile
                 onItemClick={() => setSidebarOpen(false)}
-                onNavigateStart={() => setPageLoading(true)}
+                onNavigateStart={() => {}}
               />
             </div>
           </div>
@@ -68,13 +62,7 @@ export default function AdminLayout({
           <AdminHeader onMenuClick={() => setSidebarOpen(true)} />
 
           <main className="flex-1 overflow-y-auto relative">
-            {pageLoading ? (
-              <div className="flex justify-center items-center min-h-[60vh]">
-                <Loader />
-              </div>
-            ) : (
-              children
-            )}
+            {children}
           </main>
         </div>
       </div>

@@ -14,7 +14,6 @@ import { HiBars3BottomRight, HiMiniMinus, HiMiniPlus } from "react-icons/hi2";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
 import { MdChevronRight } from "react-icons/md";
-import Loader from "./Loader";
 
 type NavItem = {
   name: string;
@@ -174,7 +173,6 @@ function Header({
   const [resetKey, setResetKey] = useState(0);
   const [activeGroup, setActiveGroup] = useState<string | null>(null);
   const [clickedGroup, setClickedGroup] = useState<string | null>(null);
-  const [isNavigating, setIsNavigating] = useState(false);
   const [headerCategories, setHeaderCategories] =
     useState<Category[]>(categories);
 
@@ -215,19 +213,9 @@ function Header({
   }, []);
 
   useEffect(() => {
-    setIsNavigating(false);
-  }, [pathname]);
-
-  useEffect(() => {
-    const handleComplete = () => {
-      setIsNavigating(false);
-    };
-
+    const handleComplete = () => {};
     window.addEventListener("popstate", handleComplete);
-
-    return () => {
-      window.removeEventListener("popstate", handleComplete);
-    };
+    return () => window.removeEventListener("popstate", handleComplete);
   }, []);
 
   const slugify = (text: string) =>
@@ -240,14 +228,7 @@ function Header({
   const [disableHover, setDisableHover] = useState(false);
 
   const handleNavigate = (url: string) => {
-    if (pathname !== url) {
-      setIsNavigating(true);
-      router.push(url);
-
-      setTimeout(() => {
-        setIsNavigating(false);
-      }, 2000);
-    }
+    router.push(url);
   };
 
   // Click-time auth URL builder — reads window.location at click, no stale state
@@ -427,11 +408,6 @@ function Header({
 
   return (
     <>
-      {isNavigating && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-white">
-          <Loader />
-        </div>
-      )}
       <header className={`w-full z-50 relative ${ hasBgImage ? "" : "bg-transparent" }`} >
         <div className={`mx-auto flex justify-between items-center pb-4 px-10 md:px-[60px] ${ hasBgImage ? "border-b border-border pt-5" : "bg-transparent pt-[40px]" }`}>
           <Link href="/">
