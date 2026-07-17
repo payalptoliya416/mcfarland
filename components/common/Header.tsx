@@ -432,17 +432,8 @@ function Header({
           <Loader />
         </div>
       )}
-      <header
-        className={`
-    w-full z-50 relative
-    ${
-      hasBgImage
-        ? ""
-        : "bg-transparent"
-    }
-  `}
-      >
-        <div className="mx-auto flex justify-between items-center pb-4 pt-[40px] px-10 md:px-[60px]">
+      <header className={`w-full z-50 relative ${ hasBgImage ? "" : "bg-transparent" }`} >
+        <div className={`mx-auto flex justify-between items-center pb-4 px-10 md:px-[60px] ${ hasBgImage ? "border-b border-border pt-5" : "bg-transparent pt-[40px]" }`}>
           <Link href="/">
             {settings?.dark_logo && <img src={settings.dark_logo} alt="Logo" />}
           </Link>
@@ -464,22 +455,24 @@ function Header({
                 <Link
                   href={item.path}
                   onClick={() => handleNavigate(item.path)}
-                  className={`text-base font-medium text-gray-700 hover:text-orange cursor-pointer relative
-                after:content-[''] after:absolute after:-bottom-1
-                after:left-1/2 after:-translate-x-1/2
-                after:h-1 after:w-0
-                after:bg-[linear-gradient(180deg,#F2671C_0%,#F2671C_50%,#F2671C_100%)]
-                after:transition-all after:duration-300
-                hover:after:w-8 hover:text-orange transition-all duration-300  ${
+            className={`text-base font-medium cursor-pointer relative overflow-hidden
+                before:absolute before:left-0 before:bottom-0 before:h-[2px]
+                before:w-full before:origin-left before:scale-x-0
+                before:bg-orange before:transition-transform before:duration-300
+                hover:before:scale-x-100 hover:text-orange
+                ${
                   item.path === "/"
                     ? pathname === "/"
-                      ? "text-orange font-bold after:w-8"
-                      : "text-white font-medium"
+                      ? "text-orange font-bold before:scale-x-100"
+                      : hasBgImage
+                        ? "text-[#1D1B1A]"
+                        : "text-white"
                     : pathname.startsWith(item.path)
-                      ? "text-orange font-bold after:w-8"
-                      : "text-white font-medium"
-                }
-              `}
+                      ? "text-orange font-bold before:scale-x-100"
+                      : hasBgImage
+                        ? "text-[#1D1B1A]"
+                        : "text-white"
+                }`}
                 >
                   {item.name}
                 </Link>
@@ -493,15 +486,19 @@ function Header({
                         openDropdown === item.name ? null : item.name,
                       );
                     }}
-                    className={`hover:text-orange transition mt-1  ${
-                      item.path === "/"
-                        ? pathname === "/"
-                          ? "text-orange font-bold after:w-8"
-                          : "text-white font-medium"
-                        : pathname.startsWith(item.path)
-                          ? "text-orange font-bold after:w-8"
-                          : "text-white font-medium"
-                    }`}
+                    className={`hover:text-orange transition mt-1 ${
+                        item.path === "/"
+                          ? pathname === "/"
+                            ? "text-orange font-bold after:w-8"
+                            : hasBgImage
+                              ? "text-[#1D1B1A] hover:text-orange"
+                              : "text-white hover:text-orange"
+                          : pathname.startsWith(item.path)
+                            ? "text-orange font-bold after:w-8"
+                            : hasBgImage
+                              ? "text-[#1D1B1A] hover:text-orange"
+                              : "text-white hover:text-orange"
+                      }`}
                   >
                     <IoIosArrowDown size={14} />
                   </button>
@@ -569,7 +566,7 @@ function Header({
                                 setTimeout(() => setDisableHover(false), 300);
                               }}
                               className="
-                                w-full flex justify-between items-center
+                                w-full flex justify-between items-center text-[#1D1B1A]
                                   font-medium hover:text-orange cursor-pointer
                               "
                             >
@@ -631,7 +628,11 @@ function Header({
           {loggedIn ? (
             <button
               onClick={() => handleNavigate("/user")}
-              className="hidden lg:block text-green bg-white py-2 px-4 md:py-3 md:px-6 rounded-lg font-semibold hover:bg-orange hover:text-white transition cursor-pointer"
+               className={`hidden lg:block transition cursor-pointer text-base leading-[16px] h-[40px] py-[12px] px-[25px] rounded-[50px] ${
+              hasBgImage
+                ? "text-white bg-green hover:bg-orange"
+                : "text-green bg-white font-semibold hover:bg-orange hover:text-white"
+            }`}
             >
               Dashboard
             </button>

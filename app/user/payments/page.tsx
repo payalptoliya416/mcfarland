@@ -108,7 +108,7 @@ function Payment() {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search..."
-              className="w-full h-12 pl-12 pr-4 rounded-lg border border-border"
+              className="w-full h-11 pl-12 pr-4 rounded-full border border-border"
             />
           </div>
 

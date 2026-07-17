@@ -128,7 +128,7 @@ const disableDecline =
   return (
     <>
       {user && (
-        <div className="rounded-2xl border border-[#ECECEC] bg-white p-5">
+        <div className="rounded-2xl border border-border bg-white p-5">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { label: "First Name", value: user.first_name },
@@ -136,7 +136,7 @@ const disableDecline =
               { label: "Email Address", value: user.email },
               { label: "Phone Number", value: user.phone_no },
             ].map((item, i) => (
-              <div key={i} className="rounded-xl border border-[#ECECEC] p-4">
+              <div key={i} className="rounded-[15px] border border-border px-6 py-3">
                 <p className="text-xs text-seclightgray mb-1">{item.label}</p>
                 <p className="text-sm font-medium text-gray-900">
                   {item.value || "-"}
@@ -145,7 +145,7 @@ const disableDecline =
             ))}
 
             {/* Company */}
-            <div className="rounded-xl border border-[#ECECEC] p-4 md:col-span-2">
+            <div className="rounded-[15px] border border-border px-6 py-3 md:col-span-2">
               <p className="text-xs text-seclightgray mb-1">Company Name</p>
               <p className="text-sm font-medium text-gray-900 uppercase">
                 {user.company_name || "-"}
@@ -153,7 +153,7 @@ const disableDecline =
             </div>
 
             {/* Address */}
-            <div className="rounded-xl border border-[#ECECEC] p-4 md:col-span-3">
+            <div className="rounded-[15px] border border-border px-6 py-3 md:col-span-3">
               <p className="text-xs text-seclightgray mb-1">Address</p>
               <p className="text-sm font-medium text-gray-900">
                 {user.address || "-"}
@@ -165,7 +165,7 @@ const disableDecline =
               { label: "State", value: user.state },
               { label: "Zip Code", value: user.zip_code },
             ].map((item, i) => (
-              <div key={i} className="rounded-xl border border-[#ECECEC] p-4">
+              <div key={i} className="rounded-[15px] border border-border px-6 py-3">
                 <p className="text-xs text-seclightgray mb-1">{item.label}</p>
                 <p className="text-sm font-medium text-gray-900">
                   {item.value || "-"}
@@ -176,7 +176,7 @@ const disableDecline =
         </div>
       )}
       {license && (
-        <div className="mt-8 rounded-2xl border border-[#ECECEC] bg-white p-6">
+        <div className="mt-8 rounded-2xl border border-border bg-white p-6">
           <div className="flex items-center gap-5 mb-6">
             <h2 className="text-lg font-semibold text-gray-900">
               License Documents
@@ -198,7 +198,7 @@ const disableDecline =
             <div className="col-span-12 xl:col-span-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* FRONT SIDE */}
-                <div className="rounded-xl border border-[#ECECEC] p-4 bg-gray-50">
+                <div className="rounded-xl border border-border p-4 bg-gray-50">
                   <p className="text-sm font-medium mb-3 text-gray-700">
                     Front Side
                   </p>
@@ -227,7 +227,7 @@ const disableDecline =
                 </div>
 
                 {/* BACK SIDE */}
-                <div className="rounded-xl border border-[#ECECEC] p-4 bg-gray-50">
+                <div className="rounded-xl border border-border p-4 bg-gray-50">
                   <p className="text-sm font-medium mb-3 text-gray-700">
                     Back Side
                   </p>

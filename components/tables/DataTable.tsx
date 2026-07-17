@@ -68,12 +68,12 @@ export default function DataTable<T extends { id?: string | number }>({
       <div className="overflow-x-auto rounded-[10px] border border-border">
         <table className="w-full bg-white border-collapse">
           {/* HEADER */}
-          <thead className="bg-[#FFEFCC]">
-            <tr>
+          <thead className="bg-[#fff6f1]">
+            <tr className="rounded-t-[10px]">
               {columns.map((col, index) => (
                 <th
                   key={col.key}
-                  className={`text-sm py-[18px] px-[15px] border border-border whitespace-nowrap ${
+                  className={`text-sm py-[18px] px-[15px] border border-border whitespace-nowrap border-t-0 first:border-l-0 last:border-r-0 ${
                     index === 0 ? "rounded-tl-[10px]" : ""
                   } ${index === columns.length - 1 ? "rounded-tr-[10px]" : ""}`}
                 >

@@ -22,43 +22,119 @@ function Testimonial() {
              ?
             </h2>
       </div>
-        <div className="grid grid-cols-12 gap-[35px]">
-       <div className="col-span-12 lg:col-span-4">
-  <div className="relative">
+     <div className="grid grid-cols-12 gap-0 mt-10 items-stretch">
 
-    {/* Content */}
-    <div className="relative z-10 px-10 pt-10 pb-20">
-      <img
-        src="/assets/images/quote.svg"
-        alt=""
-        className="mb-[30px]"
-      />
+  {/* Card 1 */}
+  <div className="col-span-12 md:col-span-6 xl:col-span-4 flex bg-[url('/assets/images/testimonial-bg1.png')] bg-no-repeat bg-center bg-[length:100%_100%] min-h-[387px] h-full w-[105%]">
+    <div className="px-[30px] pt-[30px] pb-[102px] w-full relative flex flex-col">
+    <div className="m-7">
 
-      <p className="text-lg leading-[28px] text-[#4A4A4A] font-medium">
-        “Selling my machinery through {companyName} was seamless.
-        Their team handled everything professionally, and I received great
-        value within days. Highly recommended!”
+      <img src="/assets/images/invert.png" alt="" className="mb-5 w-[50px]" />
+
+      <p className="text-lg text-[#4B4947] leading-[28px] font-semibold flex-1">
+        “Selling my machinery through Eastline Equipment Auctions was seamless.
+        Their team handled everything professionally, and I received great value
+        within days. Highly recommended!”
       </p>
     </div>
 
-    {/* Profile */}
-    <div className="absolute left-0 bottom-0 translate-y-1/2 z-20 flex items-center gap-4 bg-white rounded-tr-[32px] pr-8 pt-5 pb-4">
-      <img
-        src="/assets/images/client.png"
-        alt=""
-        className="w-16 h-16 rounded-full object-cover"
-      />
+      <div className="absolute bottom-5 xl:bottom-7 left-8 xl:left-7 flex items-center gap-[10px]">
+        <Image
+          src="/assets/images/client1.png"
+          alt="Robert F"
+          width={60}
+          height={60}
+          className="rounded-full object-cover"
+        />
 
-      <div>
-        <h4 className="text-[24px] font-semibold text-[#F97316]">
-          Robert F
-        </h4>
-        <p className="text-xl text-[#555]">Supplier</p>
+        <div>
+          <h4 className="text-primary text-lg leading-none font-semibold mb-2">
+            Robert F
+          </h4>
+
+          <p className="text-[#4B4947] text-base font-medium leading-none">
+            Supplier
+          </p>
+        </div>
       </div>
+
     </div>
   </div>
-</div>
+
+  {/* Card 2 */}
+  <div className="col-span-12 md:col-span-6 xl:col-span-4 flex bg-[url('/assets/images/testimonial-bg1.png')] bg-no-repeat bg-center bg-[length:100%_100%] min-h-[387px] h-full w-[105%]">
+    <div className=" px-[30px] pt-[30px] pb-[102px] w-full relative flex flex-col">
+
+     <div className="m-7">
+      <img src="/assets/images/invert.png" alt="" className="mb-5 w-[48px]" />
+
+      <p className="text-lg text-[#4B4947] leading-[28px] font-semibold flex-1">
+        “Fantastic experience from start to finish! The website is easy to use,
+        and the support team helped me find the perfect excavator within my
+        budget.”
+      </p>
+    </div>
+
+      <div className="absolute bottom-5 xl:bottom-7 left-8 xl:left-7 flex items-center gap-[10px]">
+        <Image
+          src="/assets/images/client2.png"
+          alt="Kathryn M"
+          width={60}
+          height={60}
+          className="rounded-full object-cover"
+        />
+
+        <div>
+          <h4 className="text-primary text-lg leading-none font-semibold mb-2">
+            Kathryn M
+          </h4>
+
+          <p className="text-[#4B4947] text-base font-medium leading-none">
+            Dealer
+          </p>
+        </div>
       </div>
+
+    </div>
+  </div>
+
+  {/* Card 3 */}
+  <div className="col-span-12 md:col-span-6 xl:col-span-4 flex bg-[url('/assets/images/testimonial-bg1.png')] bg-no-repeat bg-center bg-[length:100%_100%] min-h-[387px] h-full w-[105%]">
+    <div className="px-[30px] pt-[30px] pb-[102px] w-full relative flex flex-col">
+       <div className="m-7">
+      <img src="/assets/images/invert.png" alt="" className="mb-5 w-[48px]" />
+
+      <p className="text-lg text-[#4B4947] leading-[28px] font-semibold flex-1">
+        “I participated in my first online auction with Eastline Equipment
+        Auctions, and it was incredibly smooth, transparent, and secure. Highly
+        trustworthy and efficient service!”
+      </p>
+       </div>
+
+      <div className="absolute bottom-5 xl:bottom-7 left-8 xl:left-7 flex items-center gap-[10px]">
+        <Image
+          src="/assets/images/client3.png"
+          alt="Jerome B"
+          width={60}
+          height={60}
+          className="rounded-full object-cover"
+        />
+
+        <div>
+          <h4 className="text-primary text-lg leading-none font-semibold mb-2">
+            Jerome B
+          </h4>
+
+          <p className="text-[#4B4947] text-base font-medium leading-none">
+            Owner
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
       </div>
     </section>
   );

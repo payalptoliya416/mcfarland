@@ -57,13 +57,13 @@ export default function AdminDataTable<
       <div className="overflow-x-auto rounded-[10px] border border-border">
         <table className="w-full bg-white border-collapse">
           {/* HEADER */}
-          <thead className="bg-[#FFEFCC]">
-            <tr>
+          <thead className="bg-[#fff6f1]">
+            <tr className="rounded-t-[10px]">
               {columns.map((col, index) => (
                 <th
                   key={String(col.key)}
-                  className="text-sm py-[18px] px-[15px] border border-border whitespace-nowrap font-normal"
-                >
+                  className="text-sm py-[18px] px-[15px] border border-border whitespace-nowrap font-normal first:border-l-0
+                 last:border-r-0 border-t-0" >
                   <div
                     className={`flex items-center justify-between gap-2 ${
                       col.sortable ? "cursor-pointer" : ""
@@ -90,7 +90,7 @@ export default function AdminDataTable<
               <tr>
                 <td
                   colSpan={columns.length}
-                  className="p-10 text-center text-gray-600"
+                  className="p-10 text-center text-gray-600 "
                 >
                   <div className="flex justify-center">
                  <Loader/>
@@ -119,7 +119,8 @@ export default function AdminDataTable<
                   {columns.map((col) => (
                     <td
                       key={String(col.key)}
-                      className={`text-sm p-[16px] border border-border ${col.className ?? ""}`}
+                      className={`text-sm p-[16px] border border-border first:border-l-0
+                 last:border-r-0 border-b-0 ${col.className ?? ""}`}
                     >
                       {col.render
                         ? col.render(row)

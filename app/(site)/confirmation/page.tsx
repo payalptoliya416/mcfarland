@@ -275,7 +275,7 @@ if (pageLoading || userLoading) {
               {/* Button 1 */}
               <Link
                 href="/user/orders"
-                className="px-6 py-3 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition text-center"
+                className="flex h-10 items-center justify-center rounded-[62px] border border-gray-500 px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-gray-500 transition-all duration-300 cursor-pointer"
               >
                View Order Progress
               </Link>
@@ -283,7 +283,7 @@ if (pageLoading || userLoading) {
               {/* Button 2 */}
               <Link
                 href="/inventory"
-                className="px-6 py-3 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100 transition text-center"
+                className="flex h-10 items-center justify-center rounded-[62px] border border-gray-500 px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-gray-500 transition-all duration-300 cursor-pointer"
               >
                 View Inventory
               </Link>
@@ -291,7 +291,7 @@ if (pageLoading || userLoading) {
           </div>
         </div>
       </section>
-      <section className="pt-10">
+      <section className="pt-10 pb-16">
         <div className="max-w-6xl mx-auto px-4">
           <div className="bg-white border border-border rounded-xl p-2 md:p-6">
             <h2 className="text-2xl md:text-3xl font-bold text-gray mb-8">

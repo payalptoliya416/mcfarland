@@ -357,7 +357,7 @@ if (loading) {
                          <div className="w-full overflow-x-auto border border-border rounded-[10px]">
                             <table className="border-collapse min-w-full">
                             <thead>
-                                <tr className="bg-[#FFEFCC] text-left">
+                                <tr className="bg-[#fff6f1] text-left rounded-t-[10px]">
                                 <th className="px-[15px] py-[18px] text-sm font-medium text-secgray border-r border-border whitespace-nowrap">
                                     Machinery
                                 </th>
@@ -429,7 +429,7 @@ if (loading) {
                      <div className="w-full overflow-x-auto border border-border rounded-[10px]">
                             <table className="w-full border-collapse">
                             <thead>
-                                <tr className="bg-[#FFEFCC] text-left">
+                                <tr className="bg-[#fff6f1] text-left rounded-t-[10px]">
                                 <th className="px-[15px] py-[18px] text-sm font-medium text-secgray border-r border-border whitespace-nowrap">
                                     Machinery
                                 </th>

@@ -111,7 +111,7 @@ const handleRegister = async (values: any, { resetForm }: any) => {
           type: "registration",
           companyName:
            `${companyName}` ||
-            "McFarland Equipment Sales & Auctions",
+            "Eastline Equipment Sales & Auctions",
         });
 
       } catch (smsError) {

@@ -416,7 +416,7 @@ const handleDelete = async (id: number) => {
               setPage(1);
               setSearch(e.target.value);
             }}
-            className="w-full py-[12px] pl-[44px] pr-4 text-sm border rounded-lg border-border"
+            className="w-full py-[10px] pl-[44px] pr-4 text-sm border rounded-[50px] border-border"
           />
         </div>
       </div>

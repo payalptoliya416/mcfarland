@@ -557,7 +557,7 @@ function SignaturePadDetail() {
                   {/* NO Option */}
                   <label
                     className="flex items-center justify-between w-[90px]
-              border border-gray-300 rounded-md px-4 py-2 cursor-pointer
+              border border-gray-300 rounded-full px-4 py-2 cursor-pointer
               text-sm font-medium text-gray-700"
                   >
                     No
@@ -582,7 +582,7 @@ function SignaturePadDetail() {
                   {/* YES Option */}
                   <label
                     className="flex items-center justify-between w-[90px]
-              border border-gray-300 rounded-md px-4 py-2 cursor-pointer
+              border border-gray-300 rounded-full px-4 py-2 cursor-pointer
               text-sm font-medium text-gray-700"
                   >
                     Yes
@@ -685,7 +685,7 @@ function SignaturePadDetail() {
               <button
                 type="submit"
                 disabled={shouldDisableButton}
-                className={`w-full py-3 rounded-lg font-medium transition
+                className={`w-full py-3 font-medium transition rounded-full
                     ${
                       shouldDisableButton
                         ? "bg-gray-300 text-gray-500 cursor-not-allowed"

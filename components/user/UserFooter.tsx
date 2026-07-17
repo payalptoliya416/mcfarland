@@ -16,7 +16,7 @@ function UserFooter() {
             >
                mcfarland-equipment.com
             </a>{" "}
-            is owned by  MCFARLAND-EQUIPMENT, LLC Reg nº : (20151800734) -
+            is owned by MCFARLAND-EQUIPMENT, LLC Reg nº : (20151800734) -
             Copyright {new Date().getFullYear()} © All Rights Reserved
           </p>
         </div>

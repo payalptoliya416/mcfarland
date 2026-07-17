@@ -75,7 +75,7 @@ function ChooseUs() {
   return (
     <>
      <section
-      className="section-space bg-cover bg-center bg-no-repeat bg-[#1D1B1A]"
+      className="py-[70px] bg-cover bg-center bg-no-repeat bg-gray"
       style={{
         backgroundImage: `url(/assets/images/why-bg.png)`,
       }}

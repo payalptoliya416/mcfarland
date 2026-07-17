@@ -267,10 +267,10 @@ const handleMenuNavigate = (path: string) => {
                   item.path === "/"
                     ? pathname === "/"
                       ? "text-orange font-bold after:w-8"
-                      : "text-[#1D1B1A] font-medium"
+                      : "text-gray font-medium"
                     : pathname.startsWith(item.path)
                       ? "text-orange font-bold after:w-8"
-                      : "text-[#1D1B1A] font-medium"
+                      : "text-gray font-medium"
                 }
               `}
                     >

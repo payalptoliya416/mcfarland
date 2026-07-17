@@ -21,22 +21,18 @@ export function CountryPhoneInput({ value, onChange }: PhoneFieldProps) {
       /* INPUT FIELD */
       inputClass="
         !w-full
-        !h-[56px]
+        !h-[48px]
         !pl-[60px]
         !pr-5
-        !rounded-[10px]
-        !border
-        !border-border
+        !rounded-full
         !text-sm
         focus:!outline-none
       "
 
       /* FLAG BUTTON */
       buttonClass="
-        !border
-        !border-border
-        !rounded-l-[10px]
-        !h-[56px]
+        !rounded-l-full
+        !h-[48px]
         !w-[52px]
         !flex
         !items-center

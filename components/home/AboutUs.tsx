@@ -24,7 +24,7 @@ const [redirectLoading, setRedirectLoading] = useState(false);
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-[30px]">
             {/* Left */}
             <div className="flex justify-center lg:justify-start">
-              <img src='/assets/images/about.png' alt="About McFarland" />
+              <img src='/assets/images/about.png' alt="About Eastline Equipment" />
             </div>
 
             {/* Right */}

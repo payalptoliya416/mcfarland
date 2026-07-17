@@ -315,7 +315,7 @@ export default function UsersPage() {
               setSearch(e.target.value);
             }}
             placeholder="Search..."
-            className="w-full py-3 pl-10 pr-4 border border-border rounded-lg text-sm"
+            className="w-full py-3 pl-10 pr-4 border border-border rounded-[50px] text-sm"
           />
         </div>
       </div>

@@ -363,31 +363,40 @@ const handlePlaceBid = async () => {
       <div className="text-center text-[#343231] text-lg leading-[18px] mb-[15px]">
         - OR -
       </div>
-      <button
-        onClick={handleBuyNow}
-        disabled={buyLoading || licenseBlocked}
-        className={`w-full py-[15px] rounded-full text-base leading-[16px] font-medium flex justify-center items-center gap-[10px] border transition-all duration-300 cursor-pointer ${
-          licenseBlocked
-            ? "bg-gray-100 text-balck border-gray-300 cursor-not-allowed"
-            : "bg-white text-orange border-green hover:bg-green hover:text-white"
-        }`}
-      >
-        {buyLoading ? (
+    <button
+  onClick={handleBuyNow}
+  disabled={buyLoading || licenseBlocked}
+  className={`group w-full py-[15px] rounded-full text-base leading-[16px] font-medium flex justify-center items-center gap-[10px] border transition-all duration-300 cursor-pointer ${
+    licenseBlocked
+      ? "bg-gray-100 text-black border-gray-300 cursor-not-allowed"
+      : "bg-white text-orange border-green hover:bg-green hover:text-white"
+  }`}
+>
+  {buyLoading ? (
     <>
       <span className="h-4 w-4 border-2 border-green border-t-transparent rounded-full animate-spin" />
       Processing...
     </>
   ) : (
     <>
-      <Image src={
-              buyLoading || licenseBlocked
-                ? "/assets/images/bag-new.svg"
-                : "/assets/images/bag-new.svg"
-            } alt="icon" width={15} height={15} />
-      Buy Now for  {formatPrice(buyNow)}
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 16 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        className="transition-colors duration-300"
+      >
+        <path
+          d="M1.36463 4.30286L0.0332042 12.6971C-0.0925101 13.5257 0.141776 14.36 0.684633 15C0.953004 15.3135 1.28603 15.5652 1.66085 15.7378C2.03567 15.9104 2.4434 15.9998 2.85606 16H12.3646C13.1989 16 13.9932 15.6343 14.5361 15C14.8035 14.6853 15 14.3168 15.1124 13.9195C15.2248 13.5221 15.2504 13.1053 15.1875 12.6971L13.8561 4.30286C13.7952 3.89873 13.5906 3.53009 13.28 3.26455C12.9693 2.99901 12.5733 2.85437 12.1646 2.85714H10.9875C10.7132 1.24 9.30749 0 7.61035 0C5.9132 0 4.50749 1.24 4.2332 2.85714H3.05606C2.20463 2.85714 1.49606 3.46286 1.36463 4.30286ZM7.61035 1.14286C8.6732 1.14286 9.55892 1.87429 9.81606 2.85714H5.40463C5.66178 1.87429 6.54749 1.14286 7.61035 1.14286ZM4.7532 5.14286C5.06749 5.14286 5.32463 5.39429 5.32463 5.71429C5.32463 6.97143 6.34749 8 7.61035 8C8.87321 8 9.89606 6.97143 9.89606 5.71429C9.89606 5.39429 10.1532 5.14286 10.4675 5.14286C10.7818 5.14286 11.0389 5.39429 11.0389 5.71429C11.0389 7.60571 9.50178 9.14286 7.61035 9.14286C5.71892 9.14286 4.18178 7.60571 4.18178 5.71429C4.18178 5.39429 4.43892 5.14286 4.7532 5.14286Z"
+          fill="currentColor"
+        />
+      </svg>
+
+      Buy Now for {formatPrice(buyNow)}
     </>
   )}
-      </button>
+</button>
     </div>
   );
 }

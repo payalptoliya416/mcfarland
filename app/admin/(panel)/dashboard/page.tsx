@@ -226,14 +226,14 @@ const userBadge = (status: string) =>
                          <div className="w-full overflow-x-auto border border-border rounded-[10px]">
                             <table className="border-collapse min-w-full">
                             <thead>
-                                <tr className="bg-[#FFEFCC] text-left">
-                                <th className="px-[15px] py-[18px] text-sm font-medium text-secgray border-r border-border whitespace-nowrap">
+                                <tr className="bg-[#fff6f1] text-left rounded-[10px]">
+                                <th className="px-[15px] py-[18px] text-sm font-medium text-secgray border-r border-border whitespace-nowrap border-b">
                                     Machinery Name
                                 </th>
-                                <th className="px-[15px] py-[18px] text-sm font-medium text-secgray border-r border-border whitespace-nowrap">
+                                <th className="px-[15px] py-[18px] text-sm font-medium text-secgray border-r border-border whitespace-nowrap border-b">
                                     Total Bid
                                 </th>
-                                <th className="px-[15px] py-[18px] text-sm font-medium text-secgray whitespace-nowrap">
+                                <th className="px-[15px] py-[18px] text-sm font-medium text-secgray border-r border-border whitespace-nowrap border-b">
                                     Bid End Date
                                 </th>
                                 </tr>
@@ -313,14 +313,14 @@ const userBadge = (status: string) =>
                      <div className="w-full overflow-x-auto border border-border rounded-[10px]">
                             <table className="w-full border-collapse">
                             <thead>
-                                <tr className="bg-[#FFEFCC] text-left">
-                                <th className="px-[15px] py-[18px] text-sm font-medium text-secgray border-r border-border whitespace-nowrap">
+                                <tr className="bg-[#fff6f1] text-left">
+                                <th className="px-[15px] py-[18px] text-sm font-medium text-secgray border-border whitespace-nowrap border-r border-b">
                                     Machinery Name
                                 </th>
-                                <th className="px-[15px] py-[18px] text-sm font-medium text-secgray border-r border-border whitespace-nowrap">
+                                <th className="px-[15px] py-[18px] text-sm font-medium text-secgray border-border whitespace-nowrap border-r border-b">
                                     Won User Name
                                 </th>
-                                <th className="px-[15px] py-[18px] text-sm font-medium text-secgray whitespace-nowrap">
+                                <th className="px-[15px] py-[18px] text-sm font-medium text-secgray border-border  whitespace-nowrap border-r border-b">
                                     Won Bid Price
                                 </th>
                                 </tr>
@@ -333,13 +333,13 @@ const userBadge = (status: string) =>
                                     key={index}
                                     className="border-t border-border even:bg-[#F9F9F9]"
                                   >
-                                    <td className="px-[15px] py-[18px] text-sm text-secgray border-r border-border whitespace-nowrap">
+                                    <td className="px-[15px] py-[18px] text-sm text-secgray border-r whitespace-nowrap border-border border-b">
                                       {row.machinery}
                                     </td>
-                                    <td className="px-[15px] py-[18px] text-sm text-secgray border-r border-border whitespace-nowrap">
+                                    <td className="px-[15px] py-[18px] text-sm text-secgray border-r whitespace-nowrap border-border border-b">
                                       {row.user === "N/A" ? "" : row.user}
                                     </td>
-                                    <td className="px-[15px] py-[18px] text-sm text-secgray whitespace-nowrap">
+                                    <td className="px-[15px] py-[18px] text-sm text-secgray whitespace-nowrap border-border border-b border-r">
                                       {row.price}
                                     </td>
                                   </tr>
@@ -404,7 +404,7 @@ const userBadge = (status: string) =>
     <div className="w-full overflow-x-auto border border-border rounded-[10px]">
       <table className="w-full border-collapse">
         <thead>
-          <tr className="bg-[#FFEFCC] text-left">
+          <tr className="bg-[#fff6f1] text-left">
             {[
               "Order ID",
               "Type",   
@@ -416,7 +416,7 @@ const userBadge = (status: string) =>
             ].map((head) => (
               <th
                 key={head}
-                className="px-[15px] py-[18px] text-sm font-medium text-secgray border-r last:border-r-0 border-border whitespace-nowrap"
+                className="px-[15px] py-[18px] text-sm font-medium text-secgray border-r last:border-r-0 border-border whitespace-nowrap border-b"
               >
                 {head}
               </th>
@@ -531,7 +531,7 @@ const userBadge = (status: string) =>
                       <div className="w-full overflow-x-auto border border-border rounded-[10px]">
                         <table className="w-full border-collapse">
                         <thead>
-                            <tr className="bg-[#FFEFCC] text-left">
+                            <tr className="bg-[#fff6f1] text-left border-b border-border">
                             {[
                                 "User Name",
                                 "Email",

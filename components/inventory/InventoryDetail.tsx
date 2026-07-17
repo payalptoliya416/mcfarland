@@ -22,6 +22,14 @@ import { Category } from "@/api/data";
 import { formatPrice } from "@/hooks/formate";
 import { useRouter } from "next/navigation";
 import { IoIosTime } from "react-icons/io";
+import {
+  ShieldCheck,
+  BadgeDollarSign,
+  Truck,
+  RotateCcw,
+  Shield,
+  Wrench,
+} from "lucide-react";
 
 function getTimeLeft(endTime: string) {
   const end = new Date(endTime.replace(" ", "T")).getTime();
@@ -224,7 +232,35 @@ function InventoryDetail() {
     return offer;
   };
   const offerCount = getOfferCount(data?.offer);
-if (loading || isRedirecting) {
+
+    const features = [
+  {
+    icon: "/assets/images/detail1.svg",
+    title: "100% Secured Payments",
+  },
+  {
+    icon: "/assets/images/detail2.svg",
+    title: "Money back guaranteed",
+  },
+  {
+    icon: "/assets/images/detail3.svg",
+    title: "Delivery anywhere within the USA & Canada",
+  },
+  {
+    icon: "/assets/images/detail4.svg",
+    title: "30-day hassle-free returns",
+  },
+  {
+    icon: "/assets/images/detail5.svg",
+    title: "6 months warranty",
+  },
+  {
+    icon: "/assets/images/detail6.svg",
+    title: "Pre-delivery inspection",
+  },
+];
+
+  if (loading || isRedirecting) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-white">
         <Loader />
@@ -237,167 +273,115 @@ if (loading || isRedirecting) {
       <div className="grid grid-cols-12 gap-5">
         <div className="col-span-12 xl:col-span-7 order-2 xl:order-1">
        <div className="hidden xl:block">  {data && <ProductSlider data={data} />}</div> 
-          <div className="w-full space-y-5 hidden xl:block">
-            <h2 className="text-[22px] font-semibold text-lightblack mb-[22px]">
-              Overview
-            </h2>
+        <div className="hidden xl:block w-full">
+          <h2 className="text-[24px] font-semibold text-[#22201C] mb-5">
+            Overview
+          </h2>
 
-            {/* Row 1 */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-1">
-              {/* Year */}
-              <div className="flex items-center gap-[10px]">
-                <div>
-                  <div className="w-[50px] h-[50px] bg-green rounded-md flex items-center justify-center">
-                    <span className="text-white text-2xl">
-                      <Image
-                        src="/assets/n1.svg"
-                        alt="icon"
-                        width={23}
-                        height={23}
-                      />
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <p className="text-text-gray mb-[6px] text-base leading-[16px]">
-                    Year
-                  </p>
-                  <p className="text-gray font-semibold text-xl leading-[20px]">
-                    {data?.year}
-                  </p>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+
+            {/* Year */}
+            <div className="bg-white rounded-[10px] shadow-[0_2px_25px_rgba(34,32,28,0.1)] p-5 flex items-center gap-3">
+              <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
+                <Image src="/assets/images/overview1.svg" alt="" width={20} height={20} />
               </div>
 
-              {/* Weight */}
-              <div className="flex items-center gap-[10px]">
-                <div>
-                  <div className="w-[50px] h-[50px] bg-green rounded-md flex items-center justify-center">
-                    <span className="text-white text-2xl">
-                      <Image
-                        src="/assets/n2.svg"
-                        alt="icon"
-                        width={23}
-                        height={23}
-                      />
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <p className="text-text-gray mb-[6px] text-base leading-[16px]">
-                    Weight
-                  </p>
-                  <p className="text-gray font-semibold text-xl leading-[20px]">
-                    {data?.weight}
-                  </p>
-                </div>
-              </div>
-
-              {/* Working Hours */}
-              <div className="flex items-center gap-[10px]">
-                <div>
-                  <div className="w-[50px] h-[50px] bg-green rounded-md flex items-center justify-center">
-                    <span className="text-white text-2xl">
-                      <Image
-                        src="/assets/n3.svg"
-                        alt="icon"
-                        width={23}
-                        height={23}
-                      />
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <p className="text-text-gray mb-[6px] text-base leading-[16px]">
-                    Working Hours
-                  </p>
-                  <p className="text-gray font-semibold text-xl leading-[20px]">
-                    {data?.working_hours}
-                  </p>
-                </div>
+              <div>
+                <p className="text-base text-[#4B4947] leading-none mb-[10px]">
+                  Year
+                </p>
+                <p className="text-lg font-semibold text-gray leading-none">
+                  {data?.year}
+                </p>
               </div>
             </div>
 
-            {/* Divider */}
-            <div className="border-t border-border"></div>
+            {/* Weight */}
+            <div className="bg-white rounded-[10px] shadow-[0_2px_25px_rgba(34,32,28,0.1)] p-5 flex items-center gap-3">
+                <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
+                <Image src="/assets/images/overview2.svg" alt="" width={20} height={20} />
+              </div>
 
-            {/* Row 2 */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-1">
+              <div>
+                <p className="text-base text-[#4B4947] leading-none mb-[10px]">
+                  Weight
+                </p>
+                <p className="text-lg font-semibold text-gray leading-none">
+                  {data?.weight}
+                </p>
+              </div>
+            </div>
+
+            {/* Working Hours */}
+           <div className="bg-white rounded-[10px] shadow-[0_2px_25px_rgba(34,32,28,0.1)] p-5 flex items-center gap-3">
+               <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
+                <Image src="/assets/images/overview3.svg" alt="" width={20} height={20} />
+              </div>
+
+              <div>
+                <p className="text-base text-[#4B4947] leading-none mb-[10px]">
+                  Working Hours
+                </p>
+                 <p className="text-lg font-semibold text-gray leading-none">
+                  {data?.working_hours}
+                </p>
+              </div>
+            </div>
+
               {/* Fuel Type */}
-              <div className="flex items-center gap-[10px]">
+              <div className="bg-white rounded-[10px] shadow-[0_2px_25px_rgba(34,32,28,0.1)] p-5 flex items-center gap-3">
+                 <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
+                <Image src="/assets/images/overview4.svg" alt="" width={20} height={20} />
+              </div>
+
                 <div>
-                  <div className="w-[50px] h-[50px] bg-green rounded-md flex items-center justify-center">
-                    <span className="text-white text-2xl">
-                      <Image
-                        src="/assets/n4.svg"
-                        alt="icon"
-                        width={23}
-                        height={23}
-                      />
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <p className="text-text-gray mb-[6px] text-base leading-[16px]">
+                  <p className="text-base text-[#4B4947] leading-none mb-[10px]">
                     Fuel Type
                   </p>
-                  <p className="text-gray font-semibold text-xl leading-[20px]">
+                  <p className="text-lg font-semibold text-gray leading-none">
                     {data?.fuel}
                   </p>
                 </div>
               </div>
 
-              {/* Condition */}
-              <div className="flex items-center gap-[10px]">
+            {/* Condition */}
+             <div className="bg-white rounded-[10px] shadow-[0_2px_25px_rgba(34,32,28,0.1)] p-5 flex items-center gap-3">
+                  <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
+                <Image src="/assets/images/overview5.svg" alt="" width={20} height={20} />
+              </div>
+
                 <div>
-                  <div className="w-[50px] h-[50px] bg-green rounded-md flex items-center justify-center">
-                    <span className="text-white text-2xl">
-                      <Image
-                        src="/assets/n5.svg"
-                        alt="icon"
-                        width={23}
-                        height={23}
-                      />
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <p className="text-gray mb-[6px] text-base leading-[16px] font-semibold">
-                    Condition{" "}
+                 <p className="text-base text-[#4B4947] leading-none mb-[10px]">
+                    Condition
                   </p>
-                  <button className="bg-[#1DAF50] text-[12px] leading-[12px] text-white text-sm px-2 py-[6px] rounded-md whitespace-nowrap block">
+
+                  <span className="inline-flex items-center rounded-full bg-[#F97316] px-4 py-[5px] text-sm font-medium text-white leading-none">
                     {data?.condition}
-                  </button>
+                  </span>
                 </div>
               </div>
 
-              {/* Serial Number */}
-              <div className="flex items-center gap-[10px] pe-1">
-                <div>
-                  <div className="w-[50px] h-[50px] bg-green rounded-md flex items-center justify-center">
-                    <span className="text-white text-2xl">
-                      <Image
-                        src="/assets/n6.svg"
-                        alt="icon"
-                        width={23}
-                        height={23}
-                      />
-                    </span>
-                  </div>
-                </div>
-                <div>
-                  <p className="text-text-gray mb-[6px] text-base leading-[16px]">
-                    Serial Number
-                  </p>
-                  <p className="text-gray font-semibold text-base xl:text-xl leading-[20px] break-all">
-                    {data?.serial_number}
-                  </p>
-                </div>
+            {/* Serial Number */}
+            <div className="bg-white rounded-[10px] shadow-[0_2px_25px_rgba(34,32,28,0.1)] p-5 flex items-center gap-3">
+                <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
+                <Image src="/assets/images/overview6.svg" alt="" width={20} height={20} />
+              </div>
+
+              <div>
+               <p className="text-base text-[#4B4947] leading-none mb-[10px]">
+                  Serial Number
+                </p>
+                <p className="text-lg font-semibold text-gray leading-none">
+                  {data?.serial_number}
+                </p>
               </div>
             </div>
-            <div className="border-t border-border"></div>
+
           </div>
+        </div>
+        <div className="border-t border-border my-[40px] hidden xl:block"></div>
           <div className="mt-[30px] hidden xl:block">
-            <h3 className="mb-[15px] text-lightblack text-[22px] leading-[22px] font-semibold">
+            <h3 className="mb-[15px] text-lightblack text-lg leading-[22px] font-bold">
               Description
             </h3>
             <div
@@ -405,6 +389,7 @@ if (loading || isRedirecting) {
               dangerouslySetInnerHTML={{ __html: data?.description ?? "" }}
             />
           </div>
+          <div className="border-t border-border my-[40px]"></div>
           {/* <div className="w-full space-y-4 pt-[15px]">
             <div className="flex justify-between items-center">
               <h2 className="text-xl leading-[20px] font-semibold text-gray">
@@ -427,7 +412,32 @@ if (loading || isRedirecting) {
               ))}
             </div>
           </div> */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {features.map((item, index) => {
+          return (
+            <div
+              key={index}
+              className="flex items-center gap-3 bg-white rounded-full p-[15px] border border-[#F3F3F3] shadow-[0_2px_25px_rgba(34,32,28,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_35px_rgba(34,32,28,0.12)]"
+            >
+              <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
+                 <Image
+                  src={item.icon}
+                  alt={item.title}
+                  width={20}
+                  height={20}
+                  className="object-contain"
+                />
+              </div>
+
+              <h3 className="text-base leading-[22px] font-medium text-[#343231]">
+                {item.title}
+              </h3>
+            </div>
+          );
+        })}
+      </div>
         </div>
+        
         <div className="col-span-12 xl:col-span-5 order-1 xl:order-2">
           <div className="shadow-[0_8px_35px_rgba(0,0,0,0.08)] p-5 rounded-[10px]">
             <div className="flex justify-between flex-wrap gap-2">
@@ -438,11 +448,11 @@ if (loading || isRedirecting) {
                 <strong>Auction ID</strong> : {data?.auction_id}
               </div>
             </div>
-            <h2 className="text-secgray text-[26px] sm:text-[28px] sm:leading-[38px] mb-5 font-semibold">
+            <h2 className="text-secgray text-[22px] md:text-[28px] sm:leading-[38px] mb-5 font-semibold">
               {data?.name}
             </h2>
              <div className="block xl:hidden">  {data && <ProductSlider data={data} />}</div> 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-[17px] pb-[30px] mb-[30px] border-b border-[#D2D1D1]">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-[17px] pb-[30px] mb-[30px] border-b border-[#D2D1D1]">
               {[
                 { label: "Days", value: timeLeft.days },
                 { label: "Hours", value: timeLeft.hours },
@@ -451,7 +461,7 @@ if (loading || isRedirecting) {
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="rounded-full p-3 2xl:p-4 flex flex-col items-center bg-[#E9E9E94D] w-[90px] h-[90px]"
+                  className="rounded-full p-3 2xl:p-4 flex flex-col items-center justify-center bg-[#E9E9E94D] w-[80px] md:w-[90px] h-[80px] md:h-[90px] mx-auto"
                 >
                   <span className="text-xl 2xl:text-[30px] 2xl:mb-[7px] 2xl:leading-[36px] font-semibold text-[#343231]">
                     {item.value}
@@ -471,7 +481,7 @@ if (loading || isRedirecting) {
                 {formatPrice(data?.current_bid)}
               </p>
             </div>
-            <div className="flex items-center bg-[#E9E9E980] text-[#1D1B1A] border border-[#D2D1D1] p-3 rounded-full gap-[10px] text-base mb-[30px]">
+            <div className="flex items-center bg-[#E9E9E980] text-gray border border-[#D2D1D1] p-3 rounded-full gap-[10px] text-base mb-[30px]">
               <Image src="/assets/images/fire-new.svg" alt="icon" width={30} height={30} />
               {offerCount === 1
                 ? "1 offer was received"
@@ -491,165 +501,112 @@ if (loading || isRedirecting) {
               />
             )}
             <div className="border-t border-border my-[30px]"></div>
-            <div className="w-full space-y-5 block xl:hidden">
-              <h2 className="text-[22px] font-semibold text-lightblack mb-[22px]">
-                Overview
-              </h2>
+               <div className="block xl:hidden w-full">
+          <h2 className="text-[24px] font-semibold text-[#22201C] mb-5">
+            Overview
+          </h2>
 
-              {/* Row 1 */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-1">
-                {/* Year */}
-                <div className="flex items-center gap-[10px]">
-                  <div>
-                    <div className="w-[50px] h-[50px] bg-green rounded-md flex items-center justify-center">
-                      <span className="text-white text-2xl">
-                        <Image
-                          src="/assets/n1.svg"
-                          alt="icon"
-                          width={23}
-                          height={23}
-                        />
-                      </span>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-text-gray mb-[6px] text-base leading-[16px]">
-                      Year
-                    </p>
-                    <p className="text-gray font-semibold text-xl leading-[20px]">
-                      {data?.year}
-                    </p>
-                  </div>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
 
-                {/* Weight */}
-                <div className="flex items-center gap-[10px]">
-                  <div>
-                    <div className="w-[50px] h-[50px] bg-green rounded-md flex items-center justify-center">
-                      <span className="text-white text-2xl">
-                        <Image
-                          src="/assets/n2.svg"
-                          alt="icon"
-                          width={23}
-                          height={23}
-                        />
-                      </span>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-text-gray mb-[6px] text-base leading-[16px]">
-                      Weight
-                    </p>
-                    <p className="text-gray font-semibold text-xl leading-[20px]">
-                      {data?.weight}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Working Hours */}
-                <div className="flex items-center gap-[10px]">
-                  <div>
-                    <div className="w-[50px] h-[50px] bg-green rounded-md flex items-center justify-center">
-                      <span className="text-white text-2xl">
-                        <Image
-                          src="/assets/n3.svg"
-                          alt="icon"
-                          width={23}
-                          height={23}
-                        />
-                      </span>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-text-gray mb-[6px] text-base leading-[16px]">
-                      Working Hours
-                    </p>
-                    <p className="text-gray font-semibold text-xl leading-[20px]">
-                      {data?.working_hours}
-                    </p>
-                  </div>
-                </div>
+            {/* Year */}
+            <div className="bg-white rounded-[10px] shadow-[0_2px_25px_rgba(34,32,28,0.1)] p-5 flex items-center gap-3">
+              <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
+                <Image src="/assets/images/overview1.svg" alt="" width={20} height={20} />
               </div>
 
-              {/* Divider */}
-              <div className="border-t border-border"></div>
-
-              {/* Row 2 */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-1">
-                {/* Fuel Type */}
-                <div className="flex items-center gap-[10px]">
-                  <div>
-                    <div className="w-[50px] h-[50px] bg-green rounded-md flex items-center justify-center">
-                      <span className="text-white text-2xl">
-                        <Image
-                          src="/assets/n4.svg"
-                          alt="icon"
-                          width={23}
-                          height={23}
-                        />
-                      </span>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-text-gray mb-[6px] text-base leading-[16px]">
-                      Fuel Type
-                    </p>
-                    <p className="text-gray font-semibold text-xl leading-[20px]">
-                      {data?.fuel}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Condition */}
-                <div className="flex items-center gap-[10px]">
-                  <div>
-                    <div className="w-[50px] h-[50px] bg-green rounded-md flex items-center justify-center">
-                      <span className="text-white text-2xl">
-                        <Image
-                          src="/assets/n5.svg"
-                          alt="icon"
-                          width={23}
-                          height={23}
-                        />
-                      </span>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-gray mb-[6px] text-base leading-[16px] font-semibold">
-                      Condition{" "}
-                    </p>
-                    <button className="bg-[#1DAF50] text-[12px] leading-[12px] text-white text-sm px-2 py-[6px] rounded-md whitespace-nowrap block">
-                      {data?.condition}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Serial Number */}
-                <div className="flex items-center gap-[10px] pe-1">
-                  <div>
-                    <div className="w-[50px] h-[50px] bg-green rounded-md flex items-center justify-center">
-                      <span className="text-white text-2xl">
-                        <Image
-                          src="/assets/n6.svg"
-                          alt="icon"
-                          width={23}
-                          height={23}
-                        />
-                      </span>
-                    </div>
-                  </div>
-                  <div>
-                    <p className="text-text-gray mb-[6px] text-base leading-[16px]">
-                      Serial Number
-                    </p>
-                    <p className="text-gray font-semibold text-base xl:text-xl leading-[20px] break-all">
-                      {data?.serial_number}
-                    </p>
-                  </div>
-                </div>
+              <div>
+                <p className="text-base text-[#4B4947] leading-none mb-[10px]">
+                  Year
+                </p>
+                <p className="text-lg font-semibold text-gray leading-none">
+                  {data?.year}
+                </p>
               </div>
-              <div className="border-t border-border my-[30px]"></div>
             </div>
+
+            {/* Weight */}
+            <div className="bg-white rounded-[10px] shadow-[0_2px_25px_rgba(34,32,28,0.1)] p-5 flex items-center gap-3">
+                <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
+                <Image src="/assets/images/overview2.svg" alt="" width={20} height={20} />
+              </div>
+
+              <div>
+                <p className="text-base text-[#4B4947] leading-none mb-[10px]">
+                  Weight
+                </p>
+                <p className="text-lg font-semibold text-gray leading-none">
+                  {data?.weight}
+                </p>
+              </div>
+            </div>
+
+            {/* Working Hours */}
+           <div className="bg-white rounded-[10px] shadow-[0_2px_25px_rgba(34,32,28,0.1)] p-5 flex items-center gap-3">
+               <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
+                <Image src="/assets/images/overview3.svg" alt="" width={20} height={20} />
+              </div>
+
+              <div>
+                <p className="text-base text-[#4B4947] leading-none mb-[10px]">
+                  Working Hours
+                </p>
+                 <p className="text-lg font-semibold text-gray leading-none">
+                  {data?.working_hours}
+                </p>
+              </div>
+            </div>
+
+              {/* Fuel Type */}
+              <div className="bg-white rounded-[10px] shadow-[0_2px_25px_rgba(34,32,28,0.1)] p-5 flex items-center gap-3">
+                 <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
+                <Image src="/assets/images/overview4.svg" alt="" width={20} height={20} />
+              </div>
+
+                <div>
+                  <p className="text-base text-[#4B4947] leading-none mb-[10px]">
+                    Fuel Type
+                  </p>
+                  <p className="text-lg font-semibold text-gray leading-none">
+                    {data?.fuel}
+                  </p>
+                </div>
+              </div>
+
+            {/* Condition */}
+             <div className="bg-white rounded-[10px] shadow-[0_2px_25px_rgba(34,32,28,0.1)] p-5 flex items-center gap-3">
+                  <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
+                <Image src="/assets/images/overview5.svg" alt="" width={20} height={20} />
+              </div>
+
+                <div>
+                 <p className="text-base text-[#4B4947] leading-none mb-[10px]">
+                    Condition
+                  </p>
+
+                  <span className="inline-flex items-center rounded-full bg-[#F97316] px-4 py-[5px] text-sm font-medium text-white leading-none">
+                    {data?.condition}
+                  </span>
+                </div>
+              </div>
+
+            {/* Serial Number */}
+            <div className="bg-white rounded-[10px] shadow-[0_2px_25px_rgba(34,32,28,0.1)] p-5 flex items-center gap-3">
+                <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
+                <Image src="/assets/images/overview6.svg" alt="" width={20} height={20} />
+              </div>
+
+              <div>
+               <p className="text-base text-[#4B4947] leading-none mb-[10px]">
+                  Serial Number
+                </p>
+                <p className="text-lg font-semibold text-gray leading-none">
+                  {data?.serial_number}
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
               <div className="mt-[30px] block xl:hidden">
             <h3 className="mb-[15px] text-lightblack text-[22px] leading-[22px] font-semibold">
               Description
@@ -676,8 +633,8 @@ if (loading || isRedirecting) {
                     <Image
                       src="/assets/location1.svg"
                       alt="icon"
-                      width={20}
-                      height={20}
+                      width={22}
+                      height={22}
                     />
                     <div className="border-l border-dashed border-gray h-10 mt-1"></div>
                   </div>
@@ -799,7 +756,7 @@ if (loading || isRedirecting) {
                         <button
                           type="submit"
                           disabled={calcLoading}
-                          className="py-3 px-[18px] border border-green text-green rounded-xl text-base font-medium transition mt-5 cursor-pointer hover:bg-green hover:text-white"
+                          className="py-3 px-[18px] border border-green text-green rounded-full text-base !leading-[16px] font-medium transition mt-[25px] cursor-pointer hover:bg-green hover:text-white h-[40px]"
                         >
                           {calcLoading
                             ? "Calculating..."
@@ -814,7 +771,7 @@ if (loading || isRedirecting) {
 
               {/* Result */}
               <div className="pt-2 mb-0">
-                <p className="text-gray font-medium text-lg mb-[15px]">
+                <p className="text-gray font-medium text-lg !leading-[18px] mb-[15px]">
                   Delivery cost estimation
                 </p>
 
@@ -844,130 +801,6 @@ if (loading || isRedirecting) {
                     height={17}
                   />
                 </p>
-              </div>
-
-              <div className="border-t border-border my-[30px]"></div>
-              <div className="w-full space-y-8">
-                {/* Pay at delivery */}
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xl">
-                      <Image
-                        src="/assets/dollar.svg"
-                        alt="secure"
-                        width={0}
-                        height={0}
-                        sizes="100vw"
-                        className="w-[20px] h-auto -mt-2"
-                      />
-                    </span>
-                    <h3 className="text-lg font-semibold text-gray mb-[10px] leading-[18px]">
-                      100% Secure Payment
-                    </h3>
-                  </div>
-                  <p className="text-text-gray text-base ">
-                    All transactions are protected with advanced encryption and
-                    secure payment gateways, ensuring your personal and
-                    financial information stays safe at all times.
-                  </p>
-
-                  <div className="border-t border-gray-200 mt-[30px]"></div>
-                </div>
-
-                {/* Money back guaranteed */}
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xl">
-                      <Image
-                        src="/assets/dollar1.svg"
-                        alt="secure"
-                        width={0}
-                        height={0}
-                        sizes="100vw"
-                        className="w-[20px] h-auto"
-                      />
-                    </span>
-                    <h3 className="text-lg font-semibold text-gray leading-[18px]">
-                      Money back guaranteed
-                    </h3>
-                  </div>
-                  <p className="text-text-gray text-base">
-                    Test the machine for 30 days with a 100% Money-Back
-                    Guarantee!
-                  </p>
-
-                  <div className="border-t border-gray-200 mt-[30px]"></div>
-                </div>
-
-                {/* Feature list */}
-                <div className="space-y-4">
-                  {/* Item */}
-                  <div
-                    className="flex items-center gap-3 p-4 rounded-xl 
-                                    bg-[linear-gradient(90deg,#f6f6f6_0%,#ffffff_100%)]
-                                    "
-                  >
-                    <Image
-                      src="/assets/van.svg"
-                      alt="vehicle"
-                      width={22}
-                      height={22}
-                    />
-                    <p className="text-secgray">
-                      Delivery anywhere within the USA & Canada
-                    </p>
-                  </div>
-
-                   <div
-                    className="flex items-center gap-3 p-4 rounded-xl 
-                                bg-[linear-gradient(90deg,#f6f6f6_0%,#ffffff_100%)]"
-                  >
-                    <IoIosTime size={22} className="text-gray"/>
-                    <p className="text-secgray">
-                      Delivery Time: 10–14 Days
-                    </p>
-                  </div>
-
-                  <div
-                    className="flex items-center gap-3 p-4 rounded-xl 
-                                    bg-[linear-gradient(90deg,#f6f6f6_0%,#ffffff_100%)]
-                                    "
-                  >
-                    <Image
-                      src="/assets/van1.svg"
-                      alt="return"
-                      width={22}
-                      height={22}
-                    />
-                    <p className="text-secgray">30-day hassle-free returns</p>
-                  </div>
-                  <div
-                    className="flex items-center gap-3 p-4 rounded-xl 
-                                    bg-[linear-gradient(90deg,#f6f6f6_0%,#ffffff_100%)]
-                                    "
-                  >
-                    <Image
-                      src="/assets/van3.svg"
-                      alt="return"
-                      width={22}
-                      height={22}
-                    />
-                    <p className="text-secgray">6 months warranty</p>
-                  </div>
-                  <div
-                    className="flex items-center gap-3 p-4 rounded-xl 
-                                    bg-[linear-gradient(90deg,#f6f6f6_0%,#ffffff_100%)]
-                                    "
-                  >
-                    <Image
-                      src="/assets/van4.svg"
-                      alt="return"
-                      width={22}
-                      height={22}
-                    />
-                    <p className="text-secgray">Pre-delivery inspection</p>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

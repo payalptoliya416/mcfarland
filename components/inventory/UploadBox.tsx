@@ -30,7 +30,7 @@ export const UploadBox = ({ label, file, onChange }: UploadBoxProps) => {
       >
         <img src="/assets/images/upload-icon.svg" alt=""  className="mb-[15px]"/>
 
-        <h3 className="text-lg font-semibold text-[#1D1B1A] mb-[25px]">
+        <h3 className="text-lg font-semibold text-gray mb-[25px]">
           Upload a File
         </h3>
 

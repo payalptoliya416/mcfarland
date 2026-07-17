@@ -15,11 +15,13 @@ import { ArrowRight } from "lucide-react";
     },
     {
       icon: '/assets/images/hero-icon1.svg',
-      title: "30-day hassle-free returns",
+      title: "hassle-free returns",
+      bold :"30-day"
     },
     {
-      icon: '/assets/images/hero-icon1.svg',
-      title: "6 months warranty",
+      icon: '/assets/images/hero-icon2.svg',
+      title: "warranty",
+      bold:"6 months"
     },
   ];
   
@@ -67,7 +69,7 @@ useEffect(() => {
             <p className="mx-auto max-w-[790px] px-4 text-center text-sm font-medium leading-6 text-white sm:text-base sm:leading-[26px] mb-5 sm:mb-[35px]">
               Buy or Bid on high-quality machinery, tractors, and tools from
               trusted sellers. Whether you're expanding your fleet or upgrading
-              your equipment, Mcfarland Equipment Sales & Auctions has you
+              your equipment, {companyName} has you
               covered.
             </p>
           <Link 
@@ -108,7 +110,7 @@ useEffect(() => {
                 <img
                   src={item.icon}
                   alt={item.title}
-                  className="h-6 w-6 object-contain"
+                  className=""
                 />
               </div>
 

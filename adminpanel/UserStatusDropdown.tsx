@@ -100,8 +100,8 @@ const handleToggle = () => {
       {/* BUTTON */}
    <button
   onClick={handleToggle}
-  disabled={loading} // ✅ disable while loading
-  className={`flex items-center justify-between gap-2 px-2 py-1.5 w-[90px] sm:w-[100px] rounded-md text-sm font-medium transition-all duration-150 ${
+  disabled={loading}
+  className={`flex items-center justify-between gap-2 px-2 py-1.5 w-[90px] sm:w-[100px] rounded-md text-sm font-medium transition-all duration-150 cursor-pointer ${
     loading ? "bg-gray-400 text-white cursor-not-allowed" : current.btnClass
   }`}
 >

@@ -528,7 +528,7 @@ export default function UserProfileForm() {
                   <div className="flex justify-end gap-3 pt-4">
                     <button
                       type="button"
-                      className="px-6 py-3 rounded-lg border cursor-pointer"
+                      className="flex h-10 items-center justify-center rounded-[62px] border border-gray px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-gray transition-all duration-300 cursor-pointer"
                     >
                       Cancel
                     </button>
@@ -542,7 +542,7 @@ export default function UserProfileForm() {
                         !frontFile ||
                         !backFile
                       }
-                      className={`px-6 py-3 rounded-lg text-white cursor-pointer ${
+                      className={`flex h-10 items-center justify-center rounded-[62px] px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 cursor-pointer ${
                         !canUploadLicense ||
                         uploading ||
                         !frontFile ||
@@ -560,7 +560,7 @@ export default function UserProfileForm() {
                     <button
                       type="submit"
                       disabled={saving}
-                      className={`px-6 py-3 rounded-lg text-white bg-green cursor-pointer ${
+                      className={`flex h-10 items-center justify-center rounded-[62px] border border-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer gradient-btn ${
                         saving ? "bg-gray-400 cursor-not-allowed" : "bg-green"
                       }`}
                     >

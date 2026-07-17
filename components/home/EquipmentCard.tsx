@@ -17,19 +17,19 @@ const EquipmentCard = ({ image, title }: EquipmentCardProps) => {
       </div>
 
       {/* Content */}
-      <div className="border-b-[4px] border-primary px-6 py-5">
-        <h3 className=" text-[20px] font-bold leading-[28px] text-[#22201C]">
+      <div className="border-b-[4px] border-primary p-5">
+        <h3 className=" text-[20px] font-bold leading-[20px] text-[#22201C]">
           {title}
         </h3>
 
         <button
           type="button"
-          className="mt-3 inline-flex items-center gap-[10px]  text-base font-medium text-primary transition-all duration-300 hover:gap-3"
+          className="mt-3 inline-flex items-center gap-[10px] text-base leading-none font-medium text-primary transition-all duration-300 hover:gap-3"
         >
           Browse Inventory
-
+          
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M10.125 14.625L15.75 9L10.125 3.375M15.75 9H2.25" stroke="#F2991C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M10.125 14.625L15.75 9L10.125 3.375M15.75 9H2.25" stroke="#F2671C" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
 
         </button>

@@ -27,7 +27,7 @@ export default function ActionMenu({
     <div ref={ref} className="relative inline-block">
       {/* ICON */}
       <CgMoreVertical
-        className="cursor-pointer text-gray-500 hover:text-gray-700 transition"
+        className="cursor-pointer text-gray-500 hover:text-gray transition"
         onClick={() => setOpen(!open)}
       />
 

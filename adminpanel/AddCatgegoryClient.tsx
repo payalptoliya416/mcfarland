@@ -152,7 +152,7 @@ const [cropImage, setCropImage] = useState<string | null>(null);
                 name="categoryName"
                 placeholder="Enter category name"
                 className={`
-                      w-full px-5 py-4 rounded-[10px] border focus:outline-none
+                      input
                       ${
                         errors.categoryName && touched.categoryName
                           ? "border-red-500"
@@ -358,16 +358,14 @@ const [cropImage, setCropImage] = useState<string | null>(null);
             <button
               type="button"
               onClick={() => router.back()}
-              className="px-[18px] py-3 border rounded-[10px] text-seclightgray text-sm border-border cursor-pointer"
+              className="flex h-10 items-center justify-center rounded-[62px] border border-gray px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-gray transition-all duration-300 cursor-pointer"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`
-                px-[18px] py-3 rounded-[10px] text-white text-sm
-                gradient-btn
+              className={`flex h-10 items-center justify-center rounded-[62px] border border-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer gradient-btn
                 ${isSubmitting ? "opacity-60 cursor-not-allowed" : ""}
               `}
             >

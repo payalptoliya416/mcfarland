@@ -96,67 +96,7 @@ const slugify = (text: string) =>
     <Loader />
   </div>
 )}
-    { !categories.length  ?   <section className="section-bottom">
-        {/* <div className="container-custom">
-          <div className="mx-auto text-center">
-            <span className="inline-flex rounded-full bg-[#F2671C] text-white px-5 py-[10px] text-base !leading-[16px] font-semibold text-primary">
-              Our Equipment
-            </span>
-            <h2 className="mt-[30px] text-[30px] font-bold leading-[36px] text-[#22201C] sm:text-[36px] sm:leading-[40px] lg:text-[42px] lg:leading-[42px]">
-              Our Main <span className="text-primary">Equipment</span>
-            </h2>
-
-            <p className="mx-auto mt-[15px] text-center text-base font-medium leading-[26px] text-[#4E4D49] mb-10">
-              Browse through top categories to find what fits your business
-              needs.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                {equipmentData.map((item) => (
-                  <EquipmentCard
-                    key={item.id}
-                    image={item.image}
-                    title={item.title}
-                  />
-                ))}
-          </div>
-        </div> */}
-        <div className="container-custom">
-        <div className="mx-auto text-center">
-          <span className="inline-flex rounded-full bg-[#F2671C] px-5 py-[10px] text-base font-semibold leading-[16px] text-white">
-            Our Equipment
-          </span>
-
-          <h2 className="mt-[30px] text-[30px] font-bold leading-[36px] text-[#22201C] sm:text-[36px] sm:leading-[40px] lg:text-[42px] lg:leading-[42px]">
-            Our Main <span className="text-primary">Equipment</span>
-          </h2>
-
-          <p className="mx-auto mt-[15px] mb-10 text-center text-base font-medium leading-[26px] text-[#4E4D49]">
-            Browse through top categories to find what fits your business needs.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-          {categories.map((item) => {
-            const categorySlug = slugify(item.category_name);
-
-            return (
-              <Link
-                key={item.id}
-                href={`/inventory?category=${categorySlug}`}
-                onClick={() => setIsNavigating(true)}
-                className="block"
-              >
-                <EquipmentCard
-                  image={item.image_url}
-                  title={item.category_name}
-                />
-              </Link>
-            );
-          })}
-        </div>
-      </div>
-      </section> : 
+    { !categories.length  ?   <section className="section-bottom"></section> : 
     
     <section className="section-bottom">
        <div className="container-custom">

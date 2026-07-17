@@ -417,7 +417,7 @@ if (userLoading || pageLoading) {
   );
 }
   return (
-    <section className="pt-20">
+    <section className="py-20">
       <div className="max-w-5xl mx-auto px-4 space-y-10">
         {product && (
           <div className="bg-white border border-border rounded-xl p-4 sm:p-6">
@@ -607,10 +607,8 @@ if (userLoading || pageLoading) {
                 <div className="flex gap-4">
                   {/* NO Option */}
                   <label
-                    className="flex items-center justify-between w-[90px]
-      border border-gray-300 rounded-md px-4 py-2 cursor-pointer
-      text-sm font-medium text-gray-700"
-                  >
+                    className="flex items-center justify-between w-[90px] border border-gray-300 rounded-full px-4 py-2 cursor-pointer
+                          text-sm font-medium text-gray" >
                     No
                  <Field
     type="radio"
@@ -633,8 +631,8 @@ if (userLoading || pageLoading) {
                   {/* YES Option */}
                   <label
                     className="flex items-center justify-between w-[90px]
-      border border-gray-300 rounded-md px-4 py-2 cursor-pointer
-      text-sm font-medium text-gray-700"
+              border border-gray-300 rounded-full px-4 py-2 cursor-pointer
+              text-sm font-medium text-gray-700"
                   >
                     Yes
                    <Field
@@ -740,7 +738,7 @@ if (userLoading || pageLoading) {
          <button
               type="submit"
               disabled={shouldDisableButton || submitLoading}
-              className={`w-full py-3 rounded-lg font-medium transition
+              className={`w-full py-3 font-medium transition rounded-full
                 flex items-center justify-center gap-2 cursor-pointer
                 active:scale-95
                 ${

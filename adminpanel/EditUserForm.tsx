@@ -35,7 +35,7 @@ function PhoneField() {
       </label>
 
       <div
-        className={`rounded-[10px] border ${
+        className={`rounded-full ${
           errors.phone && touched.phone
             ? "border-red-500"
             : "border-border"
@@ -203,7 +203,7 @@ if (loading) {
       {({ errors, touched, setFieldValue, values, isSubmitting }) => (
         <Form className="space-y-8">
           {/* ================= BASIC INFO ================= */}
-          <div className="rounded-2xl md:border border-[#ECECEC] bg-white p-5">
+          <div className="rounded-2xl md:border border-border bg-white p-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* First Name */}
               <div>
@@ -214,8 +214,8 @@ if (loading) {
               name="first_name"
               placeholder="Enter first name"
               className={`
-                w-full px-5 py-4 rounded-[10px] border
-                focus:outline-none
+                w-full px-5 py-4 rounded-full border
+                focus:outline-none h-[48px]
                 ${
                   errors.first_name && touched.first_name
                     ? "border-red-500"
@@ -238,7 +238,7 @@ if (loading) {
                 <Field
                 name="last_name"
                   placeholder="Enter last name"
-                  className={`w-full px-5 py-4 rounded-[10px] border focus:outline-none
+                  className={`w-full px-5 py-4 rounded-full border focus:outline-none h-[48px]
                     ${errors.last_name && touched.last_name ? "border-red-500" : "border-border"}
                   `}
                 />
@@ -257,7 +257,7 @@ if (loading) {
                 type="email"
                 placeholder="Enter email"
                 className={`
-                  w-full px-5 py-4 rounded-[10px] border focus:outline-none
+                  w-full px-5 py-4 rounded-full border focus:outline-none h-[48px]
                   ${errors.email && touched.email ? "border-red-500" : "border-border"}
                 `}
               />
@@ -281,7 +281,7 @@ if (loading) {
                   name="password"
                   type="password"
                   placeholder="Enter password"
-                  className={`w-full px-5 py-4 rounded-[10px] border focus:outline-none
+                  className={`w-full px-5 py-4 rounded-full border focus:outline-none h-[48px]
                     ${errors.password && touched.password ? "border-red-500" : "border-border"}
                   `}
                 />
@@ -299,7 +299,7 @@ if (loading) {
   name="confirm_password"
   type="password"
   placeholder="Confirm password"
-  className={`w-full px-5 py-4 rounded-[10px] border focus:outline-none
+  className={`w-full px-5 py-4 rounded-full border focus:outline-none h-[48px]
     ${errors.confirm_password && touched.confirm_password ? "border-red-500" : "border-border"}
   `}
 />
@@ -311,7 +311,7 @@ if (loading) {
           </div>
 
           {/* ================= ADDRESS ================= */}
-          <div className="rounded-2xl md:border border-[#ECECEC] bg-white p-5 space-y-5">
+          <div className="rounded-2xl md:border border-border bg-white p-5 space-y-5">
             {/* Address */}
             <div>
               <label className="block mb-3 text-sm font-medium text-lightblack">
@@ -320,7 +320,7 @@ if (loading) {
              <Field
           name="address"
           placeholder="Enter address"
-          className={`w-full px-5 py-4 rounded-[10px] border focus:outline-none
+          className={`w-full px-5 py-4 rounded-full border focus:outline-none h-[48px]
             ${errors.address && touched.address ? "border-red-500" : "border-border"}
           `}
         />
@@ -338,7 +338,7 @@ if (loading) {
                 <Field
                   name="company_name"
                   placeholder="Company name"
-                  className={`w-full px-5 py-4 rounded-[10px] border focus:outline-none
+                  className={`w-full px-5 py-4 rounded-full border focus:outline-none h-[48px]
                     ${errors.company_name && touched.company_name ? "border-red-500" : "border-border"}
                   `}
                 />
@@ -356,7 +356,7 @@ if (loading) {
                 <Field
                   name="city"
                   placeholder="City"
-                  className={`w-full px-5 py-4 rounded-[10px] border focus:outline-none
+                  className={`w-full px-5 py-4 rounded-full border focus:outline-none h-[48px]
                     ${errors.city && touched.city ? "border-red-500" : "border-border"}
                   `}
                 />
@@ -373,7 +373,7 @@ if (loading) {
                  <Field
               name="state"
               placeholder="State"
-              className={`w-full px-5 py-4 rounded-[10px] border focus:outline-none
+              className={`w-full px-5 py-4 rounded-full border focus:outline-none h-[48px]
                 ${errors.state && touched.state ? "border-red-500" : "border-border"}
               `}
             />
@@ -390,7 +390,7 @@ if (loading) {
                 <Field
                 name="zip_code"
                 placeholder="Zip code"
-                className={`w-full px-5 py-4 rounded-[10px] border focus:outline-none
+                className={`w-full px-5 py-4 rounded-full border focus:outline-none h-[48px]
                   ${errors.zip_code && touched.zip_code ? "border-red-500" : "border-border"}
                 `}
               />
@@ -405,14 +405,14 @@ if (loading) {
               <button
                 type="button"
                 onClick={() => router.back()}
-                className="px-5 py-2 rounded-lg border text-sm text-gray-600 cursor-pointer"
+                className="flex h-10 items-center justify-center rounded-[62px] border border-gray px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-gray transition-all duration-300 cursor-pointer"
               >
                 Cancel
               </button>
 
               <button
                 type="submit"
-                className="px-6 py-2 rounded-lg bg-[#F2671C] text-white text-sm font-medium cursor-pointer"
+                className="flex h-10 items-center justify-center rounded-[62px] border border-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer gradient-btn"
               >
                 Update User
               </button>

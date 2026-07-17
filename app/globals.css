@@ -106,12 +106,12 @@
   --color-orange: #F2671C;
   --color-gray: #1D1B1A;
   --color-green: #F2671C;
-  --color-lightgreen: #FFEFCC;
+  --color-lightgreen: #fff6f1;
   --color-para: #4B4947;
   --color-text-gray: #4B4947;
   --color-light-gray: #d2d1d1;
   --color-header: #FFFBF3;
-  --color-secgray: #373737;
+  --color-secgray: #343231;
   --color-seclightgray: #7A7A7A;
   --color-lightgray: #909090;
   --color-border: #D2D1D1;
@@ -127,7 +127,7 @@ body {
 
 @layer components {
   .input {
-    @apply w-full px-5 py-3 rounded-[10px] border border-border focus:outline-none;
+    @apply w-full px-5 py-3 rounded-[50px] border border-border focus:outline-none;
   }
 }
 
@@ -160,8 +160,8 @@ body {
 .bg-gradient {
   background: linear-gradient(180deg, #F2671C00 0%, #37373714 8%);
 }
-.gradient-btn {
-  background: linear-gradient(-90deg, #F2671C 0%, var(--color-green) 100%);
+.gradient-btn { 
+  background: linear-gradient(-90deg,#ff8a45 0%,var(--color-green) 100%);
 }
 
 
@@ -298,7 +298,7 @@ select option:checked {
 .input-class {
   width: 100%;
   padding: 14px 20px;
-  border-radius: 10px;
+  border-radius: 50px;
   border: 1px solid var(--color-border);
   font-size: 14px;
   outline: none;
@@ -314,6 +314,9 @@ select option:checked {
   margin-top: 4px;
   font-size: 12px;
   color: #ef4444;
+}
+.react-tel-input .flag-dropdown.open .selected-flag{
+  border-radius: 50%;
 }
 .react-tel-input .country-list{
   left: 5%;

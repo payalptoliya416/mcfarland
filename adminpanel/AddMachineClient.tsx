@@ -612,24 +612,7 @@ if (isEdit && loading) {
             Description  
           <sup className="text-redmark">*</sup>
           </label>
-
-          {/* <Field
-          as="textarea"
-          name="description"
-          rows={4}
-          placeholder="Enter description here..."
-          className={`input w-full ${
-            errors.description && touched.description ? "border-red-500" : ""
-          }`}
-        /> */}
- <QuillEditor name="description" />
-        {/* Error Message */}
-        {/* {errors.description && touched.description && (
-          <p className="text-xs text-red-500 mt-1">
-            {errors.description}
-          </p>
-        )} */}
-
+           <QuillEditor name="description" />
         </div>
       </Grid>
 
@@ -642,16 +625,14 @@ if (isEdit && loading) {
                       <button
                         type="button"
                         onClick={() => router.back()}
-                        className="px-[18px] py-3 border rounded-[10px] text-seclightgray text-sm border-border cursor-pointer bg-white"
+                        className="flex h-10 items-center justify-center rounded-[62px] border border-gray px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-gray transition-all duration-300 cursor-pointer"
                       >
                         Cancel
                       </button>
                      <button
                 type="submit"
                 disabled={submitting}
-                className={`
-                  px-[18px] py-3 rounded-[10px] text-sm text-white
-                  gradient-btn
+                className={`flex h-10 items-center justify-center rounded-[62px] border border-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 gradient-btn
                   ${submitting ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}
                 `}
               >

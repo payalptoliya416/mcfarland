@@ -219,7 +219,7 @@ export default function OrderStatusDropdown({
         await sendSMS({
           phone,
           type: "settle_payment",
-          companyName: companyName || "McFarland Equipment Sales & Auctions",
+          companyName: companyName || "Eastline Equipment Sales & Auctions",
           orderType,
         });
       }

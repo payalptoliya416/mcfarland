@@ -1,8 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 
-const BASE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL || "https://mcfarland-equipment.com";
-const API_BASE = process.env.NEXT_PUBLIC_BASE_URL || "https://mcfarland-equipment.com/api/api";
+const BASE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL;
+const API_BASE = process.env.NEXT_PUBLIC_BASE_URL;
 
 const slugify = (text) =>
   text

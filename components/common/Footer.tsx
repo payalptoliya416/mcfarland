@@ -67,7 +67,7 @@ function Footer() {
           </div>
         </div>
     </section>
-      <footer className="bg-[#1D1B1A]">
+      <footer className="bg-gray">
         <div className="container-custom mx-auto">
          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.6fr] gap-y-10 gap-x-8 xl:gap-x-14 pb-[42px] border-b border-para py-[40px] ">
             <div className="">
@@ -302,7 +302,7 @@ function Footer() {
               >
                 eastline equipment auctions.com
               </a>{" "}
-              is owned by MCFARLAND-EQUIPMENT, LLC Reg nº : (20151800734) -
+              is owned by Eastline Equipment, LLC Reg nº : (20151800734) -
               Copyright {new Date().getFullYear()} © All Rights Reserved
             </p>
           

@@ -322,14 +322,13 @@ export default function Machinery() {
               setPage(1);
               setSearch(e.target.value);
             }}
-            className="w-full py-[12px] pl-[44px] pr-4 text-sm border rounded-lg border-border"
+            className="w-full py-[10px] pl-[44px] pr-4 text-sm border rounded-[50px] border-border"
           />
         </div>
 
         <button
           onClick={() => router.push("/admin/machinery/add")}
-          className=" gradient-btn px-5 py-[12px] text-sm text-white rounded-lg cursor-pointer transition-all duration-200 ease-in-out
-        hover:brightness-110 hover:shadow-md active:brightness-90 active:scale-95"
+          className="gradient-btn flex h-10 items-center justify-center rounded-[62px] border border-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer"
         >
           + Add Machinery
         </button>

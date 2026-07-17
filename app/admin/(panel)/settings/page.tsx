@@ -275,7 +275,7 @@ export default function CompanySettingUI() {
                 <Field
                   name="companyName"
                   placeholder="Enter footer company name"
-                  className="w-full px-5 py-4 rounded-[10px] border border-border focus:outline-none"
+                  className="input"
                 />
                 {errors.companyName && touched.companyName && (
                   <p className="text-xs text-red-500 mt-1">
@@ -292,7 +292,7 @@ export default function CompanySettingUI() {
                 <Field
                   name="email"
                   placeholder="Enter your email address"
-                  className="w-full px-5 py-4 rounded-[10px] border border-border focus:outline-none"
+                  className="input"
                 />
                 {errors.email && touched.email && (
                   <p className="text-xs text-red-500 mt-1">{errors.email}</p>
@@ -308,7 +308,7 @@ export default function CompanySettingUI() {
                   name="phone"
                   placeholder="Enter phone number"
                   maxLength={10}
-                  className="w-full px-5 py-4 rounded-[10px] border border-border"
+                  className="input"
                 />
                 {errors.phone && touched.phone && (
                   <p className="error">{errors.phone}</p>
@@ -321,7 +321,7 @@ export default function CompanySettingUI() {
                 <Field
                   name="address"
                   placeholder="Enter address"
-                  className="w-full px-5 py-4 rounded-[10px] border border-border focus:outline-none"
+                  className="input"
                 />
                 {errors.address && touched.address && (
                   <p className="text-xs text-red-500 mt-1">{errors.address}</p>
@@ -339,7 +339,7 @@ export default function CompanySettingUI() {
               <Field
                 name="perMile"
                 placeholder="Enter delivery cost"
-                className="w-full px-5 py-4 rounded-[10px] border border-border focus:outline-none"
+                className="input"
               />
               <span className="absolute right-4 top-5 text-sm text-gray-400">
                 / Per miles
@@ -361,7 +361,7 @@ export default function CompanySettingUI() {
                 <Field
                   name="bank_name"
                   placeholder="Enter bank name"
-                  className="w-full px-5 py-4 rounded-[10px] border border-border"
+                  className="input"
                 />
                 {errors.bank_name && touched.bank_name && (
                   <p className="text-xs text-red-500 mt-1">
@@ -378,7 +378,7 @@ export default function CompanySettingUI() {
                 <Field
                   name="beneficiary_name"
                   placeholder="Enter beneficiary name"
-                  className="w-full px-5 py-4 rounded-[10px] border border-border"
+                  className="input"
                 />
                 {errors.beneficiary_name && touched.beneficiary_name && (
                   <p className="text-xs text-red-500 mt-1">
@@ -395,7 +395,7 @@ export default function CompanySettingUI() {
                 <Field
                   name="beneficiary_address"
                   placeholder="Enter beneficiary address"
-                  className="w-full px-5 py-4 rounded-[10px] border border-border"
+                  className="input"
                 />
                 {errors.beneficiary_address && touched.beneficiary_address && (
                   <p className="text-xs text-red-500 mt-1">
@@ -412,7 +412,7 @@ export default function CompanySettingUI() {
                 <Field
                   name="account_number"
                   placeholder="Enter account number"
-                  className="w-full px-5 py-4 rounded-[10px] border border-border"
+                  className="input"
                 />
                 {errors.account_number && touched.account_number && (
                   <p className="text-xs text-red-500 mt-1">
@@ -429,7 +429,7 @@ export default function CompanySettingUI() {
                 <Field
                   name="routing_number"
                   placeholder="Enter routing number"
-                  className="w-full px-5 py-4 rounded-[10px] border border-border"
+                  className="input"
                 />
                 {errors.routing_number && touched.routing_number && (
                   <p className="text-xs text-red-500 mt-1">
@@ -446,7 +446,7 @@ export default function CompanySettingUI() {
                 <Field
                   name="branch_address"
                   placeholder="Enter branch address"
-                  className="w-full px-5 py-4 rounded-[10px] border border-border"
+                  className="input"
                 />
                 {errors.branch_address && touched.branch_address && (
                   <p className="text-xs text-red-500 mt-1">
@@ -468,7 +468,7 @@ export default function CompanySettingUI() {
                 <Field
                   name="facebook"
                   placeholder="https://www.facebook.com/"
-                  className="w-full px-5 py-4 rounded-[10px] border border-border  focus:outline-none"
+                  className="input  focus:outline-none"
                 />
                 {errors.facebook && touched.facebook && (
                   <p className="text-xs text-red-500 mt-1">{errors.facebook}</p>
@@ -483,7 +483,7 @@ export default function CompanySettingUI() {
                 <Field
                   name="twitter"
                   placeholder="https://www.twitter.com/"
-                  className="w-full px-5 py-4 rounded-[10px] border border-border  focus:outline-none"
+                  className="input  focus:outline-none"
                 />
                 {errors.twitter && touched.twitter && (
                   <p className="text-xs text-red-500 mt-1">{errors.twitter}</p>
@@ -498,7 +498,7 @@ export default function CompanySettingUI() {
                 <Field
                   name="instagram"
                   placeholder="https://www.instagram.com/"
-                  className="w-full px-5 py-4 rounded-[10px] border border-border  focus:outline-none"
+                  className="input  focus:outline-none"
                 />
                 {errors.instagram && touched.instagram && (
                   <p className="text-xs text-red-500 mt-1">
@@ -515,7 +515,7 @@ export default function CompanySettingUI() {
                 <Field
                   name="linkedin"
                   placeholder="https://www.linkedin.com/"
-                  className="w-full px-5 py-4 rounded-[10px] border border-border  focus:outline-none"
+                  className="input  focus:outline-none"
                 />
                 {errors.linkedin && touched.linkedin && (
                   <p className="text-xs text-red-500 mt-1">{errors.linkedin}</p>
@@ -543,7 +543,7 @@ export default function CompanySettingUI() {
                     setCancelLoading(false);
                   }
                 }}
-                className="px-6 py-2 border border-border rounded-md text-sm text-gray-500 flex items-center gap-2 disabled:opacity-60 cursor-pointer"
+                className="flex h-10 items-center justify-center rounded-[62px] border border-gray px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-gray transition-all duration-300 cursor-pointer"
               >
                 {/* 🔥 CANCEL LOADER */}
                 {cancelLoading && (
@@ -556,7 +556,7 @@ export default function CompanySettingUI() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-6 py-2 rounded-md bg-[#FFBD34] text-white text-sm flex items-center gap-2 disabled:opacity-60 cursor-pointer"
+                className="flex h-10 items-center justify-center rounded-[62px] border border-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer gradient-btn"
               >
                 {isSubmitting && (
                   <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>

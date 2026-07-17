@@ -59,8 +59,8 @@ export default function MyBidDataTable({
     <div className="w-full overflow-x-auto border border-border rounded-[10px] bg-white">
       <table className="w-full border-collapse">
         {/* ================= HEADER ================= */}
-        <thead className="bg-[#FFEFCC]">
-          <tr>
+        <thead className="bg-[#fff6f1]">
+          <tr className="rounded-t-[10px]">
             {[
               { key: "user_name", label: "User Name" },
               { key: "last_bid", label: "Last Bid" },

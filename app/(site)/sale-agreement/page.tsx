@@ -247,7 +247,7 @@ function SaleAgreement() {
 
   return (
     <>
-      <section className="pt-16">
+      <section className="py-16">
         <div className="container-custom mx-auto">
           {contractHtml && (
             <div className="bg-white border border-border rounded-[10px]  my-6">
@@ -272,16 +272,14 @@ function SaleAgreement() {
                 <button
                   type="button"
                   onClick={handleClear}
-                  className="h-9 px-5 rounded-lg border border-border text-sm font-medium
-              bg-white hover:bg-[#F6F6F6] transition  cursor-pointer"
+                  className="h-9 px-5 rounded-full border border-border text-sm font-medium bg-white hover:bg-[#F6F6F6] transition  cursor-pointer"
                 >
                   Clear
                 </button>
                 <button
                   type="button"
                   onClick={handleSave}
-                  className="h-9 px-5 rounded-lg bg-green text-sm font-medium
-              text-white transition cursor-pointer"
+                  className="h-9 px-5 rounded-full bg-green text-sm font-medium text-white transition cursor-pointer"
                 >
                   Save
                 </button>
@@ -307,8 +305,7 @@ function SaleAgreement() {
             <button
               type="button"
               onClick={handleFinalSubmit}
-              className="h-[42px] px-5 rounded-lg text-sm font-medium text-white transition 
-            bg-green hover:bg-gray hover:text-white cursor-pointer"
+              className="flex h-10 items-center justify-center rounded-[62px] border border-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer gradient-btn"
             >
               Agree & Submit
             </button>
