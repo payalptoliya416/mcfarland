@@ -182,7 +182,13 @@ export default function ResetPassword(): JSX.Element {
                       Resetting...
                     </>
                   ) : (
-                    <>Reset Password <img src="/assets/images/btn-right-errow.svg" alt="" /></>
+                    <><span>Reset Password </span><Image
+                        src="/assets/images/btn-right-errow.svg"
+                        alt="Arrow"
+                        width={18}
+                        height={18}
+                        className="transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-2"
+                      /></>
                   )}
                 </button>
               </Form>

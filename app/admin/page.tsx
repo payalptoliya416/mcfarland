@@ -63,7 +63,7 @@ useEffect(() => {
     <div className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
       {/* BACKGROUND */}
       <Image
-        src="/assets/Bg-new.png"
+        src="/assets/images/Bg-new.png"
         alt="background"
         fill
         priority
@@ -80,7 +80,7 @@ useEffect(() => {
           border-[5px] border-white
           shadow-[0_30px_80px_rgba(0,0,0,0.12)]
           px-4 xl:px-[55px] py-8 xl:py-[65px]
-          bg-[linear-gradient(180deg,#f9f4e7_0%,#FFFFFF_30%)]
+          bg-[linear-gradient(180deg,#FBD8C5_0%,#FFFFFF_30%)]
         "
       >
         {/* TITLE */}
@@ -98,7 +98,7 @@ useEffect(() => {
             <Form className="space-y-5">
               {/* EMAIL */}
               <div>
-                <label className="block text-lg font-medium text-gray mb-[10px]">
+                <label className="text-lightblack font-medium mb-3 block text-base">
                   Email Address
                 </label>
 
@@ -106,10 +106,7 @@ useEffect(() => {
                   name="email"
                   placeholder="Enter your email address"
                   className={`
-                    w-full py-3 lg:py-5
-                    rounded-[10px]
-                    border px-4 text-sm
-                    outline-none
+                    input
                     ${
                       errors.email && touched.email
                         ? "border-red-500"
@@ -127,7 +124,7 @@ useEffect(() => {
 
               {/* PASSWORD */}
               <div>
-                <label className="block text-lg font-medium text-gray mb-[10px]">
+                <label className="text-lightblack font-medium mb-3 block text-base">
                   Password
                 </label>
 
@@ -136,10 +133,7 @@ useEffect(() => {
                     type={showPassword ? "text" : "password"}
                     name="password"
                     placeholder="Enter password"
-                    className={` w-full py-3 lg:py-5
-      rounded-[10px]
-      border px-4 pr-10 text-sm
-      outline-none   ${
+                    className={` input  ${
         errors.password && touched.password
           ? "border-red-500"
           : "border-[#E0E0E0] focus:border-green"
@@ -172,15 +166,17 @@ useEffect(() => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="
-                  w-full h-12 lg:h-[50px]
-                  rounded-[12px]
-                  bg-gray
-                  text-white
-                  font-semibold
-                  text-[15px]
-                  disabled:opacity-60 cursor-pointer
-                "
+                className={`
+                    group w-full h-[42px] rounded-[62px] py-[14px]
+                    flex items-center justify-center gap-3
+                    text-base font-semibold text-white
+                    transition-all duration-300 ease-out
+                    ${
+                      isSubmitting
+                        ? "bg-green/70 cursor-not-allowed"
+                        : "bg-green cursor-pointer hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(242,103,28,0.35)] active:translate-y-[2px] active:scale-[0.97]"
+                    }
+                  `}
               >
                 {isSubmitting ? "Logging in..." : "Login"}
               </button>

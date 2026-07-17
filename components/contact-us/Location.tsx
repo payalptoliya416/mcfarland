@@ -54,7 +54,13 @@ const locations = [
   
   return (
     <>
-       <section className="py-10 lg:py-16">
+  <motion.section
+  initial={{ opacity: 0 }}
+  whileInView={{ opacity: 1 }}
+  viewport={{ once: true, amount: 0.2 }}
+  transition={{ duration: 0.6 }}
+  className="py-10 lg:py-16"
+>
       <div className="container-custom mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
@@ -187,7 +193,7 @@ const locations = [
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
     </>
   );
 }

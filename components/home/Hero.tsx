@@ -125,11 +125,13 @@ function Hero() {
               >
                 <span>Browse Inventory</span>
 
-                <img
-                  src="/assets/images/btn-right-errow.svg"
-                  className="transition-transform duration-300 group-hover:translate-x-2"
-                  alt=""
-                />
+               <Image
+                        src="/assets/images/btn-right-errow.svg"
+                        alt="Arrow"
+                        width={18}
+                        height={18}
+                        className="transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-2"
+                      />
               </Link>
             </motion.div>
           </div>

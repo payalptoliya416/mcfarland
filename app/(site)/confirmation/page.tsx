@@ -2,10 +2,6 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FaFileSignature } from "react-icons/fa";
-import { FaFileInvoiceDollar } from "react-icons/fa6";
-import {  MdLocalShipping, } from "react-icons/md";
-import {  BsFillPatchCheckFill } from "react-icons/bs";
 import { TbRosetteDiscountCheckFilled } from "react-icons/tb";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -17,6 +13,14 @@ import {
   getModels,
   getSingleInventory,
 } from "@/api/categoryActions";
+import {
+  FaFileSignature,
+  FaFileInvoiceDollar,
+  FaTruck,
+} from "react-icons/fa";
+
+import { MdPayments } from "react-icons/md";
+import { BsFillPatchCheckFill } from "react-icons/bs";
 import toast from "react-hot-toast";
 import Loader from "@/components/common/Loader";
 import { getUserDetails, UserDetails } from "@/api/user/profile";
@@ -157,7 +161,7 @@ const steps: Step[] = [
     title: "1. Order Review & Preparation",
     desc: `We have received your Buy Now request.
 Our team is currently reviewing your order details and preparing the transaction to ensure availability and final confirmation.`,
-    icon: FaFileSignature,
+    icon: FaFileSignature, // Review / Documents
   },
 
   {
@@ -180,18 +184,17 @@ Our team is currently reviewing your order details and preparing the transaction
         </>
       );
     },
-    icon: FaFileInvoiceDollar,
+    icon: FaFileInvoiceDollar, // Invoice
   },
 
   {
     title: "3. Invoice Issued & Payment",
-    desc: `Once the Invoice is generated and sent: please complete the payment according to the provided instructions.
-Your order will move to the delivery stage after payment confirmation.`,
-    icon: MdLocalShipping,
+    desc: `Once the Invoice is generated and sent, please complete the payment according to the provided instructions. Your order will move to the delivery stage after payment confirmation.`,
+    icon: MdPayments, // Payment
   },
 
-    {
-    title: "Receive your equipment",
+  {
+    title: "4. Receive Your Equipment",
     desc: (address: string | Address) => {
       if (typeof address === "string") return null;
 
@@ -205,7 +208,7 @@ Your order will move to the delivery stage after payment confirmation.`,
 
       return (
         <>
-          We'll keep you posted on when your equipment will get delivered to{" "}
+          We'll keep you posted on when your equipment will be delivered to{" "}
           <span className="font-bold text-green break-words">
             {parts.join(", ")}
           </span>
@@ -213,38 +216,39 @@ Your order will move to the delivery stage after payment confirmation.`,
         </>
       );
     },
-    icon: MdLocalShipping,
+    icon: FaTruck, // Delivery
   },
- {
-    title: "Test drive your purchase",
+
+  {
+    title: "5. Test Drive Your Purchase",
     desc: (
       <>
-          Enjoy complete peace of mind with your purchase.
-      <br />
-      You benefit from a <strong>30-day hassle-free return policy</strong> and{" "}
-      <strong>6 months of warranty coverage</strong>.
-      <br />
-      For full details, please review our{" "}
-      <Link
-        href="/terms-condition"
-        className="text-green font-semibold underline hover:text-black transition"
-      >
-        Buyer Terms & Conditions
-      </Link>
-      .
-      <br />
-      <br />
-      You can also{" "}
-      <Link
-        href="/user/orders"
-        className="text-green font-semibold underline hover:text-black transition"
-      >
-        Track Order Progress
-      </Link>{" "}
-      anytime from your dashboard.
+        Enjoy complete peace of mind with your purchase.
+        <br />
+        You benefit from a <strong>30-day hassle-free return policy</strong>{" "}
+        and <strong>6 months of warranty coverage</strong>.
+        <br />
+        For full details, please review our{" "}
+        <Link
+          href="/terms-condition"
+          className="text-green font-semibold underline hover:text-black transition"
+        >
+          Buyer Terms & Conditions
+        </Link>
+        .
+        <br />
+        <br />
+        You can also{" "}
+        <Link
+          href="/user/orders"
+          className="text-green font-semibold underline hover:text-black transition"
+        >
+          Track Order Progress
+        </Link>{" "}
+        anytime from your dashboard.
       </>
     ),
-    icon: BsFillPatchCheckFill,
+    icon: BsFillPatchCheckFill, // Completed / Warranty
   },
 ];
 
@@ -305,12 +309,12 @@ if (pageLoading || userLoading) {
                 {/* Icon + Line */}
                 <div className="relative flex flex-col items-center shrink-0">
                   {/* Icon Circle */}
-                  <div className="w-[55px] md:w-[70px] h-[55px] md:h-[70px] rounded-full bg-green flex items-center justify-center relative">
+                  <div className="w-[55px] md:w-[70px] h-[55px] md:h-[70px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center relative">
                     {/* Icon Wrapper */}
                     <div className="w-[28px] md:w-[32px] h-[28px] md:h-[32px] flex items-center justify-center">
                       {(() => {
                         const Icon = step.icon;
-                        return <Icon size={28} className="text-white" />;
+                        return <Icon size={28} className="text-green" />;
                       })()}
                     </div>
                   </div>
@@ -319,7 +323,7 @@ if (pageLoading || userLoading) {
                 {index !== steps.length - 1 && (
                   <div className="absolute top-1/2 left-[28px] md:left-[35px] -translate-x-1/2 md:mt-1">
                      <img
-                      src="/assets/strechline-new.png"
+                      src="/assets/images/strechline-new.png"
                       alt="connector-line"
                       className="object-contain"
                     />

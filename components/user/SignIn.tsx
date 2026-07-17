@@ -256,7 +256,13 @@ export default function SignInForm(): JSX.Element {
                         Signing In... 
                       </>
                     ) : (
-                      <>Sign In <img src="/assets/images/btn-right-errow.svg" alt="" /></>
+                      <><span>Sign In</span> <Image
+                        src="/assets/images/btn-right-errow.svg"
+                        alt="Arrow"
+                        width={18}
+                        height={18}
+                        className="transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-2"
+                      /></>
                     )}
                   </button>
 

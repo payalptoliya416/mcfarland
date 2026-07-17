@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useSettings } from "@/contexts/SettingsContext";
+import Image from "next/image";
 
 function Footer() {
   const { settings, companyName } = useSettings();
@@ -46,13 +47,14 @@ function Footer() {
               active:scale-[0.98]
               active:shadow-[0_4px_10px_rgba(242,103,28,0.25)]"
             >
-              Start Now
-
-              <img
-                src="/assets/images/btn-right-errow.svg"
-                alt="Arrow"
-                className="transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-2"
-              />
+              <span> Start Now </span>
+              <Image
+                        src="/assets/images/btn-right-errow.svg"
+                        alt="Arrow"
+                        width={18}
+                        height={18}
+                        className="transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-2"
+                      />
             </Link>
           </div>
         </div>

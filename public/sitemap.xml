@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://mcfarland-equipment.com/</loc>
+    <loc>undefined/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://mcfarland-equipment.com/about-us</loc>
+    <loc>undefined/about-us</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mcfarland-equipment.com/services</loc>
+    <loc>undefined/services</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mcfarland-equipment.com/inventory</loc>
+    <loc>undefined/inventory</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mcfarland-equipment.com/faq</loc>
+    <loc>undefined/faq</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://mcfarland-equipment.com/contact-us</loc>
+    <loc>undefined/contact-us</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mcfarland-equipment.com/privacy-policy</loc>
+    <loc>undefined/privacy-policy</loc>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://mcfarland-equipment.com/terms-condition</loc>
+    <loc>undefined/terms-condition</loc>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>

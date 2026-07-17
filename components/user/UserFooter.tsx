@@ -14,9 +14,9 @@ function UserFooter() {
               target="_blank"
               rel="noopener noreferrer"
             >
-               mcfarland-equipment.com
+               eastline-equipment.com
             </a>{" "}
-            is owned by MCFARLAND-EQUIPMENT, LLC Reg nº : (20151800734) -
+            is owned by EASTLINE-EQUIPMENT, LLC Reg nº : (20151800734) -
             Copyright {new Date().getFullYear()} © All Rights Reserved
           </p>
         </div>

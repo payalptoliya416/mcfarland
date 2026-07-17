@@ -842,11 +842,14 @@ const trackingRowsWithState =
             {paymentFile && (
               <div className="mt-4 flex items-center gap-3 bg-gray-50 p-3 rounded-lg">
                 {paymentFile.type.startsWith("image") ? (
-                  <img
-                    src={URL.createObjectURL(paymentFile)}
-                    alt="Payment Receipt Preview"
-                    className="w-12 h-12 sm:w-14 sm:h-14 object-cover rounded-md"
-                  />
+                  <Image
+                  src={URL.createObjectURL(paymentFile)}
+                  alt="Payment Receipt Preview"
+                  width={48}
+                  height={48}
+                  unoptimized
+                  className="w-12 h-12 sm:w-14 sm:h-14 object-cover rounded-md"
+                />
                 ) : (
                   <div className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center rounded-md bg-red-100 text-red-600 text-xl">
                     📄

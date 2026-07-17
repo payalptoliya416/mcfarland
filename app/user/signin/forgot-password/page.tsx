@@ -163,7 +163,13 @@ const handleForgot = async (
       Sending...
     </>
   ) : (
-    <>Reset it  <img src="/assets/images/btn-right-errow.svg" alt="" /></>
+    <><span>Reset it</span>  <Image
+                            src="/assets/images/btn-right-errow.svg"
+                            alt="Arrow"
+                            width={18}
+                            height={18}
+                            className="transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-2"
+                          /></>
   )}
 </button>
 
