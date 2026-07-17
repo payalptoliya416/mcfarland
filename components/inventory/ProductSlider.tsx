@@ -99,7 +99,7 @@ export default function ProductSlider({ data }: ProductSliderProps) {
     className={`w-1/2 h-[42px] rounded-full text-lg leading-[18px] font-medium transition-all duration-300 cursor-pointer ${
       activeTab === "photos"
         ? "bg-green text-white hover:bg-[#E9E9E9CC] hover:text-[#343231]"
-        : "bg-white text-[#343231] "
+        : "bg-[#E9E9E9CC] text-[#343231] "
     }`}
   >
     Photos

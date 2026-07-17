@@ -403,16 +403,35 @@ if (loading) {
             {/* ACTIONS */}
             <div className="flex justify-end gap-3 pt-4">
               <button
-                type="button"
-                onClick={() => router.back()}
-                className="flex h-10 items-center justify-center rounded-[62px] border border-gray px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-gray transition-all duration-300 cursor-pointer"
-              >
-                Cancel
-              </button>
+              type="button"
+              onClick={() => router.back()}
+              className="flex h-10 items-center justify-center rounded-[50px]
+              border border-gray px-4 xl:px-[25px]
+              text-sm xl:text-base font-semibold text-gray
+              cursor-pointer
+              transition-all duration-200 ease-out
+              hover:-translate-y-0.5
+              hover:shadow-[0_6px_16px_rgba(0,0,0,0.12)]
+              active:translate-y-[2px]
+              active:scale-[0.97]"
+            >
+              Cancel
+            </button>
 
               <button
                 type="submit"
-                className="flex h-10 items-center justify-center rounded-[62px] border border-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer gradient-btn"
+                className="flex h-10 items-center justify-center rounded-[62px]
+                border border-primary px-4 xl:px-[25px]
+                text-sm xl:text-base font-semibold text-white
+                gradient-btn cursor-pointer
+                transition-all duration-300 ease-out
+                hover:-translate-y-1
+                hover:bg-orange-500
+                hover:border-orange-500
+                hover:shadow-[0_12px_30px_rgba(242,103,28,0.35)]
+                active:translate-y-[2px]
+                active:scale-[0.97]
+                active:shadow-[0_4px_12px_rgba(242,103,28,0.2)]"
               >
                 Update User
               </button>

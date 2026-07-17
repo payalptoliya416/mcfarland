@@ -188,8 +188,9 @@ function SaleAgreement() {
     setIsSignatureSaved(true);
     toast.success("Signature saved successfully");
   };
-
+const [isSubmitting, setIsSubmitting] = useState(false);
   const handleFinalSubmit = async () => {
+
     if (!isSignatureSaved) {
       toast.error("Please save your signature before submitting");
       return;
@@ -199,7 +200,7 @@ function SaleAgreement() {
       toast.error("Checkout data missing");
       return;
     }
-
+    setIsSubmitting(true);
     const signatureBase64 = sigRef
       .current!.getTrimmedCanvas()
       .toDataURL("image/png");
@@ -234,7 +235,9 @@ function SaleAgreement() {
           error?.message ||
           "Something went wrong",
       );
-    }
+    } finally {
+    setIsSubmitting(false);
+  }
   };
 
   if (userLoading) {
@@ -303,12 +306,26 @@ function SaleAgreement() {
 
           <div className="flex justify-end mt-5">
             <button
-              type="button"
-              onClick={handleFinalSubmit}
-              className="flex h-10 items-center justify-center rounded-[62px] border border-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer gradient-btn"
-            >
-              Agree & Submit
-            </button>
+                type="button"
+                onClick={handleFinalSubmit}
+                disabled={isSubmitting}
+                className={`flex h-10 items-center justify-center gap-2 rounded-[62px]
+                border border-primary px-4 xl:px-[25px]
+                text-sm xl:text-base font-semibold text-white
+                transition-all duration-300 cursor-pointer gradient-btn
+                active:scale-95
+                ${
+                  isSubmitting
+                    ? "opacity-80 cursor-not-allowed"
+                    : "hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(242,103,28,0.35)]"
+                }`}
+              >
+                {isSubmitting && (
+                  <span className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                )}
+
+                {isSubmitting ? "Submitting..." : "Agree & Submit"}
+              </button>
           </div>
         </div>
       </section>

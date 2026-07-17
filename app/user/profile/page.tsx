@@ -527,12 +527,20 @@ export default function UserProfileForm() {
                   {/* ACTIONS */}
                   <div className="flex justify-end gap-3 pt-4">
                     <button
-                      type="button"
-                      className="flex h-10 items-center justify-center rounded-[62px] border border-gray px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-gray transition-all duration-300 cursor-pointer"
-                    >
-                      Cancel
-                    </button>
-                    <button
+              type="button"
+              className="flex h-10 items-center justify-center gap-2 rounded-[62px]
+              border border-gray px-4 xl:px-[25px]
+              text-sm xl:text-base font-semibold text-gray
+              transition-all duration-300 ease-out
+              cursor-pointer
+              hover:-translate-y-1
+              hover:shadow-[0_8px_20px_rgba(0,0,0,0.12)]
+              active:translate-y-[2px]
+              active:scale-[0.97]"
+            >
+              Cancel
+            </button>
+                   <button
                       type="button"
                       onClick={submitLicenseToNewAPI}
                       disabled={
@@ -542,30 +550,49 @@ export default function UserProfileForm() {
                         !frontFile ||
                         !backFile
                       }
-                      className={`flex h-10 items-center justify-center rounded-[62px] px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 cursor-pointer ${
+                      className={`flex h-10 items-center justify-center gap-2 rounded-[62px]
+                      px-4 xl:px-[25px]
+                      text-sm xl:text-base font-semibold text-white
+                      transition-all duration-300 ease-out
+                      ${
                         !canUploadLicense ||
                         uploading ||
+                        verifying ||
                         !frontFile ||
                         !backFile
-                          ? "bg-gray-400 cursor-not-allowed"
-                          : "bg-green"
+                          ? "bg-gray-400 cursor-not-allowed opacity-70"
+                          : "bg-green cursor-pointer hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(34,197,94,0.35)] active:translate-y-[2px] active:scale-[0.97]"
                       }`}
                     >
+                      {(uploading || verifying) && (
+                        <span className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                      )}
+
                       {uploading
                         ? "Uploading..."
                         : verifying
-                          ? "Verifying..."
-                          : "Upload License"}
+                        ? "Verifying..."
+                        : "Upload License"}
                     </button>
-                    <button
-                      type="submit"
-                      disabled={saving}
-                      className={`flex h-10 items-center justify-center rounded-[62px] border border-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer gradient-btn ${
-                        saving ? "bg-gray-400 cursor-not-allowed" : "bg-green"
-                      }`}
-                    >
-                      {saving ? "Saving..." : "Save Change"}
-                    </button>
+                <button
+                    type="submit"
+                    disabled={saving}
+                    className={`flex h-10 items-center justify-center gap-2 rounded-[62px]
+                    border border-primary px-4 xl:px-[25px]
+                    text-sm xl:text-base font-semibold text-white
+                    gradient-btn transition-all duration-300 ease-out
+                    ${
+                      saving
+                        ? "opacity-70 cursor-not-allowed"
+                        : "cursor-pointer hover:-translate-y-1 hover:bg-orange-500 hover:border-orange-500 hover:shadow-[0_12px_30px_rgba(242,103,28,0.35)] active:translate-y-[2px] active:scale-[0.97]"
+                    }`}
+                  >
+                    {saving && (
+                      <span className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                    )}
+
+                    {saving ? "Saving..." : "Save Change"}
+                  </button>
                   </div>
                 </Form>
               )}

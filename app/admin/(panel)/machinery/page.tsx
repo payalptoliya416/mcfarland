@@ -41,7 +41,7 @@ export default function Machinery() {
 
   const [sortBy, setSortBy] = useState("id");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-
+  const [redirecting, setRedirecting] = useState(false);
   const [pagination, setPagination] = useState<any>(null);
   const [noDataMessage, setNoDataMessage] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<number | null>(null);
@@ -327,11 +327,27 @@ export default function Machinery() {
         </div>
 
         <button
-          onClick={() => router.push("/admin/machinery/add")}
-          className="gradient-btn flex h-10 items-center justify-center rounded-[62px] border border-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer"
-        >
-          + Add Machinery
-        </button>
+  disabled={redirecting}
+  onClick={() => {
+    setRedirecting(true);
+    router.push("/admin/category/add");
+  }}
+  className={`gradient-btn flex h-10 items-center justify-center gap-2 rounded-[62px]
+  border border-primary px-4 xl:px-[25px]
+  text-sm xl:text-base font-semibold text-white
+  transition-all duration-300 ease-out
+  ${
+    redirecting
+      ? "opacity-70 cursor-not-allowed"
+      : "cursor-pointer hover:-translate-y-1 hover:bg-orange-500 hover:border-orange-500 hover:shadow-[0_12px_30px_rgba(242,103,28,0.35)] active:translate-y-[2px] active:scale-[0.97]"
+  }`}
+>
+  {redirecting && (
+    <span className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+  )}
+
+  {redirecting ? "Add Category" : "+ Add Category"}
+</button>
       </div>
       {isMobile ? (
         <div className="space-y-4">

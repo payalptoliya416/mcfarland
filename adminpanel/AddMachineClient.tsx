@@ -620,21 +620,37 @@ if (isEdit && loading) {
           </div>
 
                 {/* ================= ACTIONS ================= */}
-        {/* </div> */}
+
               <div className="flex justify-end gap-5">
                       <button
                         type="button"
                         onClick={() => router.back()}
-                        className="flex h-10 items-center justify-center rounded-[62px] border border-gray px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-gray transition-all duration-300 cursor-pointer"
+                        className="flex h-10 items-center justify-center rounded-[62px]
+              border border-gray px-4 xl:px-[25px]
+              text-sm xl:text-base font-semibold text-gray
+              transition-all duration-300 ease-out
+              cursor-pointer
+              hover:border-[#22201C]
+              hover:bg-[#22201C]
+              hover:text-white
+              hover:shadow-[0_10px_25px_rgba(34,32,28,0.25)]
+              active:scale-95"
                       >
                         Cancel
                       </button>
                      <button
                 type="submit"
                 disabled={submitting}
-                className={`flex h-10 items-center justify-center rounded-[62px] border border-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 gradient-btn
-                  ${submitting ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}
-                `}
+               className={`flex h-10 items-center justify-center gap-2 rounded-[62px]
+              border border-primary px-4 xl:px-[25px]
+              text-sm xl:text-base font-semibold text-white
+              gradient-btn transition-all duration-300 ease-out
+              active:scale-95
+              ${
+                submitting
+                  ? "opacity-60 cursor-not-allowed"
+                  : "cursor-pointer hover:border-orange-500 hover:bg-orange-500 hover:shadow-[0_12px_30px_rgba(242,103,28,0.35)]"
+              }`}
               >
                 {submitting && (
                   <span className="ml-2 inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />

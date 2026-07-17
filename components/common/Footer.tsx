@@ -57,13 +57,27 @@ function Footer() {
               machinery.
             </p>
 
-            <Link href="/inventory"
-              className="mt-8 inline-flex items-center justify-center gap-[10px] rounded-[62px] bg-primary px-[25px] py-3 font-nunito text-base font-semibold leading-none text-white transition-all duration-300"
+           <Link
+              href="/inventory"
+              className="group mt-8 inline-flex items-center justify-center gap-[10px]
+              rounded-[62px] bg-primary px-[25px] py-3
+              font-nunito text-base font-semibold leading-none text-white
+              transition-all duration-300 ease-out
+              hover:-translate-y-1
+              hover:scale-[1.02]
+              hover:shadow-[0_12px_30px_rgba(242,103,28,0.35)]
+              active:translate-y-[2px]
+              active:scale-[0.98]
+              active:shadow-[0_4px_10px_rgba(242,103,28,0.25)]"
             >
               Start Now
-              <img src='/assets/images/btn-right-errow.svg' alt="Arrow" />
-            </Link>
 
+              <img
+                src="/assets/images/btn-right-errow.svg"
+                alt="Arrow"
+                className="transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-2"
+              />
+            </Link>
           </div>
         </div>
     </section>

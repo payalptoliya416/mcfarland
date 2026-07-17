@@ -6,6 +6,40 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Loader from "../common/Loader";
 import Link from "next/link";
+import { motion } from "framer-motion";
+
+const fadeLeft = {
+  hidden: {
+    opacity: 0,
+    x: -80,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+  },
+};
+
+const fadeRight = {
+  hidden: {
+    opacity: 0,
+    x: 80,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+  },
+};
+
+const fadeUp = {
+  hidden: {
+    opacity: 0,
+    y: 30,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
+};
 
 function AboutUs() {
   const { companyName } = useSettings();
@@ -22,25 +56,32 @@ const [redirectLoading, setRedirectLoading] = useState(false);
       <section className="section-space">
         <div className="container-custom">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-[30px]">
-            {/* Left */}
-            <div className="flex justify-center lg:justify-start">
+            <motion.div
+            className="flex justify-center lg:justify-start"
+            variants={fadeLeft}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
               <img src='/assets/images/about.png' alt="About Eastline Equipment" />
-            </div>
-
-            {/* Right */}
-            <div>
-              {/* Badge */}
+            </motion.div>
+           <motion.div
+            variants={fadeRight}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
               <span className="inline-flex rounded-full bg-[#F2671C] px-5 py-[10px] text-base !leading-[16px] font-semibold text-white">
                 About Us
               </span>
 
-              {/* Heading */}
               <h2 className="mt-5 max-w-[570px]  text-[32px] font-bold leading-[42px] text-[#22201C] sm:text-[36px] sm:leading-[46px] lg:text-[42px] lg:leading-[52px]">
               Powering the Future of{" "}
               <span className="text-primary">Equipment Trading</span>
               </h2>
 
-              {/* Paragraph */}
               <div className="mt-[25px] space-y-[15px]">
                 <p className="text-base font-medium !leading-[26px] text-[#4E4D49]">
                 At {companyName} , we specialize in the buying, selling, and auctioning of high-quality industrial machinery, tractors, farm tools, and construction equipment.
@@ -55,7 +96,6 @@ const [redirectLoading, setRedirectLoading] = useState(false);
                 </p>
               </div>
 
-              {/* Button */}
             <Link href="" onClick={() => {
               setRedirectLoading(true);
             router.push("/about-us");
@@ -63,7 +103,7 @@ const [redirectLoading, setRedirectLoading] = useState(false);
                 Read More
                 <img src='/assets/images/btn-right-errow.svg' alt="Arrow" />
              </Link>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>

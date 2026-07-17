@@ -6,7 +6,8 @@ import { useSettings } from "@/contexts/SettingsContext";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Loader from "../common/Loader";
-import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
+
   const data = [
     {
       icon: '/assets/images/hero-icon3.svg',
@@ -27,12 +28,31 @@ import { ArrowRight } from "lucide-react";
   
 function Hero() {
   const { companyName } = useSettings();
-const pathname = usePathname();
-const [isNavigating, setIsNavigating] = useState(false);
+  const pathname = usePathname();
+  const [isNavigating, setIsNavigating] = useState(false);
 
-useEffect(() => {
-  setIsNavigating(false);
-}, [pathname]);
+  useEffect(() => {
+    setIsNavigating(false);
+  }, [pathname]);
+
+  const fadeUp = {
+  hidden: {
+    opacity: 0,
+    y: 40,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+  },
+};
+  const stagger = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.15,
+      },
+    },
+  };
 
   return (
     <>
@@ -47,15 +67,27 @@ useEffect(() => {
       >
         <div className="relative z-10 flex items-center justify-center min-h-[720px]">
           <div className="custom-container text-center text-white">
-            <div className="inline-flex items-center gap-2 rounded-[66px] bg-[#FCEBD242] px-5 py-[10px] mb-4 sm:mb-[30px]">
+            <motion.div
+              custom={0}
+              initial="hidden"
+              animate="visible"
+              variants={fadeUp} className="inline-flex items-center gap-2 rounded-[66px] bg-[#FCEBD242] px-5 py-[10px] mb-4 sm:mb-[30px]">
               <span className="text-xl pl-2">•</span>
 
               <span className="text-sm sm:text-base">
                 Welcome to {companyName.toUpperCase()}
               </span>
-            </div>
+            </motion.div>
 
-            <h1 className="mx-auto max-w-5xl text-center text-[28px] font-extrabold leading-[40px] sm:text-[42px] sm:leading-[52px] md:text-[48px] md:leading-[58px] lg:text-[60px] lg:leading-[72px] mb-5">
+            <motion.h1
+              variants={fadeUp}
+              initial="hidden"
+              animate="visible"
+              transition={{
+                duration: 0.5,
+                delay: 0.2,
+                ease: "easeOut",
+              }} className="mx-auto max-w-5xl text-center text-[28px] font-extrabold leading-[40px] sm:text-[42px] sm:leading-[52px] md:text-[48px] md:leading-[58px] lg:text-[60px] lg:leading-[72px] mb-5">
               Reliable{" "}
               <span className="text-primary">
                 Industrial <span className="text-white">&amp;</span>{" "}
@@ -64,33 +96,42 @@ useEffect(() => {
                 Equipment
               </span>{" "}
               <span className="block lg:inline">Sales &amp; Auctions</span>
-            </h1>
+            </motion.h1>
 
-            <p className="mx-auto max-w-[790px] px-4 text-center text-sm font-medium leading-6 text-white sm:text-base sm:leading-[26px] mb-5 sm:mb-[35px]">
+            <motion.p  custom={0.4}
+            initial="hidden"
+            animate="visible"
+            variants={fadeUp} className="mx-auto max-w-[790px] px-4 text-center text-sm font-medium leading-6 text-white sm:text-base sm:leading-[26px] mb-5 sm:mb-[35px]">
               Buy or Bid on high-quality machinery, tractors, and tools from
               trusted sellers. Whether you're expanding your fleet or upgrading
               your equipment, {companyName} has you
               covered.
-            </p>
-                  <Link
-            href="/inventory"
-            onClick={() => setIsNavigating(true)}
-            className="group inline-flex items-center justify-center gap-[10px]
-            rounded-[62px] bg-primary px-[25px] py-3
-            text-lg font-semibold leading-none text-white
-            transition-all duration-300 ease-out
-            hover:-translate-y-1 hover:scale-[1.03]
-            hover:shadow-[0_12px_30px_rgba(242,103,28,0.35)]
-            active:translate-y-0 active:scale-100"
-          >
-            <span>Browse Inventory</span>
+            </motion.p>
+                <motion.div
+              custom={0.6}
+              initial="hidden"
+              animate="visible"
+              variants={fadeUp}
+            >
+              <Link
+                href="/inventory"
+                onClick={() => setIsNavigating(true)}
+                className="group inline-flex items-center justify-center gap-[10px]
+                rounded-[62px] bg-primary px-[25px] py-3
+                text-lg font-semibold text-white
+                transition-all duration-300
+                hover:-translate-y-1
+                hover:shadow-[0_12px_30px_rgba(242,103,28,0.35)]"
+              >
+                <span>Browse Inventory</span>
 
-            <img
-              src="/assets/images/btn-right-errow.svg"
-              alt=""
-              className="transition-transform duration-300 group-hover:translate-x-1"
-            />
-          </Link>
+                <img
+                  src="/assets/images/btn-right-errow.svg"
+                  className="transition-transform duration-300 group-hover:translate-x-2"
+                  alt=""
+                />
+              </Link>
+            </motion.div>
           </div>
         </div>
 

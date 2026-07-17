@@ -358,27 +358,44 @@ const [cropImage, setCropImage] = useState<string | null>(null);
             <button
               type="button"
               onClick={() => router.back()}
-              className="flex h-10 items-center justify-center rounded-[62px] border border-gray px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-gray transition-all duration-300 cursor-pointer"
+              className="flex h-10 items-center justify-center rounded-[62px]
+              border border-gray px-4 xl:px-[25px]
+              text-sm xl:text-base font-semibold text-gray
+              transition-all duration-300 ease-out
+              cursor-pointer
+              hover:border-[#22201C]
+              hover:bg-[#22201C]
+              hover:text-white
+              hover:shadow-[0_10px_25px_rgba(34,32,28,0.25)]
+              active:scale-95"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`flex h-10 items-center justify-center rounded-[62px] border border-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer gradient-btn
-                ${isSubmitting ? "opacity-60 cursor-not-allowed" : ""}
-              `}
+              className={`flex h-10 items-center justify-center gap-2 rounded-[62px]
+              border border-primary px-4 xl:px-[25px]
+              text-sm xl:text-base font-semibold text-white
+              gradient-btn transition-all duration-300 ease-out
+              active:scale-95
+              ${
+                isSubmitting
+                  ? "opacity-60 cursor-not-allowed"
+                  : "cursor-pointer hover:border-orange-500 hover:bg-orange-500 hover:shadow-[0_12px_30px_rgba(242,103,28,0.35)]"
+              }`}
             >
-              {isSubmitting ? (
-                <span className="flex items-center gap-2 cursor-pointer">
-                  <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
-                  {isEdit ? "Updating..." : "Adding..."}
-                </span>
-              ) : isEdit ? (
-                "Update Category"
-              ) : (
-                "Add Category"
+              {isSubmitting && (
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
               )}
+
+              {isSubmitting
+                ? isEdit
+                  ? "Updating..."
+                  : "Adding..."
+                : isEdit
+                ? "Update Category"
+                : "Add Category"}
             </button>
           </div>
         </Form>
