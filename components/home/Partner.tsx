@@ -41,7 +41,7 @@ const brandData: BrandItem[] = [
 function Partner() {
   return (
     <>
-      <section className="section-space">
+      <section className="section-bottom">
       <div className="container-custom">
         <h2 className="mb-10 text-[30px] font-extrabold leading-[36px] sm:text-[36px] sm:leading-[38px] lg:text-[42px] lg:leading-[52px] text-center">
              <span className="text-primary">Partners</span> & Brands

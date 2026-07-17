@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 type MenuItem = {
   name: string;
@@ -40,31 +41,39 @@ export default function UserDashboardNav({
                 : pathname.startsWith(item.href);
 
             return (
-              <button
-                key={item.name}
-                onClick={() => handleNavigate(item.href)}
-                className={`
-                  text-white
-                  rounded-lg
-                  transition-all duration-200
-                  whitespace-nowrap
-                  cursor-pointer
-                  ${active ? "bg-white/20" : "hover:bg-white/10"}
-                `}
-              >
-                <div className="flex items-center h-9 px-4">
-                  <Image
-                    src={item.icon}
-                    alt=""
-                    width={16}
-                    height={16}
-                    className="block shrink-0"
-                  />
-                  <span className="ml-2 text-[15px] font-medium leading-none">
-                    {item.name}
-                  </span>
-                </div>
-              </button>
+             <Link
+              key={item.name}
+              href={item.href}
+              onClick={(e) => {
+                if (pathname === item.href) {
+                  e.preventDefault();
+                  return;
+                }
+
+                handleNavigate(item.href);
+              }}
+              className={`
+                text-white
+                rounded-lg
+                transition-all duration-200
+                whitespace-nowrap
+                cursor-pointer
+                ${active ? "bg-white/20" : "hover:bg-white/10"}
+              `}
+            >
+              <div className="flex items-center h-9 px-4">
+                <Image
+                  src={item.icon}
+                  alt=""
+                  width={16}
+                  height={16}
+                  className="block shrink-0"
+                />
+                <span className="ml-2 text-[15px] font-medium leading-none">
+                  {item.name}
+                </span>
+              </div>
+            </Link>
             );
           })}
         </div>

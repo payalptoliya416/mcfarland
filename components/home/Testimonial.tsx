@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { FaStar } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useSettings } from "@/contexts/SettingsContext";
 
@@ -9,7 +8,7 @@ function Testimonial() {
   const { companyName } = useSettings();
 
   return (
-    <section className="section-space">
+    <section className="section-bottom">
       <div className="container-custom mx-auto ">
       <div className="text-center">
          <span className="inline-flex rounded-full bg-[#F2671C] px-5 py-[10px] text-base !leading-[16px] font-semibold text-white">

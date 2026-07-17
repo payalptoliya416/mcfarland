@@ -523,7 +523,12 @@ function Header({
                       {item.submenu?.map((group, index) => {
                         const hasSubmenu = (group.submenu?.length ?? 0) > 0;
                         const isOpen = activeGroup === group.name;
-
+                        const url = hasSubmenu
+                          ? `/inventory?category=${group.submenu
+                              ?.map((sub) => sub.path.split("category=")[1])
+                              .filter(Boolean)
+                              .join(",")}`
+                          : group.path;
                         return (
                           <li
                             key={`${group.name}-${group.path}-${index}`}
@@ -537,7 +542,7 @@ function Header({
                               }
                             }}
                           >
-                            <button
+                            {/* <button
                               onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
@@ -578,7 +583,30 @@ function Header({
                                   className="text-gray-400"
                                 />
                               )}
-                            </button>
+                            </button> */}
+                            <Link
+                          href={url}
+                          onClick={(e) => {
+                            e.stopPropagation();
+
+                            setDisableHover(true);
+                            setOpenDropdown(null);
+                            setActiveGroup(null);
+                            setClickedGroup(null);
+
+                            setTimeout(() => setDisableHover(false), 300);
+                          }}
+                          className="w-full flex items-center justify-between font-medium text-[#1D1B1A] hover:text-orange"
+                        >
+                          {group.name}
+
+                          {hasSubmenu && (
+                            <MdChevronRight
+                              size={20}
+                              className="text-gray-400"
+                            />
+                          )}
+                        </Link>
 
                             {hasSubmenu && (
                               <ul
@@ -597,21 +625,17 @@ function Header({
                               >
                                 {group.submenu?.map((subItem) => (
                                   <li key={subItem.path}>
-                                    <button
-                                      onClick={() => {
-                                        setOpenDropdown(null);
-                                        setActiveGroup(null);
-                                        setClickedGroup(null);
-                                        handleNavigate(subItem.path);
-                                      }}
-                                      className="
-                                        block w-full text-left py-2
-                                        text-white font-medium hover:text-orange
-                                      text-base cursor-pointer hover:bg-gray-50  px-4
-                                      "
-                                    >
-                                      {subItem.name}
-                                    </button>
+                                    <Link
+                                href={subItem.path}
+                                onClick={() => {
+                                  setOpenDropdown(null);
+                                  setActiveGroup(null);
+                                  setClickedGroup(null);
+                                }}
+                                className="block w-full px-4 py-2 text-left text-base font-medium text-[#1D1B1A] hover:bg-gray-50 hover:text-orange"
+                              >
+                                {subItem.name}
+                              </Link>
                                   </li>
                                 ))}
                               </ul>
@@ -626,37 +650,46 @@ function Header({
             ))}
           </ul>
           {loggedIn ? (
-            <button
-              onClick={() => handleNavigate("/user")}
-               className={`hidden lg:block transition cursor-pointer text-base leading-[16px] h-[40px] py-[12px] px-[25px] rounded-[50px] ${
-              hasBgImage
-                ? "text-white bg-green hover:bg-orange"
-                : "text-green bg-white font-semibold hover:bg-orange hover:text-white"
-            }`}
-            >
-              Dashboard
-            </button>
+            <Link
+                href="/user"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavigate("/user");
+                }}
+                className={`hidden lg:flex items-center justify-center transition cursor-pointer text-base leading-[16px] h-[40px] px-[25px] rounded-[50px] ${
+                  hasBgImage
+                    ? "text-white bg-green hover:bg-orange"
+                    : "text-green bg-white font-semibold hover:bg-orange hover:text-white"
+                }`}
+              >
+                Dashboard
+              </Link>
           ) : (
             <div className="hidden lg:flex gap-3 items-center">
               {/* Sign In (Outline - light) */}
-              <button
-                onClick={() => handleNavigate(getAuthUrl("/user/signin"))}
-                 className="flex h-10 items-center justify-center rounded-[62px] border border-white px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-white hover:text-black cursor-pointer"
-              >
-                Sign In
-              </button>
+              <Link
+                  href={getAuthUrl("/user/signin")}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavigate(getAuthUrl("/user/signin"));
+                  }}
+                  className="flex h-10 items-center justify-center rounded-[62px] border border-white px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-white hover:text-black cursor-pointer"
+                >
+                  Sign In
+                </Link>
 
               {/* Sign Up (Primary highlight) */}
               {!pathname.startsWith("/signup") && (
-                <button
-                  onClick={() => {
-                    setIsNavigating(true);
-                    handleNavigate(getAuthUrl("/signup"));
-                  }}
-                 className="flex h-10 items-center justify-center rounded-[62px] border border-primary bg-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer"
-                >
-                  Sign Up
-                </button>
+               <Link
+              href={getAuthUrl("/signup")}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavigate(getAuthUrl("/signup"));
+              }}
+              className="flex h-10 items-center justify-center rounded-[62px] border border-primary bg-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer"
+            >
+              Sign Up
+            </Link>
               )}
             </div>
           )}

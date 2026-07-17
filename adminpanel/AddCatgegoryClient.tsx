@@ -270,7 +270,7 @@ const [cropImage, setCropImage] = useState<string | null>(null);
                     />
 
                     <p className="text-xs text-[#595B5E] mb-[10px]">
-                      Drop your image here, or
+                      Drop your image here, or{" "}
                       <span className="text-green font-medium underline">
                         Browse
                       </span>
