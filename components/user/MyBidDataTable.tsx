@@ -69,7 +69,7 @@ export default function MyBidDataTable({
               <th
                 key={col.key}
                 onClick={() => toggleSort(col.key as SortKey)}
-                className={`px-[15px] py-[18px] text-sm font-medium text-secgray
+                className={`px-[15px] py-[18px] text-sm font-medium text-secgray border-t-0 border-l-0 border-r-0
                 border border-border whitespace-nowrap cursor-pointer
                 ${idx === 0 ? "rounded-tl-[10px]" : ""}
                 ${idx === 3 ? "rounded-tr-[10px]" : ""}`}
@@ -107,9 +107,9 @@ export default function MyBidDataTable({
           : "bg-[#F9F9F9]";
 
             return (
-              <tr key={row.id} className={`${bg} hover:bg-gray-50`}>
+              <tr key={row.id} className={`${bg} hover:bg-gray-50 `}>
                 {/* USER NAME */}
-                <td className="px-[15px] py-[16px] border border-border">
+                <td className="px-[15px] py-[16px] border border-border border-l-0 ">
                   <div className="flex items-center gap-2">
                     {row.isHighlighted && (
                     <span className="w-2 h-2 rounded-full bg-[#3C97FF]" />
@@ -127,7 +127,7 @@ export default function MyBidDataTable({
                 </td>
 
                 {/* DATE */}
-                <td className="px-[15px] py-[16px] border border-border">
+                <td className="px-[15px] py-[16px] border border-border border-r-0">
                   <span className="inline-block px-3 py-1 rounded-md bg-[#F2F2F2] text-xs whitespace-nowrap">
                     {row.bidding_date}
                   </span>

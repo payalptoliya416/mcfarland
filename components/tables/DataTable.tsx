@@ -143,7 +143,7 @@ export default function DataTable<T extends { id?: string | number }>({
               return (
                 <tr
                   key={(row.id ?? idx).toString()}
-                  className={`${bg} hover:bg-gray-50 transition`}
+                  className={`${bg} transition`}
                 >
                   {columns.map((col) => (
                     <td

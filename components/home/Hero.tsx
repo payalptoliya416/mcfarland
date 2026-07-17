@@ -72,12 +72,25 @@ useEffect(() => {
               your equipment, {companyName} has you
               covered.
             </p>
-          <Link 
-                href="/inventory"
-                 onClick={() => setIsNavigating(true)} className="inline-flex items-center justify-center gap-[10px] rounded-[62px] bg-primary px-[25px] py-3 font-semibold leading-none text-white text-lg">
-            Browse Inventory
-            <ArrowRight size={18} strokeWidth={2.5} />
-            </Link>
+                  <Link
+            href="/inventory"
+            onClick={() => setIsNavigating(true)}
+            className="group inline-flex items-center justify-center gap-[10px]
+            rounded-[62px] bg-primary px-[25px] py-3
+            text-lg font-semibold leading-none text-white
+            transition-all duration-300 ease-out
+            hover:-translate-y-1 hover:scale-[1.03]
+            hover:shadow-[0_12px_30px_rgba(242,103,28,0.35)]
+            active:translate-y-0 active:scale-100"
+          >
+            <span>Browse Inventory</span>
+
+            <img
+              src="/assets/images/btn-right-errow.svg"
+              alt=""
+              className="transition-transform duration-300 group-hover:translate-x-1"
+            />
+          </Link>
           </div>
         </div>
 

@@ -340,7 +340,6 @@ if (loading) {
               </div>
                  <div className="grid grid-cols-12"> 
                      <div className="col-span-12">
-                                          {/* RECENT BIDDING */}
                     {isMobile ? (
                       <div className="space-y-3">
                         {recentBids.length === 0 ? (
@@ -354,7 +353,7 @@ if (loading) {
                         )}
                       </div>
                     ) : (
-                         <div className="w-full overflow-x-auto border border-border rounded-[10px]">
+                         <div className="w-full overflow-x-auto border border-border rounded-[10px] custom-scrollbar">
                             <table className="border-collapse min-w-full">
                             <thead>
                                 <tr className="bg-[#fff6f1] text-left rounded-t-[10px]">
@@ -426,7 +425,7 @@ if (loading) {
                       )}
                     </div>
                   ) : (
-                     <div className="w-full overflow-x-auto border border-border rounded-[10px]">
+                     <div className="w-full overflow-x-auto border border-border rounded-[10px] custom-scrollbar">
                             <table className="w-full border-collapse">
                             <thead>
                                 <tr className="bg-[#fff6f1] text-left rounded-t-[10px]">

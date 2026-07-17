@@ -388,6 +388,7 @@ select option:checked {
 }
 .custom-scrollbar::-webkit-scrollbar {
   width: 5px;
+  height: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
