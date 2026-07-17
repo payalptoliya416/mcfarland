@@ -238,15 +238,17 @@ export default function SignInForm(): JSX.Element {
                   <button
                     type="submit"
                     disabled={loading}
-                    className={`
-                          w-full py-[14px] rounded-[62px] font-semibold text-base
-                          transition flex items-center justify-center gap-3 h-[42px] text-white
-                          ${
-                            loading
-                              ? "bg-orange/70 cursor-not-allowed"
-                              : "bg-orange hover:opacity-90 cursor-pointer"
-                          }
-                        `}
+                     className={`
+                    group w-full h-[42px] rounded-[62px] py-[14px]
+                    flex items-center justify-center gap-3
+                    text-base font-semibold text-white
+                    transition-all duration-300 ease-out
+                    ${
+                      loading
+                        ? "bg-green/70 cursor-not-allowed"
+                        : "bg-green cursor-pointer hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(242,103,28,0.35)] active:translate-y-[2px] active:scale-[0.97]"
+                    }
+                  `}
                   >
                     {loading ? (
                       <>

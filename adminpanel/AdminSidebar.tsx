@@ -1,10 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { getSettingsByKeysFooter } from "@/api/categoryActions";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import { useSettings } from "@/contexts/SettingsContext";
 import {
   FaTachometerAlt,
@@ -40,12 +38,12 @@ export default function AdminSidebar({
 }) {
   const pathname = usePathname();
   const { settings } = useSettings();
-  const router = useRouter();
+  const [pendingHref, setPendingHref] = useState<string | null>(null);
+
+  // clear pending once pathname actually changes
   useEffect(() => {
-    menu.forEach((item) => {
-      router.prefetch(item.href);
-    });
-  }, []);
+    setPendingHref(null);
+  }, [pathname]);
 
   return (
     <aside
@@ -79,37 +77,24 @@ export default function AdminSidebar({
       {/* MENU (SCROLLABLE) */}
       <nav className="flex-1 overflow-y-auto mt-[20px] px-[10px] pb-4">
         <div className="flex flex-col gap-[6px]">
-          {menu.map((item,index) => {
+          {menu.map((item, index) => {
             const Icon = item.icon;
-            const normalize = (url: string) =>
-              url.endsWith("/") ? url.slice(0, -1) : url;
             const currentPath = pathname.replace(/\/$/, "");
             const targetPath = item.href.replace(/\/$/, "");
 
             const isActive =
-              currentPath === targetPath ||
-              currentPath.startsWith(targetPath + "/");
+              pendingHref === item.href ||
+              (!pendingHref &&
+                (currentPath === targetPath ||
+                  currentPath.startsWith(targetPath + "/")));
 
             return (
-              <div
-             key={index}
+              <Link
+                key={index}
+                href={item.href}
                 onClick={() => {
-                  const normalize = (url: string) =>
-                    url.endsWith("/") ? url.slice(0, -1) : url;
-
-                  const current = normalize(pathname);
-                  const target = normalize(item.href);
-
-                  if (current === target) {
-                    return;
-                  }
-
-                  onNavigateStart?.();
-                  router.push(item.href);
-
-                  if (mobile && onItemClick) {
-                    onItemClick();
-                  }
+                  setPendingHref(item.href);
+                  if (mobile && onItemClick) onItemClick();
                 }}
                 className={`
                   flex items-center gap-[10px]
@@ -123,12 +108,6 @@ export default function AdminSidebar({
                       : "text-seclightgray hover:bg-green hover:text-white"
                   }
                 `}
-                // onClick={() => {
-                //    onNavigateStart?.();
-                //   if (mobile && onItemClick) {
-                //     onItemClick();
-                //   }
-                // }}
               >
                 <Icon
                   className={`text-base group-hover:text-white ${
@@ -136,7 +115,7 @@ export default function AdminSidebar({
                   }`}
                 />
                 {item.label}
-              </div>
+              </Link>
             );
           })}
         </div>

@@ -114,11 +114,24 @@ function WhyBuy() {
                         {item.description}
                     </p>
 
-                    <Link href="/about-us"
-                        className="mt-[30px] inline-flex items-center gap-[10px] rounded-[62px] bg-primary px-[25px] py-[12px] text-lg !leading-[18px] font-semibold text-white transition-all duration-300"
+                   <Link
+                      href="/about-us"
+                      className="group mt-[30px] inline-flex items-center gap-[10px]
+                      rounded-[62px] bg-primary px-[25px] py-[12px]
+                      text-lg font-semibold leading-[18px] text-white
+                      transition-all duration-300 ease-out
+                      hover:-translate-y-1
+                      hover:shadow-[0_12px_30px_rgba(242,103,28,0.35)]
+                      active:translate-y-[2px]
+                      active:scale-[0.97]"
                     >
-                        Learn More
-                        <img src='/assets/images/btn-right-errow.svg' alt="Arrow" />
+                      Learn More
+
+                      <img
+                        src="/assets/images/btn-right-errow.svg"
+                        alt="Arrow"
+                        className="transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-2"
+                      />
                     </Link>
                     </div>
 

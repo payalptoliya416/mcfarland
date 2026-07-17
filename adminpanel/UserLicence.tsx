@@ -2,6 +2,7 @@
 
 import { adminUserService, UserApiItem } from "@/api/admin/usersManagement";
 import Loader from "@/components/common/Loader";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -217,11 +218,16 @@ const disableDecline =
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <img
-                        src={license.front_side_url}
-                        alt="Front Side"
-                        className="w-full h-[240px] object-contain rounded-lg bg-white cursor-pointer hover:opacity-80 transition"
-                      />
+                     {license.front_side_url && (
+                      <div className="relative w-full h-[240px]">
+                        <Image
+                          src={license.front_side_url}
+                          alt="Front Side"
+                          fill
+                          className="rounded-lg bg-white object-contain cursor-pointer transition hover:opacity-80"
+                        />
+                      </div>
+                    )}
                     </a>
                   )}
                 </div>
@@ -246,11 +252,16 @@ const disableDecline =
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <img
-                        src={license.back_side_url}
-                        alt="Back Side"
-                        className="w-full h-[240px] object-contain rounded-lg bg-white cursor-pointer hover:opacity-80 transition"
-                      />
+                     {license.back_side_url && (
+                  <div className="relative w-full h-[240px]">
+                    <Image
+                      src={license.back_side_url}
+                      alt="Back Side"
+                      fill
+                      className="rounded-lg bg-white object-contain cursor-pointer transition hover:opacity-80"
+                    />
+                  </div>
+                )}
                     </a>
                   )}
                 </div>

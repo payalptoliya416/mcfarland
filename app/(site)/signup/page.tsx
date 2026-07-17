@@ -554,30 +554,40 @@ const handleRegister = async (values: any, { resetForm }: any) => {
               />
                   </motion.div>
                   {/* Submit Button */}
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className={`
-                    w-full py-[14px] rounded-[62px] font-semibold text-base
-                          transition flex items-center justify-center gap-3 h-[42px] text-white
+               <button
+                  type="submit"
+                  disabled={loading}
+                  className={`
+                    group w-full h-[42px] rounded-[62px] py-[14px]
+                    flex items-center justify-center gap-3
+                    text-base font-semibold text-white
+                    transition-all duration-300 ease-out
                     ${
                       loading
                         ? "bg-green/70 cursor-not-allowed"
-                        : "bg-green hover:opacity-90 cursor-pointer"
+                        : "bg-green cursor-pointer hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(242,103,28,0.35)] active:translate-y-[2px] active:scale-[0.97]"
                     }
                   `}
-                  >
-                    {loading ? (
-                      <>
-                        <span className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                        Creating Account...
-                      </>
-                    ) : (
-                     <> 
-                     Create Account <img src="/assets/images/btn-right-errow.svg" alt="" />
-                     </> 
-                    )}
-                  </button>
+                >
+                  {loading ? (
+                    <>
+                      <span className="h-5 w-5 rounded-full border-2 border-white border-t-transparent animate-spin" />
+                      Creating Account...
+                    </>
+                  ) : (
+                    <>
+                      <span>Create Account</span>
+
+                      <Image
+                        src="/assets/images/btn-right-errow.svg"
+                        alt="Arrow"
+                        width={18}
+                        height={18}
+                        className="transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-2"
+                      />
+                    </>
+                  )}
+                </button>
                 </Form>
               </motion.div>
             )}

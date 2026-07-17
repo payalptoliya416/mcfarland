@@ -2,36 +2,12 @@
 
 import Link from "next/link";
 import { useSettings } from "@/contexts/SettingsContext";
-import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-import { GrLocation } from "react-icons/gr";
-import { IoCallOutline, IoTimeOutline } from "react-icons/io5";
-import { LuMail } from "react-icons/lu";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import Loader from "./Loader";
 
 function Footer() {
   const { settings, companyName } = useSettings();
-  const router = useRouter();
-  const [redirectLoading, setRedirectLoading] = useState(false);
-
-  const handleRedirect = (path: string) => {
-    setRedirectLoading(true);
-    router.push(path);
-  };
-  const pathname = usePathname();
-  useEffect(() => {
-    setRedirectLoading(false);
-  }, [pathname]);
 
   return (
     <>
-      {redirectLoading && (
-        <div className="fixed inset-0 bg-white/70 backdrop-blur-sm z-[9999] flex items-center justify-center">
-          <Loader />
-        </div>
-      )}
      <section className="">
         <div
           className="relative overflow-hidden bg-no-repeat"
@@ -153,53 +129,34 @@ function Footer() {
 
                 <ul className="space-y-[15px]">
                   <li>
-                    <button
-                      onClick={() => handleRedirect("/")}
-                      className="relative text-light-gray text-base leading-[16px] font-normal group cursor-pointer"
-                    >
+                    <Link href="/" className="relative text-light-gray text-base leading-[16px] font-normal group cursor-pointer">
                       Home
                       <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-green transition-all duration-300 group-hover:w-full"></span>
-                    </button>
+                    </Link>
                   </li>
-
                   <li>
-                    <button
-                      onClick={() => handleRedirect("/inventory")}
-                      className="relative text-light-gray text-base leading-[16px] font-normal group cursor-pointer"
-                    >
+                    <Link href="/inventory" className="relative text-light-gray text-base leading-[16px] font-normal group cursor-pointer">
                       Inventory
                       <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-green transition-all duration-300 group-hover:w-full"></span>
-                    </button>
+                    </Link>
                   </li>
-
                   <li>
-                    <button
-                      onClick={() => handleRedirect("/about-us")}
-                      className="relative text-light-gray text-base leading-[16px] font-normal group cursor-pointer"
-                    >
+                    <Link href="/about-us" className="relative text-light-gray text-base leading-[16px] font-normal group cursor-pointer">
                       About
                       <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-green transition-all duration-300 group-hover:w-full"></span>
-                    </button>
+                    </Link>
                   </li>
-
                   <li>
-                    <button
-                      onClick={() => handleRedirect("/faq")}
-                      className="relative text-light-gray text-base leading-[16px] font-normal group cursor-pointer"
-                    >
+                    <Link href="/faq" className="relative text-light-gray text-base leading-[16px] font-normal group cursor-pointer">
                       FAQ
                       <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-green transition-all duration-300 group-hover:w-full"></span>
-                    </button>
+                    </Link>
                   </li>
-
                   <li>
-                    <button
-                      onClick={() => handleRedirect("/contact-us")}
-                      className="relative text-light-gray text-base leading-[16px] font-normal group cursor-pointer"
-                    >
+                    <Link href="/contact-us" className="relative text-light-gray text-base leading-[16px] font-normal group cursor-pointer">
                       Contact
                       <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-green transition-all duration-300 group-hover:w-full"></span>
-                    </button>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -212,23 +169,16 @@ function Footer() {
 
                 <ul className="space-y-[15px]">
                   <li>
-                    <button
-                      onClick={() => handleRedirect("/terms-condition")}
-                      className="relative text-light-gray text-base leading-[16px] font-normal group cursor-pointer"
-                    >
-                    Terms & services
+                    <Link href="/terms-condition" className="relative text-light-gray text-base leading-[16px] font-normal group cursor-pointer">
+                      Terms & services
                       <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-green transition-all duration-300 group-hover:w-full"></span>
-                    </button>
+                    </Link>
                   </li>
-
                   <li>
-                    <button
-                      onClick={() => handleRedirect("/privacy-policy")}
-                      className="relative text-light-gray text-base leading-[16px] font-normal group cursor-pointer"
-                    >
+                    <Link href="/privacy-policy" className="relative text-light-gray text-base leading-[16px] font-normal group cursor-pointer">
                       Privacy policy
                       <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-green transition-all duration-300 group-hover:w-full"></span>
-                    </button>
+                    </Link>
                   </li>
                 </ul>
               </div>

@@ -2,9 +2,6 @@
 
 import Image from "next/image";
 import { useSettings } from "@/contexts/SettingsContext";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import Loader from "../common/Loader";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -43,16 +40,8 @@ const fadeUp = {
 
 function AboutUs() {
   const { companyName } = useSettings();
-const router = useRouter();
-const [redirectLoading, setRedirectLoading] = useState(false);
   return (
     <>
-    {redirectLoading && (
-    <div className="fixed inset-0 bg-white/70 backdrop-blur-sm z-50 flex items-center justify-center">
-      <Loader />
-    </div>
-  )}
-  
       <section className="section-space">
         <div className="container-custom">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-[30px]">
@@ -96,13 +85,26 @@ const [redirectLoading, setRedirectLoading] = useState(false);
                 </p>
               </div>
 
-            <Link href="" onClick={() => {
-              setRedirectLoading(true);
-            router.push("/about-us");
-          }} className="mt-[30px] inline-flex items-center justify-center gap-[10px] rounded-[62px] bg-primary px-[25px] py-[12px]  text-base sm:text-[17px] lg:text-[18px] font-semibold leading-[18px] text-white">
-                Read More
-                <img src='/assets/images/btn-right-errow.svg' alt="Arrow" />
-             </Link>
+          <Link
+            href="/about-us"
+            className="group mt-[30px] inline-flex items-center justify-center gap-[10px]
+            rounded-[62px] bg-primary px-[25px] py-[12px]
+            text-base sm:text-[17px] lg:text-[18px]
+            font-semibold leading-[18px] text-white
+            transition-all duration-300 ease-out
+            hover:-translate-y-1
+            hover:shadow-[0_12px_30px_rgba(242,103,28,0.35)]
+            active:translate-y-[2px]
+            active:scale-[0.97]"
+          >
+            Read More
+
+            <img
+              src="/assets/images/btn-right-errow.svg"
+              alt="Arrow"
+              className="transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-2"
+            />
+          </Link>
             </motion.div>
           </div>
         </div>

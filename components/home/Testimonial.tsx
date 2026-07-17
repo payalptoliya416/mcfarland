@@ -1,14 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { useSettings } from "@/contexts/SettingsContext";
 
 function Testimonial() {
-  const { companyName } = useSettings();
 
   return (
-    <section className="section-bottom">
+    <section className="">
       <div className="container-custom mx-auto ">
       <div className="text-center">
          <span className="inline-flex rounded-full bg-[#F2671C] px-5 py-[10px] text-base !leading-[16px] font-semibold text-white">

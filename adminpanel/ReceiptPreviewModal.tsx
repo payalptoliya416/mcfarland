@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { FaTimes } from "react-icons/fa";
 
 type Props = {
@@ -42,11 +43,14 @@ export default function ReceiptPreviewModal({
               className="w-full h-full rounded-md"
             />
           ) : (
-            <img
+            <div className="relative mx-auto w-full max-w-xl h-[500px]">
+            <Image
               src={url}
               alt="Payment Receipt"
-              className="max-w-full mx-auto rounded-md"
+              fill
+              className="rounded-md object-contain"
             />
+          </div>
           )}
         </div>
 
