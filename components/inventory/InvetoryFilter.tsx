@@ -747,7 +747,7 @@ export default function InventoryFilter({}: {}) {
                   <button
                     onClick={() => setSortOpen((p) => !p)}
                     className="border border-border rounded-[42px] px-3 py-2 text-base 
-               text-text-gray flex items-center justify-between w-[280px] bg-white"
+               text-text-gray flex items-center justify-between w-[280px] bg-white cursor-pointer"
                   >
                     {selectedSort.label}
                     <FaChevronDown
@@ -864,7 +864,7 @@ export default function InventoryFilter({}: {}) {
                           </div>
                         )}
 
-                        <div className="absolute border border-border rounded-full py-1.5 px-4 text-green bg-white text-sm left-1/2 bottom-0 -translate-x-1/2 opacity-[34%] translate-y-3 group-hover:opacity-100 group-hover:-translate-y-3 transition font-semibold">
+                        <div className="absolute border border-border rounded-full py-1.5 px-4 text-green bg-white text-sm left-1/2 -translate-x-1/2 opacity-0 bottom-[34%] translate-y-3 group-hover:opacity-100 group-hover:-translate-y-3 transition font-semibold">
                           BID OR BUY
                         </div>
                       </div>

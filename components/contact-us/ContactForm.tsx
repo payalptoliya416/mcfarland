@@ -1,7 +1,6 @@
 "use client";
 
 import { JSX, useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import {
   getSettingsByKeysFooter,
   sendContactEmail,
@@ -9,30 +8,6 @@ import {
 import Image from "next/image";
 
 export default function ContactForm(): JSX.Element {
-  const containerVariant = {
-    hidden: { opacity: 0, y: 60 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
-    },
-  } as const;
-
-  const staggerGroup = {
-    hidden: {},
-    show: {
-      transition: { staggerChildren: 0.15, delayChildren: 0.2 },
-    },
-  } as const;
-
-  const inputVariant = {
-    hidden: { opacity: 0, y: 20 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" },
-    },
-  } as const;
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -95,11 +70,7 @@ export default function ContactForm(): JSX.Element {
 
   return (
     <div className="w-full">
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-        viewport={{ once: true }}
+      <div
         className="container-custom"
       >
         <div className="relative overflow-hidden rounded-[20px] h-[300px] md:h-[420px]">
@@ -124,20 +95,16 @@ export default function ContactForm(): JSX.Element {
             </p>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       <div className="container-custom section-space">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-[30px]">
           <div className="">
-            <motion.h2
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              viewport={{ once: true }}
+            <h2
               className="mt-5 text-[30px] font-bold leading-[36px] text-[#22201C] sm:text-[36px] sm:leading-[40px] lg:text-[42px] lg:leading-[42px]"
             >
               Send Us a <span className="text-primary">Message</span>
-            </motion.h2>
+            </h2>
             <p className="mx-auto mt-[15px] mb-10 text-base font-medium leading-[26px] text-[#4E4D49]">
               Fill out the form below and our team will get back to you shortly.
             </p>
@@ -149,12 +116,8 @@ export default function ContactForm(): JSX.Element {
               className="mt-[30px] w-full h-auto"
             />
           </div>
-          <motion.form
+          <form
             onSubmit={handleSubmit}
-            variants={staggerGroup}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.3 }}
             className="space-y-5 shadow-[9px_10px_40px_0px_rgba(0,0,0,0.06)] p-5 rounded-[18px]"
           >
             {successMsg && (
@@ -168,7 +131,7 @@ export default function ContactForm(): JSX.Element {
               </p>
             )}
 
-            <motion.div variants={inputVariant}>
+            <div>
               <label className="text-lightblack font-medium mb-3 block text-base">
                 First Name
               </label>
@@ -181,9 +144,9 @@ export default function ContactForm(): JSX.Element {
                 required
                 className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:border-green text-base placeholder:text-[#787675] sm:h-[52px]"
               />
-            </motion.div>
+            </div>
 
-            <motion.div variants={inputVariant}>
+            <div>
               <label className="text-lightblack font-medium mb-3 block text-base">
                 Last Name
               </label>
@@ -196,10 +159,10 @@ export default function ContactForm(): JSX.Element {
                 required
                 className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:border-green text-base placeholder:text-[#787675] sm:h-[52px]"
               />
-            </motion.div>
+            </div>
 
             {/* Row 2 */}
-            <motion.div variants={inputVariant}>
+            <div>
               <label className="text-lightblack font-medium mb-3 block text-base">
                 Email Address
               </label>
@@ -212,9 +175,9 @@ export default function ContactForm(): JSX.Element {
                 required
                 className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:border-green text-base placeholder:text-[#787675] sm:h-[52px]"
               />
-            </motion.div>
+            </div>
 
-            <motion.div variants={inputVariant}>
+            <div>
               <label className="text-lightblack font-medium mb-3 block text-base">
                 Phone Number
               </label>
@@ -227,10 +190,10 @@ export default function ContactForm(): JSX.Element {
                 required
                 className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:border-green text-base placeholder:text-[#787675] sm:h-[52px]"
               />
-            </motion.div>
+            </div>
 
             {/* Message */}
-            <motion.div variants={inputVariant}>
+            <div>
               <label className="text-lightblack font-medium mb-3 block text-base">
                 Message
               </label>
@@ -243,22 +206,19 @@ export default function ContactForm(): JSX.Element {
                 required
                 className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[20px] outline-none focus:border-green text-base placeholder:text-[#787675]"
               />
-            </motion.div>
+            </div>
 
             {/* Submit Button */}
-            <motion.div variants={inputVariant} className="flex">
-              <motion.button
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
+            <div className="flex">
+              <button
                 type="submit"
                 disabled={loading}
                 className="py-[14px] px-[25px] rounded-[62px] font-semibold text-base transition flex items-center justify-center gap-3 h-[42px] text-white bg-orange hover:opacity-90 cursor-pointer"
               >
                 {loading ? "Sending..." : "Send Message"}
-              </motion.button>
-            </motion.div>
-          </motion.form>
+              </button>
+            </div>
+          </form>
         </div>
       </div>
     </div>

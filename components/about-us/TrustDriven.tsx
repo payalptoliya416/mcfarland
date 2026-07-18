@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 
 function TrustDriven() {
   const items = [
@@ -19,20 +18,10 @@ function TrustDriven() {
     },
   ];
 
-  const listContainer = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
-      },
-    },
-  };
   return (
     <section className="container-custom mx-auto lg:mb-[110px] my-10 sm:my-20 lg:mt-[142px]">
       <div className="grid grid-cols-12 lg:gap-[30px] items-stretch mt-10">
-           <motion.div
+           <div
           className="col-span-12 lg:col-span-6 mb-5 lg:mb-0"
         >
           {/* Heading */}
@@ -52,12 +41,8 @@ function TrustDriven() {
           </p>
 
           {/* Staggered List */}
-          <motion.div
+          <div
             className="space-y-[15px]"
-            variants={listContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, amount: 0.3 }}
           >
             {items.map((item, i) => (
               <div
@@ -80,15 +65,10 @@ function TrustDriven() {
                 </div>
               </div>
             ))}
-          </motion.div>
-        </motion.div>
-        {/* RIGHT TEXT + LIST */}
-          <motion.div
+          </div>
+        </div>
+          <div
           className="col-span-12 lg:col-span-6 h-full mb-5 lg:mb-0"
-          initial={{ opacity: 0, x: -60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8 }}
         >
           <div className="block lg:hidden">
             <Image
@@ -109,7 +89,7 @@ function TrustDriven() {
               className=""
             />
           </div>
-        </motion.div>
+        </div>
       
       </div>
     </section>

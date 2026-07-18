@@ -15,7 +15,7 @@ const data = [
     bold: "USA & Canada",
   },
   {
-    icon: "/assets/images/hero-icon1.svg",
+    icon: "/assets/images/herorevers.svg",
     title: "hassle-free returns",
     bold: "30-day",
   },

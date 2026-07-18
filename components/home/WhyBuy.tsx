@@ -41,7 +41,7 @@ function WhyBuy() {
   const { companyName } = useSettings();
   return (
     <>
-      <section className="section-space">
+       <section className="pt-[60px] lg:pt-[110px]">
         <div className="container-custom">
           <div className="mx-auto text-center">
             {/* Badge */}
@@ -57,73 +57,64 @@ function WhyBuy() {
             </motion.span>
             {/* Heading */}
             <motion.h2
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="mt-[30px] text-[30px] font-bold leading-[36px] text-[#22201C] sm:text-[36px] sm:leading-[40px] lg:text-[42px] lg:leading-[42px]"
-            >
-              Why Buy From <span className="text-primary">{companyName}</span> ?
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="mt-[30px] text-[30px] font-bold leading-[36px] text-[#22201C] sm:text-[36px] sm:leading-[40px] lg:text-[42px] lg:leading-[42px]"
+              >
+              Why Buy From{" "}
+              <span className="text-primary">{companyName}</span>{" "}
+             ?
             </motion.h2>
             {/* Description */}
-            <motion.p
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUp}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="mx-auto mt-[15px] text-center text-base font-medium leading-[26px] text-[#4E4D49]"
-            >
+              <motion.p
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                variants={fadeUp}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="mx-auto mt-[15px] text-center text-base font-medium leading-[26px] text-[#4E4D49]"
+              >
               We simplify equipment purchasing by providing accurate
               information, secure transactions, and dependable logistics
               support.
             </motion.p>
           </div>
-          <div className="mt-10 space-y-8">
+         <div className="mt-10 space-y-8">
             {benefitsData.map((item) => (
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                variants={fadeUp}
-                transition={{ duration: 0.6 }}
+                <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          transition={{ duration: 0.6 }}
                 key={item.id}
                 className="overflow-hidden rounded-[20px] bg-white p-6 shadow-[0_2px_35px_rgba(0,0,0,0.08)] lg:p-10"
-              >
-                <div
-                  className={`grid items-center gap-10 lg:grid-cols-2 ${
-                    item.imagePosition === "left"
-                      ? "lg:[&>*:first-child]:order-2"
-                      : ""
-                  }`}
                 >
-                  {/* Content */}
-                  <div
-                    className={
-                      item.imagePosition === "left" ? "lg:order-2" : ""
-                    }
-                  >
+                <div
+                    className={`grid items-center gap-10 lg:grid-cols-2 ${
+                    item.imagePosition === "left" ? "lg:[&>*:first-child]:order-2" : ""
+                    }`}
+                >
+                    {/* Content */}
+                    <div
+                    className={item.imagePosition === "left" ? "lg:order-2" : ""}
+                    >
                     <div className="flex h-[62px] w-[62px] items-center justify-center rounded-full bg-[#FCE1D2]">
-                      <Image
-                        src={item.icon}
-                        alt={item.title}
-                        width={0}
-                        height={0}
-                        sizes="100vw"
-                        className="w-auto h-auto"
-                      />
+                        <img src={item.icon} alt={item.title} />
                     </div>
 
                     <h3 className="mt-5 text-[22px] font-bold leading-[30px] text-[#22201C] sm:text-[24px] sm:leading-[32px] lg:text-[26px] lg:leading-[26px]">
-                      {item.title}
+                        {item.title}
                     </h3>
 
                     <p className="mt-5 max-w-[530px] text-[15px] font-medium leading-6 text-[#4E4D49] sm:text-base sm:leading-[26px]">
-                      {item.description}
+                        {item.description}
                     </p>
 
-                    <Link
+                   <Link
                       href="/about-us"
                       className="group mt-[30px] inline-flex items-center gap-[10px]
                       rounded-[62px] bg-primary px-[25px] py-[12px]
@@ -134,9 +125,9 @@ function WhyBuy() {
                       active:translate-y-[2px]
                       active:scale-[0.97]"
                     >
-                      <span> Learn More</span>
+                    <span>  Learn More</span>
 
-                      <Image
+                    <Image
                         src="/assets/images/btn-right-errow.svg"
                         alt="Arrow"
                         width={18}
@@ -144,26 +135,22 @@ function WhyBuy() {
                         className="transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-2"
                       />
                     </Link>
-                  </div>
+                    </div>
 
-                  {/* Image */}
-                  <div
-                    className={
-                      item.imagePosition === "left" ? "lg:order-1" : ""
-                    }
-                  >
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      fill
-                      unoptimized
-                      className="rounded-[20px] object-cover"
+                    {/* Image */}
+                    <div
+                    className={item.imagePosition === "left" ? "lg:order-1" : ""}
+                    >
+                    <img
+                        src={item.image}
+                        alt={item.title}
+                        className="h-full w-full rounded-[20px] object-cover"
                     />
-                  </div>
+                    </div>
                 </div>
-              </motion.div>
+                </motion.div>
             ))}
-          </div>
+            </div>
         </div>
       </section>
     </>

@@ -42,7 +42,7 @@ function AboutUs() {
   const { companyName } = useSettings();
   return (
     <>
-      <section className="section-space">
+      <section className="pt-[60px] lg:pt-[110px]">
         <div className="container-custom">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-[30px]">
             <motion.div

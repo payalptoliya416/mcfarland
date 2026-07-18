@@ -330,7 +330,7 @@ export default function Machinery() {
   disabled={redirecting}
   onClick={() => {
     setRedirecting(true);
-    router.push("/admin/category/add");
+    router.push("/admin/machinery/add");
   }}
   className={`gradient-btn flex h-10 items-center justify-center gap-2 rounded-[62px]
   border border-primary px-4 xl:px-[25px]
@@ -346,7 +346,7 @@ export default function Machinery() {
     <span className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
   )}
 
-  {redirecting ? "Add Category" : "+ Add Category"}
+  {redirecting ? "Add Machinery" : "+ Add Machinery"}
 </button>
       </div>
       {isMobile ? (
