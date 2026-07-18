@@ -18,7 +18,7 @@ const statusClassMap: Record<string, string> = {
   "Awaiting Invoice": "bg-yellow-500 text-black",
   "Settle Payment": "bg-orange-500 text-white",
   "Payment Confirmed": "bg-green-500 text-white",
-  "Processing": "bg-[#F2671C] text-black",
+  "Processing": "bg-[#F2671C] text-white",
   "Shipping Started": "bg-[#3C97FF] text-white",
   "In Transit": "bg-[#8B5CF6] text-white",
   "Delivered": "bg-[#2DBE60] text-white",

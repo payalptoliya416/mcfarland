@@ -54,7 +54,7 @@ const statusOrder: StatusType[] = [
     },
     pending: {
       label: "Pending",
-      btnClass: "bg-[#F2671C] text-black",
+      btnClass: "bg-[#F2671C] text-white",
       apiValue: 0,
     },
     sold: {

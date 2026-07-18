@@ -11,7 +11,7 @@ import ApproveContractModal from "./ApproveContractModal";
 /* ================= STATUS COLORS ================= */
 
 const statusStyleMap: Record<string, string> = {
-  Pending: "bg-[#F2671C] text-black",
+  Pending: "bg-[#F2671C] text-white",
   Send: "bg-[#A855F7] text-white",
   Signed: "bg-[#3B82F6] text-white",
   Approved: "bg-[#22C55E] text-white",

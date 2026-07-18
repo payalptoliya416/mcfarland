@@ -25,7 +25,7 @@ function MyBidCard({ row, onView ,loading}: { row: Bid; onView: () => void ,load
     Active: "bg-[#3C97FF] text-white",
     Sold: "bg-[#F05555] text-white",
     Won: "bg-[#35BB63] text-white",
-    Outbid: "bg-[#F2671C] text-black",
+    Outbid: "bg-[#F2671C] text-white",
   };
 
   return (
@@ -198,7 +198,7 @@ export default function Bids() {
       active: "bg-[#3C97FF] text-white text-center",
       sold: "bg-[#F05555] text-white text-center",
       won: "bg-[#35BB63] text-white text-center",
-      outbid: "bg-[#F2671C] text-black text-center",
+      outbid: "bg-[#F2671C] text-white text-center",
     };
 
     const statusLabel: Record<string, string> = {

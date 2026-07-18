@@ -28,7 +28,7 @@ type WonUserRow = {
 /* ================= STATUS COLORS ================= */
 
 const statusClassMap: Record<WonUserRow["status"], string> = {
-  Pending: "bg-[#F2671C] text-black",
+  Pending: "bg-[#F2671C] text-white",
   Send: "bg-[#A855F7] text-white",
   Rejected: "bg-[#EF4444] text-white",
   Signed: "bg-[#3B82F6] text-white",
