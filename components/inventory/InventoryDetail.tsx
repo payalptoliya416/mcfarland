@@ -21,15 +21,6 @@ import { calculateDistanceApi } from "@/api/calculateDistance";
 import { Category } from "@/api/data";
 import { formatPrice } from "@/hooks/formate";
 import { useRouter } from "next/navigation";
-import { IoIosTime } from "react-icons/io";
-import {
-  ShieldCheck,
-  BadgeDollarSign,
-  Truck,
-  RotateCcw,
-  Shield,
-  Wrench,
-} from "lucide-react";
 
 function getTimeLeft(endTime: string) {
   const end = new Date(endTime.replace(" ", "T")).getTime();

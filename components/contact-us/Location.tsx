@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { getSettingsByKeysFooter } from "@/api/categoryActions";
 
@@ -15,185 +14,207 @@ function Location() {
     });
   }, []);
 
-  const cardVariant = {
-    hidden: { opacity: 0, y: 40 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-  } as const;
+if (!settings) {
+  return (
+    <section className="py-10 lg:py-16">
+      <div className="container-custom">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="h-[350px] rounded-[14px] bg-gray-100 animate-pulse" />
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="h-[160px] rounded-[14px] bg-gray-100 animate-pulse" />
+            <div className="h-[160px] rounded-[14px] bg-gray-100 animate-pulse" />
+            <div className="md:col-span-2 h-[180px] rounded-[14px] bg-gray-100 animate-pulse" />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-  const containerVariant = {
-    hidden: {},
-    show: {
-      transition: { staggerChildren: 0.2, delayChildren: 0.2 },
+  const locations = [
+    {
+      icon: "/assets/images/location-icon.svg",
+      title: "Office Address",
+      desc: `${settings.company_name} ${settings.address}`,
     },
-  } as const;
+    {
+      icon: "/assets/images/call-icon.svg",
+      title: "Phone Number",
+      desc: settings.phone_no,
+    },
+    {
+      icon: "/assets/images/clock-icon.svg",
+      title: "Working Hours",
+      desc: "9am - 4pm (MDT) Monday to Friday",
+    },
+    {
+      icon: "/assets/images/mail-icon.svg",
+      title: "Email Address",
+      desc: settings.email,
+    },
+  ];
 
-    if (!settings) return null;
-
-const locations = [
-  {
-    icon: "/assets/images/location-icon.svg",
-    title: "Office Address",
-    desc: `${settings.company_name} ${settings.address}`,
-  },
-  {
-    icon: "/assets/images/call-icon.svg",
-    title: "Phone Number",
-    desc: settings.phone_no,
-  },
-  {
-    icon: "/assets/images/clock-icon.svg",
-    title: "Working Hours",
-    desc: "9am - 4pm (MDT) Monday to Friday",
-  },
-  {
-    icon: "/assets/images/mail-icon.svg",
-    title: "Email Address",
-    desc: settings.email,
-  },
-];
-  
   return (
     <>
-  <motion.section
-  initial={{ opacity: 0 }}
-  whileInView={{ opacity: 1 }}
-  viewport={{ once: true, amount: 0.2 }}
-  transition={{ duration: 0.6 }}
-  className="py-10 lg:py-16"
->
-      <div className="container-custom mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-          {/* Address */}
-          <div className="bg-white rounded-[14px] shadow-[0_2px_35px_rgba(0,0,0,0.08)] p-[25px] flex flex-col justify-between xl:min-h-[350px]">
-            <div>
-              <div className="w-12 md:w-[60px] h-12 md:h-[60px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center">
-               <img src={locations[0].icon} alt="" />
-              </div>
-
-             <h3 className="text-lg leading-[18px] font-bold text-lightblack mt-5">
-              {locations[0].title}
-            </h3>
-
-              <p className="text-para text-base leading-8 mt-4">
-                  <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                  settings.address ?? ""
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-green transition"
-              >
-                {locations[0].desc}
-              </a>
-              </p>
-            </div>
-
-            <a
-            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-              settings.address ?? ""
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-[#F26522] font-semibold text-base hover:gap-3 transition-all"
-          >
-            Get Direction
-
-            <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M8.77502 12.15L14.4 6.52502L8.77502 0.900024M14.4 6.52502H0.900024"
-                stroke="#F2671C"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </a>
-          </div>
-
-          {/* Right */}
-          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-
-            {/* Phone */}
-            <div className="bg-white rounded-[14px] shadow-[0_2px_35px_rgba(0,0,0,0.08)] p-[25px]">
-              <div className="w-12 md:w-[60px] h-12 md:h-[60px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center">
-               <img src={locations[1].icon} alt="" />
-              </div>
-
-              <h3 className="text-lg leading-[18px] font-bold text-lightblack mt-5">
-                {locations[1].title}
-              </h3>
-
-              <p className="text-para text-base mt-[10px]">
-               <a
-              href={`tel:${settings.phone_no}`}
-              className="hover:text-green transition"
-            >
-              {settings.phone_no}
-            </a>
-
-              </p>
-            </div>
-
-            {/* Hours */}
-            <div className="bg-white rounded-[14px] shadow-[0_2px_35px_rgba(0,0,0,0.08)] p-[25px]">
-              <div className="w-12 md:w-[60px] h-12 md:h-[60px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center">
-              <img src={locations[2].icon} alt="" />
-              </div>
-
-              <h3 className="text-lg leading-[18px] font-bold text-lightblack mt-5">
-               {locations[2].title}
-              </h3>
-
-              <p className="text-para text-base mt-[10px] leading-8">
-                 {locations[2].desc}
-              </p>
-            </div>
-
-            {/* Email */}
-            <div className="md:col-span-2 bg-white rounded-[14px] shadow-[0_2px_35px_rgba(0,0,0,0.08)] p-[25px] flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-
+      <section className="py-10 lg:py-16">
+        <div className="container-custom mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Address */}
+            <div className="bg-white rounded-[14px] shadow-[0_2px_35px_rgba(0,0,0,0.08)] p-[25px] flex flex-col justify-between xl:min-h-[350px]">
               <div>
                 <div className="w-12 md:w-[60px] h-12 md:h-[60px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center">
-                    <img src={locations[2].icon} alt="" />
+                  <Image
+                    src={locations[0].icon}
+                    alt={locations[0].title}
+                    width={28}
+                    height={28}
+                  />
                 </div>
 
                 <h3 className="text-lg leading-[18px] font-bold text-lightblack mt-5">
-                    {locations[2].title}
+                  {locations[0].title}
                 </h3>
 
-                <p className="text-para text-base mt-[10px] break-all">
-                 <a
-              href={`mailto:${settings.email}`}
-              className="hover:text-green transition"
-            >
-              {settings.email}
-            </a>
+                <p className="text-para text-base leading-8 mt-4">
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                      settings.address ?? "",
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-green transition"
+                  >
+                    {locations[0].desc}
+                  </a>
                 </p>
               </div>
 
               <a
-              href={`mailto:${settings.email}`}
-              className="flex items-center gap-2 text-[#F26522] font-semibold text-base hover:gap-3 transition-all whitespace-nowrap"
-            >
-              Send Email
-
-              <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M8.77502 12.15L14.4 6.52502L8.77502 0.900024M14.4 6.52502H0.900024"
-                  stroke="#F2671C"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </a>
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                  settings.address ?? "",
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-[#F26522] font-semibold text-base hover:gap-3 transition-all"
+              >
+                Get Direction
+                <svg
+                  width="16"
+                  height="14"
+                  viewBox="0 0 16 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M8.77502 12.15L14.4 6.52502L8.77502 0.900024M14.4 6.52502H0.900024"
+                    stroke="#F2671C"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </a>
             </div>
 
+            {/* Right */}
+            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Phone */}
+              <div className="bg-white rounded-[14px] shadow-[0_2px_35px_rgba(0,0,0,0.08)] p-[25px]">
+                <div className="w-12 md:w-[60px] h-12 md:h-[60px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center">
+                  <Image
+                    src={locations[1].icon}
+                    alt={locations[1].title}
+                    width={28}
+                    height={28}
+                  />
+                </div>
+
+                <h3 className="text-lg leading-[18px] font-bold text-lightblack mt-5">
+                  {locations[1].title}
+                </h3>
+
+                <p className="text-para text-base mt-[10px]">
+                  <a
+                    href={`tel:${settings.phone_no}`}
+                    className="hover:text-green transition"
+                  >
+                    {settings.phone_no}
+                  </a>
+                </p>
+              </div>
+
+              {/* Hours */}
+              <div className="bg-white rounded-[14px] shadow-[0_2px_35px_rgba(0,0,0,0.08)] p-[25px]">
+                <div className="w-12 md:w-[60px] h-12 md:h-[60px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center">
+                  <Image
+                    src={locations[2].icon}
+                    alt={locations[2].title}
+                    width={28}
+                    height={28}
+                  />
+                </div>
+
+                <h3 className="text-lg leading-[18px] font-bold text-lightblack mt-5">
+                  {locations[2].title}
+                </h3>
+
+                <p className="text-para text-base mt-[10px] leading-8">
+                  {locations[2].desc}
+                </p>
+              </div>
+
+              {/* Email */}
+              <div className="md:col-span-2 bg-white rounded-[14px] shadow-[0_2px_35px_rgba(0,0,0,0.08)] p-[25px] flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+                <div>
+                  <div className="w-12 md:w-[60px] h-12 md:h-[60px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center">
+                    <Image
+                      src={locations[3].icon}
+                      alt={locations[3].title}
+                      width={28}
+                      height={28}
+                    />
+                  </div>
+
+                  <h3 className="text-lg leading-[18px] font-bold text-lightblack mt-5">
+                    {locations[3].title}
+                  </h3>
+
+                  <p className="text-para text-base mt-[10px] break-all">
+                    <a
+                      href={`mailto:${settings.email}`}
+                      className="hover:text-green transition"
+                    >
+                      {settings.email}
+                    </a>
+                  </p>
+                </div>
+
+                <a
+                  href={`mailto:${settings.email}`}
+                  className="flex items-center gap-2 text-[#F26522] font-semibold text-base hover:gap-3 transition-all whitespace-nowrap"
+                >
+                  Send Email
+                  <svg
+                    width="16"
+                    height="14"
+                    viewBox="0 0 16 14"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.77502 12.15L14.4 6.52502L8.77502 0.900024M14.4 6.52502H0.900024"
+                      stroke="#F2671C"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </motion.section>
+      </section>
     </>
   );
 }

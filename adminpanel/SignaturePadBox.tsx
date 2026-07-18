@@ -64,8 +64,7 @@ export default function SignaturePadBox({
           <button
             type="button"
             onClick={handleClear}
-            className="h-9 px-5 rounded-lg border border-border text-sm font-medium
-              bg-white hover:bg-[#F6F6F6] transition  cursor-pointer"
+            className="h-9 px-5 rounded-full border border-border text-sm font-medium bg-white hover:bg-[#F6F6F6] transition  cursor-pointer"
           >
             Clear
           </button>
@@ -73,8 +72,7 @@ export default function SignaturePadBox({
           <button
             type="button"
             onClick={handleSave}
-            className="h-9 px-5 rounded-lg bg-green text-sm font-medium
-              text-white hover:bg-[#FFBD34] transition cursor-pointer"
+            className="h-9 px-5 rounded-full bg-green text-sm font-medium text-white transition cursor-pointer"
           >
             Save
           </button>

@@ -1,4 +1,4 @@
-// ✅ US Dollar Price Formatter
+
 export const formatPrice = (amount: number | string | null | undefined) => {
   if (amount === null || amount === undefined || amount === "") return "$0.00";
 

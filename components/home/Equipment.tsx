@@ -135,51 +135,6 @@ const slugify = (text: string) =>
         </div>
       </div>
     </section>
-    
-    // <section className="container-custom mx-auto my-20 lg:my-[110px]">
-    //   <div
-    //   className="text-center mb-10">
-    //     <h2 className="text-3xl md:text-[38px] md:leading-[38px] mb-[15px] font-bold text-gray">
-    //       Our Main <span className="text-orange">Equipment</span>
-    //     </h2>
-    //     <p className="text-base leading-[16px] text-text-gray">
-    //       Browse through top categories to find what fits your business needs.
-    //     </p>
-    //   </div>
-    //     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-[30px]">
-    //       { 
-    //       categories.map((item) =>{
-    //           const categorySlug = slugify(item.category_name);
-    //         return  (
-    //           <div
-    //             key={item.id}
-    //             className="bg-lightyellow p-[15px] rounded-xl cursor-pointer "
-    //           >
-    //             <Link href={`/inventory?category=${categorySlug}`} className="flex flex-col justify-between h-full" onClick={() => setIsNavigating(true)}>
-    //            <div className="rounded-xl overflow-hidden flex justify-center">
-                 
-    //               <img
-    //                 src={item.image_url}
-    //                 alt={item.category_name}
-    //                 className="rounded-xl"
-    //               />
-    //             </div>
-    //               <div className="pt-5">
-    //                 <h3 className="text-xl leading-[20px] mb-[15px] text-gray text-center font-semibold">
-    //                   {item.category_name}
-    //                 </h3>
-    //                 <p className="text-base leading-[16px] text-[#4B4A48] text-center font-semibold pb-[5px]">
-    //                   Browse Inventory
-    //                 </p>
-    //               </div>
-    //             </Link>
-    //           </div>
-    //         )
-    //       })
-    //        }
-    //   </div>
-
-    // </section>
     }
     </>
   );

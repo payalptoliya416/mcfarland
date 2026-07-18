@@ -1,11 +1,9 @@
 "use client";
 
 import { JSX, useState } from "react";
-import { FaMinus } from "react-icons/fa6";
-import { BiPlus } from "react-icons/bi";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSettings } from "@/contexts/SettingsContext";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 interface FAQ {
   question: string;

@@ -77,14 +77,14 @@ export default function VerifyOtp(): JSX.Element {
   };
 
   return (
-        <div className="container-custom mx-auto bg-[#fff] rounded-[14px] p-[15px] grid grid-cols-12 section-space">
+    <div className="container-custom mx-auto bg-[#fff] rounded-[14px] p-[15px] grid grid-cols-12 section-space">
       {/* LEFT SIDE CARD */}
       <div className="flex justify-center items-center col-span-12 lg:col-span-6 w-full">
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-           className="rounded-r-[15px] rounded-[15px] lg:rounded-r-none p-5 md:p-10 col-span-12 lg:col-span-6 w-full shadow-[0_2px_35px_rgba(0,0,0,0.08)]"
+          className="rounded-r-[15px] rounded-[15px] lg:rounded-r-none p-5 md:p-10 col-span-12 lg:col-span-6 w-full shadow-[0_2px_35px_rgba(0,0,0,0.08)]"
         >
           {/* TITLE */}
           <h2 className="text-3xl md:text-[42px] md:leading-[42px] font-bold text-center text-gray mb-[15px]">
@@ -136,23 +136,34 @@ export default function VerifyOtp(): JSX.Element {
           </button>
 
           <p className="text-center mt-[25px] text-lg font-semibold">
-            <Link href="/user/signin/forgot-password" className="text-green flex justify-center items-center">
-              <span className="mr-1"><img src="/assets/images/left-arrow.svg" alt="" /></span>  Back to Forgot Password
+            <Link
+              href="/user/signin/forgot-password"
+              className="text-green flex items-center justify-center"
+            >
+              <span className="mr-1">
+                <Image
+                  src="/assets/images/left-arrow.svg"
+                  alt="Back"
+                  width={16}
+                  height={16}
+                />
+              </span>
+              Back to Forgot Password
             </Link>
           </p>
         </motion.div>
       </div>
 
       {/* RIGHT IMAGE */}
-       <div className="relative col-span-12 lg:col-span-6 rounded-r-[15px]">
-                 <Image
-                   src="/assets/images/signin.png"
-                   alt="Sign In"
-                   fill
-                   className="object-cover rounded-r-[15px]"
-                   priority
-                 />
-               </div>
+      <div className="relative col-span-12 lg:col-span-6 rounded-r-[15px]">
+        <Image
+          src="/assets/images/signin.png"
+          alt="Sign In"
+          fill
+          className="object-cover rounded-r-[15px]"
+          priority
+        />
+      </div>
     </div>
   );
 }

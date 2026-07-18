@@ -11,7 +11,7 @@ import { loginUser } from "@/api/services";
 import { useRouter, useSearchParams } from "next/navigation";
 import { setToken } from "@/api/authToken";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-  import Image from "next/image";
+import Image from "next/image";
 
 // Validation Schema
 const SignInSchema = Yup.object().shape({

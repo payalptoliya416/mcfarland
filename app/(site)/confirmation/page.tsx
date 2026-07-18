@@ -13,11 +13,7 @@ import {
   getModels,
   getSingleInventory,
 } from "@/api/categoryActions";
-import {
-  FaFileSignature,
-  FaFileInvoiceDollar,
-  FaTruck,
-} from "react-icons/fa";
+import { FaFileSignature, FaFileInvoiceDollar, FaTruck } from "react-icons/fa";
 
 import { MdPayments } from "react-icons/md";
 import { BsFillPatchCheckFill } from "react-icons/bs";
@@ -42,9 +38,7 @@ type Step = {
   icon: any;
 };
 
-
 function ConfirmationPage() {
- 
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
   const categorySlug = segments[1] ?? "";
@@ -52,29 +46,29 @@ function ConfirmationPage() {
   const modelSlug = segments[3] ?? "";
   const auction_id = segments[4] ?? "";
   const [pageLoading, setPageLoading] = useState(true);
-const [userData, setUserData] = useState<UserDetails | null>(null);
-const [userLoading, setUserLoading] = useState(true);
-useEffect(() => {
-  const fetchUserDetails = async () => {
-    try {
-      setUserLoading(true);
+  const [userData, setUserData] = useState<UserDetails | null>(null);
+  const [userLoading, setUserLoading] = useState(true);
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        setUserLoading(true);
 
-      const res = await getUserDetails();
+        const res = await getUserDetails();
 
-      if (res.status) {
-        setUserData(res.data);
-      } else {
-        toast.error(res.message || "Failed to fetch user details");
+        if (res.status) {
+          setUserData(res.data);
+        } else {
+          toast.error(res.message || "Failed to fetch user details");
+        }
+      } catch (error) {
+        toast.error("Something went wrong while fetching user details");
+      } finally {
+        setUserLoading(false);
       }
-    } catch (error) {
-      toast.error("Something went wrong while fetching user details");
-    } finally {
-      setUserLoading(false);
-    }
-  };
+    };
 
-  fetchUserDetails();
-}, []);
+    fetchUserDetails();
+  }, []);
 
   const slugify = (text: string) =>
     text
@@ -89,18 +83,18 @@ useEffect(() => {
 
   const [product, setProduct] = useState<SingleMachinery | null>(null);
 
-useEffect(() => {
-  if (product) {
-    window.scrollTo(0, 0);
-  }
-}, [product]);
+  useEffect(() => {
+    if (product) {
+      window.scrollTo(0, 0);
+    }
+  }, [product]);
 
-const getFirstValidImage = (images?: { full_url?: string }[]) => {
-  if (!images || images.length === 0) return null;
+  const getFirstValidImage = (images?: { full_url?: string }[]) => {
+    if (!images || images.length === 0) return null;
 
-  return images.find((img) => img?.full_url)?.full_url || null;
-};
-const imageUrl = getFirstValidImage(product?.images);
+    return images.find((img) => img?.full_url)?.full_url || null;
+  };
+  const imageUrl = getFirstValidImage(product?.images);
 
   useEffect(() => {
     const loadData = async () => {
@@ -130,7 +124,8 @@ const imageUrl = getFirstValidImage(product?.images);
   const matchedModel = models.find((m) => slugify(m) === modelSlug);
 
   useEffect(() => {
-    if (!matchedCategory || !matchedMake || !matchedModel || !auction_id) return;
+    if (!matchedCategory || !matchedMake || !matchedModel || !auction_id)
+      return;
 
     const fetchProduct = async () => {
       setPageLoading(true);
@@ -156,109 +151,110 @@ const imageUrl = getFirstValidImage(product?.images);
     fetchProduct();
   }, [matchedCategory, matchedMake, matchedModel, auction_id]);
 
-const steps: Step[] = [
-  {
-    title: "1. Order Review & Preparation",
-    desc: `We have received your Buy Now request.
+  const steps: Step[] = [
+    {
+      title: "1. Order Review & Preparation",
+      desc: `We have received your Buy Now request.
 Our team is currently reviewing your order details and preparing the transaction to ensure availability and final confirmation.`,
-    icon: FaFileSignature, // Review / Documents
-  },
-
-  {
-    title: "2. Sales Agreement Signed – Invoice in Preparation",
-    desc: (email: string | Address) => {
-      const userEmail =
-        typeof email === "string" ? email : userData?.email;
-
-      return (
-        <>
-          Your Sales Agreement has been successfully signed.
-          <br />
-          We are now preparing your Invoice.
-          <br />
-          You will receive the invoice at{" "}
-          <span className="font-semibold text-green">
-            {userEmail || "your registered email"}
-          </span>{" "}
-          once it has been issued.
-        </>
-      );
+      icon: FaFileSignature, // Review / Documents
     },
-    icon: FaFileInvoiceDollar, // Invoice
-  },
 
-  {
-    title: "3. Invoice Issued & Payment",
-    desc: `Once the Invoice is generated and sent, please complete the payment according to the provided instructions. Your order will move to the delivery stage after payment confirmation.`,
-    icon: MdPayments, // Payment
-  },
+    {
+      title: "2. Sales Agreement Signed – Invoice in Preparation",
+      desc: (email: string | Address) => {
+        const userEmail = typeof email === "string" ? email : userData?.email;
 
-  {
-    title: "4. Receive Your Equipment",
-    desc: (address: string | Address) => {
-      if (typeof address === "string") return null;
+        return (
+          <>
+            Your Sales Agreement has been successfully signed.
+            <br />
+            We are now preparing your Invoice.
+            <br />
+            You will receive the invoice at{" "}
+            <span className="font-semibold text-green">
+              {userEmail || "your registered email"}
+            </span>{" "}
+            once it has been issued.
+          </>
+        );
+      },
+      icon: FaFileInvoiceDollar, // Invoice
+    },
 
-      const parts = [
-        address.street,
-        address.city,
-        address.state,
-        address.zip,
-        address.country,
-      ].filter(Boolean);
+    {
+      title: "3. Invoice Issued & Payment",
+      desc: `Once the Invoice is generated and sent, please complete the payment according to the provided instructions. Your order will move to the delivery stage after payment confirmation.`,
+      icon: MdPayments, // Payment
+    },
 
-      return (
+    {
+      title: "4. Receive Your Equipment",
+      desc: (address: string | Address) => {
+        if (typeof address === "string") return null;
+
+        const parts = [
+          address.street,
+          address.city,
+          address.state,
+          address.zip,
+          address.country,
+        ].filter(Boolean);
+
+        return (
+          <>
+            We'll keep you posted on when your equipment will be delivered to{" "}
+            <span className="font-bold text-green break-words">
+              {parts.join(", ")}
+            </span>
+            .
+          </>
+        );
+      },
+      icon: FaTruck, // Delivery
+    },
+
+    {
+      title: "5. Test Drive Your Purchase",
+      desc: (
         <>
-          We'll keep you posted on when your equipment will be delivered to{" "}
-          <span className="font-bold text-green break-words">
-            {parts.join(", ")}
-          </span>
+          Enjoy complete peace of mind with your purchase.
+          <br />
+          You benefit from a <strong>
+            30-day hassle-free return policy
+          </strong>{" "}
+          and <strong>6 months of warranty coverage</strong>.
+          <br />
+          For full details, please review our{" "}
+          <Link
+            href="/terms-condition"
+            className="text-green font-semibold underline hover:text-black transition"
+          >
+            Buyer Terms & Conditions
+          </Link>
           .
+          <br />
+          <br />
+          You can also{" "}
+          <Link
+            href="/user/orders"
+            className="text-green font-semibold underline hover:text-black transition"
+          >
+            Track Order Progress
+          </Link>{" "}
+          anytime from your dashboard.
         </>
-      );
+      ),
+      icon: BsFillPatchCheckFill, // Completed / Warranty
     },
-    icon: FaTruck, // Delivery
-  },
+  ];
 
-  {
-    title: "5. Test Drive Your Purchase",
-    desc: (
-      <>
-        Enjoy complete peace of mind with your purchase.
-        <br />
-        You benefit from a <strong>30-day hassle-free return policy</strong>{" "}
-        and <strong>6 months of warranty coverage</strong>.
-        <br />
-        For full details, please review our{" "}
-        <Link
-          href="/terms-condition"
-          className="text-green font-semibold underline hover:text-black transition"
-        >
-          Buyer Terms & Conditions
-        </Link>
-        .
-        <br />
-        <br />
-        You can also{" "}
-        <Link
-          href="/user/orders"
-          className="text-green font-semibold underline hover:text-black transition"
-        >
-          Track Order Progress
-        </Link>{" "}
-        anytime from your dashboard.
-      </>
-    ),
-    icon: BsFillPatchCheckFill, // Completed / Warranty
-  },
-];
-
-if (pageLoading || userLoading) {
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white z-[9999]">
-      <Loader />
-    </div>
-  );
-}
+  if (pageLoading || userLoading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-white z-[9999]">
+        <Loader />
+      </div>
+    );
+  }
   return (
     <>
       <section className="pt-16">
@@ -271,7 +267,8 @@ if (pageLoading || userLoading) {
 
             {/* Message */}
             <p className="text-gray-600 text-sm md:text-base leading-relaxed">
-              We will now review your request , the automatic shipping budget and your billing information.
+              We will now review your request , the automatic shipping budget
+              and your billing information.
             </p>
 
             {/* Buttons */}
@@ -281,7 +278,7 @@ if (pageLoading || userLoading) {
                 href="/user/orders"
                 className="flex h-10 items-center justify-center rounded-[62px] border border-gray-500 px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-gray-500 transition-all duration-300 cursor-pointer"
               >
-               View Order Progress
+                View Order Progress
               </Link>
 
               {/* Button 2 */}
@@ -299,8 +296,8 @@ if (pageLoading || userLoading) {
         <div className="max-w-6xl mx-auto px-4">
           <div className="bg-white border border-border rounded-xl p-2 md:p-6">
             <h2 className="text-2xl md:text-3xl font-bold text-gray mb-8">
-  What happens next?
-</h2>
+              What happens next?
+            </h2>
             {steps.map((step, index) => (
               <div
                 key={index}
@@ -322,10 +319,13 @@ if (pageLoading || userLoading) {
                 </div>
                 {index !== steps.length - 1 && (
                   <div className="absolute top-1/2 left-[28px] md:left-[35px] -translate-x-1/2 md:mt-1">
-                     <img
+                    <Image
                       src="/assets/images/strechline-new.png"
                       alt="connector-line"
-                      className="object-contain"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      className="w-auto h-auto object-contain"
                     />
                   </div>
                 )}
@@ -335,12 +335,11 @@ if (pageLoading || userLoading) {
                     {step.title}
                   </h3>
 
-              <p className="text-text-gray text-base leading-[26px] mb-4">
-                      {typeof step.desc === "function"
+                  <p className="text-text-gray text-base leading-[26px] mb-4">
+                    {typeof step.desc === "function"
                       ? step.desc(userData?.email || "your registered email")
                       : step.desc}
                   </p>
-
 
                   {step.title === "Receive your equipment" && (
                     <>
@@ -355,22 +354,22 @@ if (pageLoading || userLoading) {
                             <div className="w-full md:w-[300px] flex-shrink-0">
                               <div className="w-full">
                                 <div className="w-full md:w-[280px] flex-shrink-0">
-                                <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] rounded-xl overflow-hidden">
-                                 {imageUrl ? (
-                                  <Image
-                                    src={imageUrl}
-                                    alt={product.name}
-                                    fill
-                                    className="sm:object-cover object-contain"
-                                    priority
-                                  />
-                                ) : (
-                                  <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400 text-sm">
-                                    No Image Available
+                                  <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] rounded-xl overflow-hidden">
+                                    {imageUrl ? (
+                                      <Image
+                                        src={imageUrl}
+                                        alt={product.name}
+                                        fill
+                                        className="sm:object-cover object-contain"
+                                        priority
+                                      />
+                                    ) : (
+                                      <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400 text-sm">
+                                        No Image Available
+                                      </div>
+                                    )}
                                   </div>
-                                )}
                                 </div>
-                              </div>
                               </div>
                             </div>
 

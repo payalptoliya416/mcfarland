@@ -339,11 +339,14 @@ export default function UserProfileForm() {
               w-6 h-6 rounded-full flex items-center justify-center
               ${statusConfig.bg}`}
                 >
-                  <img
-                    src={statusConfig.icon}
-                    alt={statusConfig.label}
-                    className="w-3 h-3"
-                  />
+                 <Image
+                  src={statusConfig.icon}
+                  alt={statusConfig.label}
+                  width={12}
+                  height={12}
+                  className="w-3 h-3"
+                  unoptimized
+                />
                 </span>
               </div>
 

@@ -8,7 +8,6 @@ import {
 } from "@/api/categoryActions";
 import { formatPrice } from "@/hooks/formate";
 import Image from "next/image";
-import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -323,10 +322,7 @@ const handlePlaceBid = async () => {
         </button>
       </div>
 
-      {/* ERROR */}
       {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
-
-      {/* PLACE BID BUTTON */}
 
       <button
         onClick={handlePlaceBid}
@@ -339,7 +335,6 @@ const handlePlaceBid = async () => {
       >
         {bidLoading ? (
           <>
-            {/* Loader */}
             <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
             Processing...
           </>

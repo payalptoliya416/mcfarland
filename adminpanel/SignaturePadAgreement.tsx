@@ -5,7 +5,7 @@ import { getSingleWonBid, signContract, WonBid } from "@/api/user/bids";
 import { getSaleAgreementContract } from "@/api/user/profile";
 import Loader from "@/components/common/Loader";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 const makeContractResponsive = (html: string) => {
@@ -278,12 +278,16 @@ function SignaturePadAgreement() {
               onClick={handleSendContract}
               type="button"
               disabled={submitting || isAlreadySigned || isSubmitted}
-              className={`h-[42px] px-5 rounded-lg text-sm font-medium text-white transition 
-                              ${
-                                submitting || isAlreadySigned
-                                  ? "bg-[#9E9E9E] cursor-not-allowed"
-                                  : "bg-green hover:bg-[#FFBD34] cursor-pointer"
-                              }`}
+              className={`flex h-10 items-center justify-center gap-2 rounded-[62px]
+                border border-primary px-4 xl:px-[25px]
+                text-sm xl:text-base font-semibold text-white
+                transition-all duration-300 cursor-pointer gradient-btn
+                active:scale-95
+                ${
+                 submitting || isAlreadySigned
+                    ? "opacity-80 cursor-not-allowed"
+                    : "hover:-translate-y-1 hover:shadow-[0_10px_25px_rgba(242,103,28,0.35)]"
+                }`}
             >
               {isAlreadySigned || isSubmitted ? (
                 "Contract Already Signed"

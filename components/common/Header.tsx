@@ -408,10 +408,24 @@ function Header({
 
   return (
     <>
-      <header className={`w-full z-50 relative ${ hasBgImage ? "" : "bg-transparent" }`} >
-        <div className={`mx-auto flex justify-between items-center pb-4 px-10 md:px-[60px] ${ hasBgImage ? "border-b border-border pt-5" : "bg-transparent pt-[40px]" }`}>
+      <header
+        className={`w-full z-50 relative ${hasBgImage ? "" : "bg-transparent"}`}
+      >
+        <div
+          className={`mx-auto flex justify-between items-center pb-4 px-10 md:px-[60px] ${hasBgImage ? "border-b border-border pt-5" : "bg-transparent pt-[40px]"}`}
+        >
           <Link href="/">
-            {settings?.dark_logo && <img src={settings.dark_logo} alt="Logo" />}
+            {settings?.dark_logo && (
+              <Image
+                src={settings.dark_logo}
+                alt="Logo"
+                width={0}
+                height={0}
+                sizes="100vw"
+                unoptimized
+                className="w-auto h-auto"
+              />
+            )}
           </Link>
           <ul className="hidden lg:flex justify-center items-center gap-5 xl:gap-[50px]">
             {navItems.map((item) => (
@@ -431,7 +445,7 @@ function Header({
                 <Link
                   href={item.path}
                   onClick={() => handleNavigate(item.path)}
-            className={`text-base font-medium cursor-pointer relative overflow-hidden
+                  className={`text-base font-medium cursor-pointer relative overflow-hidden
                 before:absolute before:left-0 before:bottom-0 before:h-[2px]
                 before:w-full before:origin-left before:scale-x-0
                 before:bg-orange before:transition-transform before:duration-300
@@ -463,18 +477,18 @@ function Header({
                       );
                     }}
                     className={`hover:text-orange transition mt-1 ${
-                        item.path === "/"
-                          ? pathname === "/"
-                            ? "text-orange font-bold after:w-8"
-                            : hasBgImage
-                              ? "text-[#1D1B1A] hover:text-orange"
-                              : "text-white hover:text-orange"
-                          : pathname.startsWith(item.path)
-                            ? "text-orange font-bold after:w-8"
-                            : hasBgImage
-                              ? "text-[#1D1B1A] hover:text-orange"
-                              : "text-white hover:text-orange"
-                      }`}
+                      item.path === "/"
+                        ? pathname === "/"
+                          ? "text-orange font-bold after:w-8"
+                          : hasBgImage
+                            ? "text-[#1D1B1A] hover:text-orange"
+                            : "text-white hover:text-orange"
+                        : pathname.startsWith(item.path)
+                          ? "text-orange font-bold after:w-8"
+                          : hasBgImage
+                            ? "text-[#1D1B1A] hover:text-orange"
+                            : "text-white hover:text-orange"
+                    }`}
                   >
                     <IoIosArrowDown size={14} />
                   </button>
@@ -561,28 +575,28 @@ function Header({
                               )}
                             </button> */}
                             <Link
-                          href={url}
-                          onClick={(e) => {
-                            e.stopPropagation();
+                              href={url}
+                              onClick={(e) => {
+                                e.stopPropagation();
 
-                            setDisableHover(true);
-                            setOpenDropdown(null);
-                            setActiveGroup(null);
-                            setClickedGroup(null);
+                                setDisableHover(true);
+                                setOpenDropdown(null);
+                                setActiveGroup(null);
+                                setClickedGroup(null);
 
-                            setTimeout(() => setDisableHover(false), 300);
-                          }}
-                          className="w-full flex items-center justify-between font-medium text-[#1D1B1A] hover:text-orange"
-                        >
-                          {group.name}
+                                setTimeout(() => setDisableHover(false), 300);
+                              }}
+                              className="w-full flex items-center justify-between font-medium text-[#1D1B1A] hover:text-orange"
+                            >
+                              {group.name}
 
-                          {hasSubmenu && (
-                            <MdChevronRight
-                              size={20}
-                              className="text-gray-400"
-                            />
-                          )}
-                        </Link>
+                              {hasSubmenu && (
+                                <MdChevronRight
+                                  size={20}
+                                  className="text-gray-400"
+                                />
+                              )}
+                            </Link>
 
                             {hasSubmenu && (
                               <ul
@@ -602,16 +616,16 @@ function Header({
                                 {group.submenu?.map((subItem) => (
                                   <li key={subItem.path}>
                                     <Link
-                                href={subItem.path}
-                                onClick={() => {
-                                  setOpenDropdown(null);
-                                  setActiveGroup(null);
-                                  setClickedGroup(null);
-                                }}
-                                className="block w-full px-4 py-2 text-left text-base font-medium text-[#1D1B1A] hover:bg-gray-50 hover:text-orange"
-                              >
-                                {subItem.name}
-                              </Link>
+                                      href={subItem.path}
+                                      onClick={() => {
+                                        setOpenDropdown(null);
+                                        setActiveGroup(null);
+                                        setClickedGroup(null);
+                                      }}
+                                      className="block w-full px-4 py-2 text-left text-base font-medium text-[#1D1B1A] hover:bg-gray-50 hover:text-orange"
+                                    >
+                                      {subItem.name}
+                                    </Link>
                                   </li>
                                 ))}
                               </ul>
@@ -627,45 +641,45 @@ function Header({
           </ul>
           {loggedIn ? (
             <Link
-                href="/user"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavigate("/user");
-                }}
-                className={`hidden lg:flex items-center justify-center transition cursor-pointer text-base leading-[16px] h-[40px] px-[25px] rounded-[50px] ${
-                  hasBgImage
-                    ? "text-white bg-green hover:bg-orange"
-                    : "text-green bg-white font-semibold hover:bg-orange hover:text-white"
-                }`}
-              >
-                Dashboard
-              </Link>
+              href="/user"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavigate("/user");
+              }}
+              className={`hidden lg:flex items-center justify-center transition cursor-pointer text-base leading-[16px] h-[40px] px-[25px] rounded-[50px] ${
+                hasBgImage
+                  ? "text-white bg-green hover:bg-orange"
+                  : "text-green bg-white font-semibold hover:bg-orange hover:text-white"
+              }`}
+            >
+              Dashboard
+            </Link>
           ) : (
             <div className="hidden lg:flex gap-3 items-center">
               {/* Sign In (Outline - light) */}
               <Link
-                  href={getAuthUrl("/user/signin")}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavigate(getAuthUrl("/user/signin"));
-                  }}
-                  className="flex h-10 items-center justify-center rounded-[62px] border border-white px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-white hover:text-black cursor-pointer"
-                >
-                  Sign In
-                </Link>
+                href={getAuthUrl("/user/signin")}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavigate(getAuthUrl("/user/signin"));
+                }}
+                className="flex h-10 items-center justify-center rounded-[62px] border border-white px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-white hover:text-black cursor-pointer"
+              >
+                Sign In
+              </Link>
 
               {/* Sign Up (Primary highlight) */}
               {!pathname.startsWith("/signup") && (
-               <Link
-              href={getAuthUrl("/signup")}
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavigate(getAuthUrl("/signup"));
-              }}
-              className="flex h-10 items-center justify-center rounded-[62px] border border-primary bg-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer"
-            >
-              Sign Up
-            </Link>
+                <Link
+                  href={getAuthUrl("/signup")}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavigate(getAuthUrl("/signup"));
+                  }}
+                  className="flex h-10 items-center justify-center rounded-[62px] border border-primary bg-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer"
+                >
+                  Sign Up
+                </Link>
               )}
             </div>
           )}

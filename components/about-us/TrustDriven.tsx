@@ -34,10 +34,6 @@ function TrustDriven() {
       <div className="grid grid-cols-12 lg:gap-[30px] items-stretch mt-10">
            <motion.div
           className="col-span-12 lg:col-span-6 mb-5 lg:mb-0"
-          initial={{ opacity: 0, x: 60 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8 }}
         >
           {/* Heading */}
           <h2 className="mb-[25px] text-[30px] font-bold leading-[36px] sm:text-[36px] sm:leading-[38px] lg:text-[42px] lg:leading-[52px]">

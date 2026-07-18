@@ -70,7 +70,7 @@ export default function ResetPassword(): JSX.Element {
   };
 
   return (
-     <div className="container-custom mx-auto bg-[#fff] rounded-[14px] p-[15px] grid grid-cols-12 section-space">
+    <div className="container-custom mx-auto bg-[#fff] rounded-[14px] p-[15px] grid grid-cols-12 section-space">
       {/* LEFT FORM CARD */}
       <div className="flex justify-center items-center col-span-12 lg:col-span-6 w-full">
         <motion.div
@@ -110,7 +110,7 @@ export default function ResetPassword(): JSX.Element {
                       name="password"
                       type={showPassword ? "text" : "password"}
                       placeholder="Enter new password"
-                     className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:border-green text-base placeholder:text-[#787675] sm:h-[52px]"
+                      className="w-full px-5 py-2 md:py-3 sm:py-[18px] border border-border rounded-[50px] outline-none focus:border-green text-base placeholder:text-[#787675] sm:h-[52px]"
                     />
 
                     <span
@@ -182,13 +182,16 @@ export default function ResetPassword(): JSX.Element {
                       Resetting...
                     </>
                   ) : (
-                    <><span>Reset Password </span><Image
+                    <>
+                      <span>Reset Password </span>
+                      <Image
                         src="/assets/images/btn-right-errow.svg"
                         alt="Arrow"
                         width={18}
                         height={18}
                         className="transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-2"
-                      /></>
+                      />
+                    </>
                   )}
                 </button>
               </Form>
@@ -196,23 +199,34 @@ export default function ResetPassword(): JSX.Element {
           </Formik>
 
           <p className="text-center mt-[25px] text-lg font-semibold mont-text">
-             <Link href="/user/signin" className="text-green flex justify-center items-center">
-             <span className="mr-1"><img src="/assets/images/left-arrow.svg" alt="" /></span> Back to Signin
-          </Link>
+            <Link
+              href="/user/signin"
+              className="text-green flex items-center justify-center"
+            >
+              <span className="mr-1">
+                <Image
+                  src="/assets/images/left-arrow.svg"
+                  alt="Back"
+                  width={16}
+                  height={16}
+                />
+              </span>
+              Back to Signin
+            </Link>
           </p>
         </motion.div>
       </div>
 
       {/* RIGHT PANEL IMAGE */}
       <div className="relative col-span-12 lg:col-span-6 rounded-r-[15px]">
-             <Image
-               src="/assets/images/signin.png"
-               alt="Sign In"
-               fill
-               className="object-cover rounded-r-[15px]"
-               priority
-             />
-           </div>
+        <Image
+          src="/assets/images/signin.png"
+          alt="Sign In"
+          fill
+          className="object-cover rounded-r-[15px]"
+          priority
+        />
+      </div>
     </div>
   );
 }

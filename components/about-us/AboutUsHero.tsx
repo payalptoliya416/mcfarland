@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import { motion } from "framer-motion";
 import { useSettings } from "@/contexts/SettingsContext";
 
 function AboutUsHero() {

@@ -10,7 +10,7 @@ export function useIsMobile(breakpoint: number = 1280) {
       setIsMobile(window.innerWidth < breakpoint);
     };
 
-    check(); // initial check
+    check();
     window.addEventListener("resize", check);
 
     return () => {

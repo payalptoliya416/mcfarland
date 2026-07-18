@@ -820,7 +820,7 @@ export default function InventoryFilter({}: {}) {
                         <div className="w-[216px] h-[123px]" />
                       )}
 
-                      <div className="absolute border border-red-300 rounded-full py-1.5 px-4 text-red-600 bg-red-50 font-semibold text-sm left-1/2 bottom-0 -translate-x-1/2 -translate-y-3">
+                      <div className="absolute border border-red-300 rounded-full py-1.5 px-4 text-red-600 bg-red-50 font-semibold text-sm left-1/2 bottom-[34%] -translate-x-1/2 -translate-y-3">
                         SOLD
                       </div>
                     </div>
@@ -864,7 +864,7 @@ export default function InventoryFilter({}: {}) {
                           </div>
                         )}
 
-                        <div className="absolute border border-border rounded-full py-1.5 px-4 text-green bg-white text-sm left-1/2 bottom-0 -translate-x-1/2 opacity-0 translate-y-3 group-hover:opacity-100 group-hover:-translate-y-3 transition font-semibold">
+                        <div className="absolute border border-border rounded-full py-1.5 px-4 text-green bg-white text-sm left-1/2 bottom-0 -translate-x-1/2 opacity-[34%] translate-y-3 group-hover:opacity-100 group-hover:-translate-y-3 transition font-semibold">
                           BID OR BUY
                         </div>
                       </div>

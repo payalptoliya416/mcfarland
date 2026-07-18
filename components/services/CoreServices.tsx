@@ -71,7 +71,7 @@ function CoreServices() {
         >
            <div className="absolute -top-13 -right-13 h-[154px] w-[154px] rounded-full bg-[#FFF3EC]" />
           {/* Icon */}
-          <div className="relative z-10 mb-7 flex h-[66px] w-[66px] items-center justify-center rounded-full bg-[#FCE1D2]">
+          <div className="relative z-10 mb-7 flex h-[66px] w-[66px] items-center justify-center rounded-full bg-[#FCE1D2]/50">
             <Image
               src={service.icon}
               alt={service.title}

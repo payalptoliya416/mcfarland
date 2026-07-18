@@ -7,6 +7,7 @@ import { adminOrdersService } from "@/api/admin/orders";
 import { useState } from "react";
 import { FaRegImage } from "react-icons/fa";
 import Loader from "@/components/common/Loader";
+import Image from "next/image";
 
 type Props = {
   open: boolean;
@@ -90,9 +91,13 @@ export default function PaymentSlipModal({
                     </div>
                   )}
 
-                  <img
+                  <Image
                     src={slipUrl}
                     alt="Payment Receipt"
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    unoptimized
                     onLoad={() => setImageLoading(false)}
                     onError={() => setImageLoading(false)}
                     className={`max-w-full h-auto mx-auto transition-opacity duration-300 ease-in-out ${
