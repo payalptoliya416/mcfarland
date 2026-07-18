@@ -210,10 +210,10 @@ export default function Machinery() {
               {loadingEditId === row.id ? (
                 <HiArrowPath
                   size={18}
-                  className="text-[#EDB423] animate-spin "
+                  className="text-[#ff8a45] animate-spin "
                 />
               ) : (
-                <BiEdit size={18} className="text-[#EDB423] cursor-pointer" />
+                <BiEdit size={18} className="text-[#ff8a45] cursor-pointer" />
               )}
             </button>
           </TooltipWrapper>

@@ -7,7 +7,7 @@ function ContactUs() {
   const { companyName } = useSettings();
 
   return (
-    <section className="p-5 -mt-[145px] pb-0">
+    <section className="p-5 -mt-[116px] md:-mt-[145px] pb-0">
       <motion.div
         initial={{ opacity: 0, scale: 0.98 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -16,7 +16,7 @@ function ContactUs() {
         className="relative rounded-3xl overflow-hidden min-h-[410px] bg-cover bg-center bg-[url(/assets/images/contact-bg.png)] flex justify-center items-center md:bg-[length:100%_100%] bg-no-repeat"
       >
         <div className="relative z-10 pt-[132px] md:pt-[127px] pb-14 md:pb-[67px]">
-          <div className="custom-container text-center text-white">
+          <div className="container-custom text-center text-white">
             <motion.h1
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}

@@ -2,9 +2,9 @@
 
 function InventoryHero() {
   return (
-        <section className="p-5 -mt-[145px] pb-0">
+        <section className="p-5 -mt-[116px] md:-mt-[145px] pb-0">
       <div
-        className="relative rounded-3xl overflow-hidden min-h-[410px] bg-cover bg-center bg-[url(/assets/images/about-hero.png)] flex justify-center items-center md:bg-[length:100%_100%] bg-no-repeat"
+        className="relative rounded-3xl overflow-hidden min-h-[410px] bg-cover bg-center bg-[url(/assets/images/invetory-bg.png)] flex justify-center items-center md:bg-[length:100%_100%] bg-no-repeat"
       >
         <div className="relative z-10 pt-[132px] md:pt-[127px] pb-14 md:pb-[67px]">
           <div className="container-custom text-center text-white">

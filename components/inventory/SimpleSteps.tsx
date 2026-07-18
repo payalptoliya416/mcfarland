@@ -21,13 +21,13 @@ const steps = [
     desc: "Once your bid is accepted or purchase is completed, you'll receive an order summary and payment instructions.",
   },
   {
-    icon: "/assets/images/step4.svg",
+    icon: "/assets/images/step5.svg",
     number: "04",
     title: "Secure Payment",
     desc: "Complete the payment through our secure system. All transactions are protected and fully transparent.",
   },
   {
-    icon: "/assets/images/step5.svg",
+    icon: "/assets/images/step4.svg",
     number: "05",
     title: "Delivery & Collection",
     desc: "We coordinate delivery or pickup and keep you informed until the equipment reaches your location.",

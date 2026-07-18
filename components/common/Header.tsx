@@ -412,7 +412,7 @@ function Header({
         className={`w-full z-50 relative ${hasBgImage ? "" : "bg-transparent"}`}
       >
         <div
-          className={`mx-auto flex justify-between items-center pb-4 px-10 md:px-[60px] ${hasBgImage ? "border-b border-border pt-5" : "bg-transparent pt-[40px]"}`}
+          className={`mx-auto flex justify-between items-center pb-4 px-9 md:px-[60px] ${hasBgImage ? "border-b border-border pt-5" : "bg-transparent pt-8 md:pt-[40px]"}`}
         >
           <Link href="/">
             {settings?.dark_logo && (
@@ -423,7 +423,7 @@ function Header({
                 height={0}
                 sizes="100vw"
                 unoptimized
-                className="w-auto h-auto"
+                className="w-[70px] sm:w-[70px] lg:w-auto h-auto"
               />
             )}
           </Link>
@@ -647,7 +647,7 @@ function Header({
 
           <button
             ref={buttonRef}
-            className="lg:hidden focus:outline-none cursor-pointer text-white"
+            className="lg:hidden focus:outline-none cursor-pointer text-orange"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             <HiBars3BottomRight size={36} />
@@ -681,10 +681,11 @@ function Header({
                 <Image
                   src={settings.dark_logo}
                   alt="Logo"
-                  height={100}
-                  width={100}
-                  loading="eager"
-                  priority
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  unoptimized
+                  className="w-[70px] sm:w-[70px] lg:w-auto h-auto"
                 />
               )}
             </Link>

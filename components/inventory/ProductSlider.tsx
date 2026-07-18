@@ -96,7 +96,7 @@ export default function ProductSlider({ data }: ProductSliderProps) {
      <div className="flex overflow-hidden w-full mb-5 gap-[17px]">
   <button
     onClick={() => setActiveTab("photos")}
-    className={`w-1/2 h-[42px] rounded-full text-lg leading-[18px] font-medium transition-all duration-300 cursor-pointer ${
+    className={`w-1/2 h-[36px] sm:h-[42px] rounded-full text-base sm:text-lg sm:leading-[18px] font-medium transition-all duration-300 cursor-pointer ${
       activeTab === "photos"
         ? "bg-green text-white hover:bg-[#E9E9E9CC] hover:text-[#343231]"
         : "bg-[#E9E9E9CC] text-[#343231] "
@@ -107,7 +107,7 @@ export default function ProductSlider({ data }: ProductSliderProps) {
 
   <button
     onClick={() => setActiveTab("videos")}
-    className={`w-1/2 h-[42px] rounded-full text-lg leading-[18px] font-medium transition-all duration-300 cursor-pointer ${
+    className={`w-1/2 h-[36px] sm:h-[42px] rounded-full text-base sm:text-lg sm:leading-[18px] font-medium transition-all duration-300 cursor-pointer ${
       activeTab === "videos"
         ? "bg-green text-white"
         : "bg-[#E9E9E9CC] text-[#343231] hover:bg-green hover:text-white"
@@ -136,8 +136,8 @@ export default function ProductSlider({ data }: ProductSliderProps) {
         }}
       >
         {activeMedia.map((item) => (
-          <SwiperSlide key={item.id}>
-            <div className="relative border border-border w-full h-[98px] md:w-[128px] rounded-xl overflow-hidden cursor-pointer" >
+          <SwiperSlide key={item.id} className="thumb-slide">
+            <div className="relative border border-border w-full h-[98px] md:w-[128px] rounded-xl overflow-hidden cursor-pointer transition-all duration-300" >
               {item.type === "image" && (
                 <Image
                   src={item.full_url}

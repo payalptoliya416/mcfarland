@@ -8,7 +8,7 @@ function OurCommitment() {
   return (
     <section className="">
       <div
-        className="relative overflow-hidden rounded-[15px] bg-cover bg-center"
+        className="relative overflow-hidden rounded-[15px] bg-cover md:bg-[length:100%_100%] bg-no-repeat bg-center"
         style={{
           backgroundImage: "url('/assets/images/commitment-bg.png')", 
         }}

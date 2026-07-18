@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 
 const data = [
   {
-    icon: "/assets/images/hero-icon3.svg",
+    icon: "/assets/images/Hero-icon-serve.svg",
     title: "Delivery anywhere within the",
     bold: "USA & Canada",
   },
@@ -61,10 +61,10 @@ function Hero() {
           <Loader />
         </div>
       )}
-      <section className="p-5 -mt-[145px]  pb-0">
+      <section className="p-5 -mt-[116px] md:-mt-[145px]  pb-0">
         <div className="relative rounded-3xl overflow-hidden min-h-[600] bg-cover bg-center bg-[url(/assets/images/hero-bg.png)]">
           <div className="relative z-10 flex items-center justify-center min-h-[720px]">
-            <div className="custom-container text-center text-white">
+            <div className="container-custom text-center text-white">
               <motion.div
                 custom={0}
                 initial="hidden"
@@ -165,7 +165,7 @@ function Hero() {
         }
       `}
                 >
-                  <div className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-[#FCE1D2]">
+                  <div className="flex h-[52px] w-[52px] shrink-0 items-center justify-center rounded-full bg-[#FCE1D2]/50">
                     <Image
                       src={item.icon}
                       alt={item.title}

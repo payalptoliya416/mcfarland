@@ -841,7 +841,7 @@ const UploadBox = ({
       className={`  relative  border-2 border-dashed border-border rounded-[14px]
         p-8 flex flex-col items-center justify-center text-center
         bg-[#F9F9F9]  min-h-[150px] transition
-        ${loading ? "cursor-not-allowed opacity-70" : "cursor-pointer hover:border-[#FFCE67]"}
+        ${loading ? "cursor-not-allowed opacity-70" : "cursor-pointer hover:border-orange"}
       `}
       onClick={() => {
         if (!loading) refInput.current?.click();

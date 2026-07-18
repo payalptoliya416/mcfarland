@@ -128,8 +128,8 @@ export default function OrderMobileCard({
           className={`mt-2 flex items-center gap-2 text-sm font-medium transition
             ${
               isContractDisabled
-                ? "text-[#EDB423] cursor-not-allowed"
-                : "text-[#EDB423] cursor-pointer hover:opacity-80"
+                ? "text-[#ff8a45] cursor-not-allowed"
+                : "text-[#ff8a45] cursor-pointer hover:opacity-80"
             }
           `}
         >

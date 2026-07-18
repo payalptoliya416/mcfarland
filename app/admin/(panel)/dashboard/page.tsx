@@ -148,7 +148,7 @@ const orderBadge = (status: string) => {
    const licenseBadge = (status: string) => {
   switch (status) {
     case "Pending":
-      return "bg-[#EDB423] text-gray";
+      return "bg-[#ff8a45] text-gray";
     case "Declined":
       return "bg-[#DD3623] text-white";
     case "Approved":

@@ -275,7 +275,15 @@ select option:checked {
   appearance: none;
   pointer-events: none;
 }
+.thumb-slide.swiper-slide-thumb-active > div {
+  border: 2px solid #F26722;
+  border-radius: 12px;
+}
 
+.thumb-slide.swiper-slide-thumb-active img,
+.thumb-slide.swiper-slide-thumb-active video {
+  border-radius: 10px;
+}
 .range-thumb::-webkit-slider-thumb {
   appearance: none;
   width: 16px;

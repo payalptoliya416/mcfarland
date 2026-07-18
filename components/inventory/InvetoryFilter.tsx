@@ -815,12 +815,14 @@ export default function InventoryFilter({}: {}) {
                             fill
                             className="object-cover"
                           />
+                          
                         </div>
                       ) : (
                         <div className="w-[216px] h-[123px]" />
                       )}
+                      <div className="absolute inset-0 rounded-[12px] transition-all duration-300 bg-[#1D1B1A]/30 backdrop-blur-[1px]" />
 
-                      <div className="absolute border border-red-300 rounded-full py-1.5 px-4 text-red-600 bg-red-50 font-semibold text-sm left-1/2 bottom-[34%] -translate-x-1/2 -translate-y-3">
+                      <div className="absolute border border-red-300 rounded-full py-1.5 px-4 text-red-600 bg-red-50 font-semibold text-sm left-1/2 bottom-[33%] -translate-x-1/2 -translate-y-3 z-10">
                         SOLD
                       </div>
                     </div>
@@ -863,8 +865,8 @@ export default function InventoryFilter({}: {}) {
                             />
                           </div>
                         )}
-
-                        <div className="absolute border border-border rounded-full py-1.5 px-4 text-green bg-white text-sm left-1/2 -translate-x-1/2 opacity-0 bottom-[34%] translate-y-3 group-hover:opacity-100 group-hover:-translate-y-3 transition font-semibold">
+                      <div className="absolute inset-0 rounded-[12px] bg-black/0 backdrop-blur-[0px] transition-all duration-300 group-hover:bg-[#1D1B1A]/30 group-hover:backdrop-blur-[1px]" />
+                        <div className="absolute border border-border rounded-full py-1.5 px-4 text-green bg-white text-sm left-1/2 -translate-x-1/2 opacity-0 bottom-[33%] translate-y-3 group-hover:opacity-100 group-hover:-translate-y-3 transition font-semibold z-10">
                           BID OR BUY
                         </div>
                       </div>

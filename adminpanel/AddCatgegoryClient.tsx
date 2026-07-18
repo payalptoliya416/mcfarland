@@ -185,7 +185,7 @@ const [cropImage, setCropImage] = useState<string | null>(null);
               <div
                 className="relative border-2 border-dashed border-border rounded-[14px] p-8
                 flex flex-col items-center justify-center  text-center cursor-pointer
-                bg-[#F9F9F9] hover:border-[#FFCE67] transition   min-h-[150px] py-[24px] "
+                bg-[#F9F9F9] hover:border-orange transition   min-h-[150px] py-[24px] "
                 onClick={() => !uploading && fileInputRef.current?.click()}
               >
                 <input

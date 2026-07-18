@@ -104,7 +104,11 @@ export default function FAQSection(): JSX.Element {
             <motion.div
               key={i}
               variants={itemVariant}
-              className="overflow-hidden rounded-[20px] bg-white shadow-[0_2px_35px_rgba(0,0,0,0.08)]  p-4 lg:p-[23px] cursor-pointer"
+              className={`
+              overflow-hidden bg-white shadow-[0_2px_35px_rgba(0,0,0,0.08)]
+              p-4 lg:p-[23px] cursor-pointer transition-all duration-300
+              ${isOpen ? "rounded-[20px]" : "rounded-full"}
+            `}
             >
               {/* Question Button */}
               <button

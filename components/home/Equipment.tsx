@@ -98,7 +98,7 @@ const slugify = (text: string) =>
 )}
     { !categories.length  ?   <section className="pt-[60px] lg:pt-[110px]"></section> : 
     
-    <section className="pt-[60px] lgF:pt-[110px]">
+    <section className="section-space">
        <div className="container-custom">
         <div className="mx-auto text-center">
           <span className="inline-flex rounded-full bg-[#F2671C] px-5 py-[10px] text-base font-semibold leading-[16px] text-white">

@@ -102,7 +102,7 @@ function WhyBuy() {
                     <div
                     className={item.imagePosition === "left" ? "lg:order-2" : ""}
                     >
-                    <div className="flex h-[62px] w-[62px] items-center justify-center rounded-full bg-[#FCE1D2]">
+                    <div className="flex h-[62px] w-[62px] items-center justify-center rounded-full bg-[#FCE1D2]/50">
                         <img src={item.icon} alt={item.title} />
                     </div>
 

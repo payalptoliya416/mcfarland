@@ -54,9 +54,9 @@ export default function CategoryMobileCard({
           className="flex items-center justify-center rounded-full"
         >
           {loadingEditId === item.id ? (
-            <HiArrowPath size={18} className="text-[#EDB423] animate-spin" />
+            <HiArrowPath size={18} className="text-[#ff8a45] animate-spin" />
           ) : (
-            <BiEdit size={18} className="text-[#EDB423]" />
+            <BiEdit size={18} className="text-[#ff8a45]" />
           )}
         </button>
         <HiOutlineTrash

@@ -297,7 +297,7 @@ const [regenerateLoading, setRegenerateLoading] = useState(false);
           <TooltipWrapper content="View Contract">
             <button
               onClick={() => window.open(row.contractUrl, "_blank")}
-              className="text-[#EDB423] hover:text-[#EDB423] cursor-pointer transition"
+              className="text-[#ff8a45] hover:text-[#ff8a45] cursor-pointer transition"
             >
               <FaFilePdf size={20} />
             </button>

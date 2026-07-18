@@ -108,7 +108,7 @@ export default function MachineryStatusDropdown({
           e.stopPropagation();
           handleToggle();
         }}
-        className={`flex items-center justify-between gap-2 px-2 py-1.5 w-[110px] rounded-md text-sm font-medium cursor-pointer ${current.btnClass}`}
+        className={`flex items-center justify-between gap-2 px-2 py-1.5 w-[110px] rounded-md text-sm font-medium cursor-pointer text-white ${current.btnClass}`}
       >
         {current.label}
         <FiChevronDown

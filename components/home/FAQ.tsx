@@ -113,7 +113,15 @@ const faqData: Item[] = [
             return (
               <div
                 key={item.id}
-                className="overflow-hidden rounded-[20px] bg-white shadow-[0_2px_35px_rgba(0,0,0,0.08)] p-4 lg:p-[23px] cursor-pointer"
+                 className={`
+                  overflow-hidden bg-white shadow-[0_2px_35px_rgba(0,0,0,0.08)]
+                  cursor-pointer transition-all duration-300
+                  ${
+                    isOpen
+                      ? "rounded-[20px] p-4 lg:p-[23px]"
+                      : "rounded-full px-5 py-4 lg:px-[23px] lg:py-5"
+                  }
+                `}
               >
                 <button
                   onClick={() => handleToggle(item.id)}

@@ -3,40 +3,6 @@
 import Image from "next/image";
 import { useSettings } from "@/contexts/SettingsContext";
 import Link from "next/link";
-import { motion } from "framer-motion";
-
-const fadeLeft = {
-  hidden: {
-    opacity: 0,
-    x: -80,
-  },
-  visible: {
-    opacity: 1,
-    x: 0,
-  },
-};
-
-const fadeRight = {
-  hidden: {
-    opacity: 0,
-    x: 80,
-  },
-  visible: {
-    opacity: 1,
-    x: 0,
-  },
-};
-
-const fadeUp = {
-  hidden: {
-    opacity: 0,
-    y: 30,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-  },
-};
 
 function AboutUs() {
   const { companyName } = useSettings();
@@ -45,13 +11,8 @@ function AboutUs() {
       <section className="pt-[60px] lg:pt-[110px]">
         <div className="container-custom">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-[30px]">
-            <motion.div
+            <div
               className="flex justify-center lg:justify-start"
-              variants={fadeLeft}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
             >
               <Image
                 src="/assets/images/about.png"
@@ -61,13 +22,8 @@ function AboutUs() {
                 sizes="100vw"
                 className="w-auto h-auto"
               />
-            </motion.div>
-            <motion.div
-              variants={fadeRight}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              transition={{ duration: 0.7 }}
+            </div>
+            <div
             >
               <span className="inline-flex rounded-full bg-[#F2671C] px-5 py-[10px] text-base !leading-[16px] font-semibold text-white">
                 About Us
@@ -120,7 +76,7 @@ function AboutUs() {
                   className="transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-2"
                 />
               </Link>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
