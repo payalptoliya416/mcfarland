@@ -53,7 +53,7 @@ export default function BiddingMobileCard({
         {(() => {
           const statusMap: Record<string, string> = {
             active: "bg-[#34C759] text-white",
-            pending: "bg-[#FFCA42] text-black",
+            pending: "bg-[#F2671C] text-black",
             completed: "bg-[#2196F3] text-white",
             cancelled: "bg-red-500 text-white",
           };

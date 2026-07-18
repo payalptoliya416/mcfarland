@@ -50,7 +50,7 @@ function Payment() {
         const color: any = {
           Paid: "bg-[#35BB63] text-white",
           Failed: "bg-[#DD3623] text-white",
-          Pending: "bg-[#FFCA42] text-gray",
+          Pending: "bg-[#F2671C] text-gray",
         };
 
         return (

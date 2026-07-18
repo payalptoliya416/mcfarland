@@ -18,7 +18,7 @@ const statusClassMap: Record<string, string> = {
   "Awaiting Invoice": "bg-yellow-500 text-black",
   "Settle Payment": "bg-orange-500 text-white",
   "Payment Confirmed": "bg-green-500 text-white",
-  "Processing": "bg-[#FFCA42] text-black",
+  "Processing": "bg-[#F2671C] text-black",
   "Shipping Started": "bg-[#3C97FF] text-white",
   "In Transit": "bg-[#8B5CF6] text-white",
   "Delivered": "bg-[#2DBE60] text-white",
@@ -214,7 +214,7 @@ if (loading) {
   return (
     <>
     {redirectLoading && (
-    <div className="fixed inset-0 bg-white/70 backdrop-blur-sm z-50 flex items-center justify-center">
+    <div className="fixed inset-0 bg-white/70 backdrop-blur-sm z-50 flex items-center justify-center  min-h-[60vh]">
       <Loader />
     </div>
     )}
@@ -305,7 +305,7 @@ if (loading) {
             setRedirectLoading(true);
             router.push(item.link);
           }}
-              className="border rounded-[10px] border-border p-[20px] sm:p-[25px] flex flex-col gap-[15px] justify-center items-center lg:items-start lg:justify-start cursor-pointer"
+              className="border rounded-[10px] border-border p-4 sm:p-[25px] flex flex-col gap-[15px] justify-center items-center lg:items-start lg:justify-start cursor-pointer"
             >
               <div
                 className="w-[60px] h-[60px] rounded-[18px] p-[15px] flex justify-center items-center"
@@ -319,11 +319,11 @@ if (loading) {
                 />
               </div>
 
-              <h3 className="text-gray text-[30px] sm:text-[38px] font-bold">
+              <h3 className="text-gray text-2xl sm:text-[38px] font-bold">
                 {item.count}
               </h3>
 
-              <p className="text-lightgray text-[18px] sm:text-[22px] leading-[22px]">
+              <p className="text-lightgray text-base sm:text-[22px] leading-[22px]">
                 {item.label}
               </p>
             </div>

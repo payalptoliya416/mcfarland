@@ -532,60 +532,21 @@ function Header({
                               }
                             }}
                           >
-                            {/* <button
-                              onClick={(e) => {
-                                e.preventDefault();
-                                e.stopPropagation();
-
-                                let url = "";
-
-                                if (hasSubmenu) {
-                                  const categories = group.submenu
-                                    ?.map(
-                                      (sub) => sub.path.split("category=")[1],
-                                    )
-                                    .filter(Boolean)
-                                    .join(",");
-
-                                  url = `/inventory?category=${categories}`;
-                                } else {
-                                  url = group.path;
-                                }
-
-                                setDisableHover(true);
-                                setOpenDropdown(null);
-                                setActiveGroup(null);
-                                setClickedGroup(null);
-
-                                handleNavigate(url);
-                                setTimeout(() => setDisableHover(false), 300);
-                              }}
-                              className="
-                                w-full flex justify-between items-center text-[#1D1B1A]
-                                  font-medium hover:text-orange cursor-pointer
-                              "
-                            >
-                              {group.name}
-
-                              {hasSubmenu && (
-                                <MdChevronRight
-                                  size={20}
-                                  className="text-gray-400"
-                                />
-                              )}
-                            </button> */}
+                         
                             <Link
                               href={url}
                               onClick={(e) => {
-                                e.stopPropagation();
+                                  e.stopPropagation();
 
-                                setDisableHover(true);
-                                setOpenDropdown(null);
-                                setActiveGroup(null);
-                                setClickedGroup(null);
+                                  setDisableHover(true);
+                                  setOpenDropdown(null);
+                                  setActiveGroup(null);
+                                  setClickedGroup(null);
 
-                                setTimeout(() => setDisableHover(false), 300);
-                              }}
+                                  setTimeout(() => {
+                                    setDisableHover(false);
+                                  }, 300);
+                                }}
                               className="w-full flex items-center justify-between font-medium text-[#1D1B1A] hover:text-orange"
                             >
                               {group.name}

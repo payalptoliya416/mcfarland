@@ -416,7 +416,7 @@ const trackingRowsWithState =
                 </div>
                 {/* ================= BODY ================= */}
                 <div className="border-t px-6 py-6 bg-white border-border">
-                  <div className="flex justify-between mb-16 flex-wrap gap-5">
+                  <div className="flex justify-between mb-7 md:mb-16 flex-wrap gap-5">
                     <div>
                       <h3 className="text-xl font-medium">Order ID</h3>
                       <p className="text-seclightgray">#{data.order_id}</p>
@@ -507,7 +507,7 @@ const trackingRowsWithState =
                                   className="flex flex-col items-center gap-1 text-xs text-secgray"
                                 >
                                   <span>View Agreement</span>
-                                  <FaFilePdf className="text-[#FFCA42] text-lg" />
+                                  <FaFilePdf className="text-[#F2671C] text-lg" />
                                 </a>
                               </div>
                             )}
@@ -549,7 +549,7 @@ const trackingRowsWithState =
                     openTrackingModal(data);
                   }
                 }}
-                          className={`flex items-start gap-4 mb-2
+                          className={`flex items-start gap-4 lg:mb-2
                           lg:flex-col lg:items-center
                                           ${
                   s.key === "In Transit" 
@@ -569,7 +569,7 @@ const trackingRowsWithState =
                                 }`}
                             >
                               <div
-                                className={`w-[22px] h-[22px] rounded-full ${
+                                className={`w-[23px] h-[23px] rounded-full ${
                                   completed ? "bg-[#F2671C]" : "bg-light-gray"
                                 }`}
                               />
@@ -641,7 +641,7 @@ const trackingRowsWithState =
                                       className="flex items-center gap-3 text-xs text-secgray mt-1"
                                     >
                                       <span>View Agreement</span>
-                                      <FaFilePdf className="text-[#FFCA42] text-lg" />
+                                      <FaFilePdf className="text-[#F2671C] text-lg" />
                                     </a>
                                   </div>
                                 )}
@@ -1062,7 +1062,7 @@ const trackingRowsWithState =
 
                       <div
                               className={`
-                                mt-1 w-[22px] h-[22px]
+                                mt-1 w-[23px] h-[23px]
                                 rounded-full shrink-0
                                 border-[4px] border-white shadow-md
                                 z-10

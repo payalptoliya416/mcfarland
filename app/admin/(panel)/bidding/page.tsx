@@ -163,7 +163,7 @@ export default function BiddingManagement() {
       render: (row) => {
         const statusMap: Record<string, string> = {
           active: "bg-[#34C759] text-white", // Green
-          pending: "bg-[#FFCA42] text-black", // Yellow
+          pending: "bg-[#F2671C] text-black", // Yellow
           completed: "bg-[#2196F3] text-white", // Red
           cancelled: "bg-red-500 text-white"
         };

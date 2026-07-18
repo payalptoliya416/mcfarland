@@ -42,7 +42,7 @@ function WonBidCard({
     loading: boolean;
 }) {
   const statusStyles: Record<string, string> = {
-    Pending: "bg-[#FFCA42] text-secgray",
+    Pending: "bg-[#F2671C] text-secgray",
     Approved: "bg-[#35BB63] text-white",
     Signed: "bg-[#3C97FF] text-white",
     Rejected: "bg-[#FF4D4F] text-white",
@@ -211,7 +211,7 @@ export default function MyWonBids() {
       header: "Contract Status",
       render: (row) => {
         const styles: Record<string, string> = {
-          Pending: "bg-[#FFCA42] text-secgray",
+          Pending: "bg-[#F2671C] text-secgray",
           Approved: "bg-[#35BB63] text-white",
           Signed: "bg-[#3C97FF] text-white",
           Rejected: "bg-[#FF4D4F] text-white",

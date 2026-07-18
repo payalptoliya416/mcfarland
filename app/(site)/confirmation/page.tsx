@@ -82,7 +82,7 @@ function ConfirmationPage() {
   const [models, setModels] = useState<string[]>([]);
 
   const [product, setProduct] = useState<SingleMachinery | null>(null);
-
+console.log("product",product)
   useEffect(() => {
     if (product) {
       window.scrollTo(0, 0);
@@ -276,7 +276,7 @@ Our team is currently reviewing your order details and preparing the transaction
               {/* Button 1 */}
               <Link
                 href="/user/orders"
-                className="flex h-10 items-center justify-center rounded-[62px] border border-gray-500 px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-gray-500 transition-all duration-300 cursor-pointer"
+                className="flex h-10 items-center justify-center rounded-[62px] border border-gray-500 px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-gray-500 transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white cursor-pointer"
               >
                 View Order Progress
               </Link>
@@ -284,7 +284,7 @@ Our team is currently reviewing your order details and preparing the transaction
               {/* Button 2 */}
               <Link
                 href="/inventory"
-                className="flex h-10 items-center justify-center rounded-[62px] border border-gray-500 px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-gray-500 transition-all duration-300 cursor-pointer"
+                className="flex h-10 items-center justify-center rounded-[62px] border border-gray-500 px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-gray-500 transition-all duration-300 hover:border-primary hover:bg-primary hover:text-white cursor-pointer"
               >
                 View Inventory
               </Link>
@@ -341,7 +341,7 @@ Our team is currently reviewing your order details and preparing the transaction
                       : step.desc}
                   </p>
 
-                  {step.title === "Receive your equipment" && (
+                  {step.title === "4. Receive Your Equipment" && (
                     <>
                       {product && (
                         <div className="bg-white border border-border rounded-xl p-4 sm:p-6">
