@@ -75,8 +75,8 @@ function CoreServices() {
             <Image
               src={service.icon}
               alt={service.title}
-              width={26}
-              height={26}
+              width={30}
+              height={30}
             />
           </div>
 
