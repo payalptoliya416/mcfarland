@@ -12,7 +12,6 @@ import Loader from "@/components/common/Loader";
 import { HiArrowPath, HiOutlineEye } from "react-icons/hi2";
 import { formatPrice } from "@/hooks/formate";
 import { TooltipWrapper } from "@/adminpanel/TooltipWrapper";
-import BiddingStatusDropdown from "@/adminpanel/BiddingStatusDropdown";
 
 /* ================= TYPES ================= */
 export type BiddingRow = {
@@ -105,7 +104,6 @@ export default function BiddingManagement() {
 
   /* ================= COLUMNS ================= */
   const columns: Column<BiddingRow>[] = [
- 
     {
       key: "name",
       header: "Machinery Name",
@@ -115,7 +113,7 @@ export default function BiddingManagement() {
         setSortOrder((p) => (p === "asc" ? "desc" : "asc"));
       },
     },
-       {
+    {
       key: "auction_id",
       header: "Auction ID",
       sortable: true,
@@ -157,22 +155,22 @@ export default function BiddingManagement() {
       header: "Status",
       sortable: true,
       onSort: () => {
-      setSortBy("bid_status");
-      setSortOrder((p) => (p === "asc" ? "desc" : "asc"));
-    },
+        setSortBy("bid_status");
+        setSortOrder((p) => (p === "asc" ? "desc" : "asc"));
+      },
       render: (row) => {
         const statusMap: Record<string, string> = {
           active: "bg-[#34C759] text-white", // Green
           pending: "bg-[#F2671C] text-white", // Yellow
           completed: "bg-[#2196F3] text-white", // Red
-          cancelled: "bg-red-500 text-white"
+          cancelled: "bg-red-500 text-white",
         };
 
         const statusDisplay: Record<string, string> = {
           active: "Active",
           pending: "Pending",
           completed: "Completed",
-          cancelled:"Cancelled"
+          cancelled: "Cancelled",
         };
 
         return (
@@ -186,18 +184,18 @@ export default function BiddingManagement() {
         );
       },
     },
-  //   {
-  //   key: "bid_status",
-  //   header: "Status",
-  //    sortable: true,
-  //   render: (r) => (
-  //     <BiddingStatusDropdown
-  //       value={r.bid_status}
-  //       biddingId={r.id}
-  //       onUpdated={fetchBidding}
-  //     />
-  //   ),
-  // },
+    //   {
+    //   key: "bid_status",
+    //   header: "Status",
+    //    sortable: true,
+    //   render: (r) => (
+    //     <BiddingStatusDropdown
+    //       value={r.bid_status}
+    //       biddingId={r.id}
+    //       onUpdated={fetchBidding}
+    //     />
+    //   ),
+    // },
     {
       key: "actions",
       header: "Actions",
@@ -265,11 +263,11 @@ export default function BiddingManagement() {
             <BiddingMobileCard
               key={item.id}
               item={item}
-                loadingViewId={loadingViewId}
-    onEdit={() => {
-      setLoadingViewId(item.id);
-      router.push(`/admin/bidding/bidding-list?id=${item.id}`);
-    }}
+              loadingViewId={loadingViewId}
+              onEdit={() => {
+                setLoadingViewId(item.id);
+                router.push(`/admin/bidding/bidding-list?id=${item.id}`);
+              }}
             />
           ))}
         </div>
@@ -287,7 +285,6 @@ export default function BiddingManagement() {
           noDataMessage={noDataMessage}
         />
       )}
-   
     </div>
   );
 }

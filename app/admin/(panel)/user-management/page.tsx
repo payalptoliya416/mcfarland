@@ -52,7 +52,6 @@ export interface UserApiItem {
   status: number; // 0 | 1 | 2
   is_license: number; // 0 | 1
 
-  // 🔥 FIX HERE
   license_status: "approved" | "declined" | "submit" | null;
 
   created_at?: string;
@@ -97,7 +96,7 @@ export default function UsersPage() {
       });
 
       if (!res?.data || res.data.length === 0) {
-        setData([]); // ✅ clear old data
+        setData([]); 
         setPagination(res.pagination ?? null);
         setNoDataMessage(res.message ?? "No users found");
         return;
@@ -237,7 +236,7 @@ export default function UsersPage() {
         <UserStatusDropdown
           value={r.status_text ?? "Pending"}
           userId={r.id}
-          onUpdated={fetchUsers} // 🔥 refresh after update
+          onUpdated={fetchUsers} 
         />
       ),
     },

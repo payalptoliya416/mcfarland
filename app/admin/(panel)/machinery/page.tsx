@@ -15,6 +15,7 @@ import MachineryMobileCard from "@/adminpanel/MachineryMobileCard";
 import { formatPrice } from "@/hooks/formate";
 import { TooltipWrapper } from "@/adminpanel/TooltipWrapper";
 import MachineryStatusDropdown from "@/adminpanel/MachineryStatusDropdown";
+
 /* ================= TYPES ================= */
 export type MachineryRow = {
   id: number;
@@ -260,7 +261,7 @@ export default function Machinery() {
 
     try {
       await handleRefreshAuctionId(refreshId);
-      setRefreshId(null); // close modal
+      setRefreshId(null); 
     } finally {
       setRefreshLoading(false);
     }
@@ -274,7 +275,6 @@ export default function Machinery() {
       if (res?.status) {
         toast.success(res.message || "Machinery deleted successfully");
 
-        // ✅ pagination safe logic
         if (data.length === 1 && page > 1) {
           setPage((p) => p - 1);
         } else {
@@ -292,19 +292,13 @@ export default function Machinery() {
 
     try {
       setDeleteLoading(true);
-      await handleDelete(deleteId); // 🔥 reuse existing logic
-      setDeleteId(null); // close modal
+      await handleDelete(deleteId); 
+      setDeleteId(null); 
     } finally {
       setDeleteLoading(false);
     }
   };
-  // if (loading) {
-  //   return (
-  //     <div className="flex justify-center items-center h-[70vh]">
-  //       <Loader />
-  //     </div>
-  //   );
-  // }
+
   return (
     <div className="space-y-5 bg-white border border-border rounded-[14px] p-3 sm:p-5">
       {/* TOP BAR */}
@@ -351,7 +345,6 @@ export default function Machinery() {
       </div>
       {isMobile ? (
         <div className="space-y-4">
-          {/* {loading &&  <div className="flex justify-center items-center h-full"><Loader/></div>} */}
 
           {!loading && data.length === 0 && (
             <p className="text-center text-gray-500">{noDataMessage}</p>

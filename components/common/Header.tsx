@@ -624,12 +624,15 @@ function Header({
                   e.preventDefault();
                   handleNavigate(getAuthUrl("/user/signin"));
                 }}
-                className="flex h-10 items-center justify-center rounded-[62px] border border-white px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-white hover:text-black cursor-pointer"
+                className={`flex h-10 items-center justify-center rounded-[62px] px-4 xl:px-[25px] text-sm xl:text-base font-semibold transition-all duration-300 cursor-pointer ${
+                hasBgImage
+                  ? "border border-gray text-gray hover:bg-orange hover:text-white hover:border-orange"
+                  : "border border-white text-white hover:bg-white hover:text-black"
+              }`}
               >
                 Sign In
               </Link>
 
-              {/* Sign Up (Primary highlight) */}
               {!pathname.startsWith("/signup") && (
                 <Link
                   href={getAuthUrl("/signup")}
@@ -637,7 +640,7 @@ function Header({
                     e.preventDefault();
                     handleNavigate(getAuthUrl("/signup"));
                   }}
-                  className="flex h-10 items-center justify-center rounded-[62px] border border-primary bg-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-orange-500 hover:border-orange-500 cursor-pointer"
+                  className="flex h-10 items-center justify-center rounded-[62px] border border-primary bg-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-white hover:border-gray hover:text-gray cursor-pointer"
                 >
                   Sign Up
                 </Link>

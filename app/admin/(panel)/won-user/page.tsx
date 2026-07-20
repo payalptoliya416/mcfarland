@@ -69,7 +69,7 @@ export default function WonUser() {
       });
 
       if (!res?.data || res.data.length === 0) {
-        setData([]); // ✅ clear old rows
+        setData([]); 
         setPagination(res.pagination ?? null);
         setNoDataMessage(res.message || "No won users found");
         return;

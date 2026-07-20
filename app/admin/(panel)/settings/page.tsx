@@ -1,10 +1,8 @@
 "use client";
 
 import { Formik, Form, Field } from "formik";
-import PhoneInput from "react-phone-input-2";
 import * as Yup from "yup";
 import "react-phone-input-2/lib/style.css";
-import { FiPlus } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import {
   AdminSettingsData,
@@ -13,7 +11,6 @@ import {
 } from "@/api/admin/settings";
 import Loader from "@/components/common/Loader";
 import toast from "react-hot-toast";
-import QuillEditor from "@/adminpanel/QuillEditor";
 import { useSettings } from "@/contexts/SettingsContext";
 
 type SettingsFormValues = {
@@ -68,9 +65,6 @@ export const Schema = Yup.object({
   facebook: Yup.string()
     .url("Enter a valid Twitter URL")
     .required("Facebook link is required"),
-  //   facebook: Yup.string()
-  //   .matches(/^https?:\/\/(www\.)?facebook\.com\/.+$/, "Enter valid Facebook profile URL")
-  //   .required("Facebook link is required"),
 
   twitter: Yup.string()
     .url("Enter a valid Twitter URL")
@@ -91,7 +85,6 @@ export default function CompanySettingUI() {
   const [loading, setLoading] = useState(true);
   const [cancelLoading, setCancelLoading] = useState(false);
 
-  /* ================= API FETCH ================= */
   const fetchSettings = async () => {
     try {
       const res = await adminSettingsService();

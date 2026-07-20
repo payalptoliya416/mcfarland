@@ -33,25 +33,26 @@ export default function ProductSlider({ data }: ProductSliderProps) {
     <div className="group">
       {/* ================= MAIN SLIDER ================= */}
     <div className="relative border border-border rounded-[15px] mb-[25px] overflow-hidden">
-  <Swiper
-    modules={[Navigation, Thumbs]}
-    thumbs={{ swiper: thumbsSwiper }}
-    navigation={{
-      prevEl: prevRef.current,
-      nextEl: nextRef.current,
-    }}
-    onBeforeInit={(swiper: any) => {
-      swiper.params.navigation.prevEl = prevRef.current;
-      swiper.params.navigation.nextEl = nextRef.current;
-    }}
-  >
-    {activeMedia.map((item) => (
+ <Swiper
+  modules={[Navigation, Thumbs]}
+  thumbs={{ swiper: thumbsSwiper }}
+  navigation={{
+    prevEl: prevRef.current,
+    nextEl: nextRef.current,
+  }}
+  onBeforeInit={(swiper: any) => {
+    swiper.params.navigation.prevEl = prevRef.current;
+    swiper.params.navigation.nextEl = nextRef.current;
+  }}
+>
+  {activeMedia.length > 0 ? (
+    activeMedia.map((item) => (
       <SwiperSlide
         key={item.id}
         className="cursor-grab active:cursor-grabbing"
       >
         <div className="relative w-full h-[220px] sm:h-[320px] md:h-[420px] lg:h-[500px]">
-          {item.type === "image" && (
+          {item.type === "image" ? (
             <Image
               src={item.full_url}
               alt={data.name}
@@ -60,9 +61,7 @@ export default function ProductSlider({ data }: ProductSliderProps) {
               sizes="(max-width:700px)100vw,623px"
               className="object-cover rounded-[15px]"
             />
-          )}
-
-          {item.type === "video" && (
+          ) : (
             <video
               src={item.full_url}
               controls
@@ -71,8 +70,15 @@ export default function ProductSlider({ data }: ProductSliderProps) {
           )}
         </div>
       </SwiperSlide>
-    ))}
-  </Swiper>
+    ))
+  ) : (
+    <SwiperSlide>
+      <div className="flex h-[220px] sm:h-[320px] md:h-[420px] lg:h-[500px] items-center justify-center rounded-[15px] bg-gray-100 text-gray-500">
+        No {activeTab === "photos" ? "Image" : "Video"} Available
+      </div>
+    </SwiperSlide>
+  )}
+</Swiper>
 
   {/* Navigation */}
   <div className="absolute bottom-5 right-5 z-20 flex gap-[10px]">

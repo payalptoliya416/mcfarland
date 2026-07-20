@@ -10,27 +10,27 @@ export interface BrandItem {
 const brandData: BrandItem[] = [
   {
     id: 1,
-    logo: "/assets/images/brand1.png",
+    logo: "/assets/images/brand-logo1.png",
     name: "Caterpillar",
   },
   {
     id: 2,
-    logo: "/assets/images/brand2.png",
+    logo: "/assets/images/brand-logo02.png",
     name: "JCB",
   },
   {
     id: 3,
-    logo: "/assets/images/brand3.png",
+    logo: "/assets/images/brand-logo3.png",
     name: "John Deere",
   },
   {
     id: 4,
-    logo: "/assets/images/brand4.png",
+    logo: "/assets/images/brand-logo4.png",
     name: "Volvo",
   },
   {
     id: 5,
-    logo: "/assets/images/brand5.png",
+    logo: "/assets/images/brand-logo5.png",
     name: "CASE",
   },
 ];

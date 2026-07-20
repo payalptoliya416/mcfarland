@@ -4,7 +4,7 @@ import Image from "next/image";
 
 function Testimonial() {
   return (
-    <section className="">
+    <section>
       <div className="container-custom mx-auto ">
         <div className="text-center">
           <span className="inline-flex rounded-full bg-[#F2671C] px-5 py-[10px] text-base !leading-[16px] font-semibold text-white">
@@ -46,11 +46,11 @@ function Testimonial() {
                 />
 
                 <div>
-                  <h4 className="text-primary text-lg leading-none font-semibold mb-2">
+                  <h4 className="text-primary text-base md:text-lg leading-none font-semibold mb-2">
                     Robert F
                   </h4>
 
-                  <p className="text-[#4B4947] text-base font-medium leading-none">
+                  <p className="text-[#4B4947] text-sm md:text-base font-medium leading-none">
                     Supplier
                   </p>
                 </div>
@@ -88,11 +88,11 @@ function Testimonial() {
                 />
 
                 <div>
-                  <h4 className="text-primary text-lg leading-none font-semibold mb-2">
+                  <h4 className="text-primary text-base md:text-lg leading-none font-semibold mb-2">
                     Kathryn M
                   </h4>
 
-                  <p className="text-[#4B4947] text-base font-medium leading-none">
+                  <p className="text-[#4B4947] text-sm md:text-base font-medium leading-none">
                     Dealer
                   </p>
                 </div>
@@ -130,11 +130,11 @@ function Testimonial() {
                 />
 
                 <div>
-                  <h4 className="text-primary text-lg leading-none font-semibold mb-2">
+                  <h4 className="text-primary text-base md:text-lg leading-none font-semibold mb-2">
                     Jerome B
                   </h4>
 
-                  <p className="text-[#4B4947] text-base font-medium leading-none">
+                  <p className="text-[#4B4947] text-sm md:text-base font-medium leading-none">
                     Owner
                   </p>
                 </div>

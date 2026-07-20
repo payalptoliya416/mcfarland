@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { Formik, Form, Field, ErrorMessage, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { adminAuthService } from "@/api/admin/auth";
@@ -61,7 +60,6 @@ useEffect(() => {
 
   return (
     <div className="relative min-h-[100svh] flex items-center justify-center overflow-hidden">
-      {/* BACKGROUND */}
       <Image
         src="/assets/images/Bg-new.png"
         alt="background"
@@ -70,7 +68,6 @@ useEffect(() => {
          className="absolute inset-0 object-cover opacity-60 -z-10"
       />
 
-      {/* LOGIN CARD */}
       <div
         className="
           relative z-10

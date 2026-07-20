@@ -1,5 +1,5 @@
 import BiddingList from "@/adminpanel/BiddingList";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 
 function page() {
   return (

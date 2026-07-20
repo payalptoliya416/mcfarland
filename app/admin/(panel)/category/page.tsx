@@ -31,7 +31,7 @@ export default function AdminCategory() {
   /* ================= STATE ================= */
   const [data, setData] = useState<CategoryRow[]>([]);
   const [loading, setLoading] = useState(false);
-const [redirecting, setRedirecting] = useState(false);
+  const [redirecting, setRedirecting] = useState(false);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
@@ -121,8 +121,8 @@ const [redirecting, setRedirecting] = useState(false);
 
     try {
       setDeleteLoading(true);
-      await handleDelete(deleteId); // 🔥 reuse logic
-      setDeleteId(null); // close modal
+      await handleDelete(deleteId);
+      setDeleteId(null);
     } finally {
       setDeleteLoading(false);
     }
@@ -233,12 +233,12 @@ const [redirecting, setRedirecting] = useState(false);
         </div>
 
         <button
-  disabled={redirecting}
-  onClick={() => {
-    setRedirecting(true);
-    router.push("/admin/category/add");
-  }}
-  className={`gradient-btn flex h-10 items-center justify-center gap-2 rounded-[62px]
+          disabled={redirecting}
+          onClick={() => {
+            setRedirecting(true);
+            router.push("/admin/category/add");
+          }}
+          className={`gradient-btn flex h-10 items-center justify-center gap-2 rounded-[62px]
   border border-primary px-4 xl:px-[25px]
   text-sm xl:text-base font-semibold text-white
   transition-all duration-300 ease-out
@@ -247,13 +247,13 @@ const [redirecting, setRedirecting] = useState(false);
       ? "opacity-70 cursor-not-allowed"
       : "cursor-pointer hover:-translate-y-1 hover:bg-orange-500 hover:border-orange-500 hover:shadow-[0_12px_30px_rgba(242,103,28,0.35)] active:translate-y-[2px] active:scale-[0.97]"
   }`}
->
-  {redirecting && (
-    <span className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
-  )}
+        >
+          {redirecting && (
+            <span className="h-4 w-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
+          )}
 
-  {redirecting ? "Add Category" : "+ Add Category"}
-</button>
+          {redirecting ? "Add Category" : "+ Add Category"}
+        </button>
       </div>
 
       {isMobile ? (
@@ -272,11 +272,11 @@ const [redirecting, setRedirecting] = useState(false);
             <CategoryMobileCard
               key={item.id}
               item={item}
-                loadingEditId={loadingEditId}
-    onEdit={() => {
-      setLoadingEditId(item.id);
-      router.push(`/admin/category/add?id=${item.id}`);
-    }}
+              loadingEditId={loadingEditId}
+              onEdit={() => {
+                setLoadingEditId(item.id);
+                router.push(`/admin/category/add?id=${item.id}`);
+              }}
               onDelete={() => setDeleteId(item.id)}
             />
           ))}
