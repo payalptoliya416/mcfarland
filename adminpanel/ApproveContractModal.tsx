@@ -208,7 +208,7 @@ export default function ApproveContractModal({
                   <button
                     type="submit"
                     disabled={loading || isSubmitting}
-                    className="px-5 py-2 bg-[#FFBD34] text-white rounded-md text-sm flex items-center gap-2 cursor-pointer"
+                    className="px-5 py-2 bg-[#f2671c] text-white rounded-md text-sm flex items-center gap-2 cursor-pointer"
                   >
                     {loading && (
                       <span className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
