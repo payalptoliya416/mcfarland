@@ -82,7 +82,6 @@ function ConfirmationPage() {
   const [models, setModels] = useState<string[]>([]);
 
   const [product, setProduct] = useState<SingleMachinery | null>(null);
-console.log("product",product)
   useEffect(() => {
     if (product) {
       window.scrollTo(0, 0);
