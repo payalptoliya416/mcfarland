@@ -281,7 +281,7 @@ function InventoryDetail() {
                 <p className="text-base text-[#4B4947] leading-none mb-[10px]">
                   Year
                 </p>
-                <p className="text-lg font-semibold text-gray leading-none">
+                <p className="text-lg font-semibold text-gray leading-none break-all">
                   {data?.year}
                 </p>
               </div>
@@ -297,7 +297,7 @@ function InventoryDetail() {
                 <p className="text-base text-[#4B4947] leading-none mb-[10px]">
                   Weight
                 </p>
-                <p className="text-lg font-semibold text-gray leading-none">
+                <p className="text-lg font-semibold text-gray leading-none break-all">
                   {data?.weight}
                 </p>
               </div>
@@ -313,7 +313,7 @@ function InventoryDetail() {
                 <p className="text-base text-[#4B4947] leading-none mb-[10px]">
                   Working Hours
                 </p>
-                 <p className="text-lg font-semibold text-gray leading-none">
+                 <p className="text-lg font-semibold text-gray leading-none break-all">
                   {data?.working_hours}
                 </p>
               </div>
@@ -329,7 +329,7 @@ function InventoryDetail() {
                   <p className="text-base text-[#4B4947] leading-none mb-[10px]">
                     Fuel Type
                   </p>
-                  <p className="text-lg font-semibold text-gray leading-none">
+                  <p className="text-lg font-semibold text-gray leading-none break-all">
                     {data?.fuel}
                   </p>
                 </div>
@@ -362,7 +362,7 @@ function InventoryDetail() {
                <p className="text-base text-[#4B4947] leading-none mb-[10px]">
                   Serial Number
                 </p>
-                <p className="text-lg font-semibold text-gray leading-none">
+                <p className="text-lg font-semibold text-gray leading-none break-all">
                   {data?.serial_number}
                 </p>
               </div>
@@ -509,7 +509,7 @@ function InventoryDetail() {
                 <p className="text-base text-[#4B4947] leading-none mb-[10px]">
                   Year
                 </p>
-                <p className="text-lg font-semibold text-gray leading-none">
+                <p className="text-lg font-semibold text-gray leading-none break-all">
                   {data?.year}
                 </p>
               </div>
@@ -525,7 +525,7 @@ function InventoryDetail() {
                 <p className="text-base text-[#4B4947] leading-none mb-[10px]">
                   Weight
                 </p>
-                <p className="text-lg font-semibold text-gray leading-none">
+                <p className="text-lg font-semibold text-gray leading-none break-all">
                   {data?.weight}
                 </p>
               </div>
@@ -541,7 +541,7 @@ function InventoryDetail() {
                 <p className="text-base text-[#4B4947] leading-none mb-[10px]">
                   Working Hours
                 </p>
-                 <p className="text-lg font-semibold text-gray leading-none">
+                 <p className="text-lg font-semibold text-gray leading-none break-all">
                   {data?.working_hours}
                 </p>
               </div>
@@ -557,7 +557,7 @@ function InventoryDetail() {
                   <p className="text-base text-[#4B4947] leading-none mb-[10px]">
                     Fuel Type
                   </p>
-                  <p className="text-lg font-semibold text-gray leading-none">
+                  <p className="text-lg font-semibold text-gray leading-none break-all">
                     {data?.fuel}
                   </p>
                 </div>
@@ -590,7 +590,7 @@ function InventoryDetail() {
                <p className="text-base text-[#4B4947] leading-none mb-[10px]">
                   Serial Number
                 </p>
-                <p className="text-lg font-semibold text-gray leading-none">
+                <p className="text-lg font-semibold text-gray leading-none break-all">
                   {data?.serial_number}
                 </p>
               </div>
