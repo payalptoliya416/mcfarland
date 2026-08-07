@@ -154,6 +154,22 @@ export default function AdminHeader({
     setMenuLoading("breadcrumb");
     router.push(path);
   };
+
+  const handleCloseChangePassword = () => {
+    setShowChangePassword(false);
+
+    // Reset form values + validation
+    formik.resetForm();
+
+    // Reset API messages
+    setApiError(null);
+    setApiSuccess(null);
+
+    // Reset password visibility
+    setShowCurrent(false);
+    setShowNew(false);
+    setShowConfirm(false);
+  };
   return (
     <>
       <header className="bg-white flex items-center justify-between border rounded-[14px] border-border p-3 sm:p-5 mb-5">
@@ -316,7 +332,7 @@ export default function AdminHeader({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
           <div className="bg-white w-full max-w-md rounded-2xl shadow-xl p-6 relative">
             <button
-              onClick={() => setShowChangePassword(false)}
+              onClick={handleCloseChangePassword}
               className="absolute top-4 right-4 w-6 h-6 rounded-full border
         flex items-center justify-center text-gray-500 hover:bg-gray-100 cursor-pointer"
             >
@@ -448,9 +464,22 @@ export default function AdminHeader({
               {/* Submit Button */}
               <button
                 type="submit"
-                className="w-full bg-[#F2671C] text-white py-2 rounded-full font-medium hover:opacity-90 transition cursor-pointer"
+                disabled={loading}
+                className={`w-full py-2 rounded-full font-medium transition
+              ${
+                loading
+                  ? "bg-[#F2671C]/70 cursor-not-allowed text-white"
+                  : "bg-[#F2671C] hover:opacity-90 cursor-pointer text-white"
+              }`}
               >
-                Update Password
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <HiArrowPath className="animate-spin" size={18} />
+                    Updating...
+                  </span>
+                ) : (
+                  "Update Password"
+                )}
               </button>
             </form>
           </div>
