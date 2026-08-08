@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { getAdminToken } from "@/api/admin/adminAuth";
 import Loader from "@/components/common/Loader";
 import AdminSidebar from "@/adminpanel/AdminSidebar";
@@ -14,10 +14,8 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [ready, setReady] = useState(false);
-  const [navigating, setNavigating] = useState(false);
 
   useEffect(() => {
     const token = getAdminToken();
@@ -27,15 +25,6 @@ export default function AdminLayout({
       setReady(true);
     }
   }, [router]);
-
-  // stop loader when route actually changes
-  useEffect(() => {
-    setNavigating(false);
-  }, [pathname]);
-
-  const handleNavigateStart = useCallback(() => {
-    setNavigating(true);
-  }, []);
 
   if (!ready) {
     return (
@@ -49,7 +38,7 @@ export default function AdminLayout({
     <SettingsProvider>
       <div className="flex min-h-screen overflow-x-hidden bg-[#F9F9F9]">
         <div className="hidden lg:block py-5 pl-5">
-          <AdminSidebar onNavigateStart={handleNavigateStart} />
+          <AdminSidebar />
         </div>
 
         {sidebarOpen && (
@@ -62,7 +51,6 @@ export default function AdminLayout({
               <AdminSidebar
                 mobile
                 onItemClick={() => setSidebarOpen(false)}
-                onNavigateStart={handleNavigateStart}
               />
             </div>
           </div>
@@ -72,13 +60,7 @@ export default function AdminLayout({
           <AdminHeader onMenuClick={() => setSidebarOpen(true)} />
 
           <main className="flex-1 overflow-y-auto relative">
-            {navigating ? (
-              <div className="flex justify-center items-center min-h-[60vh]">
-                <Loader />
-              </div>
-            ) : (
-              children
-            )}
+            {children}
           </main>
         </div>
       </div>
