@@ -34,8 +34,6 @@ export const metadata: Metadata = {
   description: "",
   icons: {
     icon: "/favicon-new.png",
-    shortcut: "/favicon-new.png",
-    apple: "/favicon-new.png",
   },
 
    robots: {
