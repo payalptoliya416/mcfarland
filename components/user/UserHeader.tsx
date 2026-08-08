@@ -195,12 +195,12 @@ function UserHeader({ onNavigate }: { onNavigate?: (url: string) => void }) {
     setMenuLoading(false);
   }, [pathname]);
 
-const handleMenuNavigate = (path: string) => {
-  onNavigate?.(path);  
-  setTimeout(() => {
-    setOpen(false);  
-  }, 0);
-};
+  const handleMenuNavigate = (path: string) => {
+    onNavigate?.(path);
+    setTimeout(() => {
+      setOpen(false);
+    }, 0);
+  };
 
   // Click-time auth URL builder
   const getAuthUrl = (base: "/user/signin" | "/signup"): string => {
@@ -209,12 +209,14 @@ const handleMenuNavigate = (path: string) => {
     const params = new URLSearchParams(window.location.search);
     const existingReturnUrl = params.get("returnUrl");
     const onAuthPage =
-      currentPathname === "/signup" || currentPathname.startsWith("/user/signin");
-    const destination = onAuthPage && existingReturnUrl
-      ? existingReturnUrl
-      : !onAuthPage
-        ? window.location.pathname + window.location.search
-        : "";
+      currentPathname === "/signup" ||
+      currentPathname.startsWith("/user/signin");
+    const destination =
+      onAuthPage && existingReturnUrl
+        ? existingReturnUrl
+        : !onAuthPage
+          ? window.location.pathname + window.location.search
+          : "";
     return destination && destination !== "/" && destination !== "/user"
       ? `${base}?returnUrl=${encodeURIComponent(destination)}`
       : base;
@@ -233,20 +235,25 @@ const handleMenuNavigate = (path: string) => {
               <Image
                 src={`${settings.dark_logo}`}
                 alt="Logo"
+                width={0}
                 height={0}
-              width={0}
-              style={{ width: "100%", height: "100%" }}
-              priority
+                sizes="100vw"
+                unoptimized
+                className="w-[100px] sm:w-[120px] lg:w-auto h-auto"
               />
             )}
           </Link>
           {!isSigninPage && isLicense !== null && isLicense !== 1 && (
-          <div className="bg-[#FFF4F4] text-[#D83B3B] text-center py-2 px-4 text-xs md:text-sm font-medium hidden lg:block">
-            You need to verify your account in order to be able to place bids and buy it now . To complete account verification{" "}
-            <Link href="/user/profile" className="underline hover:text-red-700 transition-colors">
-              click here
-            </Link>
-          </div>
+            <div className="bg-[#FFF4F4] text-[#D83B3B] text-center py-2 px-4 text-xs md:text-sm font-medium hidden lg:block">
+              You need to verify your account in order to be able to place bids
+              and buy it now . To complete account verification{" "}
+              <Link
+                href="/user/profile"
+                className="underline hover:text-red-700 transition-colors"
+              >
+                click here
+              </Link>
+            </div>
           )}
           {/* Desktop & Tablet Navbar */}
           {isSigninPage && (
@@ -254,7 +261,8 @@ const handleMenuNavigate = (path: string) => {
               <ul className="hidden lg:flex justify-center items-center gap-8 md:gap-12">
                 {navItems.map((item) => (
                   <li key={item.path}>
-                    <button onClick={() => onNavigate?.(item.path)}
+                    <button
+                      onClick={() => onNavigate?.(item.path)}
                       className={`
                 text-base relative
                 after:content-[''] after:absolute after:-bottom-1
@@ -426,7 +434,10 @@ const handleMenuNavigate = (path: string) => {
               ))}
 
               <button
-                onClick={() => { setIsMenuOpen(false); onNavigate?.(getAuthUrl("/signup")); }}
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  onNavigate?.(getAuthUrl("/signup"));
+                }}
                 className="block lg:hidden text-white bg-green py-[14px] px-[22px] rounded-lg text-base leading-[16px] cursor-pointer text-center"
               >
                 Sign up
@@ -435,15 +446,19 @@ const handleMenuNavigate = (path: string) => {
           </div>
         </div>
       </div>
-       {!isSigninPage && isLicense !== null && isLicense !== 1 && (
-          <div className="bg-[#FFF4F4] text-[#D83B3B] text-center py-2 px-4 text-xs md:text-sm font-medium block lg:hidden">
-            You need to verify your account in order to be able to place bids and buy it now . To complete account verification{" "}
-            <Link href="/user/profile" className="underline hover:text-red-700 transition-colors">
-              click here
-            </Link>
-          </div>
-        )}
-      {!isSigninPage && <UserDashboardNav  onNavigate={onNavigate}  />}
+      {!isSigninPage && isLicense !== null && isLicense !== 1 && (
+        <div className="bg-[#FFF4F4] text-[#D83B3B] text-center py-2 px-4 text-xs md:text-sm font-medium block lg:hidden">
+          You need to verify your account in order to be able to place bids and
+          buy it now . To complete account verification{" "}
+          <Link
+            href="/user/profile"
+            className="underline hover:text-red-700 transition-colors"
+          >
+            click here
+          </Link>
+        </div>
+      )}
+      {!isSigninPage && <UserDashboardNav onNavigate={onNavigate} />}
     </>
   );
 }

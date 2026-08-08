@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-import { useState, useEffect } from "react";
 import { useSettings } from "@/contexts/SettingsContext";
 import {
   FaTachometerAlt,
@@ -30,20 +29,12 @@ const menu = [
 export default function AdminSidebar({
   mobile = false,
   onItemClick,
-  onNavigateStart,
 }: {
   mobile?: boolean;
   onItemClick?: () => void;
-  onNavigateStart?: () => void;
 }) {
   const pathname = usePathname();
   const { settings } = useSettings();
-  const [pendingHref, setPendingHref] = useState<string | null>(null);
-
-  // clear pending once pathname actually changes
-  useEffect(() => {
-    setPendingHref(null);
-  }, [pathname]);
 
   return (
     <aside
@@ -66,7 +57,7 @@ export default function AdminSidebar({
               width={120}
               loading="eager"
               priority
-              className="h-[77px] w-auto"
+              className="h-[10px] w-auto"
             />
           )}
         </Link>
@@ -83,17 +74,14 @@ export default function AdminSidebar({
             const targetPath = item.href.replace(/\/$/, "");
 
             const isActive =
-              pendingHref === item.href ||
-              (!pendingHref &&
-                (currentPath === targetPath ||
-                  currentPath.startsWith(targetPath + "/")));
+              currentPath === targetPath ||
+              currentPath.startsWith(targetPath + "/");
 
             return (
               <Link
                 key={index}
                 href={item.href}
                 onClick={() => {
-                  setPendingHref(item.href);
                   if (mobile && onItemClick) onItemClick();
                 }}
                 className={`

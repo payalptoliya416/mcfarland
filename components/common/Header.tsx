@@ -423,7 +423,7 @@ function Header({
                 height={0}
                 sizes="100vw"
                 unoptimized
-                className="w-[70px] sm:w-[70px] lg:w-auto h-auto"
+                 className="w-[100px] sm:w-[120px] lg:w-auto h-auto"
               />
             )}
           </Link>

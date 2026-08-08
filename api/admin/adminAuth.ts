@@ -2,6 +2,14 @@ const ADMIN_TOKEN_KEY = "admin_token";
 const ADMIN_TOKEN_EXP_KEY = "admin_token_exp";
 const ADMIN_USER_KEY = "admin_user";
 
+const getCookieValue = (name: string) => {
+  if (typeof document === "undefined") return null;
+  const match = document.cookie.match(
+    new RegExp(`(?:^|; )${name}=([^;]*)`),
+  );
+  return match ? decodeURIComponent(match[1]) : null;
+};
+
 /* ================= SAVE ================= */
 export const saveAdminToken = (
   token: string,
@@ -26,14 +34,16 @@ export const getAdminToken = () => {
   const token = localStorage.getItem(ADMIN_TOKEN_KEY);
   const expiry = localStorage.getItem(ADMIN_TOKEN_EXP_KEY);
 
-  if (!token || !expiry) return null;
+  if (token && expiry) {
+    if (Date.now() > Number(expiry)) {
+      clearAdminToken();
+      return null;
+    }
 
-  if (Date.now() > Number(expiry)) {
-    clearAdminToken();
-    return null;
+    return token;
   }
 
-  return token;
+  return getCookieValue(ADMIN_TOKEN_KEY);
 };
 
 /* ================= USER ================= */
