@@ -11,7 +11,7 @@ interface Item {
 }
 
 function FAQ() {
-  const { companyName } = useSettings();
+  const { companyName, settings } = useSettings();
    const [openId, setOpenId] = useState<number>(1);
 
   const handleToggle = (id: number) => {
@@ -88,8 +88,9 @@ const faqData: Item[] = [
   {
     id: 12,
     question: "How can I contact customer support?",
-    answer:
-      "Yes, we serve customers across multiple countries through our network.",
+    answer: `You can contact our customer support team at ${
+      settings?.phone_no || ""
+    } or ${settings?.email || ""}.`,
   },
 ];
  

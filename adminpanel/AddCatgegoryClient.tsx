@@ -14,7 +14,6 @@ import {
 } from "@/api/admin/category";
 import toast from "react-hot-toast";
 import Loader from "@/components/common/Loader";
-import { ImageCropGallry } from "./ImageCropGallry";
 
 const schema = Yup.object({
   categoryName: Yup.string().trim().required("Category name is required"),
@@ -45,7 +44,7 @@ const UrlPreview = ({
             <button
               type="button"
               onClick={() => onRemove(i)}
-              className="absolute top-1 right-1 w-5 h-5 rounded-full bg-white shadow flex items-center justify-center"
+              className="absolute top-1 right-1 w-5 h-5 rounded-full bg-white shadow flex items-center justify-center cursor-pointer"
             >
               <RxCross2 size={12} />
             </button>
@@ -72,10 +71,7 @@ export default function AddCategoryClient() {
   const [uploading, setUploading] = useState(false);
   const [initialValues, setInitialValues] = useState(DEFAULT_VALUES);
   const [loading, setLoading] = useState(false);
-  // ✅ Crop Queue System
-const [cropQueue, setCropQueue] = useState<File[]>([]);
-const [currentIndex, setCurrentIndex] = useState(0);
-const [cropImage, setCropImage] = useState<string | null>(null);
+
   useEffect(() => {
     if (!isEdit) return;
 
@@ -91,15 +87,15 @@ const [cropImage, setCropImage] = useState<string | null>(null);
           image_urls: Array.isArray(c.image_urls)
             ? c.image_urls
             : c.image_urls
-            ? [c.image_urls]
-            : [],
+              ? [c.image_urls]
+              : [],
         });
 
         // 🔑 preview images
         setImages([]);
       } catch (e) {
         toast.error("Failed to load category");
-       router.push("/admin/category");
+        router.push("/admin/category");
       } finally {
         setLoading(false);
       }
@@ -135,7 +131,7 @@ const [cropImage, setCropImage] = useState<string | null>(null);
             toast.success("Category added successfully");
           }
 
-         router.push("/admin/category");
+          router.push("/admin/category");
         } finally {
           setSubmitting(false);
         }
@@ -194,59 +190,47 @@ const [cropImage, setCropImage] = useState<string | null>(null);
                   multiple
                   accept="image/png,image/jpeg"
                   className="hidden"
-                  // onChange={async (e) => {
-                  //   if (!e.target.files) return;
+                  onChange={async (e) => {
+                    if (!e.target.files) return;
 
-                  //   const files = Array.from(e.target.files);
+                    const files = Array.from(e.target.files);
 
-                  //   const formData = new FormData();
-                  //   files.forEach((file) => {
-                  //     formData.append("images[]", file);
-                  //   });
-                  //   formData.append("type", "category");
+                    if (!files.length) return;
 
-                  //   try {
-                  //     setUploading(true); // 🔄 START LOADER
+                    try {
+                      setUploading(true);
 
-                  //     const res = await adminUploadService.uploadImage(
-                  //       formData
-                  //     );
+                      const formData = new FormData();
 
-                  //     const urls = res.data.images.map((img) => img.url);
+                      files.forEach((file) => {
+                        formData.append("images[]", file);
+                      });
 
-                  //     // ✅ Store URLs in formik
-                  //     setFieldValue("image_urls", (prev: string[]) => [
-                  //       ...prev,
-                  //       ...urls,
-                  //     ]);
+                      formData.append("type", "category");
 
-                  //     // ✅ Preview images
-                  //     setImages((prev) => [...prev, ...files]);
-                  //   } catch (err) {
-                  //     // toast already handled
-                  //   } finally {
-                  //     setUploading(false); // ✅ STOP LOADER
-                  //   }
-                  // }}
-                  onChange={(e) => {
-  if (!e.target.files) return;
+                      const res =
+                        await adminUploadService.uploadImage(formData);
 
-  const files = Array.from(e.target.files);
+                      const urls = res.data.images.map((img) => img.url);
 
-  if (!files.length) return;
+                      // Save URLs in Formik
+                      setFieldValue("image_urls", (prev: string[]) => [
+                        ...prev,
+                        ...urls,
+                      ]);
 
-  // ✅ Store all selected images
-  setCropQueue(files);
+                      // Preview uploaded files
+                      setImages((prev) => [...prev, ...files]);
 
-  // ✅ Start from first image
-  setCurrentIndex(0);
-
-  // ✅ Open crop modal for first image
-  setCropImage(URL.createObjectURL(files[0]));
-
-  // Reset input
-  e.target.value = "";
-}}
+                      toast.success("Image uploaded successfully");
+                    } catch (error) {
+                      console.log(error);
+                      toast.error("Image upload failed");
+                    } finally {
+                      setUploading(false);
+                      e.target.value = "";
+                    }
+                  }}
                 />
 
                 {uploading && (
@@ -286,58 +270,6 @@ const [cropImage, setCropImage] = useState<string | null>(null);
                 <p className="text-xs text-red-500 mt-2">{errors.image_urls}</p>
               )}
             </div>
-            {cropImage && cropQueue.length > 0 && (
-            <ImageCropGallry
-              open
-              image={cropImage}
-              aspect={1}
-              outputWidth={340}
-              outputHeight={220}
-              isLast={currentIndex === cropQueue.length - 1}
-
-              onClose={() => {
-                setCropImage(null);
-                setCropQueue([]);
-                setCurrentIndex(0);
-              }}
-
-              onNext={async (croppedFile: File) => {
-                try {
-                  setUploading(true);
-
-                  // ✅ Upload Cropped File
-                  const formData = new FormData();
-                  formData.append("images[]", croppedFile);
-                  formData.append("type", "category");
-
-                  const res = await adminUploadService.uploadImage(formData);
-
-                  const url = res.data.images[0].url;
-
-                  // ✅ Save URL in Formik
-                  setFieldValue("image_urls", (prev: string[]) => [...prev, url]);
-
-                  // ✅ Preview UI
-                  setImages((prev) => [...prev, croppedFile]);
-
-                  // ✅ Move to Next Image
-                  const nextIndex = currentIndex + 1;
-
-                  if (nextIndex < cropQueue.length) {
-                    setCurrentIndex(nextIndex);
-                    setCropImage(URL.createObjectURL(cropQueue[nextIndex]));
-                  } else {
-                    // ✅ All Crops Done
-                    setCropImage(null);
-                    setCropQueue([]);
-                    setCurrentIndex(0);
-                  }
-                } finally {
-                  setUploading(false);
-                }
-              }}
-            />
-                )}
             <div className="flex gap-4 flex-wrap">
               {/* EXISTING IMAGES (EDIT MODE) */}
               {values.image_urls?.length > 0 && (
@@ -345,7 +277,7 @@ const [cropImage, setCropImage] = useState<string | null>(null);
                   urls={values.image_urls}
                   onRemove={(i) => {
                     const updated = values.image_urls.filter(
-                      (_, idx) => idx !== i
+                      (_, idx) => idx !== i,
                     );
                     setFieldValue("image_urls", updated);
                   }}
@@ -394,8 +326,8 @@ const [cropImage, setCropImage] = useState<string | null>(null);
                   ? "Updating..."
                   : "Adding..."
                 : isEdit
-                ? "Update Category"
-                : "Add Category"}
+                  ? "Update Category"
+                  : "Add Category"}
             </button>
           </div>
         </Form>

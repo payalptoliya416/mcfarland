@@ -10,7 +10,7 @@ function PrivacyPolicy() {
   {
     title: "1. Introduction",
     desc: [
-      `This Privacy Policy explains how ${companyName}, LLC (Reg nº: 20151800734), having its registered address at  ${ settings?.address } (“Company”, “we”, “our”, or “us”) collects, uses, discloses, and safeguards your information when you use our website.`,
+      `This Privacy Policy explains how ${companyName}, LLC (Reg nº: W20335923), having its registered address at  ${ settings?.address } (“Company”, “we”, “our”, or “us”) collects, uses, discloses, and safeguards your information when you use our website.`,
       "By accessing or using our website, you agree to the terms of this Privacy Policy.",
     ],
   },
@@ -99,7 +99,7 @@ function PrivacyPolicy() {
     desc: [
       "If you have any questions about this Privacy Policy, you may contact:",
       `${companyName}, LLC`,
-      "Reg nº: 20151800734",
+      "Reg nº: W20335923",
       `${ settings?.address }`,
       "You may also contact us through the Contact Us page on this website.",
     ],

@@ -13,7 +13,7 @@ function TermsCondition() {
     desc: [
       `If you have any questions regarding these Terms & Conditions, you may contact ${companyName}, LLC at:`,
       `Registered Address: ${ settings?.address }.`,
-      `Reg nº: 20151800734.`,
+      `Reg nº: W20335923.`,
       `You may also contact us through the Contact Us page on this website.`,
     ],
   },
@@ -137,7 +137,7 @@ function TermsCondition() {
             <p className="text-gray-700 text-sm sm:text-base leading-relaxed mb-6">
               Please read these Terms & Conditions carefully before using this
               website. This website is owned and operated by{" "}
-              <strong> {companyName}, LLC</strong>, Reg nº: (20151800734),
+              <strong> {companyName}, LLC</strong>, Reg nº: (W20335923),
               Reg Address:  { settings?.address }.
             </p>
 

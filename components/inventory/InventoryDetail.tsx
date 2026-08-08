@@ -224,7 +224,7 @@ function InventoryDetail() {
   };
   const offerCount = getOfferCount(data?.offer);
 
-    const features = [
+  const features = [
   {
     icon: "/assets/images/detail1.svg",
     title: "100% Secured Payments",
@@ -248,6 +248,16 @@ function InventoryDetail() {
   {
     icon: "/assets/images/detail6.svg",
     title: "Pre-delivery inspection",
+  },
+];
+  const featuresData = [
+  {
+    icon: "/assets/images/detail1.svg",
+    title: "100% Secured Payments",
+  },
+  {
+    icon: "/assets/images/detail2.svg",
+    title: "Money back guaranteed",
   },
 ];
 
@@ -792,6 +802,31 @@ function InventoryDetail() {
                     height={17}
                   />
                 </p>
+
+                  <div className="grid grid-cols-1 pt-5 gap-5">
+                    {featuresData.map((item, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className="flex items-center gap-3 bg-white rounded-[10px] p-3 border border-[#F3F3F3] shadow-[0_2px_25px_rgba(34,32,28,0.08)] transition-all duration-300 hover:shadow-[0_8px_35px_rgba(34,32,28,0.12)]"
+                        >
+                          <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
+                            <Image
+                              src={item.icon}
+                              alt={item.title}
+                              width={20}
+                              height={20}
+                              className="object-contain"
+                            />
+                          </div>
+
+                          <h3 className="text-base leading-[22px] font-medium text-[#343231]">
+                            {item.title}
+                          </h3>
+                        </div>
+                      );
+                    })}
+                  </div>
               </div>
             </div>
           </div>

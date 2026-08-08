@@ -16,7 +16,7 @@ function UserFooter() {
             >
                eastline-equipment.com
             </a>{" "}
-            is owned by EASTLINE-EQUIPMENT, LLC Reg nº : (20151800734) -
+            is owned by EASTLINE-EQUIPMENT, LLC Reg nº : (W20335923) -
             Copyright {new Date().getFullYear()} © All Rights Reserved
           </p>
         </div>

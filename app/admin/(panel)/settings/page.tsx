@@ -164,8 +164,21 @@ export default function CompanySettingUI() {
         await fetchSettings();
         await refreshSettings(); // update sidebar logo instantly
       }
-    } catch (e) {
-      toast.error("Update failed");
+    } catch (e: any) {
+      console.log("API ERROR:", e);
+      console.log("ERROR DATA:", e?.data);
+
+      const errors = e?.data?.errors;
+
+      if (errors) {
+        Object.values(errors)
+          .flat()
+          .forEach((error) => {
+            toast.error(String(error));
+          });
+      } else {
+        toast.error(e?.data?.message || e?.message || "Update failed");
+      }
     } finally {
       setSubmitting(false);
     }

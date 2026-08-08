@@ -11,7 +11,8 @@ interface FAQ {
 }
 
 export default function FAQSection(): JSX.Element {
-  const { companyName } = useSettings();
+  const { companyName,settings } = useSettings();
+  console.log("settings",settings)
 
   const faqs: FAQ[] = [
     {
@@ -69,8 +70,9 @@ export default function FAQSection(): JSX.Element {
     },
     {
       question: "How can I contact customer support?",
-      answer:
-        "Yes, we serve customers across multiple countries through our network.",
+       answer: `You can contact our customer support team at ${
+      settings?.phone_no || ""
+    } or ${settings?.email || ""}.`,
     },
   ];
   const [openIndex, setOpenIndex] = useState<number | null>(0);
