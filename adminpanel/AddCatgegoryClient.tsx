@@ -224,6 +224,7 @@ export default function AddCategoryClient() {
 
                       toast.success("Image uploaded successfully");
                     } catch (error) {
+                      console.log(error);
                       toast.error("Image upload failed");
                     } finally {
                       setUploading(false);

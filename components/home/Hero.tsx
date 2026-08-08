@@ -61,10 +61,10 @@ function Hero() {
           <Loader />
         </div>
       )}
-      <section className="p-5 -mt-[150px] sm:-mt-[175px] lg:-mt-[180px] pb-0">
+      <section className="p-5 -mt-[116px] md:-mt-[145px]  pb-0">
         <div className="relative rounded-3xl overflow-hidden min-h-[600] bg-cover bg-center bg-[url(/assets/images/hero-bg.png)]">
           <div className="relative z-10 flex items-center justify-center min-h-[720px]">
-            <div className="container-custom text-center text-white pt-6 sm:pt-20 lg:pt-0">
+            <div className="container-custom text-center text-white">
               <motion.div
                 custom={0}
                 initial="hidden"
@@ -74,7 +74,7 @@ function Hero() {
               >
                 <span className="text-xl pl-2">•</span>
 
-                <span className="text-xs sm:text-base">
+                <span className="text-sm sm:text-base">
                   Welcome to {companyName.toUpperCase()}
                 </span>
               </motion.div>
@@ -88,7 +88,7 @@ function Hero() {
                   delay: 0.2,
                   ease: "easeOut",
                 }}
-                className="mx-auto max-w-5xl text-center text-[26px] font-extrabold leading-[40px] sm:text-[42px] sm:leading-[52px] md:text-[48px] md:leading-[58px] lg:text-[60px] lg:leading-[72px] mb-5"
+                className="mx-auto max-w-5xl text-center text-[28px] font-extrabold leading-[40px] sm:text-[42px] sm:leading-[52px] md:text-[48px] md:leading-[58px] lg:text-[60px] lg:leading-[72px] mb-5"
               >
                 Reliable{" "}
                 <span className="text-primary">

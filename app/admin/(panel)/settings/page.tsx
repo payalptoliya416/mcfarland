@@ -165,6 +165,8 @@ export default function CompanySettingUI() {
         await refreshSettings(); // update sidebar logo instantly
       }
     } catch (e: any) {
+      console.log("API ERROR:", e);
+      console.log("ERROR DATA:", e?.data);
 
       const errors = e?.data?.errors;
 

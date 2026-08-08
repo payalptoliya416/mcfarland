@@ -2,7 +2,7 @@
 
 function FaqHero() {
   return (
-     <section className="p-5 -mt-[150px] sm:-mt-[175px] lg:-mt-[180px] pb-0">
+     <section className="p-5 -mt-[116px] md:-mt-[145px]  pb-0">
       <div
         className="relative rounded-3xl overflow-hidden min-h-[410px] bg-cover bg-center bg-[url(/assets/images/faq-bg.png)] flex justify-center items-center md:bg-[length:100%_100%] bg-no-repeat"
       >

@@ -12,6 +12,7 @@ interface FAQ {
 
 export default function FAQSection(): JSX.Element {
   const { companyName,settings } = useSettings();
+  console.log("settings",settings)
 
   const faqs: FAQ[] = [
     {

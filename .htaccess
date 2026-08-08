@@ -26,17 +26,6 @@ RewriteRule ^confirmation(/.*)?$ /confirmation/index.html [L]
 
 RewriteRule ^sale-agreement(/.*)?$ /sale-agreement/index.html [L]
 
-# ✅ Admin panel deep routes
-RewriteRule ^admin(/.*)?$ /admin/index.html [L]
-
-# ✅ User panel deep routes
-RewriteRule ^user(/.*)?$ /user/index.html [L]
-
-# ✅ Verification status routes
-RewriteRule ^verification-status(/.*)?$ /verification-status/index.html [L]
-
-# ✅ Verify account routes
-RewriteRule ^verify-account(/.*)?$ /verify-account/index.html [L]
 
 # ✅ SPA fallback
 RewriteRule . /index.html [L]
