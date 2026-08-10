@@ -57,7 +57,7 @@ export default function AdminSidebar({
               width={120}
               loading="eager"
               priority
-              className="h-[10px] w-auto"
+              className="h-[100px] w-auto"
             />
           )}
         </Link>

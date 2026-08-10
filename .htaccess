@@ -1,3 +1,5 @@
+Options -MultiViews
+DirectoryIndex index.html
 RewriteEngine On
 
 # ✅ Block Next internal txt files everywhere
