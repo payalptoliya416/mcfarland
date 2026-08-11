@@ -396,18 +396,16 @@ const shouldDisableButton = Boolean(
 const getFirstValidImage = (images: any[]) => {
   if (!Array.isArray(images)) return null;
 
-  for (let i = 0; i < images.length; i++) {
-    if (images[i]?.full_url) {
-      return images[i].full_url;
-    }
-  }
+  const firstImage = images.find(
+    (img) =>
+      img?.type?.toString().trim().toLowerCase() === "image" &&
+      img?.full_url
+  );
 
-  return null;
+  return firstImage?.full_url || null;
 };
-const productImage =
-  product?.images && product.images.length > 0
-    ? getFirstValidImage(product.images)
-    : null;
+
+const productImage = getFirstValidImage(product?.images || []);
 
 if (userLoading || pageLoading) {
   return (
