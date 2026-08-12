@@ -4,7 +4,7 @@ import AdminDataTable, { Column } from "@/components/tables/AdminDataTable";
 import { FiSearch } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { adminBiddingService } from "@/api/admin/bidding";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import BiddingMobileCard from "@/adminpanel/BiddingMobileCard";
@@ -30,25 +30,59 @@ export type BiddingRow = {
 export default function BiddingManagement() {
   const router = useRouter();
   const isMobile = useIsMobile();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  /* ================= PARSE URL PARAMS ================= */
+  const parsePageParam = (value: string | null) => {
+    const n = Number(value);
+    return Number.isInteger(n) && n >= 1 ? n : 1;
+  };
+  const parsePerPageParam = (value: string | null) => {
+    const n = Number(value);
+    return [10, 20, 25, 50, 100].includes(n) ? n : 10;
+  };
+
   /* ================= STATE ================= */
   const [data, setData] = useState<BiddingRow[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
-
-  const [sortBy, setSortBy] = useState("id");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [search, setSearch] = useState(searchParams.get("search") ?? "");
+  const [page, setPage] = useState(parsePageParam(searchParams.get("page")));
+  const [perPage, setPerPage] = useState(parsePerPageParam(searchParams.get("perPage")));
+  const [sortBy, setSortBy] = useState(searchParams.get("sortBy") ?? "id");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">(
+    searchParams.get("sortOrder") === "asc" ? "asc" : "desc"
+  );
 
   const [pagination, setPagination] = useState<any>(null);
   const [noDataMessage, setNoDataMessage] = useState<string | null>(null);
   const [loadingViewId, setLoadingViewId] = useState<number | null>(null);
-  const pathname = usePathname();
 
   useEffect(() => {
     setLoadingViewId(null);
   }, [pathname]);
+
+  /* ================= BUILD QUERY STRING ================= */
+  const buildQueryString = () => {
+    const params = new URLSearchParams();
+    if (search.trim()) params.set("search", search.trim());
+    if (page > 1) params.set("page", String(page));
+    if (perPage !== 10) params.set("perPage", String(perPage));
+    if (sortBy !== "id") params.set("sortBy", sortBy);
+    if (sortOrder !== "desc") params.set("sortOrder", sortOrder);
+    return params.toString();
+  };
+
+  /* ================= SYNC STATE → URL ================= */
+  useEffect(() => {
+    const query = buildQueryString();
+    const currentQuery = searchParams.toString();
+    if (query !== currentQuery) {
+      const url = query ? `/admin/bidding?${query}` : "/admin/bidding";
+      router.replace(url);
+    }
+  }, [search, page, perPage, sortBy, sortOrder, router, searchParams]);
   /* ================= FETCH ================= */
   const fetchBidding = async () => {
     try {
@@ -206,7 +240,10 @@ export default function BiddingManagement() {
               disabled={loadingViewId === r.id}
               onClick={() => {
                 setLoadingViewId(r.id);
-                router.push(`/admin/bidding/bidding-list?id=${r.id}`);
+                const query = buildQueryString();
+                router.push(
+                  `/admin/bidding/bidding-list?id=${r.id}${query ? `&${query}` : ""}`
+                );
               }}
               className="w-9 h-9 flex items-center justify-center rounded-full text-[#3C97FF] cursor-pointer"
             >
@@ -266,7 +303,10 @@ export default function BiddingManagement() {
               loadingViewId={loadingViewId}
               onEdit={() => {
                 setLoadingViewId(item.id);
-                router.push(`/admin/bidding/bidding-list?id=${item.id}`);
+                const query = buildQueryString();
+                router.push(
+                  `/admin/bidding/bidding-list?id=${item.id}${query ? `&${query}` : ""}`
+                );
               }}
             />
           ))}

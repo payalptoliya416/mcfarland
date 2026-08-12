@@ -5,7 +5,7 @@ import { FiSearch } from "react-icons/fi";
 import { HiArrowPath, HiOutlineEye } from "react-icons/hi2";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { adminWonUsersService } from "@/api/admin/biddingWonUsers";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import WonUserMobileCard from "@/adminpanel/WonUserMobileCard";
@@ -38,18 +38,72 @@ const statusClassMap: Record<WonUserRow["status"], string> = {
 
 export default function WonUser() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const isMobile = useIsMobile();
   const [data, setData] = useState<WonUserRow[]>([]);
   const [loading, setLoading] = useState(false);
   const [pagination, setPagination] = useState<any>(null);
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
-  const [sortBy, setSortBy] = useState("id");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+
+  const parsePageParam = (value: string | null) => {
+    const pageNumber = Number(value);
+    return Number.isInteger(pageNumber) && pageNumber >= 1 ? pageNumber : 1;
+  };
+
+  const parsePerPageParam = (value: string | null) => {
+    const perPageNumber = Number(value);
+    return [10, 20, 25, 50, 100].includes(perPageNumber)
+      ? perPageNumber
+      : 10;
+  };
+
+  const defaultSearch = searchParams.get("search") ?? "";
+  const defaultPage = parsePageParam(searchParams.get("page"));
+  const defaultPerPage = parsePerPageParam(searchParams.get("perPage"));
+  const defaultSortBy = searchParams.get("sortBy") ?? "id";
+  const defaultSortOrder =
+    searchParams.get("sortOrder") === "asc" ? "asc" : "desc";
+
+  const [search, setSearch] = useState(defaultSearch);
+  const [page, setPage] = useState(defaultPage);
+  const [perPage, setPerPage] = useState(defaultPerPage);
+  const [sortBy, setSortBy] = useState(defaultSortBy);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">(
+    defaultSortOrder
+  );
   const [noDataMessage, setNoDataMessage] = useState<string | null>(null);
   const [loadingViewId, setLoadingViewId] = useState<number | null>(null);
   const pathname = usePathname();
+
+  const buildQueryString = () => {
+    const params = new URLSearchParams();
+
+    if (search.trim()) {
+      params.set("search", search.trim());
+    }
+    if (page > 1) {
+      params.set("page", String(page));
+    }
+    if (perPage !== 10) {
+      params.set("perPage", String(perPage));
+    }
+    if (sortBy !== "id") {
+      params.set("sortBy", sortBy);
+    }
+    if (sortOrder !== "desc") {
+      params.set("sortOrder", sortOrder);
+    }
+
+    return params.toString();
+  };
+
+  useEffect(() => {
+    const query = buildQueryString();
+    const currentQuery = searchParams.toString();
+    if (query !== currentQuery) {
+      const url = query ? `/admin/won-user?${query}` : "/admin/won-user";
+      router.replace(url);
+    }
+  }, [search, page, perPage, sortBy, sortOrder, router, searchParams]);
 
   useEffect(() => {
     setLoadingViewId(null);
@@ -159,7 +213,12 @@ export default function WonUser() {
             disabled={loadingViewId === row.id}
             onClick={() => {
               setLoadingViewId(row.id);
-              router.push(`/admin/won-user/won-user-details/?id=${row.id}`);
+              const query = buildQueryString();
+              router.push(
+                `/admin/won-user/won-user-details/?id=${row.id}${
+                  query ? `&${query}` : ""
+                }`
+              );
             }}
             className="w-9 h-9 flex items-center justify-center rounded-full text-blue-500 cursor-pointer"
           >

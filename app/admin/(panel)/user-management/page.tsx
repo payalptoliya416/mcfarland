@@ -3,10 +3,10 @@
 import AdminDataTable, { Column } from "@/components/tables/AdminDataTable";
 import { FiSearch } from "react-icons/fi";
 import { HiOutlineEye, HiOutlineTrash } from "react-icons/hi2";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { adminUserService } from "@/api/admin/usersManagement";
 import UserStatusDropdown from "@/adminpanel/UserStatusDropdown";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import ConfirmModal from "@/components/tables/ConfirmDialog";
 import { useIsMobile } from "@/hooks/useIsMobile";
@@ -60,13 +60,34 @@ export interface UserApiItem {
 
 export default function UsersPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   /* ================= STATE ================= */
   const [data, setData] = useState<UserRow[]>([]);
   const [loading, setLoading] = useState(false);
   const isMobile = useIsMobile();
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+
+  const parsePageParam = (value: string | null) => {
+    const pageNumber = Number(value);
+    return Number.isInteger(pageNumber) && pageNumber >= 1 ? pageNumber : 1;
+  };
+
+  const parsePerPageParam = (value: string | null) => {
+    const perPageNumber = Number(value);
+    return [10, 20, 25, 50, 100].includes(perPageNumber)
+      ? perPageNumber
+      : 10;
+  };
+
+  const defaultSearch = searchParams.get("search") ?? "";
+  const defaultPage = parsePageParam(searchParams.get("page"));
+  const defaultPerPage = parsePerPageParam(searchParams.get("perPage"));
+  const defaultSortBy = searchParams.get("sortBy") ?? "id";
+  const defaultSortOrder =
+    searchParams.get("sortOrder") === "asc" ? "asc" : "desc";
+
+  const [search, setSearch] = useState(defaultSearch);
+  const [page, setPage] = useState(defaultPage);
+  const [perPage, setPerPage] = useState(defaultPerPage);
   const [loadingAction, setLoadingAction] = useState<{
     id: number | null;
     type: "view" | "edit" | null;
@@ -75,12 +96,46 @@ export default function UsersPage() {
   useEffect(() => {
     setLoadingAction({ id: null, type: null });
   }, [pathname]);
-  const [sortBy, setSortBy] = useState("id");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [sortBy, setSortBy] = useState(defaultSortBy);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">(
+    defaultSortOrder
+  );
   const [pagination, setPagination] = useState<any>(null);
   const [noDataMessage, setNoDataMessage] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
+
+  const buildQueryString = () => {
+    const params = new URLSearchParams();
+
+    if (search.trim()) {
+      params.set("search", search.trim());
+    }
+    if (page > 1) {
+      params.set("page", String(page));
+    }
+    if (perPage !== 10) {
+      params.set("perPage", String(perPage));
+    }
+    if (sortBy !== "id") {
+      params.set("sortBy", sortBy);
+    }
+    if (sortOrder !== "desc") {
+      params.set("sortOrder", sortOrder);
+    }
+
+    return params.toString();
+  };
+
+  useEffect(() => {
+    const query = buildQueryString();
+    const currentQuery = searchParams.toString();
+    if (query !== currentQuery) {
+      const url = query ? `/admin/user-management?${query}` : "/admin/user-management";
+      router.replace(url);
+    }
+  }, [search, page, perPage, sortBy, sortOrder, router, searchParams]);
+
   /* ================= FETCH ================= */
 
   const fetchUsers = async () => {
@@ -253,7 +308,9 @@ export default function UsersPage() {
               onClick={() => {
                 setLoadingAction({ id: r.id, type: "view" });
                 router.push(
-                  `/admin/user-management/user-license?id=${r.id}`,
+                  `/admin/user-management/user-license?id=${r.id}${
+                    buildQueryString() ? `&${buildQueryString()}` : ""
+                  }`,
                 );
               }}
               className="w-9 h-9 flex items-center justify-center rounded-full text-blue-500 transition cursor-pointer"
@@ -273,7 +330,11 @@ export default function UsersPage() {
               }
               onClick={() => {
                 setLoadingAction({ id: r.id, type: "edit" });
-                router.push(`/admin/user-management/add?id=${r.id}`);
+                router.push(
+                  `/admin/user-management/add?id=${r.id}${
+                    buildQueryString() ? `&${buildQueryString()}` : ""
+                  }`,
+                );
               }}
               className="w-9 h-9 flex items-center justify-center rounded-full text-yellow-500 transition cursor-pointer"
             >
@@ -342,7 +403,11 @@ export default function UsersPage() {
                   loadingAction={loadingAction}
                 onEdit={() => {
                   setLoadingAction({ id: user.id, type: "edit" });
-                  router.push(`/admin/user-management/add?id=${user.id}`);
+                  router.push(
+                  `/admin/user-management/add?id=${user.id}${
+                    buildQueryString() ? `&${buildQueryString()}` : ""
+                  }`,
+                );
                 }}
                 onView={() => {
                   setLoadingAction({ id: user.id, type: "view" });

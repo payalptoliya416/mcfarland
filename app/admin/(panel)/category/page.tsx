@@ -2,7 +2,7 @@
 
 import AdminDataTable, { Column } from "@/components/tables/AdminDataTable";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BiEdit } from "react-icons/bi";
 import { FiSearch } from "react-icons/fi";
@@ -27,23 +27,45 @@ export type CategoryRow = {
 
 export default function AdminCategory() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
+  const parsePageParam = (value: string | null) => {
+    const pageNumber = Number(value);
+    return Number.isInteger(pageNumber) && pageNumber >= 1 ? pageNumber : 1;
+  };
+
+  const parsePerPageParam = (value: string | null) => {
+    const perPageNumber = Number(value);
+    return [10, 20, 25, 50, 100].includes(perPageNumber)
+      ? perPageNumber
+      : 10;
+  };
+
+  const defaultSearch = searchParams.get("search") ?? "";
+  const defaultPage = parsePageParam(searchParams.get("page"));
+  const defaultPerPage = parsePerPageParam(searchParams.get("perPage"));
+  const defaultSortBy = searchParams.get("sortBy") ?? "id";
+  const defaultSortOrder =
+    searchParams.get("sortOrder") === "asc" ? "asc" : "desc";
 
   /* ================= STATE ================= */
   const [data, setData] = useState<CategoryRow[]>([]);
   const [loading, setLoading] = useState(false);
   const [redirecting, setRedirecting] = useState(false);
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const [search, setSearch] = useState(defaultSearch);
+  const [page, setPage] = useState(defaultPage);
+  const [perPage, setPerPage] = useState(defaultPerPage);
   const isMobile = useIsMobile();
-  const [sortBy, setSortBy] = useState("id");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [sortBy, setSortBy] = useState(defaultSortBy);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">(
+    defaultSortOrder
+  );
   const [noDataMessage, setNoDataMessage] = useState<string | null>(null);
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const [pagination, setPagination] = useState<any>(null);
   const [loadingEditId, setLoadingEditId] = useState<number | null>(null);
-  const pathname = usePathname();
 
   useEffect(() => {
     setLoadingEditId(null);
@@ -91,6 +113,37 @@ export default function AdminCategory() {
   };
 
   /* ================= EFFECT ================= */
+  const buildQueryString = () => {
+    const params = new URLSearchParams();
+
+    if (search.trim()) {
+      params.set("search", search.trim());
+    }
+    if (page > 1) {
+      params.set("page", String(page));
+    }
+    if (perPage !== 10) {
+      params.set("perPage", String(perPage));
+    }
+    if (sortBy !== "id") {
+      params.set("sortBy", sortBy);
+    }
+    if (sortOrder !== "desc") {
+      params.set("sortOrder", sortOrder);
+    }
+
+    return params.toString();
+  };
+
+  useEffect(() => {
+    const query = buildQueryString();
+    const currentQuery = searchParams.toString();
+    if (query !== currentQuery) {
+      const url = query ? `${pathname}?${query}` : pathname;
+      router.replace(url);
+    }
+  }, [search, page, perPage, sortBy, sortOrder, pathname, searchParams, router]);
+
   useEffect(() => {
     fetchCategories();
   }, [search, page, perPage, sortBy, sortOrder]);
@@ -184,7 +237,10 @@ export default function AdminCategory() {
               disabled={loadingEditId === row.id}
               onClick={() => {
                 setLoadingEditId(row.id);
-                router.push(`/admin/category/add?id=${row.id}`);
+                const query = buildQueryString();
+                router.push(
+                  `/admin/category/add?id=${row.id}${query ? `&${query}` : ""}`
+                );
               }}
               className="flex items-center justify-center"
             >
@@ -236,7 +292,8 @@ export default function AdminCategory() {
           disabled={redirecting}
           onClick={() => {
             setRedirecting(true);
-            router.push("/admin/category/add");
+            const query = buildQueryString();
+            router.push(`/admin/category/add${query ? `?${query}` : ""}`);
           }}
           className={`gradient-btn flex h-10 items-center justify-center gap-2 rounded-[62px]
   border border-primary px-4 xl:px-[25px]
@@ -275,7 +332,10 @@ export default function AdminCategory() {
               loadingEditId={loadingEditId}
               onEdit={() => {
                 setLoadingEditId(item.id);
-                router.push(`/admin/category/add?id=${item.id}`);
+                const query = buildQueryString();
+                router.push(
+                  `/admin/category/add?id=${item.id}${query ? `&${query}` : ""}`
+                );
               }}
               onDelete={() => setDeleteId(item.id)}
             />

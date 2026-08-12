@@ -3,7 +3,7 @@
 import AdminDataTable, { Column } from "@/components/tables/AdminDataTable";
 import { FiSearch } from "react-icons/fi";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { adminOrdersService } from "@/api/admin/orders";
 import OrderStatusDropdown from "@/adminpanel/OrderStatusDropdown";
 import OrderMobileCard from "@/adminpanel/OrderMobileCard";
@@ -52,12 +52,35 @@ export default function AdminOrder() {
   const [data, setData] = useState<OrderRow[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const [search, setSearch] = useState("");
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(10);
+  const searchParams = useSearchParams();
 
-  const [sortBy, setSortBy] = useState("id");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const parsePageParam = (value: string | null) => {
+    const pageNumber = Number(value);
+    return Number.isInteger(pageNumber) && pageNumber >= 1 ? pageNumber : 1;
+  };
+
+  const parsePerPageParam = (value: string | null) => {
+    const perPageNumber = Number(value);
+    return [10, 20, 25, 50, 100].includes(perPageNumber)
+      ? perPageNumber
+      : 10;
+  };
+
+  const defaultSearch = searchParams.get("search") ?? "";
+  const defaultPage = parsePageParam(searchParams.get("page"));
+  const defaultPerPage = parsePerPageParam(searchParams.get("perPage"));
+  const defaultSortBy = searchParams.get("sortBy") ?? "id";
+  const defaultSortOrder =
+    searchParams.get("sortOrder") === "asc" ? "asc" : "desc";
+
+  const [search, setSearch] = useState(defaultSearch);
+  const [page, setPage] = useState(defaultPage);
+  const [perPage, setPerPage] = useState(defaultPerPage);
+
+  const [sortBy, setSortBy] = useState(defaultSortBy);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">(
+    defaultSortOrder
+  );
 
   const [pagination, setPagination] = useState<any>(null);
   const [noDataMessage, setNoDataMessage] = useState<string | null>(null);
@@ -67,6 +90,37 @@ export default function AdminOrder() {
     slipUrl?: string;
     paymentSlipStatus?: "Pending" | "Approve" | "Decline";
   }>({ open: false });
+
+  const buildQueryString = () => {
+    const params = new URLSearchParams();
+
+    if (search.trim()) {
+      params.set("search", search.trim());
+    }
+    if (page > 1) {
+      params.set("page", String(page));
+    }
+    if (perPage !== 10) {
+      params.set("perPage", String(perPage));
+    }
+    if (sortBy !== "id") {
+      params.set("sortBy", sortBy);
+    }
+    if (sortOrder !== "desc") {
+      params.set("sortOrder", sortOrder);
+    }
+
+    return params.toString();
+  };
+
+  useEffect(() => {
+    const query = buildQueryString();
+    const currentQuery = searchParams.toString();
+    if (query !== currentQuery) {
+      const url = query ? `/admin/orders?${query}` : "/admin/orders";
+      router.replace(url);
+    }
+  }, [search, page, perPage, sortBy, sortOrder, router, searchParams]);
   const [regenerateId, setRegenerateId] = useState<number | null>(null);
 const [regenerateLoading, setRegenerateLoading] = useState(false);
 
@@ -437,8 +491,22 @@ const handleDelete = async (id: number) => {
             key={order.id}
             order={order}
             onUpdated={fetchOrders}
-            onView={() => router.push(`/admin/orders/view?id=${order.id}`)}
-            onEdit={() => router.push(`/admin/orders/edit?id=${order.id}`)}
+            onView={() => {
+              const query = buildQueryString();
+              router.push(
+                `/admin/orders/view?id=${order.id}${
+                  query ? `&${query}` : ""
+                }`
+              );
+            }}
+            onEdit={() => {
+              const query = buildQueryString();
+              router.push(
+                `/admin/orders/edit?id=${order.id}${
+                  query ? `&${query}` : ""
+                }`
+              );
+            }}
             onDelete={() => setDeleteId(order.id)}
             onOpenPaymentSlip={(order) =>
               setSlipModal({

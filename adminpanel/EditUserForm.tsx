@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import {  useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Formik, Form, Field, useFormikContext } from "formik";
 import { adminUserService } from "@/api/admin/usersManagement";
 import { CountryPhoneInput } from "@/adminpanel/CountryPhoneInput";
@@ -60,6 +60,16 @@ function PhoneField() {
 export default function EditUserForm() {
 const searchParams = useSearchParams();
 const id = searchParams.get("id");
+const returnQuery = useMemo(() => {
+  const params = new URLSearchParams();
+  searchParams.forEach((value, key) => {
+    if (key !== "id") {
+      params.set(key, value);
+    }
+  });
+  const query = params.toString();
+  return query ? `?${query}` : "";
+}, [searchParams]);
 const [loading, setLoading] = useState(true);
   const router = useRouter();
   const defaultInitialValues: FormValues = {
@@ -181,7 +191,7 @@ const handleSubmit = async (values: FormValues) => {
     });
 
     toast.success("User updated successfully");
-    router.back();
+    router.push(`/admin/user-management${returnQuery}`);
   } catch (error) {
     // toast.error("Update failed");
   }
@@ -404,7 +414,7 @@ if (loading) {
             <div className="flex justify-end gap-3 pt-4">
               <button
               type="button"
-              onClick={() => router.back()}
+              onClick={() => router.push(`/admin/user-management${returnQuery}`)}
               className="flex h-10 items-center justify-center rounded-[50px]
               border border-gray px-4 xl:px-[25px]
               text-sm xl:text-base font-semibold text-gray

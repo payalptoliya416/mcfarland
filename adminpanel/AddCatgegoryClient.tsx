@@ -3,7 +3,7 @@
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { RxCross2 } from "react-icons/rx";
 import { MdCloudUpload } from "react-icons/md";
@@ -66,6 +66,16 @@ export default function AddCategoryClient() {
   const editId = searchParams.get("id");
   const isEdit = Boolean(editId);
   const router = useRouter();
+  const returnQuery = useMemo(() => {
+    const params = new URLSearchParams();
+    searchParams.forEach((value, key) => {
+      if (key !== "id") {
+        params.set(key, value);
+      }
+    });
+    const query = params.toString();
+    return query ? `?${query}` : "";
+  }, [searchParams]);
   const [images, setImages] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [uploading, setUploading] = useState(false);
@@ -131,7 +141,7 @@ export default function AddCategoryClient() {
             toast.success("Category added successfully");
           }
 
-          router.push("/admin/category");
+          router.push(`/admin/category${returnQuery}`);
         } finally {
           setSubmitting(false);
         }
@@ -288,7 +298,7 @@ export default function AddCategoryClient() {
           <div className="flex justify-end gap-5">
             <button
               type="button"
-              onClick={() => router.back()}
+              onClick={() => router.push(`/admin/category${returnQuery}`)}
               className="flex h-10 items-center justify-center rounded-[62px]
               border border-gray px-4 xl:px-[25px]
               text-sm xl:text-base font-semibold text-gray
