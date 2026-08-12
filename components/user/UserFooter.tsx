@@ -14,10 +14,9 @@ function UserFooter() {
               target="_blank"
               rel="noopener noreferrer"
             >
-               eastline-equipment.com
+              Eastline Equipment Auctions
             </a>{" "}
-            is owned by EASTLINE-EQUIPMENT, LLC Reg nº : (W20335923) -
-            Copyright {new Date().getFullYear()} © All Rights Reserved
+            is owned by Eastline Equipment, LLC - Registration no : W20335923 - Copyright {new Date().getFullYear()} © All Rights Reserved
           </p>
         </div>
         <div className="text-center md:text-left col-span-12 xl:col-span-4 flex items-center justify-center xl:justify-end gap-5 flex-col lg:flex-row">

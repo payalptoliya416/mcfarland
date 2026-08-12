@@ -390,7 +390,6 @@ function InventoryDetail() {
               dangerouslySetInnerHTML={{ __html: data?.description ?? "" }}
             />
           </div>
-          <div className="border-t border-border my-[40px]"></div>
           {/* <div className="w-full space-y-4 pt-[15px]">
             <div className="flex justify-between items-center">
               <h2 className="text-xl leading-[20px] font-semibold text-gray">
@@ -413,30 +412,7 @@ function InventoryDetail() {
               ))}
             </div>
           </div> */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {features.map((item, index) => {
-          return (
-            <div
-              key={index}
-              className="flex items-center gap-3 bg-white rounded-full p-[15px] border border-[#F3F3F3] shadow-[0_2px_25px_rgba(34,32,28,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_35px_rgba(34,32,28,0.12)]"
-            >
-              <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
-                 <Image
-                  src={item.icon}
-                  alt={item.title}
-                  width={20}
-                  height={20}
-                  className="object-contain"
-                />
-              </div>
-
-              <h3 className="text-base leading-[22px] font-medium text-[#343231]">
-                {item.title}
-              </h3>
-            </div>
-          );
-        })}
-      </div>
+         
         </div>
         
         <div className="col-span-12 xl:col-span-5 order-1 xl:order-2">
@@ -804,28 +780,28 @@ function InventoryDetail() {
                 </p>
 
                   <div className="grid grid-cols-1 pt-5 gap-5">
-                    {featuresData.map((item, index) => {
-                      return (
-                        <div
-                          key={index}
-                          className="flex items-center gap-3 bg-white rounded-[10px] p-3 border border-[#F3F3F3] shadow-[0_2px_25px_rgba(34,32,28,0.08)] transition-all duration-300 hover:shadow-[0_8px_35px_rgba(34,32,28,0.12)]"
-                        >
-                          <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
-                            <Image
-                              src={item.icon}
-                              alt={item.title}
-                              width={20}
-                              height={20}
-                              className="object-contain"
-                            />
-                          </div>
+                      {features.map((item, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className="flex items-center gap-3 bg-white rounded-full p-[15px] border border-[#F3F3F3] shadow-[0_2px_25px_rgba(34,32,28,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_35px_rgba(34,32,28,0.12)]"
+                          >
+                            <div className="w-[40px] h-[40px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center shrink-0">
+                              <Image
+                                src={item.icon}
+                                alt={item.title}
+                                width={20}
+                                height={20}
+                                className="object-contain"
+                              />
+                            </div>
 
-                          <h3 className="text-base leading-[22px] font-medium text-[#343231]">
-                            {item.title}
-                          </h3>
-                        </div>
-                      );
-                    })}
+                            <h3 className="text-base leading-[22px] font-medium text-[#343231]">
+                              {item.title}
+                            </h3>
+                          </div>
+                        );
+                      })}
                   </div>
               </div>
             </div>

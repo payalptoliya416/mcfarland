@@ -6,7 +6,15 @@ import Image from "next/image";
 
 function Footer() {
   const { settings, companyName } = useSettings();
+  const formatPhoneNumber = (phone: string) => {
+    const digits = phone.replace(/\D/g, "");
 
+    if (digits.length === 10) {
+      return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+    }
+
+    return phone;
+  };
   return (
     <>
       <section className="">
@@ -231,25 +239,28 @@ function Footer() {
               </h3>
 
               <a
-                href={`tel:${settings?.phone_no}`}
-                className="group block mb-5 transition-all duration-300"
-              >
-                <div className="flex gap-3 items-center">
-                  <div>
-                    <div className="flex justify-center items-center w-10 h-10 rounded-full bg-white/10 group-hover:bg-primary">
-                      <Image
-                        src="/assets/images/call.svg"
-                        alt="Call"
-                        width={18}
-                        height={18}
-                      />
-                    </div>
+              href={`tel:${settings?.phone_no?.replace(/\D/g, "")}`}
+              className="group block mb-5 transition-all duration-300"
+            >
+              <div className="flex gap-3 items-center">
+                <div>
+                  <div className="flex justify-center items-center w-10 h-10 rounded-full bg-white/10 group-hover:bg-primary">
+                    <Image
+                      src="/assets/images/call.svg"
+                      alt="Call"
+                      width={18}
+                      height={18}
+                    />
                   </div>
-                  <h3 className="text-light-gray group-hover:text-white">
-                    {settings?.phone_no}
-                  </h3>
                 </div>
-              </a>
+
+                <h3 className="text-light-gray group-hover:text-white">
+                  {settings?.phone_no
+                    ?.replace(/\D/g, "")
+                    .replace(/^(\d{3})(\d{3})(\d{4})$/, "($1) $2-$3")}
+                </h3>
+              </div>
+            </a>
               <a
                 href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
                   settings?.address ?? "",
@@ -325,10 +336,9 @@ function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                eastline equipment auctions.com
+               Eastline Equipment Auctions
               </a>{" "}
-              is owned by Eastline Equipment, LLC Reg nº : (W20335923) -
-              Copyright {new Date().getFullYear()} © All Rights Reserved
+              is owned by Eastline Equipment, LLC - Registration no : W20335923 - Copyright {new Date().getFullYear()} © All Rights Reserved
             </p>
           </div>
         </div>
