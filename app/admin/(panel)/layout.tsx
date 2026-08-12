@@ -8,6 +8,24 @@ import AdminSidebar from "@/adminpanel/AdminSidebar";
 import AdminHeader from "@/adminpanel/AdminHeader";
 import { SettingsProvider } from "@/contexts/SettingsContext";
 
+// All admin routes — prefetch on layout mount so navigation feels instant
+const ADMIN_ROUTES = [
+  "/admin/dashboard",
+  "/admin/machinery",
+  "/admin/machinery/add",
+  "/admin/category",
+  "/admin/category/add",
+  "/admin/user-management",
+  "/admin/user-management/add",
+  "/admin/user-management/user-license",
+  "/admin/bidding",
+  "/admin/bidding/bidding-list",
+  "/admin/orders",
+  "/admin/won-user",
+  "/admin/won-user/won-user-details",
+  "/admin/settings",
+];
+
 export default function AdminLayout({
   children,
 }: {
@@ -23,6 +41,8 @@ export default function AdminLayout({
       router.push("/admin");
     } else {
       setReady(true);
+      // Prefetch all admin pages in background after login confirmed
+      ADMIN_ROUTES.forEach((route) => router.prefetch(route));
     }
   }, [router]);
 

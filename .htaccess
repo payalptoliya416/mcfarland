@@ -5,6 +5,25 @@ RewriteEngine On
 # ✅ Block Next internal txt files everywhere
 RedirectMatch 404 (^|/)(__next.*\.txt)$
 
+# ✅ Enable compression for JS/CSS chunks
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE application/javascript text/css application/json
+</IfModule>
+
+# ✅ Serve pre-compressed .js.gz files if they exist
+<IfModule mod_rewrite.c>
+  RewriteCond %{HTTP:Accept-Encoding} gzip
+  RewriteCond %{REQUEST_FILENAME}.gz -f
+  RewriteRule ^(.*)$ $1.gz [QSA,L]
+</IfModule>
+
+# ✅ Long cache for _next static assets (they have hash in filename — safe to cache forever)
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|woff|woff2|ttf|png|jpg|jpeg|gif|svg|ico|webp)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
+
 # ✅ Allow _next static assets (IMPORTANT)
 RewriteRule ^_next/ - [L]
 
