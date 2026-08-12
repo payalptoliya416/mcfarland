@@ -151,8 +151,23 @@ export default function AdminHeader({
 
     if (current === target) return;
 
+    const preservedParams = new URLSearchParams();
+    ["search", "page", "perPage", "sortBy", "sortOrder"].forEach(
+      (key) => {
+        const value = searchParams.get(key);
+        if (value) {
+          preservedParams.set(key, value);
+        }
+      }
+    );
+
+    const url =
+      preservedParams.toString() && target === normalize(`/admin/${segments[0]}`)
+        ? `${path}?${preservedParams.toString()}`
+        : path;
+
     setMenuLoading("breadcrumb");
-    router.push(path);
+    router.push(url);
   };
 
   const handleCloseChangePassword = () => {
