@@ -16,6 +16,7 @@ export const saveAdminToken = (
   expiresInSeconds: number,
   user?: { name: string; email: string }
 ) => {
+  if (typeof window === "undefined") return;
   const expiryTime = Date.now() + expiresInSeconds * 1000;
 
   localStorage.setItem(ADMIN_TOKEN_KEY, token);
@@ -31,6 +32,7 @@ export const saveAdminToken = (
 
 /* ================= TOKEN ================= */
 export const getAdminToken = () => {
+  if (typeof window === "undefined") return null;
   const token = localStorage.getItem(ADMIN_TOKEN_KEY);
   const expiry = localStorage.getItem(ADMIN_TOKEN_EXP_KEY);
 
@@ -48,12 +50,14 @@ export const getAdminToken = () => {
 
 /* ================= USER ================= */
 export const getAdminUser = () => {
+  if (typeof window === "undefined") return null;
   const user = localStorage.getItem(ADMIN_USER_KEY);
   return user ? JSON.parse(user) : null;
 };
 
 /* ================= LOGOUT ================= */
 export const clearAdminToken = () => {
+  if (typeof window === "undefined") return;
   localStorage.removeItem(ADMIN_TOKEN_KEY);
   localStorage.removeItem(ADMIN_TOKEN_EXP_KEY);
   localStorage.removeItem(ADMIN_USER_KEY);
