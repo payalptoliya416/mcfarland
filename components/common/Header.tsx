@@ -154,12 +154,19 @@ const inventoryGroups: Record<string, string[]> = {
   "Farm Tractors": [],
 };
 
+const slugify = (text: string) =>
+  (text || "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
 function Header({
-  categories,
-  settings: settingsProp,
+  categories = [],
+  settings: settingsProp = null,
 }: {
-  categories: Category[];
-  settings: any;
+  categories?: Category[];
+  settings?: any;
 }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -206,11 +213,13 @@ function Header({
   }, [pathname]);
 
   useEffect(() => {
-    getSettingsByKeysFooter().then((res) => {
-      if (res.success && res.data) {
-        setSettings(res.data);
-      }
-    });
+    getSettingsByKeysFooter()
+      .then((res) => {
+        if (res.success && res.data) {
+          setSettings(res.data);
+        }
+      })
+      .catch(() => {});
   }, []);
 
   useEffect(() => {
@@ -219,12 +228,6 @@ function Header({
     return () => window.removeEventListener("popstate", handleComplete);
   }, []);
 
-  const slugify = (text: string) =>
-    text
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [disableHover, setDisableHover] = useState(false);
 
@@ -267,17 +270,16 @@ function Header({
     const groupedMenus: NavItem[] = [];
 
     Object.entries(inventoryGroups).forEach(([groupName, children]) => {
-      const matched = headerCategories.filter((cat) =>
-        children.some(
-          (child) =>
-            child.trim().toLowerCase() ===
-            cat.category_name.trim().toLowerCase(),
-        ),
-      );
+      const matched = headerCategories.filter((cat) => {
+        const name = cat?.category_name?.trim()?.toLowerCase() || "";
+        return children.some(
+          (child) => child.trim().toLowerCase() === name,
+        );
+      });
 
       const directCategory = headerCategories.find(
         (cat) =>
-          cat.category_name.trim().toLowerCase() ===
+          (cat?.category_name?.trim()?.toLowerCase() || "") ===
           groupName.trim().toLowerCase(),
       );
 
@@ -292,7 +294,7 @@ function Header({
           matched.length > 0
             ? matched.map((cat) => ({
                 name: cat.category_name,
-                path: `/inventory?category=${slugify(cat.category_name)}`,
+                path: `/inventory?category=${slugify(cat.category_name || "")}`,
               }))
             : undefined,
       });
@@ -301,7 +303,8 @@ function Header({
     const dynamicCategories: NavItem[] = [];
 
     headerCategories.forEach((cat) => {
-      const categoryName = cat.category_name.trim().toLowerCase();
+      const categoryName = cat?.category_name?.trim()?.toLowerCase() || "";
+      if (!categoryName) return;
 
       const isGrouped = Object.entries(inventoryGroups).some(
         ([groupName, children]) => {
@@ -318,13 +321,13 @@ function Header({
       if (!isGrouped) {
         dynamicCategories.push({
           name: cat.category_name,
-          path: `/inventory?category=${slugify(cat.category_name)}`,
+          path: `/inventory?category=${slugify(cat.category_name || "")}`,
         });
       }
     });
 
     return [...groupedMenus, ...dynamicCategories];
-  }, [headerCategories, slugify]);
+  }, [headerCategories]);
 
   const navItems: NavItem[] = useMemo(
     () => [
@@ -416,20 +419,18 @@ function Header({
           className={`mx-auto flex justify-between items-center pb-4 px-9 md:px-[60px] ${hasBgImage ? "border-b border-border pt-5" : "bg-transparent pt-8 md:pt-[40px]"}`}
         >
           <Link href="/">
-            {/* {settings?.dark_logo && (
-              <Image
-                src={settings.dark_logo}
-                alt="Logo"
-                width={0}
-                height={0}
-                sizes="100vw"
-                unoptimized
-                 onError={(e) => {
-    e.currentTarget.src = "/assets/dark_logo.png";
-  }}
-                 className="w-[100px] sm:w-[120px] lg:w-auto h-auto"
-              />
-            )} */}
+            <Image
+              src={settings?.dark_logo || "/assets/dark_logo.png"}
+              alt={settings?.company_name || "Logo"}
+              width={0}
+              height={0}
+              sizes="100vw"
+              unoptimized
+              onError={(e) => {
+                e.currentTarget.src = "/assets/dark_logo.png";
+              }}
+              className="w-[100px] sm:w-[120px] lg:w-auto h-auto"
+            />
           </Link>
           <ul className="hidden lg:flex justify-center items-center gap-5 xl:gap-[50px]">
             {navItems.map((item) => (
@@ -684,17 +685,18 @@ function Header({
           `}
           >
             <Link href="/">
-              {/* {settings?.dark_logo && (
-                <Image
-                  src={settings.dark_logo}
-                  alt="Logo"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  unoptimized
-                  className="w-[70px] sm:w-[70px] lg:w-auto h-auto"
-                />
-              )} */}
+              <Image
+                src={settings?.dark_logo || "/assets/dark_logo.png"}
+                alt={settings?.company_name || "Logo"}
+                width={0}
+                height={0}
+                sizes="100vw"
+                unoptimized
+                onError={(e) => {
+                  e.currentTarget.src = "/assets/dark_logo.png";
+                }}
+                className="w-[70px] sm:w-[70px] lg:w-auto h-auto"
+              />
             </Link>
             <button
               onClick={handleCloseMenu}

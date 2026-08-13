@@ -48,6 +48,14 @@ try {
   // Run Next.js build
   execSync('next build', { stdio: 'inherit', cwd: path.join(__dirname, '..') });
 
+  // Copy .htaccess into out/ — required for Apache static hosting
+  const htaccessSrc = path.join(__dirname, '..', '.htaccess');
+  const htaccessDest = path.join(__dirname, '..', 'out', '.htaccess');
+  if (fs.existsSync(htaccessSrc) && fs.existsSync(path.join(__dirname, '..', 'out'))) {
+    fs.copyFileSync(htaccessSrc, htaccessDest);
+    console.log('✅ Copied .htaccess to out/');
+  }
+
 
 } catch (error) {
   console.error('❌ Build failed:', error.message);
