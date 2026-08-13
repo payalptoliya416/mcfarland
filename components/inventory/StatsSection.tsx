@@ -20,45 +20,94 @@ export default function StatsSection(): JSX.Element {
   const sectionRef = useRef<HTMLDivElement | null>(null);
   const hasAnimated = useRef(false);
 
+  // useEffect(() => {
+  //   const element = sectionRef.current;
+  //   if (!element) return;
+
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       if (entries[0].isIntersecting && !hasAnimated.current) {
+  //         hasAnimated.current = true;
+
+  //         stats.forEach((stat, index) => {
+  //           let start = 0;
+  //           const end = stat.value;
+  //           const duration = 1500;
+  //           const increment = end / (duration / 20);
+
+  //           const counter = setInterval(() => {
+  //             start += increment;
+
+  //             if (start >= end) {
+  //               start = end;
+  //               clearInterval(counter);
+  //             }
+
+  //             setCounts((prev) => {
+  //               const updated = [...prev];
+  //               updated[index] = Math.floor(start);
+  //               return updated;
+  //             });
+  //           }, 20);
+  //         });
+  //       }
+  //     },
+  //     { threshold: 0.4 }
+  //   );
+
+  //   observer.observe(element);
+
+  //   return () => observer.disconnect();
+  // }, []);
+
   useEffect(() => {
-    const element = sectionRef.current;
-    if (!element) return;
+  const element = sectionRef.current;
+  if (!element) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && !hasAnimated.current) {
-          hasAnimated.current = true;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting && !hasAnimated.current) {
+        hasAnimated.current = true;
 
-          stats.forEach((stat, index) => {
-            let start = 0;
-            const end = stat.value;
-            const duration = 1500;
-            const increment = end / (duration / 20);
+        stats.forEach((stat, index) => {
+          const startTime = performance.now();
+          const duration = 1500;
+          const end = stat.value;
 
-            const counter = setInterval(() => {
-              start += increment;
+          const animate = (currentTime: number) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
 
-              if (start >= end) {
-                start = end;
-                clearInterval(counter);
-              }
+            const currentValue = Math.floor(end * progress);
 
+            setCounts((prev) => {
+              const updated = [...prev];
+              updated[index] = currentValue;
+              return updated;
+            });
+
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            } else {
               setCounts((prev) => {
                 const updated = [...prev];
-                updated[index] = Math.floor(start);
+                updated[index] = end;
                 return updated;
               });
-            }, 20);
-          });
-        }
-      },
-      { threshold: 0.4 }
-    );
+            }
+          };
 
-    observer.observe(element);
+          requestAnimationFrame(animate);
+        });
+      }
+    },
+    { threshold: 0.4 }
+  );
 
-    return () => observer.disconnect();
-  }, []);
+  observer.observe(element);
+
+  return () => observer.disconnect();
+}, []);
 
   return (
     <section ref={sectionRef} className="container-custom section-bottom">

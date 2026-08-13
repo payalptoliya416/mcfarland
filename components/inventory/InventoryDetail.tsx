@@ -183,17 +183,34 @@ function InventoryDetail() {
     seconds: 0,
   });
 
+  // useEffect(() => {
+  //   if (!data?.bid_end_time) return;
+
+  //   setTimeLeft(getTimeLeft(data.bid_end_time)); // initial set
+
+  //   const timer = setInterval(() => {
+  //     setTimeLeft(getTimeLeft(data.bid_end_time));
+  //   }, 1000);
+
+  //   return () => clearInterval(timer);
+  // }, [data?.bid_end_time]);
+
   useEffect(() => {
-    if (!data?.bid_end_time) return;
+  if (!data?.bid_end_time) return;
 
-    setTimeLeft(getTimeLeft(data.bid_end_time)); // initial set
+  let animationFrame: number;
 
-    const timer = setInterval(() => {
-      setTimeLeft(getTimeLeft(data.bid_end_time));
-    }, 1000);
+  const updateTimer = () => {
+    setTimeLeft(getTimeLeft(data.bid_end_time));
+    animationFrame = requestAnimationFrame(updateTimer);
+  };
 
-    return () => clearInterval(timer);
-  }, [data?.bid_end_time]);
+  updateTimer();
+
+  return () => {
+    cancelAnimationFrame(animationFrame);
+  };
+}, [data?.bid_end_time]);
 
   const calculateDeliveryCost = async (zip: string, country: string) => {
     try {

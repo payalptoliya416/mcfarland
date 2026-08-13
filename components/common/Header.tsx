@@ -166,6 +166,7 @@ function Header({
   const query = searchParams.toString();
   const returnUrl = query ? `${pathname}?${query}` : pathname;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
   const menuRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -415,7 +416,7 @@ function Header({
           className={`mx-auto flex justify-between items-center pb-4 px-9 md:px-[60px] ${hasBgImage ? "border-b border-border pt-5" : "bg-transparent pt-8 md:pt-[40px]"}`}
         >
           <Link href="/">
-            {settings?.dark_logo && (
+            {/* {settings?.dark_logo && (
               <Image
                 src={settings.dark_logo}
                 alt="Logo"
@@ -423,9 +424,12 @@ function Header({
                 height={0}
                 sizes="100vw"
                 unoptimized
+                 onError={(e) => {
+    e.currentTarget.src = "/assets/dark_logo.png";
+  }}
                  className="w-[100px] sm:w-[120px] lg:w-auto h-auto"
               />
-            )}
+            )} */}
           </Link>
           <ul className="hidden lg:flex justify-center items-center gap-5 xl:gap-[50px]">
             {navItems.map((item) => (
@@ -680,7 +684,7 @@ function Header({
           `}
           >
             <Link href="/">
-              {settings?.dark_logo && (
+              {/* {settings?.dark_logo && (
                 <Image
                   src={settings.dark_logo}
                   alt="Logo"
@@ -690,7 +694,7 @@ function Header({
                   unoptimized
                   className="w-[70px] sm:w-[70px] lg:w-auto h-auto"
                 />
-              )}
+              )} */}
             </Link>
             <button
               onClick={handleCloseMenu}

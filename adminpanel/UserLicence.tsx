@@ -270,12 +270,12 @@ const disableDecline =
                 <button
                   disabled={disableDecline}
                   onClick={() => handleLicenseAction("decline")}
-                  className={`px-4 py-2 text-sm rounded-lg text-white flex items-center gap-2 cursor-pointer
-          ${
-            disableDecline
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-[#DC3623] hover:bg-[#C12E1E]"
-          }`}
+                  className={`px-4 py-2 text-sm rounded-lg text-white flex items-center gap-2
+                  ${
+                    disableDecline
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-[#DC3623] hover:bg-[#C12E1E] cursor-pointer"
+                  }`}
                 >
                   {actionLoading === "decline" && (
                     <span className="h-3 w-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -286,12 +286,12 @@ const disableDecline =
                 <button
                   disabled={disableApprove}
                   onClick={() => handleLicenseAction("approve")}
-                  className={`px-4 py-2 text-sm rounded-lg text-white flex items-center gap-2 cursor-pointer
-          ${
-            disableApprove
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-[#35BB63] hover:bg-[#2EA556]"
-          }`}
+                  className={`px-4 py-2 text-sm rounded-lg text-white flex items-center gap-2
+                  ${
+                    disableApprove
+                      ? "bg-gray-400"
+                      : "bg-[#35BB63] hover:bg-[#2EA556] cursor-pointer"
+                  }`}
                 >
                   {actionLoading === "approve" && (
                     <span className="h-3 w-3 border-2 border-white border-t-transparent rounded-full animate-spin" />

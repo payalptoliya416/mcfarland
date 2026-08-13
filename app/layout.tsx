@@ -3,7 +3,7 @@ import "./globals.css";
 import localFont from "next/font/local";
 import ToastProvider from "@/components/common/ToastProvider";
 import { SettingsProvider } from "@/contexts/SettingsContext";
-import Script from "next/script";
+// import Script from "next/script";
 // ---------------- MONT FONT ----------------
 const mont = localFont({
   src: [
@@ -14,6 +14,7 @@ const mont = localFont({
   ],
   variable: "--font-mont",
   display: "swap",
+   preload: false,
 });
 
 // ---------------- SF PRO FONT ----------------
@@ -27,6 +28,7 @@ const sfPro = localFont({
   ],
   variable: "--font-sfpro",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -57,7 +59,7 @@ export default function RootLayout({
         <meta httpEquiv="Pragma" content="no-cache" />
         <meta httpEquiv="Expires" content="0" />
           {/* ✅ LiveChat Script */}
-        <Script id="livechat-script" strategy="afterInteractive">
+        {/* <Script id="livechat-script" strategy="afterInteractive">
           {`
             window.__lc = window.__lc || {};
             window.__lc.license = 19682522;
@@ -87,7 +89,7 @@ export default function RootLayout({
               n.LiveChatWidget = n.LiveChatWidget || e;
             })(window,document,[].slice);
           `}
-        </Script>
+        </Script> */}
       </head>
 
       <body
@@ -95,14 +97,14 @@ export default function RootLayout({
         suppressHydrationWarning
       >
 
-        <noscript>
+        {/* <noscript>
           <a
             href="https://www.livechat.com/chat-with/19682522/"
             rel="nofollow"
           >
             Chat with us
           </a>
-        </noscript>
+        </noscript> */}
 
         <SettingsProvider>
           {children}
