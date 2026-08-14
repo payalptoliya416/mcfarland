@@ -11,7 +11,6 @@ import { setToken } from "@/api/authToken";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
-import { sendSMS } from "@/api/sms/sendSMS";
 import { useSettings } from "@/contexts/SettingsContext";
 import Image from "next/image";
 
@@ -104,22 +103,6 @@ const handleRegister = async (values: any, { resetForm }: any) => {
       );
 
       resetForm();
-
-      try {
-        const smsRes = await sendSMS({
-          phone: values.phone_no,
-          type: "registration",
-          companyName:
-           `${companyName}` ||
-            "Eastline Equipment Sales & Auctions",
-        });
-
-      } catch (smsError) {
-        console.log(
-          "SMS ERROR:",
-          smsError
-        );
-      }
 
       if (typeof window !== "undefined") {
         (window as any).dataLayer = (window as any).dataLayer || [];

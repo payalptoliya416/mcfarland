@@ -64,7 +64,7 @@ const sfPro = localFont({
 });
 
 export const metadata: Metadata = {
-  title: `Eastline Equipment Sales & Auctions`,
+  title: `Eastline Equipment Auctions`,
   description: "",
   icons: {
     icon: "/favicon-new.png",

@@ -216,10 +216,10 @@ export default function OrderStatusDropdown({
       });
 
       if (status === "Settle Payment") {
-        await sendSMS({
+      const res = await sendSMS({
           phone,
           type: "settle_payment",
-          companyName: companyName || "Eastline Equipment Sales & Auctions",
+          companyName: companyName || "Eastline Equipment Auctions",
           orderType,
         });
       }

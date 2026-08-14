@@ -1,5 +1,11 @@
 const fs = require("fs");
 const path = require("path");
+const { loadEnvConfig } = require("@next/env");
+
+const projectDir = path.join(__dirname, "..");
+
+// Load Next.js environment variables
+loadEnvConfig(projectDir);
 
 const BASE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL;
 const API_BASE = process.env.NEXT_PUBLIC_BASE_URL;

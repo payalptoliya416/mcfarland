@@ -1,8 +1,10 @@
 "use client";
 
+import { useSettings } from "@/contexts/SettingsContext";
 import Link from "next/link";
 
 function UserFooter() {
+    const { companyName } = useSettings();
   return (
     <div className="bg-gray">
       <div className="py-12 container-custom mx-auto grid grid-cols-12 gap-4 lg:gap-5 sm:gap-1 items-center">
@@ -14,7 +16,7 @@ function UserFooter() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Eastline Equipment Auctions
+             {companyName}
             </a>{" "}
             is owned by Eastline Equipment, LLC - Registration no : W20335923 - Copyright {new Date().getFullYear()} © All Rights Reserved
           </p>

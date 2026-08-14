@@ -1,8 +1,10 @@
 "use client";
 
+import { useSettings } from "@/contexts/SettingsContext";
 import Image from "next/image";
 
 function Testimonial() {
+    const { companyName } = useSettings();
   return (
     <section>
       <div className="container-custom mx-auto ">
@@ -30,7 +32,7 @@ function Testimonial() {
                 />
 
                 <p className="text-lg text-[#4B4947] leading-[28px] font-semibold flex-1">
-                  “Selling my machinery through Eastline Equipment Auctions was
+                  “Selling my machinery through {companyName} was
                   seamless. Their team handled everything professionally, and I
                   received great value within days. Highly recommended!”
                 </p>

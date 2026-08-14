@@ -1,5 +1,4 @@
 export type SmsType =
-  | "registration"
   | "auction_won"
   | "buy_now"
   | "settle_payment"
@@ -12,8 +11,9 @@ interface SendSMSProps {
   orderType?: "Bidding" | "Checkout";
 }
 
-interface TwilioResponse {
+interface PingramResponse {
   sid?: string;
+  id?: string;
   message?: string;
   status?: string;
   error_code?: string;
@@ -27,15 +27,12 @@ export const sendSMS = async ({
   orderType,
 }: SendSMSProps): Promise<{
   success: boolean;
-  data?: TwilioResponse;
+  data?: PingramResponse;
 }> => {
   try {
     let message = "";
 
     switch (type) {
-      case "registration":
-        message = `Welcome to ${companyName}! Your registration is complete. Start browsing, bidding, or use Buy It Now.`;
-        break;
 
       case "auction_won":
         message = `Congrats! You won an auction at ${companyName}. Please sign in to review and complete your sales agreement.`;
@@ -48,10 +45,9 @@ export const sendSMS = async ({
       case "settle_payment":
         if (orderType === "Bidding") {
           message = `Thank you for bidding with ${companyName}. Your winning item has been secured. Please sign in to review your invoice and complete payment.`;
-          break;
+        } else {
+          message = `Thank you for your purchase with ${companyName}. Your order has been secured. Please sign in to review your invoice and complete payment.`;
         }
-
-        message = `Thank you for your purchase with ${companyName}. Your order has been secured. Please sign in to review your invoice and complete payment.`;
         break;
 
       case "shipping_started":
@@ -61,47 +57,24 @@ export const sendSMS = async ({
       default:
         message = "SMS";
     }
+    const PINGRAM_API_URL =
+      process.env.PINGRAM_API_URL || "https://api.eu.pingram.io/sms";
 
-    // ENV
-    const ACCOUNT_SID = process.env.NEXT_PUBLIC_TWILIO_ACCOUNT_SID;
-
-    const API_KEY = process.env.NEXT_PUBLIC_TWILIO_API_KEY;
-
-    const API_SECRET = process.env.NEXT_PUBLIC_TWILIO_API_SECRET;
-
-    const FROM_NUMBER = process.env.NEXT_PUBLIC_TWILIO_PHONE_NUMBER;
-
-    // VALIDATION
-    if (!ACCOUNT_SID || !API_KEY || !API_SECRET || !FROM_NUMBER) {
-      return {
-        success: false,
-      };
-    }
-
-    // AUTH
-    const auth = btoa(`${API_KEY}:${API_SECRET}`);
-
-    // FORM DATA
-    const formData = new URLSearchParams();
-
-    formData.append("To", phone);
-    formData.append("From", FROM_NUMBER);
-    formData.append("Body", message);
-
-    // REQUEST
-    const response = await fetch(
-      `https://api.twilio.com/2010-04-01/Accounts/${ACCOUNT_SID}/Messages.json`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Basic ${auth}`,
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: formData.toString(),
+    // Pingram request
+    const response = await fetch(PINGRAM_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer pingram_sk_eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJrZXlfOWFlYWViN2QzYjZlMDE1MWZjOTAwMWQ3OTIyMjViMTUiLCJ2ZXJzaW9uIjoxLCJhY2NvdW50SWQiOiI1eDJmZm90eXM5aHBxYmxzaGgxZWk2bnVlNyIsImtleVR5cGUiOiJzZWNyZXQiLCJlbnZpcm9ubWVudElkIjoiNXgyZmZvdHlzOWhwcWJsc2hoMWVpNm51ZTcifQ.emdCQr3WYYXODlaf3knTpmcRxirHPCgYtFEMtajmhq4`,
       },
-    );
+      body: JSON.stringify({
+        type: "sms_compose_preview",
+        to: phone,
+        message,
+      }),
+    });
 
-    const data: TwilioResponse = await response.json();
+    const data: PingramResponse = await response.json();
 
     if (response.ok) {
       return {
@@ -110,11 +83,17 @@ export const sendSMS = async ({
       };
     }
 
+    console.error("❌ Pingram SMS failed:", {
+      status: response.status,
+      data,
+    });
+
     return {
       success: false,
       data,
     };
   } catch (error) {
+    console.error("❌ Pingram SMS error:", error);
 
     return {
       success: false,

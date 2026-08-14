@@ -336,7 +336,7 @@ function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-               Eastline Equipment Auctions
+               {companyName}
               </a>{" "}
               is owned by Eastline Equipment, LLC - Registration no : W20335923 - Copyright {new Date().getFullYear()} © All Rights Reserved
             </p>

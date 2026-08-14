@@ -16,7 +16,7 @@ function AboutUs() {
             >
               <Image
                 src="/assets/images/about.png"
-                alt="About Eastline Equipment"
+                alt="About us"
                 width={0}
                 height={0}
                 sizes="100vw"
