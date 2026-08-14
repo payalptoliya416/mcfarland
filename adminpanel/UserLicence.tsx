@@ -225,6 +225,9 @@ const disableDecline =
                           alt="Front Side"
                           fill
                           className="rounded-lg bg-white object-contain cursor-pointer transition hover:opacity-80"
+                          onError={(e) => {
+                            e.currentTarget.src = "/assets/default.png";
+                          }}
                         />
                       </div>
                     )}
@@ -259,6 +262,9 @@ const disableDecline =
                       alt="Back Side"
                       fill
                       className="rounded-lg bg-white object-contain cursor-pointer transition hover:opacity-80"
+                      onError={(e) => {
+                        e.currentTarget.src = "/assets/default.png";
+                      }}
                     />
                   </div>
                 )}

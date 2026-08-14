@@ -29,6 +29,9 @@ export default function CategoryMobileCard({
               alt={item.categoryName}
               fill
               className="object-cover"
+              onError={(e) => {
+                e.currentTarget.src = "/assets/default.png";
+              }}
             />
           </div>
         ) : (

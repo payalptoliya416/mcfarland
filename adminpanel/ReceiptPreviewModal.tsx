@@ -49,6 +49,9 @@ export default function ReceiptPreviewModal({
               alt="Payment Receipt"
               fill
               className="rounded-md object-contain"
+              onError={(e) => {
+                e.currentTarget.src = "/assets/default.png";
+              }}
             />
           </div>
           )}

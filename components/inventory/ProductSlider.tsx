@@ -60,6 +60,9 @@ export default function ProductSlider({ data }: ProductSliderProps) {
               priority
               sizes="(max-width:700px)100vw,623px"
               className="object-cover rounded-[15px]"
+              onError={(e) => {
+                e.currentTarget.src = "/assets/default.png";
+              }}
             />
           ) : (
             <video
@@ -150,6 +153,9 @@ export default function ProductSlider({ data }: ProductSliderProps) {
                   alt="thumb"
                   fill
                   className="object-cover"
+                  onError={(e) => {
+                  e.currentTarget.src = "/assets/default.png";
+                }}
                 />
               )}
 

@@ -814,6 +814,9 @@ export default function InventoryFilter({}: {}) {
                             alt={product.name}
                             fill
                             className="object-cover"
+                            onError={(e) => {
+                              e.currentTarget.src = "/assets/default.png";
+                            }}
                           />
                           
                         </div>
@@ -855,16 +858,17 @@ export default function InventoryFilter({}: {}) {
                   >
                     <div className="h-full shadow-[0_2px_35px_rgba(0,0,0,0.08)] rounded-[10px] p-[15px] bg-white cursor-pointer hover:shadow-md transition flex flex-col">
                       <div className="w-full flex items-center justify-center bg-[#E9E9E926] relative group rounded-[12px]">
-                        {product.first_image_url && (
-                          <div className="relative w-full aspect-[240/163] rounded-[12px] overflow-hidden">
-                            <Image
-                              src={product.first_image_url}
-                              alt={product.name}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-                        )}
+                        <div className="relative w-full aspect-[240/163] rounded-[12px] overflow-hidden">
+                          <Image
+                            src={product.first_image_url || "/assets/default.png"}
+                            alt={product.name}
+                            fill
+                            className="object-cover"
+                            onError={(e) => {
+                              e.currentTarget.src = "/assets/default.png";
+                            }}
+                          />
+                        </div>
                       <div className="absolute inset-0 rounded-[12px] bg-black/0 backdrop-blur-[0px] transition-all duration-300 group-hover:bg-[#1D1B1A]/30 group-hover:backdrop-blur-[1px]" />
                         <div className="absolute border border-border rounded-full py-1.5 px-4 text-green bg-white text-sm left-1/2 -translate-x-1/2 opacity-0 bottom-[33%] translate-y-3 group-hover:opacity-100 group-hover:-translate-y-3 transition font-semibold z-10">
                           BID OR BUY

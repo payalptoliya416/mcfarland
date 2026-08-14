@@ -195,6 +195,9 @@ export default function AdminCategory() {
               fill
               className="object-cover"
               sizes="44px"
+              onError={(e) => {
+                e.currentTarget.src = "/assets/default.png";
+              }}
             />
           </div>
         ),

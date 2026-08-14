@@ -59,6 +59,9 @@ function WonBidCard({
           width={50}
           height={50}
           className="rounded-md object-cover"
+          onError={(e) => {
+            e.currentTarget.src = "/assets/default.png";
+          }}
         />
         <div>
           <p className="font-semibold text-sm text-secgray">

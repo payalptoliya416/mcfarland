@@ -99,7 +99,10 @@ export default function PaymentSlipModal({
                     sizes="100vw"
                     unoptimized
                     onLoad={() => setImageLoading(false)}
-                    onError={() => setImageLoading(false)}
+                    onError={(e) => {
+                      setImageLoading(false);
+                      e.currentTarget.src = "/assets/default.png";
+                    }}
                     className={`max-w-full h-auto mx-auto transition-opacity duration-300 ease-in-out ${
                       imageLoading ? "opacity-0" : "opacity-100"
                     }`}

@@ -157,23 +157,26 @@ export default function Machinery() {
 
   /* ================= COLUMNS ================= */
   const columns: Column<MachineryRow>[] = [
-    {
-      key: "image_urls",
-      header: "Image",
-      render: (row) =>
-        row.image_urls && (
-          <div className="relative w-[44px] h-[44px] overflow-hidden rounded-lg">
-            <Image
-              src={row.image_urls}
-              alt={row.title}
-              fill
-              className="object-cover"
-              sizes="44px"
-            />
-          </div>
-        ),
-      className: "w-[80px]",
-    },
+   {
+  key: "image_urls",
+  header: "Image",
+  render: (row) => (
+    <div className="relative w-[44px] h-[44px] overflow-hidden rounded-lg">
+      <Image
+        src={row.image_urls}
+        alt={row.title || "Machinery"}
+        fill
+        className="object-cover"
+        sizes="44px"
+        onError={(e) => {
+          e.currentTarget.src =
+            "/assets/default.png";
+        }}
+      />
+    </div>
+  ),
+  className: "w-[80px]",
+},
     {
       key: "title",
       header: "Title",

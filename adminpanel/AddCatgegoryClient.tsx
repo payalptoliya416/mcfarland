@@ -38,6 +38,9 @@ const UrlPreview = ({
             alt="preview"
             fill
             className="rounded-[14px] object-cover"
+            onError={(e) => {
+              e.currentTarget.src = "/assets/default.png";
+            }}
           />
 
           {onRemove && (

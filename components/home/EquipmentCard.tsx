@@ -16,6 +16,9 @@ const EquipmentCard = ({ image, title }: EquipmentCardProps) => {
           fill
           unoptimized
           className="object-cover transition-transform duration-500 hover:scale-105"
+          onError={(e) => {
+            e.currentTarget.src = "/assets/default.png";
+          }}
         />
       </div>
 

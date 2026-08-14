@@ -28,6 +28,9 @@ export default function MachineryMobileCard({
             alt={item.title}
             fill
             className="object-cover"
+            onError={(e) => {
+              e.currentTarget.src = "/assets/default.png";
+            }}
           />
         </div>
 

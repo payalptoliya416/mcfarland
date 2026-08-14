@@ -388,6 +388,9 @@ const trackingRowsWithState =
                           alt={data.name}
                           width={110}
                           height={80}
+                          onError={(e) => {
+                            e.currentTarget.src = "/assets/default.png";
+                          }}
                         />
                       </div>
 

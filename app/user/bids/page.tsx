@@ -38,6 +38,9 @@ function MyBidCard({ row, onView ,loading}: { row: Bid; onView: () => void ,load
           width={48}
           height={48}
           className="rounded-md object-cover"
+          onError={(e) => {
+            e.currentTarget.src = "/assets/default.png";
+          }}
         />
         <p className="font-semibold text-secgray text-sm">
           {row.machinery}

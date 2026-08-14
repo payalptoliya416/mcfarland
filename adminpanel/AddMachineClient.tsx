@@ -1000,6 +1000,9 @@ const Preview = ({ files, isVideo = false, onRemove }: PreviewProps) => (
               alt="preview"
               fill
               className="object-cover"
+              onError={(e) => {
+                e.currentTarget.src = "/assets/default.png";
+              }}
             />
           )}
 
@@ -1054,7 +1057,15 @@ const UrlPreview = ({
         className="relative w-[90px] h-[90px] rounded-[14px] overflow-hidden"
       >
         {!isVideo ? (
-          <Image src={url} alt="preview" fill className="object-cover" />
+          <Image 
+            src={url} 
+            alt="preview" 
+            fill 
+            className="object-cover"
+            onError={(e) => {
+              e.currentTarget.src = "/assets/default.png";
+            }}
+          />
         ) : (
           <video src={url} className="w-full h-full object-cover" />
         )}
