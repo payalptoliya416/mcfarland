@@ -38,7 +38,7 @@ type Step = {
   icon: any;
 };
 
-function ConfirmationPage() {
+export default function ClientPage() {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
   const categorySlug = segments[1] ?? "";
@@ -425,5 +425,3 @@ Our team is currently reviewing your order details and preparing the transaction
     </>
   );
 }
-
-export default ConfirmationPage;

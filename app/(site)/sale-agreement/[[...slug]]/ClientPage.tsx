@@ -73,7 +73,7 @@ const makeContractResponsive = (html: string) => {
   `;
 };
 
-function SaleAgreement() {
+export default function ClientPage() {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
   const categorySlug = segments[1];
@@ -332,5 +332,3 @@ const [isSubmitting, setIsSubmitting] = useState(false);
     </>
   );
 }
-
-export default SaleAgreement;

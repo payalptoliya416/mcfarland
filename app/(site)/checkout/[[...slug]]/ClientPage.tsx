@@ -99,7 +99,7 @@ const InputField: React.FC<InputFieldProps> = ({
   );
 };
 
-export default function CheckOutPage() {
+export default function ClientPage() {
   const CheckoutSchema = Yup.object().shape({
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
@@ -273,147 +273,147 @@ useEffect(() => {
     fetchProduct();
   }, [matchedCategory, matchedMake, matchedModel, auction_id]);
 
-const calculateDeliveryCost = async (zip: string, country: string) => {
-  if (!zip || !country) return;
+  const calculateDeliveryCost = async (zip: string, country: string) => {
+    if (!zip || !country) return;
 
-  try {
-    setCalcLoading(true);
-    setDeliveryError(null);
+    try {
+      setCalcLoading(true);
+      setDeliveryError(null);
 
-    const res = await calculateDistanceApi({
-      zip_code: zip,
-      country,
-    });
-    if (res.status === "success") {
-      setDistanceMiles(res.distance_miles);
-      setDeliveryCost(res.total_cost);
-    } else {
+      const res = await calculateDistanceApi({
+        zip_code: zip,
+        country,
+      });
+      if (res.status === "success") {
+        setDistanceMiles(res.distance_miles);
+        setDeliveryCost(res.total_cost);
+      } else {
+        setDeliveryCost(null);
+        setDeliveryError(res.message || "Delivery calculation failed");
+      }
+    } catch (err: any) {
       setDeliveryCost(null);
-      setDeliveryError(res.message || "Delivery calculation failed");
+      setDeliveryError(err?.message || "Delivery calculation failed");
+    } finally {
+      setCalcLoading(false);
     }
-  } catch (err: any) {
-    setDeliveryCost(null);
-    setDeliveryError(err?.message || "Delivery calculation failed");
-  } finally {
-    setCalcLoading(false);
-  }
-};
+  };
 
-useEffect(() => {
-  if (!zipToUse || !countryToUse) return;
+  useEffect(() => {
+    if (!zipToUse || !countryToUse) return;
 
-  setDeliveryTouched(true); 
+    setDeliveryTouched(true); 
 
-  const timer = setTimeout(() => {
-    calculateDeliveryCost(zipToUse, countryToUse);
-  }, 700);
+    const timer = setTimeout(() => {
+      calculateDeliveryCost(zipToUse, countryToUse);
+    }, 700);
 
-  return () => clearTimeout(timer);
-}, [zipToUse, countryToUse]);
+    return () => clearTimeout(timer);
+  }, [zipToUse, countryToUse]);
 
- const handleCheckoutSubmit = async (values: CheckoutFormValues) => {
-  if (!product?.id) return toast.error("Product not found");
+   const handleCheckoutSubmit = async (values: CheckoutFormValues) => {
+    if (!product?.id) return toast.error("Product not found");
 
-  try {
-    setSubmitLoading(true);
+    try {
+      setSubmitLoading(true);
 
-    const payload = {
-      machinery_id: product.id,
-      first_name: values.firstName,
-      last_name: values.lastName,
-      phone_number: values.phone,
-      billing_details: {
-        legal_company_name: values.company,
-        street_and_number: values.street,
-        city: values.city,
-        state_province: values.state,
-        zip_postal_code: values.zip,
-        country: values.country,
-      },
-      shipping_details:
-        values.shippingDifferent === "yes"
-          ? {
-              is_different: true,
-              shipping_street: values.shippingStreet,
-              shipping_city: values.shippingCity,
-              shipping_state: values.shippingState,
-              shipping_zip: values.shippingZip,
-              shipping_country: values.shippingCountry,
-            }
-          : { is_different: false },
-    };
+      const payload = {
+        machinery_id: product.id,
+        first_name: values.firstName,
+        last_name: values.lastName,
+        phone_number: values.phone,
+        billing_details: {
+          legal_company_name: values.company,
+          street_and_number: values.street,
+          city: values.city,
+          state_province: values.state,
+          zip_postal_code: values.zip,
+          country: values.country,
+        },
+        shipping_details:
+          values.shippingDifferent === "yes"
+            ? {
+                is_different: true,
+                shipping_street: values.shippingStreet,
+                shipping_city: values.shippingCity,
+                shipping_state: values.shippingState,
+                shipping_zip: values.shippingZip,
+                shipping_country: values.shippingCountry,
+              }
+            : { is_different: false },
+      };
 
-    localStorage.setItem("checkoutData", JSON.stringify(payload));
+      localStorage.setItem("checkoutData", JSON.stringify(payload));
 
-    toast.success("Proceeding to sale agreement…");
+      toast.success("Proceeding to sale agreement…");
 
-   router.push(
-      `/sale-agreement/${categorySlug}/${makeSlug}/${modelSlug}/${auction_id}`
-    );
-  } finally {
-    setSubmitLoading(false);
-  }
-};
+     router.push(
+        `/sale-agreement/${categorySlug}/${makeSlug}/${modelSlug}/${auction_id}`
+      );
+    } finally {
+      setSubmitLoading(false);
+    }
+  };
 
   const DeliveryCostBox = () => (
-  <div className="mt-5 p-4 rounded-xl border bg-gray-50 border-border">
-    <p className="text-sm font-semibold text-gray-700">
-      Delivery Cost Estimation
-    </p>
-
-    {calcLoading ? (
-      <p className="text-sm text-gray-500 mt-2">
-        Calculating delivery cost...
+    <div className="mt-5 p-4 rounded-xl border bg-gray-50 border-border">
+      <p className="text-sm font-semibold text-gray-700">
+        Delivery Cost Estimation
       </p>
-    ) : deliveryCost !== null ? (
-      <>
-        <p className="text-green font-bold text-xl mt-2">
-      {formatPrice(deliveryCost)}
+
+      {calcLoading ? (
+        <p className="text-sm text-gray-500 mt-2">
+          Calculating delivery cost...
         </p>
-
-        {distanceMiles && (
-          <p className="text-gray-500 text-sm">
-            Distance: {distanceMiles} miles
+      ) : deliveryCost !== null ? (
+        <>
+          <p className="text-green font-bold text-xl mt-2">
+        {formatPrice(deliveryCost)}
           </p>
-        )}
-      </>
-    ) : deliveryError ? (
-      <p className="text-red-500 text-sm mt-2">
-        {deliveryError}
-      </p>
-    ) : (
-      <p className="text-gray-400 text-sm mt-2">
-        Enter ZIP & Country to calculate delivery cost
-      </p>
-    )}
-  </div>
-);
 
-const shouldDisableButton = Boolean(
-  deliveryTouched &&
-    (calcLoading || deliveryCost === null || deliveryError)
-);
-const getFirstValidImage = (images: any[]) => {
-  if (!Array.isArray(images)) return null;
-
-  const firstImage = images.find(
-    (img) =>
-      img?.type?.toString().trim().toLowerCase() === "image" &&
-      img?.full_url
-  );
-
-  return firstImage?.full_url || null;
-};
-
-const productImage = getFirstValidImage(product?.images || []);
-
-if (userLoading || pageLoading) {
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white z-[9999]">
-      <Loader />
+          {distanceMiles && (
+            <p className="text-gray-500 text-sm">
+              Distance: {distanceMiles} miles
+            </p>
+          )}
+        </>
+      ) : deliveryError ? (
+        <p className="text-red-500 text-sm mt-2">
+          {deliveryError}
+        </p>
+      ) : (
+        <p className="text-gray-400 text-sm mt-2">
+          Enter ZIP & Country to calculate delivery cost
+        </p>
+      )}
     </div>
   );
-}
+
+  const shouldDisableButton = Boolean(
+    deliveryTouched &&
+      (calcLoading || deliveryCost === null || deliveryError)
+  );
+  const getFirstValidImage = (images: any[]) => {
+    if (!Array.isArray(images)) return null;
+
+    const firstImage = images.find(
+      (img) =>
+        img?.type?.toString().trim().toLowerCase() === "image" &&
+        img?.full_url
+    );
+
+    return firstImage?.full_url || null;
+  };
+
+  const productImage = getFirstValidImage(product?.images || []);
+
+  if (userLoading || pageLoading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-white z-[9999]">
+        <Loader />
+      </div>
+    );
+  }
   return (
     <section className="py-20">
       <div className="max-w-5xl mx-auto px-4 space-y-10">
