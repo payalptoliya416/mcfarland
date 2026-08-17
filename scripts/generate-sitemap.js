@@ -7,7 +7,7 @@ const projectDir = path.join(__dirname, "..");
 // Load Next.js environment variables
 loadEnvConfig(projectDir);
 
-const BASE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL;
+const BASE_URL = (process.env.NEXT_PUBLIC_WEBSITE_URL || "").replace(/\/$/, "");
 const API_BASE = process.env.NEXT_PUBLIC_BASE_URL;
 
 const slugify = (text) =>
