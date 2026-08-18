@@ -47,7 +47,6 @@ function InventoryDetail() {
   }, []);
   const pathname = usePathname();
 
-  // /inventory/agricultural-machinery/mahindra/seed-drill-9-row/1200
   const segments = pathname.split("/").filter(Boolean);
   const categorySlug = segments[1] ?? "";
   const makeSlug = segments[2] ?? "";

@@ -92,18 +92,17 @@ export default function RootLayout({
         />
         <meta httpEquiv="Pragma" content="no-cache" />
         <meta httpEquiv="Expires" content="0" />
-        {/* ✅ LiveChat Script */}
         <Script
           id="livechat-script"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-      window.lc = window.lc || {};
-      window.lc.license = 19895941;
-      window.lc.integration_name = "manual_onboarding";
-      window.lc.product_name = "livechat";
+      window.__lc = window.__lc || {};
+      window.__lc.license = 19895941;
+      window.__lc.integration_name = "manual_onboarding";
+      window.__lc.product_name = "livechat";
 
-      (function(n,t,c){
+      ;(function(n,t,c){
         function i(n){
           return e._h ? e._h.apply(null,n) : e._q.push(n)
         }
@@ -145,9 +144,8 @@ export default function RootLayout({
           }
         };
 
-        !n.lc.asyncInit && e.init();
+        !n.__lc.asyncInit && e.init();
         n.LiveChatWidget = n.LiveChatWidget || e;
-
       })(window, document, [].slice);
     `,
           }}
@@ -171,7 +169,6 @@ export default function RootLayout({
             LiveChat
           </a>
         </noscript>
-
         <SettingsProvider>
           {children}
           <ToastProvider />
