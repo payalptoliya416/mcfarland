@@ -22,6 +22,13 @@ RedirectMatch 404 (^|/)(__next.*\.txt)$
   <FilesMatch "\.(js|css|woff|woff2|ttf|png|jpg|jpeg|gif|svg|ico|webp)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
   </FilesMatch>
+  
+  # ❌ Do not cache HTML files (so updates are visible immediately)
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
+  </FilesMatch>
 </IfModule>
 
 # ✅ Allow _next static assets (IMPORTANT)
@@ -37,27 +44,27 @@ RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
 # ✅ Inventory deep routes
-RewriteRule ^inventory(/.*)?$ /inventory/index.html [L]
+RewriteRule ^inventory(/.*)?$ inventory/index.html [L]
 
 # ✅ Checkout deep routes
-RewriteRule ^checkout(/.*)?$ /checkout/index.html [L]
+RewriteRule ^checkout(/.*)?$ checkout/index.html [L]
 
 # ✅ Confirmation deep routes
-RewriteRule ^confirmation(/.*)?$ /confirmation/index.html [L]
+RewriteRule ^confirmation(/.*)?$ confirmation/index.html [L]
 
-RewriteRule ^sale-agreement(/.*)?$ /sale-agreement/index.html [L]
+RewriteRule ^sale-agreement(/.*)?$ sale-agreement/index.html [L]
 
 # ✅ Admin panel deep routes
-RewriteRule ^admin(/.*)?$ /admin/index.html [L]
+RewriteRule ^admin(/.*)?$ admin/index.html [L]
 
 # ✅ User panel deep routes
-RewriteRule ^user(/.*)?$ /user/index.html [L]
+RewriteRule ^user(/.*)?$ user/index.html [L]
 
 # ✅ Verification status routes
-RewriteRule ^verification-status(/.*)?$ /verification-status/index.html [L]
+RewriteRule ^verification-status(/.*)?$ verification-status/index.html [L]
 
 # ✅ Verify account routes
-RewriteRule ^verify-account(/.*)?$ /verify-account/index.html [L]
+RewriteRule ^verify-account(/.*)?$ verify-account/index.html [L]
 
 # ✅ SPA fallback
-RewriteRule . /index.html [L]
+RewriteRule . index.html [L]
