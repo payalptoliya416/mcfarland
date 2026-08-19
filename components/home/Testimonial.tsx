@@ -116,8 +116,7 @@ function Testimonial() {
                 />
 
                 <p className="text-lg text-[#4B4947] leading-[28px] font-semibold flex-1">
-                  “I participated in my first online auction with Eastline
-                  Equipment Auctions, and it was incredibly smooth, transparent,
+                  “I participated in my first online auction with {companyName}, and it was incredibly smooth, transparent,
                   and secure. Highly trustworthy and efficient service!”
                 </p>
               </div>

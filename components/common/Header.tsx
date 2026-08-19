@@ -210,7 +210,7 @@ function Header({
     return () => {
       isMounted = false;
     };
-  }, [pathname]);
+  }, []);
 
   useEffect(() => {
     getSettingsByKeysFooter()
@@ -449,7 +449,6 @@ function Header({
               >
                 <Link
                   href={item.path}
-                  onClick={() => handleNavigate(item.path)}
                   className={`text-base font-medium cursor-pointer relative overflow-hidden
                 before:absolute before:left-0 before:bottom-0 before:h-[2px]
                 before:w-full before:origin-left before:scale-x-0
@@ -608,10 +607,6 @@ function Header({
           {loggedIn ? (
             <Link
               href="/user"
-              onClick={(e) => {
-                e.preventDefault();
-                handleNavigate("/user");
-              }}
               className={`hidden lg:flex items-center justify-center transition cursor-pointer text-base leading-[16px] h-[40px] px-[25px] rounded-[50px] ${
                 hasBgImage
                   ? "text-white bg-green hover:bg-orange"
@@ -625,10 +620,6 @@ function Header({
               {/* Sign In (Outline - light) */}
               <Link
                 href={getAuthUrl("/user/signin")}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavigate(getAuthUrl("/user/signin"));
-                }}
                 className={`flex h-10 items-center justify-center rounded-[62px] px-4 xl:px-[25px] text-sm xl:text-base font-semibold transition-all duration-300 cursor-pointer ${
                 hasBgImage
                   ? "border border-gray text-gray hover:bg-orange hover:text-white hover:border-orange"
@@ -641,10 +632,6 @@ function Header({
               {!pathname.startsWith("/signup") && (
                 <Link
                   href={getAuthUrl("/signup")}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavigate(getAuthUrl("/signup"));
-                  }}
                   className="flex h-10 items-center justify-center rounded-[62px] border border-primary bg-primary px-4 xl:px-[25px] text-sm xl:text-base font-semibold text-white transition-all duration-300 hover:bg-white hover:border-gray hover:text-gray cursor-pointer"
                 >
                   Sign Up
