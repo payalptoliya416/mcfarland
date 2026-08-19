@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import ToastProvider from "@/components/common/ToastProvider";
 import { SettingsProvider } from "@/contexts/SettingsContext";
 import Script from "next/script";
+import MetadataUpdater from "@/components/common/MetadataUpdater";
 // ---------------- MONT FONT ----------------
 const mont = localFont({
   src: [
@@ -86,6 +87,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <title>Eastline Equipment Auctions</title>
         <meta
           httpEquiv="Cache-Control"
           content="no-cache, no-store, must-revalidate"
@@ -170,6 +172,7 @@ export default function RootLayout({
           </a>
         </noscript>
         <SettingsProvider>
+          <MetadataUpdater />
           {children}
           <ToastProvider />
         </SettingsProvider>

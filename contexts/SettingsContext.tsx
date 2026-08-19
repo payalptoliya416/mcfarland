@@ -51,7 +51,17 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     fetchSettings();
   }, []);
 
-  const companyName = settings?.company_name || "";
+  const capitalizeCompanyName = (name: string) => {
+    if (!name) return "";
+    return name
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
+  const companyName = settings?.company_name
+    ? capitalizeCompanyName(settings.company_name)
+    : "";
   const phoneNumber = settings?.phone_no || "";
 
   return (

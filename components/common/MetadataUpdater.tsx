@@ -7,7 +7,9 @@ export default function MetadataUpdater() {
     const { companyName } = useSettings();
 
     useEffect(() => {
-        document.title = companyName;
+        if (companyName) {
+            document.title = companyName;
+        }
     }, [companyName]);
 
     return null;

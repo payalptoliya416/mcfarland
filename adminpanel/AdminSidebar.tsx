@@ -48,7 +48,7 @@ export default function AdminSidebar({
     >
       {/* LOGO (FIXED) */}
       <div className="flex items-center justify-center py-1 shrink-0">
-        <Link href="/">
+        <Link href="/admin/dashboard">
           {settings?.dark_logo && (
             <Image
               src={`${settings.dark_logo}`}

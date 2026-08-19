@@ -6,15 +6,7 @@ import Image from "next/image";
 
 function Footer() {
   const { settings, companyName } = useSettings();
-  const formatPhoneNumber = (phone: string) => {
-    const digits = phone.replace(/\D/g, "");
-
-    if (digits.length === 10) {
-      return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
-    }
-
-    return phone;
-  };
+ 
   return (
     <>
       <section className="">
@@ -79,7 +71,7 @@ function Footer() {
                 )}
               </Link>
               <p className="text-light-gray text-base leading-[26px] mb-[40px] w-full">
-                {settings?.company_name} is your trusted marketplace for buying,
+                {companyName} is your trusted marketplace for buying,
                 selling, and auctioning quality industrial machinery, tractors,
                 and tools.
               </p>
@@ -280,7 +272,7 @@ function Footer() {
                     </div>
                   </div>
                   <h3 className="text-light-gray group-hover:text-white">
-                    {settings?.company_name} , {settings?.address}
+                    {companyName} , {settings?.address}
                   </h3>
                 </div>
               </a>
