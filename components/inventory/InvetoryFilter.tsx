@@ -113,14 +113,7 @@ export default function InventoryFilter({}: {}) {
     });
   }, [products]);
 
-  useEffect(() => {
-    if (machinerySectionRef.current) {
-      machinerySectionRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  }, [currentPage]);
+
 
   useEffect(() => {
     if (loadingcategory || categories.length === 0) return;
@@ -177,7 +170,6 @@ export default function InventoryFilter({}: {}) {
   const cardRefs = useRef<Record<number, HTMLDivElement | null>>({});
 
   const handleCategoryChange = (categoryId: number) => {
-    setProducts([]);
     setHasFetched(false);
 
     setSelectedCategories((prev) => {
@@ -265,8 +257,15 @@ export default function InventoryFilter({}: {}) {
       } finally {
         if (requestId !== latestRequestRef.current) return;
         setLoading(false);
-        setHasFetched(true);
         setIsNavigating(false);
+
+        if (hasFetched && machinerySectionRef.current) {
+          machinerySectionRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        }
+        setHasFetched(true);
       }
     };
     fetchMachinery();
@@ -434,7 +433,7 @@ export default function InventoryFilter({}: {}) {
           {/* ================= LEFT SIDEBAR ================= */}
           <aside
             className={`custom-scroll fixed lg:sticky top-0 lg:top-[10px] left-0 h-full lg:h-fit w-[280px] lg:w-72
-            bg-white shadow-[0_2px_35px_rgba(0,0,0,0.08)] rounded-none lg:rounded-[20px] px-[15px] py-5 z-[999] overflow-y-auto transition-transform duration-300
+            bg-white shadow-[0_2px_35px_rgba(0,0,0,0.08)] rounded-none lg:rounded-[20px] px-[15px] py-5 z-[999] lg:z-10 overflow-y-auto transition-transform duration-300
             ${
               openSidebar
                 ? "translate-x-0"
@@ -713,7 +712,7 @@ export default function InventoryFilter({}: {}) {
             )}
           </AnimatePresence>
 
-          <main ref={machinerySectionRef} className="flex-1">
+          <main ref={machinerySectionRef} className="flex-1 min-h-[850px] scroll-mt-[120px]">
             <motion.div
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
@@ -780,17 +779,25 @@ export default function InventoryFilter({}: {}) {
               </div>
             </motion.div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 items-stretch">
-              {loading ? (
-                <div className="col-span-full flex items-center justify-center py-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5 items-stretch relative">
+              {loading && products.length === 0 ? (
+                <div className="col-span-full flex items-center justify-center py-10 min-h-[400px]">
                   <Loader />
                 </div>
-              ) : hasFetched && products.length === 0 ? (
-                <div className="col-span-full text-center text-gray-500 py-10">
+              ) : !loading && hasFetched && products.length === 0 ? (
+                <div className="col-span-full text-center text-gray-500 py-10 min-h-[400px]">
                   No machinery found for selected filters
                 </div>
               ) : (
-                products.map((product) => {
+                <>
+                  {loading && (
+                    <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-30 flex items-center justify-center min-h-[300px]">
+                      <div className="sticky top-[300px]">
+                        <Loader />
+                      </div>
+                    </div>
+                  )}
+                  {products.map((product) => {
                   const categorySlug = slugify(
                     product.category?.category_name ?? "",
                   );
@@ -891,7 +898,8 @@ export default function InventoryFilter({}: {}) {
                     </div>
                   </Link>
                 );
-                })
+                  })}
+                </>
               )}
             </div>
             {!loading && products.length > 0 && totalPages > 1 && (
@@ -981,7 +989,9 @@ export default function InventoryFilter({}: {}) {
           </main>
         </div>
       </div>
-      <SimpleSteps />
+      <div className="w-full bg-white relative z-20">
+        <SimpleSteps />
+      </div>
     </>
   );
 }
