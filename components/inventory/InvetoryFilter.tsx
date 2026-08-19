@@ -32,6 +32,7 @@ export default function InventoryFilter({}: {}) {
   const leftPercent = ((fromYear - min) / (max - min)) * 100;
   const rightPercent = ((toYear - min) / (max - min)) * 100;
   const [openSidebar, setOpenSidebar] = useState(false);
+  const [openSection, setOpenSection] = useState<string | null>("category");
 
   const sortOptions = [
     { label: "Sort By Default", value: "" },
@@ -113,10 +114,12 @@ export default function InventoryFilter({}: {}) {
   }, [products]);
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    if (machinerySectionRef.current) {
+      machinerySectionRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
   }, [currentPage]);
 
   useEffect(() => {
@@ -162,8 +165,14 @@ export default function InventoryFilter({}: {}) {
   }, []);
 
   useEffect(() => {
-    setDebouncedYear({ from: fromYear, to: toYear });
+    const handler = setTimeout(() => {
+      setDebouncedYear({ from: fromYear, to: toYear });
+    }, 500);
+
+    return () => clearTimeout(handler);
   }, [fromYear, toYear]);
+
+  const machinerySectionRef = useRef<HTMLElement>(null);
 
   const cardRefs = useRef<Record<number, HTMLDivElement | null>>({});
 
@@ -440,271 +449,259 @@ export default function InventoryFilter({}: {}) {
             >
               ✕
             </button>
-
             {/* FILTER BY CATEGORY */}
             <div>
-              <Disclosure defaultOpen>
-                {({ open }) => (
-                  <>
-                    <Disclosure.Button className="w-full flex items-center justify-between mt-10 lg:mt-0 cursor-pointer">
-                      <h2 className="font-semibold text-lg text-gray">
-                        Filter by Category
-                      </h2>
+              <button
+                onClick={() => setOpenSection(openSection === "category" ? null : "category")}
+                className="w-full flex items-center justify-between mt-10 lg:mt-0 cursor-pointer text-left focus:outline-none"
+              >
+                <h2 className="font-semibold text-lg text-gray">
+                  Filter by Category
+                </h2>
+                <FaChevronDown
+                  className={`text-gray transition-transform duration-300 cursor-pointer ${
+                    openSection === "category" ? "rotate-180" : "rotate-0"
+                  }`}
+                />
+              </button>
 
-                      <FaChevronDown
-                        className={`text-gray transition-transform duration-300 ${
-                          open ? "rotate-180" : "rotate-0"
-                        }`}
-                      />
-                    </Disclosure.Button>
-
-                    <Disclosure.Panel>
-                      <div className="mt-[25px] space-y-5">
-                        {categories
-                          .filter((item) => {
-                            const isSelected = selectedCategories.includes(
-                              item.id,
-                            );
-                            if (isSelected) return true;
-                            return item.machinery_count > 0;
-                          })
-                          .map((item, idx) => {
-                            return (
-                              <label
-                                key={item.id}
-                                className="flex items-center justify-between text-base cursor-pointer"
+              {openSection === "category" && (
+                <div className="mt-[25px] space-y-5">
+                  {categories
+                    .filter((item) => {
+                      const isSelected = selectedCategories.includes(
+                        item.id,
+                      );
+                      if (isSelected) return true;
+                      return item.machinery_count > 0;
+                    })
+                    .map((item, idx) => {
+                      return (
+                        <label
+                          key={item.id}
+                          className="flex items-center justify-between text-base cursor-pointer"
+                        >
+                          <div className="flex items-center gap-3">
+                            <label className="relative flex items-center gap-3 cursor-pointer select-none">
+                              <input
+                                type="checkbox"
+                                checked={selectedCategories.includes(item.id)}
+                                onChange={() => handleCategoryChange(item.id)}
+                                className="peer appearance-none w-5 h-5 border border-border rounded-[6px] checked:bg-green checked:border-green transition cursor-pointer"
+                              />
+                              {/* Custom Tick */}
+                              <svg
+                                className="absolute left-[2px] top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none hidden peer-checked:block"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="white"
+                                strokeWidth="3"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
                               >
-                                <div className="flex items-center gap-3">
-                                 <label className="relative flex items-center gap-3 cursor-pointer select-none">
-                                  <input
-                                    type="checkbox"
-                                    checked={selectedCategories.includes(item.id)}
-                                    onChange={() => handleCategoryChange(item.id)}
-                                    className="peer appearance-none w-5 h-5 border border-border rounded-[6px] checked:bg-green checked:border-green transition cursor-pointer"
-                                  />
-
-                                  {/* Custom Tick */}
-                                  <svg
-                                    className="absolute left-[2px] top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none hidden peer-checked:block"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="white"
-                                    strokeWidth="3"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                  >
-                                    <path d="M5 13l4 4L19 7" />
-                                  </svg>
-
-                                  <span className="text-text-gray">
-                                    {item.category_name}
-                                  </span>
-                                </label>
-                                </div>
-
-                                <span className="text-text-gray">
-                                  {item.machinery_count}
-                                </span>
-                              </label>
-                            );
-                          })}
-                      </div>
-                    </Disclosure.Panel>
-                  </>
-                )}
-              </Disclosure>
+                                <path d="M5 13l4 4L19 7" />
+                              </svg>
+                              <span className="text-text-gray">
+                                {item.category_name}
+                              </span>
+                            </label>
+                          </div>
+                          <span className="text-text-gray">
+                            {item.machinery_count}
+                          </span>
+                        </label>
+                      );
+                    })}
+                </div>
+              )}
             </div>
 
-            <div className="border-t border-border my-[30px]" />
+            <div className="border-t border-border my-5" />
 
             {/* MAKE & MODEL */}
+            <div>
+              <button
+                onClick={() => setOpenSection(openSection === "make_model" ? null : "make_model")}
+                className="w-full flex items-center justify-between mb-4 text-left focus:outline-none cursor-pointer"
+              >
+                <h2 className="font-semibold text-lg text-gray">
+                  Filter by Make and Model
+                </h2>
+                <FaChevronDown
+                  className={`text-gray transition-transform duration-300 cursor-pointer ${
+                    openSection === "make_model" ? "rotate-180" : "rotate-0"
+                  }`}
+                />
+              </button>
 
-            <Disclosure defaultOpen>
-              {({ open }) => (
-                <div>
-                  <Disclosure.Button className="w-full flex items-center justify-between mb-4">
-                    <h2 className="font-semibold text-lg text-gray">
-                      Filter by Make and Model
-                    </h2>
-                    <FaChevronDown
-                      className={`text-gray transition-transform duration-300 ${
-                        open ? "rotate-180" : ""
-                      }`}
+              {openSection === "make_model" && (
+                <div className="space-y-5">
+                  {/* MAKE */}
+                  <div>
+                    <Select
+                      options={makeOptions}
+                      value={makeOptions.find(
+                        (opt) => opt.value === selectedMake,
+                      )}
+                      onChange={(selected) => {
+                        setSelectedMake(selected?.value || "Any Make");
+                      }}
+                      isSearchable
+                      placeholder="Select Make"
+                      styles={customSelectStyles}
+                      menuPortalTarget={
+                        typeof document !== "undefined"
+                          ? document.body
+                          : null
+                      }
+                      menuPosition="fixed"
                     />
-                  </Disclosure.Button>
+                  </div>
 
-                  <Disclosure.Panel>
-                    <div className="space-y-5">
-                      {/* MAKE */}
-                      <div>
-                        <Select
-                          options={makeOptions}
-                          value={makeOptions.find(
-                            (opt) => opt.value === selectedMake,
-                          )}
-                          onChange={(selected) => {
-                            setSelectedMake(selected?.value || "Any Make");
-                          }}
-                          isSearchable
-                          placeholder="Select Make"
-                          styles={customSelectStyles}
-                          menuPortalTarget={
-                            typeof document !== "undefined"
-                              ? document.body
-                              : null
-                          }
-                          menuPosition="fixed"
-                        />
-                      </div>
-
-                      <div>
-                        <Select
-                          options={modelOptions}
-                          value={modelOptions.find(
-                            (opt) => opt.value === selectedModel,
-                          )}
-                          onChange={(selected) => {
-                            setSelectedModel(selected?.value || "Select Model");
-                          }}
-                          isSearchable
-                          placeholder="Select Model"
-                          styles={customSelectStyles}
-                          menuPortalTarget={
-                            typeof document !== "undefined"
-                              ? document.body
-                              : null
-                          }
-                          menuPosition="fixed"
-                        />
-                      </div>
-                    </div>
-                  </Disclosure.Panel>
+                  <div>
+                    <Select
+                      options={modelOptions}
+                      value={modelOptions.find(
+                        (opt) => opt.value === selectedModel,
+                      )}
+                      onChange={(selected) => {
+                        setSelectedModel(selected?.value || "Select Model");
+                      }}
+                      isSearchable
+                      placeholder="Select Model"
+                      styles={customSelectStyles}
+                      menuPortalTarget={
+                        typeof document !== "undefined"
+                          ? document.body
+                          : null
+                      }
+                      menuPosition="fixed"
+                    />
+                  </div>
                 </div>
               )}
-            </Disclosure>
-            <div className="border-t border-border my-[30px]" />
+            </div>
 
-            <Disclosure defaultOpen>
-              {({ open }) => (
+            <div className="border-t border-border my-5" />
+
+            {/* YEAR */}
+            <div>
+              <button
+                onClick={() => setOpenSection(openSection === "year" ? null : "year")}
+                className="w-full flex items-center justify-between mb-3 text-left focus:outline-none cursor-pointer"
+              >
+                <h2 className="font-semibold text-lg text-gray">
+                  Filter by Year
+                </h2>
+                <FaChevronDown
+                  className={`text-gray transition-transform duration-300 cursor-pointer ${
+                    openSection === "year" ? "rotate-180" : "rotate-0"
+                  }`}
+                />
+              </button>
+
+              {openSection === "year" && (
                 <div>
-                  <Disclosure.Button className="w-full flex items-center justify-between mb-3">
-                    <h2 className="font-semibold text-lg text-gray">
-                      Filter by Year
-                    </h2>
-                    <FaChevronDown
-                      className={`text-gray transition-transform duration-300 ${
-                        open ? "rotate-180" : ""
-                      }`}
-                    />
-                  </Disclosure.Button>
-
-                  <Disclosure.Panel>
-                    <div className="flex items-center justify-between text-sm text-secgray mt-3 mb-1">
-                      <span>{min}</span>
-                      <span>{max}</span>
+                  <div className="flex items-center justify-between text-sm text-secgray mt-3 mb-1">
+                    <span>{min}</span>
+                    <span>{max}</span>
+                  </div>
+                  <div className="w-full mb-5">
+                    <div className="relative w-full h-1 bg-[#E9E9E9] rounded-full mt-4 ">
+                      <div
+                        className="absolute h-[6px] bg-green rounded-full top-1/2 -translate-y-1/2"
+                        style={{
+                          left: `${Math.max(0, Math.min(100, leftPercent))}%`,
+                          width: `${Math.max(0, Math.min(100 - leftPercent, rightPercent - leftPercent))}%`,
+                        }}
+                      />
+                      {/* FROM */}
+                      <input
+                        type="range"
+                        min={min}
+                        max={max}
+                        value={fromYear}
+                        onChange={(e) => {
+                          const v = Number(e.target.value);
+                          if (v < toYear) setFromYear(v);
+                        }}
+                        className="range-thumb z-10"
+                      />
+                      {/* TO */}
+                      <input
+                        type="range"
+                        min={min}
+                        max={max}
+                        value={toYear}
+                        onChange={(e) => {
+                          const v = Number(e.target.value);
+                          if (v > fromYear) setToYear(v);
+                        }}
+                        className="range-thumb z-20"
+                      />
                     </div>
-                    <div className="w-full mb-5">
-                      <div className="relative w-full h-1 bg-[#E9E9E9] rounded-full mt-4 ">
-                        <div
-                          className="absolute h-[6px] bg-green rounded-full top-1/2 -translate-y-1/2"
-                          style={{
-                            left: `${Math.max(0, Math.min(100, leftPercent))}%`,
-                            width: `${Math.max(0, Math.min(100 - leftPercent, rightPercent - leftPercent))}%`,
-                          }}
-                        />
-
-                        {/* FROM */}
-                        <input
-                          type="range"
-                          min={min}
-                          max={max}
-                          value={fromYear}
-                          onChange={(e) => {
-                            const v = Number(e.target.value);
-                            if (v < toYear) setFromYear(v);
-                          }}
-                          className="range-thumb z-10"
-                        />
-
-                        {/* TO */}
-                        <input
-                          type="range"
-                          min={min}
-                          max={max}
-                          value={toYear}
-                          onChange={(e) => {
-                            const v = Number(e.target.value);
-                            if (v > fromYear) setToYear(v);
-                          }}
-                          className="range-thumb z-20"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex gap-3">
-                      <div className="w-1/2">
-                        <label className="text-base text-secgray">From</label>
-                        <input
-                          type="number"
-                          value={fromInput}
-                          onChange={(e) => {
-                            let val = e.target.value
-                              .replace(/\D/g, "")
-                              .slice(0, 4);
-                            setFromInput(val);
-
-                            const num = Number(val);
-                            if (!isNaN(num)) {
-                              if (num < min) return;
-                              if (num <= toYear) {
-                                setFromYear(num);
-                              }
+                  </div>
+                  <div className="flex gap-3">
+                    <div className="w-1/2">
+                      <label className="text-base text-secgray">From</label>
+                      <input
+                        type="number"
+                        value={fromInput}
+                        onChange={(e) => {
+                          let val = e.target.value
+                            .replace(/\D/g, "")
+                            .slice(0, 4);
+                          setFromInput(val);
+                          const num = Number(val);
+                          if (!isNaN(num)) {
+                            if (num < min) return;
+                            if (num <= toYear) {
+                              setFromYear(num);
                             }
-                          }}
-                          onBlur={() => {
-                            let num = Number(fromInput);
-                            if (!num || num < min) num = min;
-                            if (num > toYear) num = toYear;
-                            setFromYear(num);
-                            setFromInput(String(num));
-                          }}
-                          className="w-full mt-1 border border-border rounded-[46px] py-2 px-3  focus:outline-none"
-                        />
-                      </div>
-
-                      <div className="w-1/2">
-                        <label className="text-base text-secgray">To</label>
-                        <input
-                          type="number"
-                          value={toInput}
-                          onChange={(e) => {
-                            let val = e.target.value
-                              .replace(/\D/g, "")
-                              .slice(0, 4);
-                            setToInput(val);
-
-                            const num = Number(val);
-                            if (!isNaN(num)) {
-                              if (num > max) return;
-                              if (num >= fromYear) {
-                                setToYear(num);
-                              }
-                            }
-                          }}
-                          onBlur={() => {
-                            let num = Number(toInput);
-                            if (!num || num > max) num = max;
-                            if (num < fromYear) num = fromYear;
-                            setToYear(num);
-                            setToInput(String(num));
-                          }}
-                          className="w-full mt-1 border border-border rounded-[46px] py-2 px-3 focus:outline-none"
-                        />
-                      </div>
+                          }
+                        }}
+                        onBlur={() => {
+                          let num = Number(fromInput);
+                          if (!num || num < min) num = min;
+                          if (num > toYear) num = toYear;
+                          setFromYear(num);
+                          setFromInput(String(num));
+                        }}
+                        className="w-full mt-1 border border-border rounded-[46px] py-2 px-3  focus:outline-none"
+                      />
                     </div>
-                  </Disclosure.Panel>
+                    <div className="w-1/2">
+                      <label className="text-base text-secgray">To</label>
+                      <input
+                        type="number"
+                        value={toInput}
+                        onChange={(e) => {
+                          let val = e.target.value
+                            .replace(/\D/g, "")
+                            .slice(0, 4);
+                          setToInput(val);
+                          const num = Number(val);
+                          if (!isNaN(num)) {
+                            if (num > max) return;
+                            if (num >= fromYear) {
+                              setToYear(num);
+                            }
+                          }
+                        }}
+                        onBlur={() => {
+                          let num = Number(toInput);
+                          if (!num || num > max) num = max;
+                          if (num < fromYear) num = fromYear;
+                          setToYear(num);
+                          setToInput(String(num));
+                        }}
+                        className="w-full mt-1 border border-border rounded-[46px] py-2 px-3 focus:outline-none"
+                      />
+                    </div>
+                  </div>
                 </div>
               )}
-            </Disclosure>
+            </div>
           </aside>
 
           <AnimatePresence>
@@ -716,7 +713,7 @@ export default function InventoryFilter({}: {}) {
             )}
           </AnimatePresence>
 
-          <main className="flex-1">
+          <main ref={machinerySectionRef} className="flex-1">
             <motion.div
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
