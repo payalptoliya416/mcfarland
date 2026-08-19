@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import Image from "next/image";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -77,8 +77,6 @@ function InventoryDetail() {
 
     return categories.find((c) => slugify(c.category_name) === slug);
   };
-  const matchedCategory = getCategoryBySlug(categorySlug);
-  const categoryName = matchedCategory?.category_name ?? "";
   const getMakeBySlug = (slug?: string) => {
     if (!slug) return null;
     return makes.find((m) => slugify(m) === slug);
@@ -89,8 +87,11 @@ function InventoryDetail() {
     return models.find((m) => slugify(m) === slug);
   };
 
-  const matchedMake = getMakeBySlug(makeSlug);
-  const matchedModel = getModelBySlug(modelSlug);
+  const matchedCategory = useMemo(() => getCategoryBySlug(categorySlug), [categories, categorySlug]);
+  const categoryName = matchedCategory?.category_name ?? "";
+
+  const matchedMake = useMemo(() => getMakeBySlug(makeSlug), [makes, makeSlug]);
+  const matchedModel = useMemo(() => getModelBySlug(modelSlug), [models, modelSlug]);
 
   const makeName = matchedMake ?? "";
   const modelName = matchedModel ?? "";
@@ -182,34 +183,17 @@ function InventoryDetail() {
     seconds: 0,
   });
 
-  // useEffect(() => {
-  //   if (!data?.bid_end_time) return;
-
-  //   setTimeLeft(getTimeLeft(data.bid_end_time)); // initial set
-
-  //   const timer = setInterval(() => {
-  //     setTimeLeft(getTimeLeft(data.bid_end_time));
-  //   }, 1000);
-
-  //   return () => clearInterval(timer);
-  // }, [data?.bid_end_time]);
-
   useEffect(() => {
-  if (!data?.bid_end_time) return;
+    if (!data?.bid_end_time) return;
 
-  let animationFrame: number;
+    setTimeLeft(getTimeLeft(data.bid_end_time)); // initial set
 
-  const updateTimer = () => {
-    setTimeLeft(getTimeLeft(data.bid_end_time));
-    animationFrame = requestAnimationFrame(updateTimer);
-  };
+    const timer = setInterval(() => {
+      setTimeLeft(getTimeLeft(data.bid_end_time));
+    }, 1000);
 
-  updateTimer();
-
-  return () => {
-    cancelAnimationFrame(animationFrame);
-  };
-}, [data?.bid_end_time]);
+    return () => clearInterval(timer);
+  }, [data?.bid_end_time]);
 
   const calculateDeliveryCost = async (zip: string, country: string) => {
     try {
