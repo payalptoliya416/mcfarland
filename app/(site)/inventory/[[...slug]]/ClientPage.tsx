@@ -19,7 +19,7 @@ export default function ClientPage() {
   return (
     <Suspense
       fallback={
-        <div className="fixed inset-0 flex items-center justify-center bg-white/60 backdrop-blur-sm">
+        <div className="fixed inset-0 flex items-center justify-center bg-white z-[9999]">
           <Loader />
         </div>
       }
