@@ -2,10 +2,8 @@
 const isExport = process.env.NODE_ENV === "production";
 
 const nextConfig = {
-  // Production Export બિલ્ડ માટે જ static output ગણશે
   ...(isExport ? { output: "export" } : {}),
 
-  // rewrites() ફક્ત Local / Development માં જ ચાલશે
   ...(!isExport
     ? {
         async rewrites() {

@@ -72,11 +72,6 @@ export const metadata: Metadata = {
     shortcut: "/favicon-new.png",
     apple: "/favicon-new.png",
   },
-
-  robots: {
-    index: false,
-    follow: false,
-  },
 };
 
 export default function RootLayout({
