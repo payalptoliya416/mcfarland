@@ -712,7 +712,7 @@ export default function InventoryFilter({}: {}) {
             )}
           </AnimatePresence>
 
-          <main ref={machinerySectionRef} className="flex-1 min-h-[850px] scroll-mt-[120px]">
+          <main ref={machinerySectionRef} className="flex-1 min-h-[500px] scroll-mt-[120px]">
             <motion.div
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
