@@ -66,7 +66,8 @@ const sfPro = localFont({
 
 export const metadata: Metadata = {
   title: `Eastline Equipment Auctions`,
-  description: "",
+  description:
+    "We specialize in the buying, selling, and auctioning of high-quality industrial machinery, tractors, farm tools, and construction equipment.",
   icons: {
     icon: "/favicon-new.png",
     shortcut: "/favicon-new.png",
