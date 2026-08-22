@@ -82,7 +82,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <title>Eastline Equipment Auctions</title>
         <meta
           httpEquiv="Cache-Control"
           content="no-cache, no-store, must-revalidate"

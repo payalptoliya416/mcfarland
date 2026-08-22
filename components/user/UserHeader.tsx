@@ -792,7 +792,7 @@ function UserHeader({ onNavigate }: { onNavigate?: (url: string) => void }) {
             className={`lg:hidden fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300
             ${
               isMenuOpen
-                ? "opacity-100 pointer-events-auto"
+                ? "opacity-100 pointer-events-auto z-[2]"
                 : "opacity-0 pointer-events-none"
             }
           `}
@@ -855,7 +855,7 @@ function UserHeader({ onNavigate }: { onNavigate?: (url: string) => void }) {
               </Link>
             ) : (
               <div className="">
-                <button
+                {/* <button
                   onClick={() => {
                     handleNavigate(getAuthUrl("/user/signin"));
                     handleCloseMenu();
@@ -863,7 +863,7 @@ function UserHeader({ onNavigate }: { onNavigate?: (url: string) => void }) {
                   className="mt-6 block text-center text-green bg-white border border-green py-3 px-6 rounded-lg font-semibold w-full transition-all duration-300 hover:bg-orange hover:text-white hover:border-orange cursor-pointer"
                 >
                   Sign In
-                </button>
+                </button> */}
                 <button
                   onClick={() => {
                     handleNavigate(getAuthUrl("/signup"));

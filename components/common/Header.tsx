@@ -173,7 +173,7 @@ function Header({
   const query = searchParams.toString();
   const returnUrl = query ? `${pathname}?${query}` : pathname;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
+
   const menuRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -272,9 +272,7 @@ function Header({
     Object.entries(inventoryGroups).forEach(([groupName, children]) => {
       const matched = headerCategories.filter((cat) => {
         const name = cat?.category_name?.trim()?.toLowerCase() || "";
-        return children.some(
-          (child) => child.trim().toLowerCase() === name,
-        );
+        return children.some((child) => child.trim().toLowerCase() === name);
       });
 
       const directCategory = headerCategories.find(
@@ -540,21 +538,20 @@ function Header({
                               }
                             }}
                           >
-                         
                             <Link
                               href={url}
                               onClick={(e) => {
-                                  e.stopPropagation();
+                                e.stopPropagation();
 
-                                  setDisableHover(true);
-                                  setOpenDropdown(null);
-                                  setActiveGroup(null);
-                                  setClickedGroup(null);
+                                setDisableHover(true);
+                                setOpenDropdown(null);
+                                setActiveGroup(null);
+                                setClickedGroup(null);
 
-                                  setTimeout(() => {
-                                    setDisableHover(false);
-                                  }, 300);
-                                }}
+                                setTimeout(() => {
+                                  setDisableHover(false);
+                                }, 300);
+                              }}
                               className="w-full flex items-center justify-between font-medium text-[#1D1B1A] hover:text-orange"
                             >
                               {group.name}
@@ -625,7 +622,6 @@ function Header({
             </Link>
           ) : (
             <div className="hidden lg:flex gap-3 items-center">
-              {/* Sign In (Outline - light) */}
               <Link
                 href={getAuthUrl("/user/signin")}
                 onClick={(e) => {
@@ -633,10 +629,12 @@ function Header({
                   handleNavigate(getAuthUrl("/user/signin"));
                 }}
                 className={`flex h-10 items-center justify-center rounded-[62px] px-4 xl:px-[25px] text-sm xl:text-base font-semibold transition-all duration-300 cursor-pointer ${
-                hasBgImage
-                  ? "border border-gray text-gray hover:bg-orange hover:text-white hover:border-orange"
-                  : "border border-white text-white hover:bg-white hover:text-black"
-              }`}
+                  pathname.startsWith("/signup")
+                    ? "border border-primary bg-primary text-white hover:bg-white hover:border-gray hover:text-gray"
+                    : hasBgImage
+                      ? "border border-gray text-gray hover:bg-orange hover:text-white hover:border-orange"
+                      : "border border-white text-white hover:bg-white hover:text-black"
+                }`}
               >
                 Sign In
               </Link>
@@ -736,28 +734,32 @@ function Header({
               </Link>
             ) : (
               <div className="">
-                <button
-                  onClick={() => handleNavigate(getAuthUrl("/user/signin"))}
+                <Link
+                  href={getAuthUrl("/user/signin")}
+                  onClick={handleCloseMenu}
                   className="
-              mt-6 block text-center text-green bg-white border border-green 
-              py-3 px-6 rounded-lg font-semibold w-full
-              transition-all duration-300 
-              hover:bg-orange hover:text-white hover:border-orange
-            "
+                    mt-6 block text-center text-green bg-white border border-green 
+                    py-3 px-6 rounded-lg font-semibold w-full
+                    transition-all duration-300 
+                    hover:bg-orange hover:text-white hover:border-orange
+                  "
                 >
                   Sign In
-                </button>
-                <button
-                  onClick={() => handleNavigate(getAuthUrl("/signup"))}
-                  className="
+                </Link>
+                {!pathname.startsWith("/signup") && (
+                  <Link
+                    href={getAuthUrl("/signup")}
+                    onClick={handleCloseMenu}
+                    className="
               mt-2 block text-center text-green bg-white border border-green 
               py-3 px-6 rounded-lg font-semibold w-full
               transition-all duration-300 
               hover:bg-orange hover:text-white hover:border-orange
             "
-                >
-                  Sign Up
-                </button>
+                  >
+                    Sign Up
+                  </Link>
+                )}
               </div>
             )}
           </div>
