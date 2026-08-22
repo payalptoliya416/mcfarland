@@ -65,9 +65,6 @@ const sfPro = localFont({
 });
 
 export const metadata: Metadata = {
-  title: `Eastline Equipment Auctions`,
-  description:
-    "We specialize in the buying, selling, and auctioning of high-quality industrial machinery, tractors, farm tools, and construction equipment.",
   icons: {
     icon: "/favicon-new.png",
     shortcut: "/favicon-new.png",
@@ -83,6 +80,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <title>Eastline Equipment Auctions</title>
+        <meta
+          name="description"
+          content="We specialize in the buying, selling, and auctioning of high-quality industrial machinery, tractors, farm tools, and construction equipment."
+        />
         <meta
           httpEquiv="Cache-Control"
           content="no-cache, no-store, must-revalidate"

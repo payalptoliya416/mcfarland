@@ -21,6 +21,7 @@ import { calculateDistanceApi } from "@/api/calculateDistance";
 import { Category } from "@/api/data";
 import { formatPrice } from "@/hooks/formate";
 import { useRouter } from "next/navigation";
+import { useSettings } from "@/contexts/SettingsContext";
 
 function getTimeLeft(endTime: string) {
   const end = new Date(endTime.replace(" ", "T")).getTime();
@@ -42,6 +43,8 @@ function getTimeLeft(endTime: string) {
 const countries = ["USA", "CANADA"];
 
 function InventoryDetail() {
+  const { companyName } = useSettings();
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, []);
@@ -71,6 +74,70 @@ function InventoryDetail() {
   const [models, setModels] = useState<string[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (data?.name && companyName) {
+      const updateMetadata = () => {
+        const title = `${data.name} | ${companyName}`;
+        
+        // Handle title tags and duplicates
+        const titleTags = document.querySelectorAll("title");
+        if (titleTags.length > 0) {
+          if (titleTags[0].textContent !== title) {
+            titleTags[0].textContent = title;
+          }
+          // Clean up duplicate title tags
+          for (let i = 1; i < titleTags.length; i++) {
+            titleTags[i].remove();
+          }
+        } else {
+          if (document.title !== title) {
+            document.title = title;
+          }
+        }
+
+        const rawDesc = data.description || "";
+        // Strip HTML tags and normalize whitespace
+        const cleanDesc = rawDesc
+          .replace(/<[^>]*>/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+
+        // Limit description character length (SEO standard is ~155-160 chars)
+        const truncatedDesc =
+          cleanDesc.length > 155 ? cleanDesc.slice(0, 155).trim() + "..." : cleanDesc;
+
+        const descriptionTags = document.querySelectorAll('meta[name="description"]');
+        let descriptionTag: HTMLMetaElement;
+
+        if (descriptionTags.length === 0) {
+          descriptionTag = document.createElement("meta");
+          descriptionTag.setAttribute("name", "description");
+          document.head.appendChild(descriptionTag);
+        } else {
+          descriptionTag = descriptionTags[0] as HTMLMetaElement;
+          // Clean up duplicate description tags
+          for (let i = 1; i < descriptionTags.length; i++) {
+            descriptionTags[i].remove();
+          }
+        }
+
+        if (descriptionTag.getAttribute("content") !== truncatedDesc) {
+          descriptionTag.setAttribute("content", truncatedDesc);
+        }
+      };
+
+      // Run immediately and after a short timeout to override Next.js client router head changes
+      updateMetadata();
+      const timer1 = setTimeout(updateMetadata, 100);
+      const timer2 = setTimeout(updateMetadata, 300);
+
+      return () => {
+        clearTimeout(timer1);
+        clearTimeout(timer2);
+      };
+    }
+  }, [data, companyName]);
 
   const getCategoryBySlug = (slug?: string) => {
     if (!slug) return null;
