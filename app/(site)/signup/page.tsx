@@ -206,7 +206,7 @@ const handleRegister = async (values: any, { resetForm }: any) => {
                   {/* FIRST GRID */}
                   <motion.div
                     variants={itemVariant}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                    className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6"
                   >
                     {/* First Name */}
                     <div>
@@ -246,7 +246,7 @@ const handleRegister = async (values: any, { resetForm }: any) => {
                   {/* SECOND GRID */}
                   <motion.div
                     variants={itemVariant}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                    className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6"
                   >
                     {/* Email */}
                     <div>
@@ -304,7 +304,7 @@ const handleRegister = async (values: any, { resetForm }: any) => {
                   {/* GRID 3 (Company & City) */}
                   <motion.div
                     variants={itemVariant}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                    className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6"
                   >
                     <div>
                       <label className="text-lightblack font-medium mb-3 block text-base">
@@ -342,7 +342,7 @@ const handleRegister = async (values: any, { resetForm }: any) => {
                   {/* GRID 4 (State & Zip) */}
                   <motion.div
                     variants={itemVariant}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                    className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6"
                   >
                     {/* State */}
                     <div>
@@ -385,7 +385,7 @@ const handleRegister = async (values: any, { resetForm }: any) => {
                   {/* Password Fields */}
                   <motion.div
                     variants={itemVariant}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                    className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6"
                   >
                     {/* Password */}
                     <div className="">

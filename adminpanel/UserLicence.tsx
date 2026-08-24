@@ -197,7 +197,7 @@ const disableDecline =
           {/* IMAGES */}
           <div className="grid grid-cols-12">
             <div className="col-span-12 xl:col-span-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                 {/* FRONT SIDE */}
                 <div className="rounded-xl border border-border p-4 bg-gray-50">
                   <p className="text-sm font-medium mb-3 text-gray-700">

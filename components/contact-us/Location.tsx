@@ -20,7 +20,7 @@ if (!settings) {
       <div className="container-custom">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="h-[350px] rounded-[14px] bg-gray-100 animate-pulse" />
-          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
             <div className="h-[160px] rounded-[14px] bg-gray-100 animate-pulse" />
             <div className="h-[160px] rounded-[14px] bg-gray-100 animate-pulse" />
             <div className="md:col-span-2 h-[180px] rounded-[14px] bg-gray-100 animate-pulse" />
@@ -117,7 +117,7 @@ if (!settings) {
             </div>
 
             {/* Right */}
-            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
               {/* Phone */}
               <div className="bg-white rounded-[14px] shadow-[0_2px_35px_rgba(0,0,0,0.08)] p-[25px]">
                 <div className="w-12 md:w-[60px] h-12 md:h-[60px] rounded-full bg-[#FCE1D2]/50 flex items-center justify-center">

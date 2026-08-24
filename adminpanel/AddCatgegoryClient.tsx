@@ -152,7 +152,7 @@ export default function AddCategoryClient() {
     >
       {({ errors, touched, setFieldValue, values, isSubmitting }) => (
         <Form className="space-y-5 bg-white border border-border rounded-[14px] p-3 sm:p-5">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
             <div>
               <label className="block mb-3 text-sm font-medium text-lightblack">
                 Category Name <span className="text-redmark">*</span>

@@ -478,7 +478,7 @@ useEffect(() => {
           {({ errors, touched, values ,setFieldValue  }) => (
             <Form className="bg-white border border-border rounded-xl p-6 space-y-10">
               {/* Personal Info */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                 <InputField
                   label="First name"
                   name="firstName"
@@ -521,7 +521,7 @@ useEffect(() => {
                   touched={touched}
                 />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                   <InputField
                     label="City"
                     name="city"
@@ -535,7 +535,7 @@ useEffect(() => {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                  <InputField
   label="ZIP/Postal Code"
   name="zip"
@@ -666,7 +666,7 @@ useEffect(() => {
                     touched={touched}
                   />
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                     <InputField
                       label="Shipping City"
                       name="shippingCity"
@@ -681,7 +681,7 @@ useEffect(() => {
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                    <InputField
                 label="Shipping ZIP"
                 name="shippingZip"

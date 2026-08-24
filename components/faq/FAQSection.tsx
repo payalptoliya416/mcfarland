@@ -92,12 +92,7 @@ export default function FAQSection(): JSX.Element {
 
   return (
     <div className="container-custom section-space">
-      <motion.div
-        className="w-full mx-auto max-w-[900px] space-y-[31px]"
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.3 }}
-      >
+      <div className="w-full mx-auto max-w-[900px] space-y-[31px]">
         {faqs.map((faq, i) => {
           const isOpen = openIndex === i;
 
@@ -161,7 +156,7 @@ export default function FAQSection(): JSX.Element {
             </motion.div>
           );
         })}
-      </motion.div>
+      </div>
     </div>
   );
 }

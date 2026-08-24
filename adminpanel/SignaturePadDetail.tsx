@@ -472,7 +472,7 @@ function SignaturePadDetail() {
                   touched={touched}
                 />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                   <InputField
                     label="City"
                     name="city"
@@ -486,7 +486,7 @@ function SignaturePadDetail() {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                   <InputField
                     label="ZIP/Postal Code"
                     name="zip"
@@ -619,7 +619,7 @@ function SignaturePadDetail() {
                     touched={touched}
                   />
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                     <InputField
                       label="Shipping City"
                       name="shippingCity"
@@ -634,7 +634,7 @@ function SignaturePadDetail() {
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                     <InputField
                       label="Shipping ZIP"
                       name="shippingZip"

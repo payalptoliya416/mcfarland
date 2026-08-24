@@ -274,7 +274,7 @@ export default function VerifyAccount() {
             })()}
 
           <form onSubmit={handleSubmit} className="space-y-[30px]">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
               <UploadBox
                 label="Upload the front of your Driver’s License"
                 file={frontFile}

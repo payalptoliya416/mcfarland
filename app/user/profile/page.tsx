@@ -487,7 +487,7 @@ export default function UserProfileForm() {
                       {/* LEFT SIDE */}
                       <div className="border border-border rounded-xl p-4">
                         {canUploadLicense ? (
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                             <UploadBox
                               label="Upload the front of your Driver’s License"
                               file={frontFile}
