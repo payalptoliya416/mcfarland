@@ -45,7 +45,7 @@ if (!settings) {
     {
       icon: "/assets/images/clock-icon.svg",
       title: "Working Hours",
-      desc: "8:30am - 4:30pm (EDT) Monday to Friday",
+      desc: "9:00 am - 5:00 pm (EDT) Monday to Friday",
     },
     {
       icon: "/assets/images/mail-icon.svg",

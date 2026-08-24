@@ -314,7 +314,7 @@ function Footer() {
                     </div>
                   </div>
                   <h3 className="text-light-gray text-base transition-all duration-300 group-hover:text-white">
-                    8:30am - 4:30pm (EDT) Monday to Friday
+                    9:00 am - 5:00 pm  (EDT) Monday to Friday
                   </h3>
                 </div>
               </div>
