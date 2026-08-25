@@ -48,9 +48,13 @@ if (res.status === 401) {
   throw new Error("Unauthorized");
 }
 
-// ❌ API-level error (status:false)
-if (data?.status === false) {
-  throw new Error(data.message || "Something went wrong");
+// Preserve API validation details so forms can show errors beside fields.
+if (data?.status === false || data?.success === false) {
+  const error = new Error(data.message || "Something went wrong") as Error & {
+    errors?: Record<string, string[]>;
+  };
+  error.errors = data.errors;
+  throw error;
 }
 
 // ❌ HTTP error

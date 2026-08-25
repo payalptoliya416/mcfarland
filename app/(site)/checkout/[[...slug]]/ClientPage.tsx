@@ -12,7 +12,6 @@ import {
   getMakes,
   getModels,
   getSingleInventory,
-  userCheckout,
 } from "@/api/categoryActions";
 import toast from "react-hot-toast";
 import Image from "next/image";

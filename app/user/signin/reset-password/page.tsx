@@ -5,6 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { resetPassword } from "@/api/services";
 import { FiEye, FiEyeOff } from "react-icons/fi";
@@ -22,6 +23,7 @@ const ResetPasswordSchema = Yup.object().shape({
 
 export default function ResetPassword(): JSX.Element {
   const [email, setEmail] = useState("");
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -32,9 +34,9 @@ export default function ResetPassword(): JSX.Element {
       setEmail(savedEmail);
     } else {
       toast.error("Email missing! Please restart reset process.");
-      window.location.href = "/user/forgot-password";
+      router.replace("/user/forgot-password");
     }
-  }, []);
+  }, [router]);
 
   const handleReset = async (values: any, { resetForm }: any) => {
     if (!email) return;
@@ -55,7 +57,7 @@ export default function ResetPassword(): JSX.Element {
       resetForm();
 
       setTimeout(() => {
-        window.location.href = "/user/signin";
+        router.push("/user/signin");
       }, 600);
     } catch (error: any) {
       const message =

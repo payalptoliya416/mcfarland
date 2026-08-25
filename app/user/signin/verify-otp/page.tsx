@@ -3,24 +3,26 @@
 import { JSX, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { verifyOtp } from "@/api/services";
 import Image from "next/image";
 
 export default function VerifyOtp(): JSX.Element {
   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
+  const router = useRouter();
   const [otpValues, setOtpValues] = useState(["", "", "", ""]);
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  // useEffect(() => {
-  //   const savedEmail = localStorage.getItem("reset_email");
-  //   if (savedEmail) {
-  //     setEmail(savedEmail);
-  //   } else {
-  //     toast.error("Email not found! Please try again.");
-  //     window.location.href = "/user/signin/forgot-password";
-  //   }
-  // }, []);
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("reset_email");
+    if (savedEmail) {
+      setEmail(savedEmail);
+    } else {
+      toast.error("Email not found! Please try again.");
+      router.replace("/user/signin/forgot-password");
+    }
+  }, [router]);
   const handleChange = (value: string, index: number) => {
     if (!/^[0-9]?$/.test(value)) return;
 
@@ -59,7 +61,7 @@ export default function VerifyOtp(): JSX.Element {
         toast.success(res?.message || "OTP verified!");
 
         setTimeout(() => {
-          window.location.href = "/user/signin/reset-password";
+          router.push("/user/signin/reset-password");
         }, 800);
       } else {
         toast.error(res?.message || "Invalid OTP!");

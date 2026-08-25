@@ -78,7 +78,10 @@ function CreateAccountInner(): JSX.Element {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-const handleRegister = async (values: any, { resetForm }: any) => {
+const handleRegister = async (
+  values: any,
+  { resetForm, setFieldError, setFieldTouched }: any,
+) => {
   try {
     setLoading(true);
 
@@ -124,14 +127,18 @@ const handleRegister = async (values: any, { resetForm }: any) => {
     
  } catch (error: any) {
   let messages: string[] = [];
-
   if (error?.message) {
     messages.push(error.message);
   }
 
   if (error?.errors) {
-    Object.values(error.errors).forEach((err: any) => {
-      messages.push(err[0]); 
+    Object.entries(error.errors).forEach(([field, errors]: [string, any]) => {
+      const message = Array.isArray(errors) ? errors[0] : errors;
+      if (message) {
+        setFieldError(field, message);
+        setFieldTouched(field, true, false);
+        messages.push(message);
+      }
     });
   }
 

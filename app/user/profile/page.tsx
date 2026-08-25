@@ -220,7 +220,7 @@ export default function UserProfileForm() {
           type: "pending",
           bg: "bg-[#FFF4EC] border border-[#F9C8A5] text-[#D96A1C]",
           message:
-            "Your license is under verification. Please wait while we review your document.",
+            "Please upload your license document for verification.",
         };
 
       case 1: // Verified
