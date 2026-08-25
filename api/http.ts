@@ -1,9 +1,6 @@
+import { getToken } from "./authToken";
 
-
-
-import { clearToken, getToken } from "./authToken";
-
-export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/+$/, "") || "";
 
 export async function api<T>(
   endpoint: string,
