@@ -17,35 +17,35 @@ function Testimonial() {
             What <span className="text-orange">Our Clients</span> Say ?
           </h2>
         </div>
-        <div className="grid grid-cols-12 gap-0 mt-10 items-stretch">
+        <div className="grid grid-cols-12 gap-0 mt-7 sm:mt-10 items-stretch">
           {/* Card 1 */}
-          <div className="col-span-12 md:col-span-6 xl:col-span-4 flex bg-[url('/assets/images/testimonial-bg1.png')] bg-no-repeat bg-center bg-[length:100%_100%] min-h-[387px] h-full w-[105%]">
-            <div className="px-[30px] pt-[30px] pb-[102px] w-full relative flex flex-col">
-              <div className="m-7">
+          <div className="col-span-12 md:col-span-6 xl:col-span-4 flex bg-[url('/assets/images/testimonial-bg1.png')] bg-no-repeat bg-center bg-[length:100%_100%] min-h-[387px] h-full sm:w-[105%]">
+            <div className="px-[30px] pt-[30px] pb-[90px] sm:pb-[102px] w-full relative flex flex-col">
+              <div className="m-4 lg:m-7">
                 <Image
                   src="/assets/images/invert.png"
                   alt="Quote"
                   width={0}
                   height={0}
                   sizes="100vw"
-                  className="mb-5 w-[50px] h-auto"
+                  className="mb-5 w-9 sm:w-[48px] h-auto"
                 />
 
-                <p className="text-lg text-[#4B4947] leading-[28px] font-semibold flex-1">
+                <p className="text-base sm:text-lg text-[#4B4947] leading-[28px] font-semibold flex-1">
                   “Selling my machinery through {companyName} was
                   seamless. Their team handled everything professionally, and I
                   received great value within days. Highly recommended!”
                 </p>
               </div>
 
-              <div className="absolute bottom-5 xl:bottom-7 left-8 xl:left-7 flex items-center gap-[10px]">
+              <div className="absolute bottom-9 sm:bottom-8 lg:bottom-5 xl:bottom-7 left-7 sm:left-8 xl:left-7 flex items-center gap-[10px]">
                 <Image
-                  src="/assets/images/client1.png"
-                  alt="Robert F"
-                  width={60}
-                  height={60}
-                  className="rounded-full object-cover"
-                />
+                src="/assets/images/client1.png"
+                alt="Robert F"
+                width={60}
+                height={60}
+                className="rounded-full object-cover w-10 h-10 sm:w-12 sm:h-12 lg:w-[60px] lg:h-[60px]"
+              />
 
                 <div>
                   <h4 className="text-primary text-base md:text-lg leading-none font-semibold mb-2">
@@ -61,32 +61,32 @@ function Testimonial() {
           </div>
 
           {/* Card 2 */}
-          <div className="col-span-12 md:col-span-6 xl:col-span-4 flex bg-[url('/assets/images/testimonial-bg1.png')] bg-no-repeat bg-center bg-[length:100%_100%] min-h-[387px] h-full w-[105%]">
-            <div className=" px-[30px] pt-[30px] pb-[102px] w-full relative flex flex-col">
-              <div className="m-7">
+          <div className="col-span-12 md:col-span-6 xl:col-span-4 flex bg-[url('/assets/images/testimonial-bg1.png')] bg-no-repeat bg-center bg-[length:100%_100%] min-h-[387px] h-full sm:w-[105%]">
+            <div className=" px-[30px] pt-[30px] pb-[90px] sm:pb-[102px] w-full relative flex flex-col">
+              <div className="m-4 lg:m-7">
                 <Image
                   src="/assets/images/invert.png"
                   alt="Quote"
                   width={0}
                   height={0}
                   sizes="100vw"
-                  className="mb-5 w-[48px] h-auto"
+                  className="mb-5 w-9 sm:w-[48px] h-auto"
                 />
 
-                <p className="text-lg text-[#4B4947] leading-[28px] font-semibold flex-1">
+                <p className="text-base sm:text-lg text-[#4B4947] leading-[28px] font-semibold flex-1">
                   “Fantastic experience from start to finish! The website is
                   easy to use, and the support team helped me find the perfect
                   excavator within my budget.”
                 </p>
               </div>
 
-              <div className="absolute bottom-5 xl:bottom-7 left-8 xl:left-7 flex items-center gap-[10px]">
+              <div className="absolute bottom-9 sm:bottom-8 lg:bottom-5 xl:bottom-7 left-7 sm:left-8 xl:left-7 flex items-center gap-[10px]">
                 <Image
                   src="/assets/images/client2.png"
                   alt="Kathryn M"
                   width={60}
                   height={60}
-                  className="rounded-full object-cover"
+                 className="rounded-full object-cover w-10 h-10 sm:w-12 sm:h-12 lg:w-[60px] lg:h-[60px]"
                 />
 
                 <div>
@@ -103,31 +103,31 @@ function Testimonial() {
           </div>
 
           {/* Card 3 */}
-          <div className="col-span-12 md:col-span-6 xl:col-span-4 flex bg-[url('/assets/images/testimonial-bg1.png')] bg-no-repeat bg-center bg-[length:100%_100%] min-h-[387px] h-full w-[105%]">
-            <div className="px-[30px] pt-[30px] pb-[102px] w-full relative flex flex-col">
-              <div className="m-7">
+          <div className="col-span-12 md:col-span-6 xl:col-span-4 flex bg-[url('/assets/images/testimonial-bg1.png')] bg-no-repeat bg-center bg-[length:100%_100%] min-h-[387px] h-full sm:w-[105%]">
+            <div className="px-[30px] pt-[30px] pb-[90px] sm:pb-[102px] w-full relative flex flex-col">
+              <div className="m-4 lg:m-7">
                 <Image
                   src="/assets/images/invert.png"
                   alt="Quote"
                   width={0}
                   height={0}
                   sizes="100vw"
-                  className="mb-5 w-[48px] h-auto"
+                  className="mb-5 w-9 sm:w-[48px] h-auto"
                 />
 
-                <p className="text-lg text-[#4B4947] leading-[28px] font-semibold flex-1">
+                <p className="text-base sm:text-lg text-[#4B4947] leading-[28px] font-semibold flex-1">
                   “I participated in my first online auction with {companyName}, and it was incredibly smooth, transparent,
                   and secure. Highly trustworthy and efficient service!”
                 </p>
               </div>
 
-              <div className="absolute bottom-5 xl:bottom-7 left-8 xl:left-7 flex items-center gap-[10px]">
+              <div className="absolute bottom-9 sm:bottom-8 lg:bottom-5 xl:bottom-7 left-7 sm:left-8 xl:left-7 flex items-center gap-[10px]">
                 <Image
                   src="/assets/images/client3.png"
                   alt="Jerome B"
                   width={60}
                   height={60}
-                  className="rounded-full object-cover"
+                  className="rounded-full object-cover w-10 h-10 sm:w-12 sm:h-12 lg:w-[60px] lg:h-[60px]"
                 />
 
                 <div>

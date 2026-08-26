@@ -69,7 +69,7 @@ function HowWork() {
                 {processData.map((item) => (
                   <div
                     key={item.id}
-                    className="flex gap-[30px] border-b border-[#D3D2D2] py-5 lg:py-[30px] first:pt-0 last:pb-0 last:border-none"
+                    className="flex gap-5 md:gap-[30px] border-b border-[#D3D2D2] py-5 lg:py-[30px] first:pt-0 last:pb-0 last:border-none"
                   >
                     <div>
                       <h3 className="text-3xl xl:text-[44px] font-semibold leading-none text-[#22201C]">
