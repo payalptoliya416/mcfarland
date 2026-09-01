@@ -24,6 +24,7 @@ import { getUserDetails, UserDetails } from "@/api/user/profile";
 /* Types */
 /* ============================= */
 interface CheckoutFormValues {
+  bankName: string;
   firstName: string;
   lastName: string;
   phone: string;
@@ -100,6 +101,7 @@ const InputField: React.FC<InputFieldProps> = ({
 
 export default function ClientPage() {
   const CheckoutSchema = Yup.object().shape({
+    bankName: Yup.string().required("Bank account name is required"),
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
     phone: Yup.string().required("Phone is required"),
@@ -166,6 +168,7 @@ const [userLoading, setUserLoading] = useState(true);
 const [submitLoading, setSubmitLoading] = useState(false);
 
  const initialValues: CheckoutFormValues = {
+  bankName: "",
   firstName: userData?.first_name || "",
   lastName: userData?.last_name || "",
   phone: userData?.phone_no || "",
@@ -318,6 +321,7 @@ useEffect(() => {
 
       const payload = {
         machinery_id: product.id,
+        bank_name: values.bankName,
         first_name: values.firstName,
         last_name: values.lastName,
         phone_number: values.phone,
@@ -504,6 +508,13 @@ useEffect(() => {
                 <h3 className="text-md font-semibold text-gray-700">
                   Billing details
                 </h3>
+
+                <InputField
+                  label="Bank Account Name"
+                  name="bankName"
+                  errors={errors}
+                  touched={touched}
+                />
 
                 <InputField
                   label="Legal Company Name"

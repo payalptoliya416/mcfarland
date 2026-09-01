@@ -144,6 +144,7 @@ export default function ClientPage() {
       try {
         const contractPayload = {
           machinery_id: parsed.machinery_id,
+          bank_name: parsed.bank_name,
           is_bid: false,
           billing_details: parsed.billing_details,
           shipping_details: parsed.shipping_details,
@@ -207,6 +208,7 @@ const [isSubmitting, setIsSubmitting] = useState(false);
 
     const finalPayload = {
       machinery_id: checkoutData.machinery_id,
+      bank_name: checkoutData.bank_name,
       billing_details: checkoutData.billing_details,
       shipping_details: checkoutData.shipping_details,
       sign_photo: signatureBase64,

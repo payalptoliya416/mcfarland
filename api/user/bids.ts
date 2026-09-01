@@ -237,6 +237,28 @@ export const getSingleWonBid = (machineryId: number) => {
 };
 
 
+export interface SignContractPayload {
+  machinery_id: number | string;
+  bank_name: string;
+  billing_details: {
+    legal_company_name: string;
+    street_and_number: string;
+    city: string;
+    state_province?: string;
+    zip_postal_code: string;
+    country: string;
+  };
+  shipping_details: {
+    is_different: boolean;
+    shipping_street?: string;
+    shipping_city?: string;
+    shipping_state?: string;
+    shipping_zip?: string;
+    shipping_country?: string;
+  };
+  sign_photo: string | File;
+}
+
 export type SignContractResponse = {
   success: boolean;
   message: string;
@@ -248,5 +270,6 @@ export const signContract = (formData: FormData) => {
     body: formData,
   });
 };
+
 
 

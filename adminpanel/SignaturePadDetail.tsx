@@ -11,21 +11,7 @@ import * as Yup from "yup";
 import { formatPrice } from "@/hooks/formate";
 import { calculateDistanceApi } from "@/api/calculateDistance";
 interface CheckoutFormValues {
-  company: string;
-  street: string;
-  city: string;
-  state: string;
-  zip: string;
-  country: string;
-  shippingDifferent: "yes" | "no";
-
-  shippingStreet: string;
-  shippingCity: string;
-  shippingState: string;
-  shippingZip: string;
-  shippingCountry: string;
-}
-interface CheckoutFormValues {
+  bankName: string;
   company: string;
   street: string;
   city: string;
@@ -115,6 +101,7 @@ function SignaturePadDetail() {
   const [deliveryCost, setDeliveryCost] = useState<number | null>(null);
 
   const initialValues: CheckoutFormValues = {
+    bankName: "",
     company: userData?.company_name || "",
     street: userData?.address || "",
     city: userData?.city || "",
@@ -131,6 +118,7 @@ function SignaturePadDetail() {
     shippingCountry: "",
   };
   const CheckoutSchema = Yup.object().shape({
+    bankName: Yup.string().required("Bank account name is required"),
     company: Yup.string().notRequired(),
     street: Yup.string().required("Street is required"),
     city: Yup.string().required("City is required"),
@@ -312,6 +300,7 @@ function SignaturePadDetail() {
 
     const payload = {
       machinery_id: id,
+      bank_name: values.bankName,
 
       billing_details: {
         legal_company_name: values.company,
@@ -456,6 +445,13 @@ function SignaturePadDetail() {
                 <h3 className="text-md font-semibold text-gray-700">
                   Billing details
                 </h3>
+
+                <InputField
+                  label="Bank Account Name"
+                  name="bankName"
+                  errors={errors}
+                  touched={touched}
+                />
 
                 <InputField
                   label="Legal Company Name"
