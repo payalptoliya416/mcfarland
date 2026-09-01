@@ -5,7 +5,6 @@ import { IoClose } from "react-icons/io5";
 import toast from "react-hot-toast";
 import { adminOrdersService } from "@/api/admin/orders";
 import { useState } from "react";
-import { FaRegImage } from "react-icons/fa";
 import Loader from "@/components/common/Loader";
 import Image from "next/image";
 
@@ -67,7 +66,7 @@ export default function PaymentSlipModal({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
-      <div className="relative bg-white rounded-2xl shadow-xl w-fit max-w-3xl max-h-[90vh] flex flex-col">
+      <div className="relative bg-white rounded-2xl shadow-xl w-full max-w-2xl max-h-[90vh] flex flex-col">
         <div className="flex items-center justify-between px-5 py-4 border-b border-border">
           <h2 className="text-lg font-semibold text-gray-800">
             Payment Receipt
@@ -86,7 +85,7 @@ export default function PaymentSlipModal({
               isImage(slipUrl) ? (
                 <div className="relative block">
                   {imageLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="absolute inset-0 flex items-center justify-center min-h-[200px]">
                       <Loader />
                     </div>
                   )}
@@ -97,6 +96,7 @@ export default function PaymentSlipModal({
                     width={0}
                     height={0}
                     sizes="100vw"
+                    style={{ width: "auto", height: "auto", maxHeight: "60vh" }}
                     unoptimized
                     onLoad={() => setImageLoading(false)}
                     onError={(e) => {
