@@ -279,6 +279,11 @@ export default function VerifyAccount() {
                 label="Upload the front of your Driver’s License"
                 file={frontFile}
                 onChange={setFrontFile}
+                defaultUrl={
+                  profile?.front_side ||
+                  (profile as any)?.front_side_url ||
+                  (profile as any)?.license?.front_side_url
+                }
               />
 
               {requiresBack && (
@@ -286,6 +291,11 @@ export default function VerifyAccount() {
                   label="Upload the back of your Driver’s License"
                   file={backFile}
                   onChange={setBackFile}
+                  defaultUrl={
+                    profile?.back_side ||
+                    (profile as any)?.back_side_url ||
+                    (profile as any)?.license?.back_side_url
+                  }
                 />
               )}
             </div>

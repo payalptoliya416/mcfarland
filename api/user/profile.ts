@@ -19,6 +19,19 @@ export interface UserProfile {
 
   country_code?: string;
   country?: string;
+
+  front_side?: string;
+  back_side?: string;
+  front_side_url?: string;
+  back_side_url?: string;
+  license?: {
+    front_side?: string;
+    back_side?: string;
+    front_side_url?: string;
+    back_side_url?: string;
+    file?: string;
+    file_url?: string;
+  };
 }
 
 export interface UserProfileResponse {
@@ -33,7 +46,7 @@ export interface UserProfileFormValues {
   email: string;
   phone: string;
   address: string;
-  company: string;
+  company?: string;
   city: string;
   state: string;
   zip: string;
@@ -55,7 +68,7 @@ export const updateUserProfile = (
       email: payload.email,
       phone: payload.phone,
       address: payload.address,
-      company_name: payload.company,
+      company_name: payload.company || "",
       city: payload.city,
       state: payload.state,
       zip_code: payload.zip,

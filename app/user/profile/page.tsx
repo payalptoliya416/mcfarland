@@ -80,7 +80,13 @@ const LicenseStatusBadge = ({ status }: { status: string }) => {
     <span
       className={`inline-flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium ${config.bg}`}
     >
-      <Image src={config.icon} alt={config.label} width={14} height={14} />
+      <Image
+        src={config.icon}
+        alt={config.label}
+        width={14}
+        height={14}
+        unoptimized
+      />
       {config.label}
     </span>
   );
@@ -99,7 +105,7 @@ const schema = Yup.object({
       (value) => getNorthAmericanPhoneDigits(value).length === 10,
     ),
   address: Yup.string().required("Address is required"),
-  company: Yup.string().required("Company name is required"),
+  company: Yup.string().nullable().optional(),
   city: Yup.string().required("City is required"),
   state: Yup.string().required("State is required"),
   zip: Yup.string().required("Zip code is required"),
@@ -201,11 +207,27 @@ export default function UserProfileForm() {
     email: profile.email,
     phone: formatNorthAmericanPhone(profile.phone_no),
     address: profile.address,
-    company: profile.company_name,
+    company: profile.company_name || "",
     city: profile.city,
     state: profile.state,
     zip: profile.zip_code,
   };
+
+  const frontUrl =
+    profile?.front_side ||
+    (profile as any)?.front_side_url ||
+    (profile as any)?.license?.front_side_url ||
+    (profile as any)?.license?.front_side;
+
+  const backUrl =
+    profile?.back_side ||
+    (profile as any)?.back_side_url ||
+    (profile as any)?.license?.back_side_url ||
+    (profile as any)?.license?.back_side;
+
+  const hasUploadedLicense = Boolean(frontUrl || backUrl);
+  const isPdf = (url?: string | null) =>
+    url ? url.toLowerCase().split("?")[0].endsWith(".pdf") : false;
 
   const statusKey =
     (profile?.license_status as keyof typeof LICENSE_STATUS_CONFIG) ||
@@ -323,8 +345,8 @@ export default function UserProfileForm() {
 
           {/* PROFILE INFO */}
           <div className="flex items-center justify-between px-6 pb-6 -mt-7 flex-wrap gap-4">
-            <div className="flex items-center gap-4">
-              <div className="relative">
+            <div className="flex items-center gap-4 min-w-0">
+              <div className="relative shrink-0">
                 <div
                   className={`w-[142px] h-[142px] rounded-full flex items-center justify-center
               text-white text-4xl font-semibold border-4 border-white
@@ -339,23 +361,24 @@ export default function UserProfileForm() {
               w-6 h-6 rounded-full flex items-center justify-center
               ${statusConfig.bg}`}
                 >
-                 <Image
-                  src={statusConfig.icon}
-                  alt={statusConfig.label}
-                  width={12}
-                  height={12}
-                  className="w-3 h-3"
-                  unoptimized
-                />
+                  <Image
+                    src={statusConfig.icon}
+                    alt={statusConfig.label}
+                    width={12}
+                    height={12}
+                    className="w-3 h-3"
+                    unoptimized
+                  />
                 </span>
               </div>
 
-              <div>
+              <div className="min-w-0">
                 <p className="font-medium text-secgray">
-                  {" "}
                   {profile.first_name} {profile.last_name}
                 </p>
-                <p className="text-sm text-seclightgray"> {profile.email}</p>
+                <p className="text-sm text-seclightgray break-all">
+                  {profile.email}
+                </p>
               </div>
             </div>
 
@@ -492,13 +515,109 @@ export default function UserProfileForm() {
                               label="Upload the front of your Driver’s License"
                               file={frontFile}
                               onChange={setFrontFile}
+                              defaultUrl={frontUrl}
                             />
 
                             <UploadBox
                               label="Upload the back of your Driver’s License"
                               file={backFile}
                               onChange={setBackFile}
+                              defaultUrl={backUrl}
                             />
+                          </div>
+                        ) : hasUploadedLicense ? (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
+                            {/* FRONT SIDE */}
+                            <div>
+                              <p className="mb-3 text-base font-medium text-[#22201C]">
+                                Front Side
+                              </p>
+                              <div className="relative w-full h-[220px] rounded-[16px] border border-border bg-[#FBFBFB] overflow-hidden group flex items-center justify-center">
+                                {frontUrl ? (
+                                  isPdf(frontUrl) ? (
+                                    <a
+                                      href={frontUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="flex flex-col items-center justify-center text-center p-4 hover:opacity-80 transition"
+                                    >
+                                      <span className="text-4xl mb-2">📄</span>
+                                      <span className="text-sm font-medium text-blue-600 underline">
+                                        View Front PDF
+                                      </span>
+                                    </a>
+                                  ) : (
+                                    <a
+                                      href={frontUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="w-full h-full relative block cursor-pointer"
+                                    >
+                                      <Image
+                                        src={frontUrl}
+                                        alt="Front of Driver's License"
+                                        fill
+                                        unoptimized
+                                        className="object-contain p-3 transition duration-300 group-hover:scale-105"
+                                      />
+                                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                        <span className="rounded-[10px] bg-white px-4 py-2 text-xs font-medium text-[#22201C] shadow">
+                                          View Full Size
+                                        </span>
+                                      </div>
+                                    </a>
+                                  )
+                                ) : (
+                                  <span className="text-sm text-gray-400">Not uploaded</span>
+                                )}
+                              </div>
+                            </div>
+
+                            {/* BACK SIDE */}
+                            <div>
+                              <p className="mb-3 text-base font-medium text-[#22201C]">
+                                Back Side
+                              </p>
+                              <div className="relative w-full h-[220px] rounded-[16px] border border-border bg-[#FBFBFB] overflow-hidden group flex items-center justify-center">
+                                {backUrl ? (
+                                  isPdf(backUrl) ? (
+                                    <a
+                                      href={backUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="flex flex-col items-center justify-center text-center p-4 hover:opacity-80 transition"
+                                    >
+                                      <span className="text-4xl mb-2">📄</span>
+                                      <span className="text-sm font-medium text-blue-600 underline">
+                                        View Back PDF
+                                      </span>
+                                    </a>
+                                  ) : (
+                                    <a
+                                      href={backUrl}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="w-full h-full relative block cursor-pointer"
+                                    >
+                                      <Image
+                                        src={backUrl}
+                                        alt="Back of Driver's License"
+                                        fill
+                                        unoptimized
+                                        className="object-contain p-3 transition duration-300 group-hover:scale-105"
+                                      />
+                                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                        <span className="rounded-[10px] bg-white px-4 py-2 text-xs font-medium text-[#22201C] shadow">
+                                          View Full Size
+                                        </span>
+                                      </div>
+                                    </a>
+                                  )
+                                ) : (
+                                  <span className="text-sm text-gray-400">Not uploaded</span>
+                                )}
+                              </div>
+                            </div>
                           </div>
                         ) : (
                           <div className="border-2 border-dashed border-[#E0E0E0] rounded-lg py-10 px-6 text-center text-sm text-gray-400">
