@@ -30,6 +30,8 @@ interface CheckoutFormValues {
 interface InputFieldProps {
   label: string;
   name: keyof CheckoutFormValues;
+  placeholder?: string;
+  helperText?: string;
   errors?: FormikErrors<CheckoutFormValues>;
   touched?: FormikTouched<CheckoutFormValues>;
   optional?: boolean;
@@ -39,6 +41,8 @@ interface InputFieldProps {
 const InputField: React.FC<InputFieldProps> = ({
   label,
   name,
+  placeholder,
+  helperText,
   errors,
   touched,
   optional,
@@ -59,7 +63,7 @@ const InputField: React.FC<InputFieldProps> = ({
         {({ field }: any) => (
           <input
             {...field}
-            placeholder={`Enter ${label}`}
+            placeholder={placeholder || `Enter ${label}`}
             onChange={(e) => {
               field.onChange(e); // ✅ Formik update
 
@@ -67,12 +71,15 @@ const InputField: React.FC<InputFieldProps> = ({
                 onChange(e); // ✅ extra custom logic
               }
             }}
-            className={`w-full input transition ${
-              hasError ? "border-red-500 focus:ring-red-400" : "border-gray-300"
-            }`}
+            className={`w-full input transition ${hasError ? "border-red-500 focus:ring-red-400" : "border-gray-300"
+              }`}
           />
         )}
       </Field>
+
+      {helperText && (
+        <p className="text-gray-500 text-xs mt-1">{helperText}</p>
+      )}
 
       {hasError && (
         <p className="text-red-500 text-xs mt-1">{errors?.[name] as string}</p>
@@ -118,7 +125,7 @@ function SignaturePadDetail() {
     shippingCountry: "",
   };
   const CheckoutSchema = Yup.object().shape({
-    bankName: Yup.string().required("Bank account name is required"),
+    bankName: Yup.string().notRequired(),
     company: Yup.string().notRequired(),
     street: Yup.string().required("Street is required"),
     city: Yup.string().required("City is required"),
@@ -314,16 +321,16 @@ function SignaturePadDetail() {
       shipping_details:
         values.shippingDifferent === "yes"
           ? {
-              is_different: true,
-              shipping_street: values.shippingStreet,
-              shipping_city: values.shippingCity,
-              shipping_state: values.shippingState,
-              shipping_zip: values.shippingZip,
-              shipping_country: values.shippingCountry,
-            }
+            is_different: true,
+            shipping_street: values.shippingStreet,
+            shipping_city: values.shippingCity,
+            shipping_state: values.shippingState,
+            shipping_zip: values.shippingZip,
+            shipping_country: values.shippingCountry,
+          }
           : {
-              is_different: false,
-            },
+            is_different: false,
+          },
     };
 
     localStorage.setItem("wonBidUserOut", JSON.stringify(payload));
@@ -447,10 +454,12 @@ function SignaturePadDetail() {
                 </h3>
 
                 <InputField
-                  label="Bank Account Name"
+                  label="Bank Name"
                   name="bankName"
+                  placeholder="Please tell us which bank you will use so we can confirm your payment faster."
                   errors={errors}
                   touched={touched}
+                  optional
                 />
 
                 <InputField
@@ -682,11 +691,10 @@ function SignaturePadDetail() {
                 type="submit"
                 disabled={shouldDisableButton}
                 className={`w-full py-3 font-medium transition rounded-full
-                    ${
-                      shouldDisableButton
-                        ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                        : "bg-green text-white hover:bg-lightblack cursor-pointer"
-                    }
+                    ${shouldDisableButton
+                    ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    : "bg-green text-white hover:bg-lightblack cursor-pointer"
+                  }
                   `}
               >
                 {calcLoading ? "Calculating Delivery..." : "Continue"}

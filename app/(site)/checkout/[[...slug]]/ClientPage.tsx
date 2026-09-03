@@ -46,15 +46,19 @@ interface CheckoutFormValues {
 interface InputFieldProps {
   label: string;
   name: keyof CheckoutFormValues;
+  placeholder?: string;
+  helperText?: string;
   errors?: FormikErrors<CheckoutFormValues>;
   touched?: FormikTouched<CheckoutFormValues>;
   optional?: boolean;
-   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
   label,
   name,
+  placeholder,
+  helperText,
   errors,
   touched,
   optional,
@@ -71,11 +75,11 @@ const InputField: React.FC<InputFieldProps> = ({
         )}
       </label>
 
-     <Field name={name}>
+      <Field name={name}>
         {({ field }: any) => (
           <input
             {...field}
-            placeholder={`Enter ${label}`}
+            placeholder={placeholder || `Enter ${label}`}
             onChange={(e) => {
               field.onChange(e); // ✅ Formik update
 
@@ -83,14 +87,17 @@ const InputField: React.FC<InputFieldProps> = ({
                 onChange(e); // ✅ extra custom logic
               }
             }}
-            className={`w-full input transition ${
-              hasError
-                ? "border-red-500 focus:ring-red-400"
-                : "border-gray-300"
-            }`}
+            className={`w-full input transition ${hasError
+              ? "border-red-500 focus:ring-red-400"
+              : "border-gray-300"
+              }`}
           />
         )}
       </Field>
+
+      {helperText && (
+        <p className="text-gray-500 text-xs mt-1">{helperText}</p>
+      )}
 
       {hasError && (
         <p className="text-red-500 text-xs mt-1">{errors?.[name] as string}</p>
@@ -101,7 +108,7 @@ const InputField: React.FC<InputFieldProps> = ({
 
 export default function ClientPage() {
   const CheckoutSchema = Yup.object().shape({
-    bankName: Yup.string().required("Bank account name is required"),
+    bankName: Yup.string().notRequired(),
     firstName: Yup.string().required("First name is required"),
     lastName: Yup.string().required("Last name is required"),
     phone: Yup.string().required("Phone is required"),
@@ -164,51 +171,51 @@ export default function ClientPage() {
   const [deliveryError, setDeliveryError] = useState<string | null>(null);
   const [deliveryTouched, setDeliveryTouched] = useState(false);
   const [userData, setUserData] = useState<UserDetails | null>(null);
-const [userLoading, setUserLoading] = useState(true);
-const [submitLoading, setSubmitLoading] = useState(false);
+  const [userLoading, setUserLoading] = useState(true);
+  const [submitLoading, setSubmitLoading] = useState(false);
 
- const initialValues: CheckoutFormValues = {
-  bankName: "",
-  firstName: userData?.first_name || "",
-  lastName: userData?.last_name || "",
-  phone: userData?.phone_no || "",
-  company: userData?.company_name || "",
-  street: userData?.address || "",
-  city: userData?.city || "",
-  state: userData?.state || "",
-  zip: userData?.zip_code || "",
-  country: "USA",
+  const initialValues: CheckoutFormValues = {
+    bankName: "",
+    firstName: userData?.first_name || "",
+    lastName: userData?.last_name || "",
+    phone: userData?.phone_no || "",
+    company: userData?.company_name || "",
+    street: userData?.address || "",
+    city: userData?.city || "",
+    state: userData?.state || "",
+    zip: userData?.zip_code || "",
+    country: "USA",
 
-  shippingDifferent: "no",
+    shippingDifferent: "no",
 
-  shippingStreet: "",
-  shippingCity: "",
-  shippingState: "",
-  shippingZip: "",
-  shippingCountry: "",
-};
-
-useEffect(() => {
-  const fetchUserDetails = async () => {
-    try {
-      setUserLoading(true);
-
-      const res = await getUserDetails();
-
-      if (res.status) {
-        setUserData(res.data);
-      } else {
-        toast.error(res.message || "Failed to fetch user details");
-      }
-    } catch (error) {
-      toast.error("Something went wrong while fetching user details");
-    } finally {
-      setUserLoading(false);
-    }
+    shippingStreet: "",
+    shippingCity: "",
+    shippingState: "",
+    shippingZip: "",
+    shippingCountry: "",
   };
 
-  fetchUserDetails();
-}, []);
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      try {
+        setUserLoading(true);
+
+        const res = await getUserDetails();
+
+        if (res.status) {
+          setUserData(res.data);
+        } else {
+          toast.error(res.message || "Failed to fetch user details");
+        }
+      } catch (error) {
+        toast.error("Something went wrong while fetching user details");
+      } finally {
+        setUserLoading(false);
+      }
+    };
+
+    fetchUserDetails();
+  }, []);
 
   useEffect(() => {
     const loadData = async () => {
@@ -229,18 +236,18 @@ useEffect(() => {
     loadData();
   }, []);
 
-useEffect(() => {
-  if (!userData) return;
+  useEffect(() => {
+    if (!userData) return;
 
-  const zip = userData.zip_code;
-  const country = "USA"; 
+    const zip = userData.zip_code;
+    const country = "USA";
 
-  if (zip && country) {
-    setZipToUse(zip);
-    setCountryToUse(country);
-    setDeliveryTouched(true);
-  }
-}, [userData]);
+    if (zip && country) {
+      setZipToUse(zip);
+      setCountryToUse(country);
+      setDeliveryTouched(true);
+    }
+  }, [userData]);
 
   const matchedCategory = categories.find(
     (c) => slugify(c.category_name) === categorySlug,
@@ -304,7 +311,7 @@ useEffect(() => {
   useEffect(() => {
     if (!zipToUse || !countryToUse) return;
 
-    setDeliveryTouched(true); 
+    setDeliveryTouched(true);
 
     const timer = setTimeout(() => {
       calculateDeliveryCost(zipToUse, countryToUse);
@@ -313,7 +320,7 @@ useEffect(() => {
     return () => clearTimeout(timer);
   }, [zipToUse, countryToUse]);
 
-   const handleCheckoutSubmit = async (values: CheckoutFormValues) => {
+  const handleCheckoutSubmit = async (values: CheckoutFormValues) => {
     if (!product?.id) return toast.error("Product not found");
 
     try {
@@ -336,13 +343,13 @@ useEffect(() => {
         shipping_details:
           values.shippingDifferent === "yes"
             ? {
-                is_different: true,
-                shipping_street: values.shippingStreet,
-                shipping_city: values.shippingCity,
-                shipping_state: values.shippingState,
-                shipping_zip: values.shippingZip,
-                shipping_country: values.shippingCountry,
-              }
+              is_different: true,
+              shipping_street: values.shippingStreet,
+              shipping_city: values.shippingCity,
+              shipping_state: values.shippingState,
+              shipping_zip: values.shippingZip,
+              shipping_country: values.shippingCountry,
+            }
             : { is_different: false },
       };
 
@@ -350,7 +357,7 @@ useEffect(() => {
 
       toast.success("Proceeding to sale agreement…");
 
-     router.push(
+      router.push(
         `/sale-agreement/${categorySlug}/${makeSlug}/${modelSlug}/${auction_id}`
       );
     } finally {
@@ -371,7 +378,7 @@ useEffect(() => {
       ) : deliveryCost !== null ? (
         <>
           <p className="text-green font-bold text-xl mt-2">
-        {formatPrice(deliveryCost)}
+            {formatPrice(deliveryCost)}
           </p>
 
           {distanceMiles && (
@@ -394,7 +401,7 @@ useEffect(() => {
 
   const shouldDisableButton = Boolean(
     deliveryTouched &&
-      (calcLoading || deliveryCost === null || deliveryError)
+    (calcLoading || deliveryCost === null || deliveryError)
   );
   const getFirstValidImage = (images: any[]) => {
     if (!Array.isArray(images)) return null;
@@ -427,17 +434,17 @@ useEffect(() => {
             </h2>
 
             <div className="flex flex-col md:flex-row gap-6 items-start">
-            <div className="w-full md:w-[320px] flex-shrink-0">
-              <div className="relative w-full aspect-[4/3] md:aspect-[16/10] rounded-xl overflow-hidden bg-gray-100">
-                <Image
-                  src={productImage}
-                  alt={product.name}
-                  fill
-                  className="object-cover"
-                  priority
-                />
+              <div className="w-full md:w-[320px] flex-shrink-0">
+                <div className="relative w-full aspect-[4/3] md:aspect-[16/10] rounded-xl overflow-hidden bg-gray-100">
+                  <Image
+                    src={productImage}
+                    alt={product.name}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                </div>
               </div>
-            </div>
 
               <div className="flex-1 space-y-2 w-full">
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
@@ -478,7 +485,7 @@ useEffect(() => {
           validationSchema={CheckoutSchema}
           onSubmit={handleCheckoutSubmit}
         >
-          {({ errors, touched, values ,setFieldValue  }) => (
+          {({ errors, touched, values, setFieldValue }) => (
             <Form className="bg-white border border-border rounded-xl p-6 space-y-10">
               {/* Personal Info */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
@@ -510,10 +517,12 @@ useEffect(() => {
                 </h3>
 
                 <InputField
-                  label="Bank Account Name"
+                  label="Bank Name"
                   name="bankName"
+                  placeholder="Please tell us which bank you will use so we can confirm your payment faster."
                   errors={errors}
                   touched={touched}
+                  optional
                 />
 
                 <InputField
@@ -546,22 +555,22 @@ useEffect(() => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
-                 <InputField
-  label="ZIP/Postal Code"
-  name="zip"
-  errors={errors}
-  touched={touched}
-  onChange={(e) => {
-    const zip = e.target.value;
+                  <InputField
+                    label="ZIP/Postal Code"
+                    name="zip"
+                    errors={errors}
+                    touched={touched}
+                    onChange={(e) => {
+                      const zip = e.target.value;
 
-    setFieldValue("zip", zip);
+                      setFieldValue("zip", zip);
 
-    if (values.shippingDifferent === "no") {
-      setZipToUse(zip);
-      setCountryToUse(values.country);
-    }
-  }}
-/>
+                      if (values.shippingDifferent === "no") {
+                        setZipToUse(zip);
+                        setCountryToUse(values.country);
+                      }
+                    }}
+                  />
 
                   {/* Country */}
                   <div>
@@ -569,21 +578,21 @@ useEffect(() => {
                       Country
                     </label>
 
-                   <Field
-  as="select"
-  name="country"
-  className="w-full input bg-white"
-  onChange={(e: any) => {
-    const country = e.target.value;
+                    <Field
+                      as="select"
+                      name="country"
+                      className="w-full input bg-white"
+                      onChange={(e: any) => {
+                        const country = e.target.value;
 
-    setFieldValue("country", country);
+                        setFieldValue("country", country);
 
-    if (values.shippingDifferent === "no") {
-      setZipToUse(values.zip);
-      setCountryToUse(country);
-    }
-  }}
->
+                        if (values.shippingDifferent === "no") {
+                          setZipToUse(values.zip);
+                          setCountryToUse(country);
+                        }
+                      }}
+                    >
                       <option value="">Select Country</option>
                       <option value="CANADA">CANADA</option>
                       <option value="USA">USA</option>
@@ -597,7 +606,7 @@ useEffect(() => {
                   </div>
                 </div>
               </div>
-{values.shippingDifferent === "no" && <DeliveryCostBox />}
+              {values.shippingDifferent === "no" && <DeliveryCostBox />}
 
               <hr className="border-gray-200" />
 
@@ -618,22 +627,22 @@ useEffect(() => {
                     className="flex items-center justify-between w-[90px] border border-gray-300 rounded-full px-4 py-2 cursor-pointer
                           text-sm font-medium text-gray" >
                     No
-                 <Field
-    type="radio"
-    name="shippingDifferent"
-    value="no"
-    onChange={() => {
-      setFieldValue("shippingDifferent", "no");
+                    <Field
+                      type="radio"
+                      name="shippingDifferent"
+                      value="no"
+                      onChange={() => {
+                        setFieldValue("shippingDifferent", "no");
 
-     setDeliveryCost(null);
-    setDeliveryError(null);
-    setDeliveryTouched(false);
+                        setDeliveryCost(null);
+                        setDeliveryError(null);
+                        setDeliveryTouched(false);
 
-    setZipToUse(values.zip);
-    setCountryToUse(values.country);
-    }} 
-      className="w-4 h-4 accent-black"
-  />
+                        setZipToUse(values.zip);
+                        setCountryToUse(values.country);
+                      }}
+                      className="w-4 h-4 accent-black"
+                    />
                   </label>
 
                   {/* YES Option */}
@@ -643,22 +652,22 @@ useEffect(() => {
               text-sm font-medium text-gray-700"
                   >
                     Yes
-                   <Field
-    type="radio"
-    name="shippingDifferent"
-    value="yes"
-    onChange={() => {
-      setFieldValue("shippingDifferent", "yes");
+                    <Field
+                      type="radio"
+                      name="shippingDifferent"
+                      value="yes"
+                      onChange={() => {
+                        setFieldValue("shippingDifferent", "yes");
 
-      setDeliveryCost(null);
-      setDeliveryError(null);
-       setDeliveryTouched(false); 
+                        setDeliveryCost(null);
+                        setDeliveryError(null);
+                        setDeliveryTouched(false);
 
-    setZipToUse("");
-    setCountryToUse("");
-    }}
-     className="w-4 h-4 accent-black"
-  />
+                        setZipToUse("");
+                        setCountryToUse("");
+                      }}
+                      className="w-4 h-4 accent-black"
+                    />
                   </label>
                 </div>
               </div>
@@ -692,81 +701,80 @@ useEffect(() => {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
-                   <InputField
-                label="Shipping ZIP"
-                name="shippingZip"
-                errors={errors}
-                touched={touched}
-                onChange={(e) => {
-                  const zip = e.target.value;
+                    <InputField
+                      label="Shipping ZIP"
+                      name="shippingZip"
+                      errors={errors}
+                      touched={touched}
+                      onChange={(e) => {
+                        const zip = e.target.value;
 
-                  setFieldValue("shippingZip", zip);
+                        setFieldValue("shippingZip", zip);
 
-                  setZipToUse(zip);
-                  setCountryToUse(values.shippingCountry);
-                }}
-              />
+                        setZipToUse(zip);
+                        setCountryToUse(values.shippingCountry);
+                      }}
+                    />
                     <div>
-  <label className="block text-[13px] font-medium text-gray-600 mb-1">
-    Shipping Country
-  </label>
+                      <label className="block text-[13px] font-medium text-gray-600 mb-1">
+                        Shipping Country
+                      </label>
 
-  <Field
-    as="select"
-    name="shippingCountry"
-    className="w-full input bg-white"
-    onChange={(e: any) => {
-      const country = e.target.value;
+                      <Field
+                        as="select"
+                        name="shippingCountry"
+                        className="w-full input bg-white"
+                        onChange={(e: any) => {
+                          const country = e.target.value;
 
-      // ✅ Formik Update
-      setFieldValue("shippingCountry", country);
+                          // ✅ Formik Update
+                          setFieldValue("shippingCountry", country);
 
-      // ✅ Delivery Calculation Trigger
-      setZipToUse(values.shippingZip);
-      setCountryToUse(country);
-    }}
-  >
-    <option value="">Select Country</option>
-    <option value="CANADA">CANADA</option>
-    <option value="USA">USA</option>
-  </Field>
+                          // ✅ Delivery Calculation Trigger
+                          setZipToUse(values.shippingZip);
+                          setCountryToUse(country);
+                        }}
+                      >
+                        <option value="">Select Country</option>
+                        <option value="CANADA">CANADA</option>
+                        <option value="USA">USA</option>
+                      </Field>
 
-  {errors.shippingCountry && touched.shippingCountry && (
-    <p className="text-red-500 text-xs mt-1">
-      {errors.shippingCountry}
-    </p>
-  )}
-</div>
+                      {errors.shippingCountry && touched.shippingCountry && (
+                        <p className="text-red-500 text-xs mt-1">
+                          {errors.shippingCountry}
+                        </p>
+                      )}
+                    </div>
 
                   </div>
                 </div>
               )}
-{values.shippingDifferent === "yes" && <DeliveryCostBox />}
+              {values.shippingDifferent === "yes" && <DeliveryCostBox />}
               {/* Button */}
-         <button
-              type="submit"
-              disabled={shouldDisableButton || submitLoading}
-              className={`w-full py-3 font-medium transition rounded-full
+              <button
+                type="submit"
+                disabled={shouldDisableButton || submitLoading}
+                className={`w-full py-3 font-medium transition rounded-full
                 flex items-center justify-center gap-2 cursor-pointer
                 active:scale-95
-                ${
-                  shouldDisableButton || submitLoading
+                ${shouldDisableButton || submitLoading
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                     : "bg-green text-white hover:bg-lightblack"
-                }
+                  }
               `}
-            >
-              {submitLoading ? (
-                <>
-                  <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Processing...
-                </>
-              ) : calcLoading ? (
-                "Calculating Delivery..."
-              ) : (
-                "Continue Checkout"
-              )}
-            </button>
+              >
+                {submitLoading ? (
+                  <>
+                    <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    Processing...
+                  </>
+                ) : calcLoading ? (
+                  "Calculating Delivery..."
+                ) : (
+                  "Continue Checkout"
+                )}
+              </button>
 
             </Form>
           )}
