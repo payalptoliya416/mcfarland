@@ -41,10 +41,19 @@ type Step = {
 export default function ClientPage() {
   const pathname = usePathname();
   const segments = pathname.split("/").filter(Boolean);
-  const categorySlug = segments[1] ?? "";
-  const makeSlug = segments[2] ?? "";
-  const modelSlug = segments[3] ?? "";
-  const auction_id = segments[4] ?? "";
+
+  const slugify = (text: string) =>
+    text
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "");
+
+  const categorySlug = slugify(decodeURIComponent(segments[1] ?? ""));
+  const makeSlug = slugify(decodeURIComponent(segments[2] ?? ""));
+  const modelSlug = slugify(decodeURIComponent(segments[3] ?? ""));
+  const auction_id = decodeURIComponent(segments[4] ?? "");
+
   const [pageLoading, setPageLoading] = useState(true);
   const [userData, setUserData] = useState<UserDetails | null>(null);
   const [userLoading, setUserLoading] = useState(true);
@@ -69,13 +78,6 @@ export default function ClientPage() {
 
     fetchUserDetails();
   }, []);
-
-  const slugify = (text: string) =>
-    text
-      .toLowerCase()
-      .trim()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-+|-+$/g, "");
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [makes, setMakes] = useState<string[]>([]);

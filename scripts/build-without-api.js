@@ -48,6 +48,22 @@ try {
   // Run Next.js build
   execSync('next build', { stdio: 'inherit', cwd: path.join(__dirname, '..') });
 
+  // Ensure .htaccess and web.config are copied to out/
+  const outDir = path.join(__dirname, '..', 'out');
+  const htaccessSrc = path.join(__dirname, '..', '.htaccess');
+  const webConfigSrc = path.join(__dirname, '..', 'web.config');
+
+  if (fs.existsSync(outDir)) {
+    if (fs.existsSync(htaccessSrc)) {
+      fs.copyFileSync(htaccessSrc, path.join(outDir, '.htaccess'));
+      console.log('✅ Copied .htaccess to out/');
+    }
+    if (fs.existsSync(webConfigSrc)) {
+      fs.copyFileSync(webConfigSrc, path.join(outDir, 'web.config'));
+      console.log('✅ Copied web.config to out/');
+    }
+  }
+
 } catch (error) {
   console.error('❌ Build failed:', error.message);
   process.exit(1);

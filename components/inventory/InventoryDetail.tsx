@@ -51,10 +51,6 @@ function InventoryDetail() {
   const pathname = usePathname();
 
   const segments = pathname.split("/").filter(Boolean);
-  const categorySlug = segments[1] ?? "";
-  const makeSlug = segments[2] ?? "";
-  const modelSlug = segments[3] ?? "";
-  const hours = segments[4] ?? "";
 
   const slugify = (text: string) =>
     text
@@ -62,6 +58,11 @@ function InventoryDetail() {
       .trim()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
+
+  const categorySlug = slugify(decodeURIComponent(segments[1] ?? ""));
+  const makeSlug = slugify(decodeURIComponent(segments[2] ?? ""));
+  const modelSlug = slugify(decodeURIComponent(segments[3] ?? ""));
+  const hours = decodeURIComponent(segments[4] ?? "");
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<SingleMachinery>();
@@ -142,16 +143,16 @@ function InventoryDetail() {
   const getCategoryBySlug = (slug?: string) => {
     if (!slug) return null;
 
-    return categories.find((c) => slugify(c.category_name) === slug);
+    return categories.find((c) => slugify(c.category_name) === slugify(slug));
   };
   const getMakeBySlug = (slug?: string) => {
     if (!slug) return null;
-    return makes.find((m) => slugify(m) === slug);
+    return makes.find((m) => slugify(m) === slugify(slug));
   };
 
   const getModelBySlug = (slug?: string) => {
     if (!slug) return null;
-    return models.find((m) => slugify(m) === slug);
+    return models.find((m) => slugify(m) === slugify(slug));
   };
 
   const matchedCategory = useMemo(() => getCategoryBySlug(categorySlug), [categories, categorySlug]);
