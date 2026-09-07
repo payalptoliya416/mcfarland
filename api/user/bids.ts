@@ -145,6 +145,8 @@ export interface OrderApiItem {
   year: string;
   invoice_url?: string;
   contract_url?: string;
+  is_contract_viewed?: boolean;
+  is_invoice_viewed?: boolean;
   current_status: | "Order Submitted"
   | "Sales Agreement"
   | "Awaiting Invoice"
@@ -209,6 +211,27 @@ export const orderService = {
       success: boolean;
       message: string;
     }>("/user/upload-payment-slip", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    }),
+
+  updateViewStatus: (payload: {
+    order_id: number | string;
+    type?: "contract" | "sales_contract" | "invoice";
+    is_viewed?: boolean;
+    is_contract_viewed?: boolean;
+    is_invoice_viewed?: boolean;
+  }) =>
+    api<{
+      success: boolean;
+      message: string;
+      data?: {
+        id: number;
+        order_id: string;
+        is_contract_viewed: boolean;
+        is_invoice_viewed: boolean;
+      };
+    }>("/user/orders/update-view-status", {
       method: "POST",
       body: JSON.stringify(payload),
     }),

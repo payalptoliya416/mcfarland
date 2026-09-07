@@ -110,8 +110,10 @@ export default function OrderMobileCard({
           className={`mt-2 flex items-center gap-2 text-sm font-medium
     ${
       order.invoiceUrl
-        ? "text-green cursor-pointer"
-        : "text-green  cursor-not-allowed"
+        ? order.isInvoiceViewed
+          ? "text-[#2DBE60] cursor-pointer"
+          : "text-green cursor-pointer"
+        : "text-green cursor-not-allowed"
     }
   `}
         >
@@ -129,6 +131,8 @@ export default function OrderMobileCard({
             ${
               isContractDisabled
                 ? "text-[#ff8a45] cursor-not-allowed"
+                : order.isContractViewed
+                ? "text-[#2DBE60] cursor-pointer hover:opacity-80"
                 : "text-[#ff8a45] cursor-pointer hover:opacity-80"
             }
           `}

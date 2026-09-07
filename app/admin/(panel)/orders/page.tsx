@@ -41,6 +41,8 @@ export type OrderRow = {
   | "Cancelled";
   invoiceUrl?: string;
   contractUrl?: string;
+  isContractViewed?: boolean;
+  isInvoiceViewed?: boolean;
   paymentSlipUrl?: string;
   paymentSlipStatus: "Pending" | "Approve" | "Decline";
 };
@@ -158,6 +160,8 @@ const [regenerateLoading, setRegenerateLoading] = useState(false);
         status: item.status,
         invoiceUrl: item.invoice_url,
         contractUrl: item.contract_url || undefined,
+        isContractViewed: Boolean(item.is_contract_viewed),
+        isInvoiceViewed: Boolean(item.is_invoice_viewed),
         paymentSlipUrl: item.payment_slip_url,
         paymentSlipStatus: item.payment_slip_status_text,
       }));
@@ -339,7 +343,11 @@ const [regenerateLoading, setRegenerateLoading] = useState(false);
           <TooltipWrapper content="Invoice">
             <button
               onClick={() => window.open(row.invoiceUrl!, "_blank")}
-              className="text-green transition cursor-pointer"
+              className={`${
+                row.isInvoiceViewed
+                  ? "text-[#2DBE60] hover:text-[#2DBE60]"
+                  : "text-green"
+              } transition cursor-pointer`}
             >
               <FaFilePdf size={20} />
             </button>
@@ -351,7 +359,11 @@ const [regenerateLoading, setRegenerateLoading] = useState(false);
           <TooltipWrapper content="View Contract">
             <button
               onClick={() => window.open(row.contractUrl, "_blank")}
-              className="text-[#ff8a45] hover:text-[#ff8a45] cursor-pointer transition"
+              className={`${
+                row.isContractViewed
+                  ? "text-[#2DBE60] hover:text-[#2DBE60]"
+                  : "text-[#ff8a45] hover:text-[#ff8a45]"
+              } cursor-pointer transition`}
             >
               <FaFilePdf size={20} />
             </button>

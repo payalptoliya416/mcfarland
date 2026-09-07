@@ -16,6 +16,7 @@ export interface RecentBid {
 
 /* RECENT BUY ORDER (API) */
 export interface RecentBuyOrder {
+  order_id?: string;
   machinery_name: string;
   price: string;
   purchase_date: string;
@@ -23,6 +24,7 @@ export interface RecentBuyOrder {
    invoice_url?: string; 
 }
 export interface RecentBuyOrderData {
+  order_id?: string;
   machinery_name: string;
   amount: string;
   purchase_date: string;

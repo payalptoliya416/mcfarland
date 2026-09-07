@@ -37,6 +37,8 @@ export interface OrderApiItem {
   | "Cancelled";
   invoice_url?: string;
   contract_url?: string;
+  is_contract_viewed?: boolean;
+  is_invoice_viewed?: boolean;
   type_text: string;
   payment_slip_status: 0 | 1 | 2;
   payment_slip_status_text: "Pending" | "Approve" | "Decline";

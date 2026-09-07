@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { FaFilePdf } from "react-icons/fa6";
+import { orderService } from "@/api/user/bids";
 
 const statusClassMap: Record<string, string> = {
   "Order Submitted": "bg-gray-500 text-white",
@@ -84,7 +85,12 @@ function RecentOrderCard({ row }: any) {
                                   "Delivered",
                                   ].includes(row.status) ? (
           <button
-            onClick={() => window.open(row.invoice_url, "_blank")}
+            onClick={() => {
+              if (row.order_id) {
+                orderService.updateViewStatus({ order_id: row.order_id, type: "invoice" }).catch(() => {});
+              }
+              window.open(row.invoice_url, "_blank");
+            }}
             className="text-green hover:scale-110 transition"
           >
             <FaFilePdf size={18} />
@@ -185,6 +191,7 @@ const fetchDashboard = async () => {
     /* RECENT BUY ORDERS */
     setRecentOrders(
       data.recent_buy_orders.map((o) => ({
+        order_id: o.order_id,
         machinery_name: o.machinery_name,
         price: formatPrice(o.amount),
         purchase_date: formatDateTime(o.purchase_date),
@@ -268,7 +275,12 @@ if (loading) {
             <p className="text-sm sm:text-base text-[#14532D]">
               Your sale agreement has been successfully signed and approved.{" "}
               <span
-                onClick={() => window.open(wonData.pdf_url, "_blank")}
+                onClick={() => {
+                  if (wonData.id) {
+                    orderService.updateViewStatus({ order_id: wonData.id, type: "invoice" }).catch(() => {});
+                  }
+                  window.open(wonData.pdf_url, "_blank");
+                }}
                 className="font-extrabold cursor-pointer underline"
               >
                 click here
@@ -489,7 +501,12 @@ if (loading) {
                                     "Delivered",
                                   ].includes(row.status) ? (
                                     <button
-                                      onClick={() => window.open(row.invoice_url, "_blank")}
+                                      onClick={() => {
+                                        if (row.order_id) {
+                                          orderService.updateViewStatus({ order_id: row.order_id, type: "invoice" }).catch(() => {});
+                                        }
+                                        window.open(row.invoice_url, "_blank");
+                                      }}
                                       className="text-green hover:scale-110 transition cursor-pointer ml-4"
                                     >
                                       <FaFilePdf size={18} />

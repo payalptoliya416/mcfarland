@@ -36,6 +36,8 @@ type OrderData = {
   invoice_url?: string;
   payment_slip_url?: string | null;
   contract_url?: string;
+  is_contract_viewed?: boolean;
+  is_invoice_viewed?: boolean;
 };
 
 type StepItem = {
@@ -507,6 +509,14 @@ const trackingRowsWithState =
                                   href={data.contract_url}
                                   target="_blank"
                                   rel="noopener noreferrer"
+                                  onClick={() => {
+                                    if (data.id) {
+                                      orderService.updateViewStatus({
+                                        order_id: data.id,
+                                        type: "contract",
+                                      }).catch(() => {});
+                                    }
+                                  }}
                                   className="flex flex-col items-center gap-1 text-xs text-secgray"
                                 >
                                   <span>View Agreement</span>
@@ -528,6 +538,14 @@ const trackingRowsWithState =
                                   href={data.invoice_url}
                                   target="_blank"
                                   rel="noopener noreferrer"
+                                  onClick={() => {
+                                    if (data.id) {
+                                      orderService.updateViewStatus({
+                                        order_id: data.id,
+                                        type: "invoice",
+                                      }).catch(() => {});
+                                    }
+                                  }}
                                   className="flex flex-col items-center gap-1 text-xs text-secgray"
                                 >
                                   <span>View Invoice</span>
@@ -641,6 +659,14 @@ const trackingRowsWithState =
                                       href={data.contract_url}
                                       target="_blank"
                                       rel="noopener noreferrer"
+                                      onClick={() => {
+                                        if (data.id) {
+                                          orderService.updateViewStatus({
+                                            order_id: data.id,
+                                            type: "contract",
+                                          }).catch(() => {});
+                                        }
+                                      }}
                                       className="flex items-center gap-3 text-xs text-secgray mt-1"
                                     >
                                       <span>View Agreement</span>
@@ -662,6 +688,14 @@ const trackingRowsWithState =
                                       href={data.invoice_url}
                                       target="_blank"
                                       rel="noopener noreferrer"
+                                      onClick={() => {
+                                        if (data.id) {
+                                          orderService.updateViewStatus({
+                                            order_id: data.id,
+                                            type: "invoice",
+                                          }).catch(() => {});
+                                        }
+                                      }}
                                       className="flex items-center gap-3 text-xs text-secgray mt-1"
                                     >
                                       <span>View Invoice</span>
