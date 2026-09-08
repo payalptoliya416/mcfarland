@@ -16,26 +16,39 @@ export interface RecentBid {
 
 /* RECENT BUY ORDER (API) */
 export interface RecentBuyOrder {
-  order_id?: string;
+  id?: number;
+  order_id?: string | number;
   machinery_name: string;
   price: string;
   purchase_date: string;
-  status: "Processing" | "Delivered" | "Cancelled";
-   invoice_url?: string; 
+  status: "Processing" | "Delivered" | "Cancelled" | string;
+  invoice_url?: string;
+  contract_url?: string;
+  is_contract_viewed?: boolean;
+  is_invoice_viewed?: boolean;
 }
 export interface RecentBuyOrderData {
-  order_id?: string;
+  id?: number;
+  order_id?: string | number;
   machinery_name: string;
   amount: string;
   purchase_date: string;
-  status: "Processing" | "Delivered" | "Cancelled";
-   invoice_url?: string;
+  status: "Processing" | "Delivered" | "Cancelled" | string;
+  invoice_url?: string;
+  contract_url?: string;
+  is_contract_viewed?: boolean;
+  is_invoice_viewed?: boolean;
 }
 
 export interface MachineryDetails {
   id: number;
+  order_id?: number | string;
   name: string;
   pdf_url?: string;
+  contract_url?: string;
+  order_status?: number;
+  is_contract_viewed?: boolean;
+  is_invoice_viewed?: boolean;
 }
 
 export interface DashboardData {
@@ -62,7 +75,7 @@ export interface DashboardCard {
   bg: string;
   count: number;
   label: string;
-  link: string; 
+  link: string;
 }
 
 export const getUserDashboard = (): Promise<DashboardResponse> => {

@@ -68,11 +68,11 @@ export interface WonBidRow {
   wonBidAmount: string;
   wonDate: string;
   contractStatus:
-    | "Pending"
-    | "Approved"
-    | "Signed"
-    | "Rejected"
-    | "Unknown";
+  | "Pending"
+  | "Approved"
+  | "Signed"
+  | "Rejected"
+  | "Unknown";
 }
 
 export interface WonBidApiItem {
@@ -123,7 +123,7 @@ export type DeliveryStatus =
 export type DeliveryTimelineItem = {
   status: DeliveryStatus;
   date: string;
-  status_code: number; 
+  status_code: number;
 };
 export interface OrderTrackingItem {
   id: number;
@@ -158,7 +158,7 @@ export interface OrderApiItem {
   | "Delivered"
   | "Cancelled";
   delivery_status: number;
-  type_text : string;
+  type_text: string;
   delivery_status_text: string;
   delivery_contact: string | null;
   delivery_timeline: DeliveryTimelineItem[];
@@ -216,13 +216,22 @@ export const orderService = {
     }),
 
   updateViewStatus: (payload: {
-    order_id: number | string;
+    order_id?: number | string;
+    id?: number | string;
     type?: "contract" | "sales_contract" | "invoice";
     is_viewed?: boolean;
     is_contract_viewed?: boolean;
     is_invoice_viewed?: boolean;
-  }) =>
-    api<{
+    [key: string]: any;
+  }) => {
+    const finalPayload: any = { ...payload };
+    if (finalPayload.order_id === undefined && finalPayload.id !== undefined) {
+      finalPayload.order_id = finalPayload.id;
+    }
+    if (finalPayload.id === undefined && finalPayload.order_id !== undefined) {
+      finalPayload.id = finalPayload.order_id;
+    }
+    return api<{
       success: boolean;
       message: string;
       data?: {
@@ -233,8 +242,9 @@ export const orderService = {
       };
     }>("/user/orders/update-view-status", {
       method: "POST",
-      body: JSON.stringify(payload),
-    }),
+      body: JSON.stringify(finalPayload),
+    });
+  },
 };
 
 export type WonBid = {
@@ -253,7 +263,7 @@ export type SingleWonBidResponse = {
 }
 
 export const getSingleWonBid = (machineryId: number) => {
-   return api<SingleWonBidResponse>("/user/single-won-bids", {
+  return api<SingleWonBidResponse>("/user/single-won-bids", {
     method: "POST",
     body: JSON.stringify({ machineryId }),
   });
