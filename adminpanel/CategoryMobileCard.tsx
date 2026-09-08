@@ -46,7 +46,7 @@ export default function CategoryMobileCard({
       {/* DATES */}
       <div className="grid grid-cols-2 gap-3 text-sm">
         <Info label="Created" value={item.createdDate} />
-        <Info label="Updated" value={item.lastUpdated} />
+        <Info label="Last Updated" value={item.lastUpdated} />
       </div>
 
       {/* ACTIONS */}

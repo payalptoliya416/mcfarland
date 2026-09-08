@@ -1,6 +1,9 @@
 "use client";
 
-import AdminDataTable, { Column } from "@/components/tables/AdminDataTable";
+import AdminDataTable, {
+  Column,
+  PaginationControls,
+} from "@/components/tables/AdminDataTable";
 import { FiSearch } from "react-icons/fi";
 import { HiOutlineEye, HiOutlineTrash } from "react-icons/hi2";
 import { useEffect, useMemo, useState } from "react";
@@ -384,7 +387,7 @@ export default function UsersPage() {
       {isMobile ? (
         <div className="space-y-4">
           {loading && (
-            <div className="flex justify-center items-center h-full">
+            <div className="flex justify-center items-center h-full py-5">
               <Loader />
             </div>
           )}
@@ -419,6 +422,16 @@ export default function UsersPage() {
                 onUpdated={fetchUsers}
               />
             ))}
+          {pagination && (
+            <PaginationControls
+              pagination={pagination}
+              onPageChange={setPage}
+              onPageSizeChange={(size) => {
+                setPage(1);
+                setPerPage(size);
+              }}
+            />
+          )}
         </div>
       ) : (
         <AdminDataTable

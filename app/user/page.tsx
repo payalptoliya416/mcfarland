@@ -364,7 +364,7 @@ function Dashboard() {
                   {item.count}
                 </h3>
 
-                <p className="text-lightgray text-base sm:text-[22px] leading-[22px]">
+                <p className="text-lightgray text-base xl:text-[22px] leading-[22px]">
                   {item.label}
                 </p>
               </div>
@@ -384,9 +384,11 @@ function Dashboard() {
                   {isMobile ? (
                     <div className="space-y-3">
                       {recentBids.length === 0 ? (
-                        <p className="text-center text-sm text-gray-400">
-                          No recent bids found
-                        </p>
+                         <div className="border border-border rounded-md min-h-[50px] flex items-center justify-center">
+                          <p className="text-sm text-gray-400">
+                            No recent bids found
+                          </p>
+                        </div>
                       ) : (
                         recentBids.map((row, i) => (
                           <RecentBidCard key={i} row={row} />
@@ -456,9 +458,11 @@ function Dashboard() {
                   {isMobile ? (
                     <div className="space-y-3">
                       {recentOrders.length === 0 ? (
-                        <p className="text-center text-sm text-secgray">
-                          No recent orders found
-                        </p>
+                         <div className="border border-border rounded-md min-h-[50px] flex items-center justify-center">
+                          <p className="text-sm text-gray-400">
+                            No recent orders found
+                          </p>
+                        </div>
                       ) : (
                         recentOrders.map((row, i) => (
                           <RecentOrderCard key={i} row={row} />

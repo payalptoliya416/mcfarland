@@ -1,6 +1,9 @@
 "use client";
 
-import AdminDataTable, { Column } from "@/components/tables/AdminDataTable";
+import AdminDataTable, {
+  Column,
+  PaginationControls,
+} from "@/components/tables/AdminDataTable";
 import { FiSearch } from "react-icons/fi";
 import { HiArrowPath, HiOutlineEye } from "react-icons/hi2";
 import { useEffect, useState } from "react";
@@ -255,7 +258,7 @@ export default function WonUser() {
       {isMobile ? (
         <div className="space-y-4">
           {loading && (
-            <p className="flex justify-center items-center h-full">
+            <p className="flex justify-center items-center h-full py-5">
               <Loader />
             </p>
           )}
@@ -277,6 +280,16 @@ export default function WonUser() {
     }}
             />
           ))}
+          {pagination && (
+            <PaginationControls
+              pagination={pagination}
+              onPageChange={setPage}
+              onPageSizeChange={(size) => {
+                setPage(1);
+                setPerPage(size);
+              }}
+            />
+          )}
         </div>
       ) : (
         <AdminDataTable

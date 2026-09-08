@@ -343,12 +343,16 @@ const trackingRowsWithState =
           My Buy It Now Orders
         </h1>
         {!loading && orders.length === 0 && (
-          <div className="flex items-center justify-center min-h-[30vh]">
-            <h2 className="text-lg sm:text-xl font-medium text-gray-600">
-              No Orders Found
-            </h2>
-          </div>
-        )}
+            <div className="mt-6 border border-border rounded-xl bg-white min-h-[150px] flex flex-col items-center justify-center text-center px-4">
+              <h2 className="text-lg sm:text-xl font-semibold text-gray-700">
+                No Orders Found
+              </h2>
+
+              <p className="mt-1 text-sm text-gray-400">
+                You don't have any Buy It Now orders yet.
+              </p>
+            </div>
+          )}
         
         <div className="space-y-6">
           {orders.map((data) => {

@@ -1,6 +1,9 @@
 "use client";
 
-import AdminDataTable, { Column } from "@/components/tables/AdminDataTable";
+import AdminDataTable, {
+  Column,
+  PaginationControls,
+} from "@/components/tables/AdminDataTable";
 import { FiSearch } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -16,6 +19,7 @@ import { HiArrowPath, HiOutlineTrash } from "react-icons/hi2";
 import ConfirmModal from "@/components/tables/ConfirmDialog";
 import toast from "react-hot-toast";
 import { MdReceiptLong } from "react-icons/md";
+import Loader from "@/components/common/Loader";
 
 /* ================= TYPES ================= */
 export type OrderRow = {
@@ -490,7 +494,9 @@ const handleDelete = async (id: number) => {
       {/* MOBILE VIEW */}
      <div className="block xl:hidden space-y-4">
       {loading ? (
-        <p className="text-center text-gray-500 py-5">Loading...</p>
+         <div className="flex justify-center items-center h-full py-5">
+            <Loader />
+          </div>
       ) : data.length === 0 ? (
         <div className="text-center py-5">
           <p className="text-gray-500 text-sm">
@@ -530,6 +536,16 @@ const handleDelete = async (id: number) => {
             }
           />
         ))
+      )}
+      {!loading && pagination && (
+        <PaginationControls
+          pagination={pagination}
+          onPageChange={setPage}
+          onPageSizeChange={(size) => {
+            setPage(1);
+            setPerPage(size);
+          }}
+        />
       )}
     </div>
 

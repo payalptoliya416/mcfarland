@@ -132,7 +132,7 @@ export default function DataTable<T extends { id?: string | number }>({
                   colSpan={columns.length}
                   className="p-8 text-center text-gray-600"
                 >
-                  No records found
+                  No Bids Found
                 </td>
               </tr>
             )}

@@ -292,9 +292,16 @@ export default function MyWonBids() {
       <Loader />
       </div>
     ) : rows.length === 0 ? (
-      <p className="text-center text-sm text-gray-400">
-        No won bids found
-      </p>
+       <div className="mt-4 min-h-[150px] border border-border rounded-xl flex flex-col items-center justify-center text-center px-4">
+
+  <p className="text-sm sm:text-base font-medium text-gray-500">
+    No won bids found
+  </p>
+
+  <p className="mt-1 text-xs sm:text-sm text-gray-400">
+    You haven't won any bids yet.
+  </p>
+</div>
     ) : (
       rows.map((row) => (
         <WonBidCard

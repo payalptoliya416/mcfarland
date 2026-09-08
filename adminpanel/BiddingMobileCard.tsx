@@ -39,7 +39,7 @@ export default function BiddingMobileCard({
       {/* GRID INFO */}
       <div className="grid grid-cols-2 gap-4 text-sm">
         <Info label="Total Bids" value={item.bids_count} />
-        <Info label="Start Price" value={item.bid_start_price} />
+        <Info label="Bid Start Price" value={item.bid_start_price} />
         <Info label="Bid End Time" value={item.bid_end_time} />
       </div>
 
@@ -95,7 +95,7 @@ function Info({ label, value }: { label: string; value: any }) {
   return (
     <div>
       <p className="text-xs text-gray-500">{label}</p>
-      <p className="font-medium">{value}</p>
+      <p className="font-medium whitespace-nowrap">{value}</p>
     </div>
   );
 }

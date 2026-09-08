@@ -281,9 +281,16 @@ export default function Bids() {
       <Loader />
       </div>
     ) : bids.length === 0 ? (
-      <p className="text-center text-sm text-gray-400">
-        No bids found
-      </p>
+      <div className="mt-5 min-h-[150px] border border-border rounded-xl flex flex-col items-center justify-center text-center px-5">
+
+  <p className="text-sm sm:text-base font-semibold text-gray-600">
+    No Bids Found
+  </p>
+
+  <p className="mt-1 text-xs sm:text-sm text-gray-400">
+    You haven't placed any bids yet.
+  </p>
+</div>
     ) : (
       bids.map((row) => (
         <MyBidCard

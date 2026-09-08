@@ -16,7 +16,7 @@ export type Column<T> = {
 };
 
 /* ================= PAGINATION TYPE ================= */
-type Pagination = {
+export type Pagination = {
   current_page: number;
   last_page: number;
   per_page: number;
@@ -24,6 +24,94 @@ type Pagination = {
   from: number;
   to: number;
 };
+
+export function PaginationControls({
+  pagination,
+  onPageChange,
+  onPageSizeChange,
+}: {
+  pagination: Pagination;
+  onPageChange?: (page: number) => void;
+  onPageSizeChange?: (size: number) => void;
+}) {
+  return (
+    <div className="sm:px-4 sm:py-4 text-sm text-para flex flex-col gap-3
+        sm:flex-row sm:items-center sm:justify-between mb-12 sm:mb-5 xl:mb-3">
+      <div className="font-medium text-center sm:text-left">
+        {pagination.from} – {pagination.to} of {pagination.total} results
+      </div>
+
+      <div
+        className="
+          flex items-center justify-center
+          gap-3
+          flex-wrap
+          sm:flex-nowrap
+        "
+      >
+        <select
+          value={pagination.per_page}
+          onChange={(e) => onPageSizeChange?.(Number(e.target.value))}
+          className="border border-[#E0E0E0] rounded-md px-2 py-1 text-sm focus:outline-none bg-white cursor-pointer"
+        >
+          {[10, 20, 25, 50, 100].map((size) => (
+            <option key={size} value={size}>
+              {size}
+            </option>
+          ))}
+        </select>
+
+        <button
+          disabled={pagination.current_page === 1}
+          onClick={() => onPageChange?.(1)}
+          className={`px-1 text-lg cursor-pointer ${
+            pagination.current_page === 1
+              ? "text-gray-300 cursor-not-allowed"
+              : "text-gray-600 hover:text-black"
+          }`}
+        >
+          ⏮
+        </button>
+        <button
+          disabled={pagination.current_page === 1}
+          onClick={() => onPageChange?.(pagination.current_page - 1)}
+          className={`px-1 text-lg cursor-pointer ${
+            pagination.current_page === 1
+              ? "text-gray-300 cursor-not-allowed"
+              : "text-gray-600 hover:text-black"
+          }`}
+        >
+          ‹
+        </button>
+        <span className="min-w-[50px] text-center font-medium">
+          {pagination.current_page} / {pagination.last_page}
+        </span>
+        <button
+          disabled={pagination.current_page === pagination.last_page}
+          onClick={() => onPageChange?.(pagination.current_page + 1)}
+          className={`px-1 text-lg cursor-pointer ${
+            pagination.current_page === pagination.last_page
+              ? "text-gray-300 cursor-not-allowed"
+              : "text-gray-600 hover:text-black"
+          }`}
+        >
+          ›
+        </button>
+        <button
+          disabled={pagination.current_page === pagination.last_page}
+          onClick={() => onPageChange?.(pagination.last_page)}
+          className={`px-1 text-lg cursor-pointer ${
+            pagination.current_page === pagination.last_page
+              ? "text-gray-300 cursor-not-allowed"
+              : "text-gray-600 hover:text-black"
+          }`}
+        >
+          ⏭
+        </button>
+      </div>
+    </div>
+  );
+}
 
 /* ================= PROPS ================= */
 type Props<T> = {
@@ -137,113 +225,11 @@ export default function AdminDataTable<
 
       {/* PAGINATION */}
     {pagination && (
-      <div
-        className="
-          px-4 py-4 text-sm text-para
-          flex flex-col gap-3
-          sm:flex-row sm:items-center sm:justify-between
-        "
-      >
-        {/* LEFT INFO */}
-        <div className="font-medium text-center sm:text-left">
-          {pagination.from} – {pagination.to} of {pagination.total} results
-        </div>
-
-        {/* RIGHT CONTROLS */}
-        <div
-          className="
-            flex items-center justify-center
-            gap-3
-            flex-wrap
-            sm:flex-nowrap
-          "
-        >
-          {/* PAGE SIZE */}
-          <select
-            value={pagination.per_page}
-            onChange={(e) =>
-              onPageSizeChange?.(Number(e.target.value))
-            }
-            className="
-              border border-[#E0E0E0]
-              rounded-md
-              px-2 py-1
-              text-sm
-              focus:outline-none
-              bg-white cursor-pointer
-            "
-          >
-            {[10, 20, 25, 50, 100].map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            ))}
-          </select>
-
-          {/* FIRST */}
-          <button
-            disabled={pagination.current_page === 1}
-            onClick={() => onPageChange?.(1)}
-            className={`px-1 text-lg cursor-pointer ${
-              pagination.current_page === 1
-                ? "text-gray-300 cursor-not-allowed"
-                : "text-gray-600 hover:text-black"
-            }`}
-          >
-            ⏮
-          </button>
-
-          {/* PREV */}
-          <button
-            disabled={pagination.current_page === 1}
-            onClick={() =>
-              onPageChange?.(pagination.current_page - 1)
-            }
-            className={`px-1 text-lg cursor-pointer ${
-              pagination.current_page === 1
-                ? "text-gray-300 cursor-not-allowed"
-                : "text-gray-600 hover:text-black"
-            }`}
-          >
-            ‹
-          </button>
-
-          {/* PAGE INFO */}
-          <span className="min-w-[50px] text-center font-medium">
-            {pagination.current_page} / {pagination.last_page}
-          </span>
-
-          {/* NEXT */}
-          <button
-            disabled={pagination.current_page === pagination.last_page}
-            onClick={() =>
-              onPageChange?.(pagination.current_page + 1)
-            }
-            className={`px-1 text-lg cursor-pointer ${
-              pagination.current_page === pagination.last_page
-                ? "text-gray-300 cursor-not-allowed"
-                : "text-gray-600 hover:text-black"
-            }`}
-          >
-            ›
-          </button>
-
-          {/* LAST */}
-          <button
-            disabled={pagination.current_page === pagination.last_page}
-            onClick={() =>
-              onPageChange?.(pagination.last_page)
-            }
-            className={`px-1 text-lg cursor-pointer ${
-              pagination.current_page === pagination.last_page
-                ? "text-gray-300 cursor-not-allowed"
-                : "text-gray-600 hover:text-black"
-            }`}
-          >
-            ⏭
-          </button>
-        </div>
-      </div>
+      <PaginationControls
+        pagination={pagination}
+        onPageChange={onPageChange}
+        onPageSizeChange={onPageSizeChange}
+      />
     )}
 
     </div>

@@ -1,6 +1,9 @@
 "use client";
 
-import AdminDataTable, { Column } from "@/components/tables/AdminDataTable";
+import AdminDataTable, {
+  Column,
+  PaginationControls,
+} from "@/components/tables/AdminDataTable";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -319,7 +322,7 @@ export default function AdminCategory() {
       {isMobile ? (
         <div className="space-y-4">
           {loading && (
-            <div className="flex justify-center items-center h-full">
+            <div className="flex justify-center items-center h-full py-5">
               <Loader />
             </div>
           )}
@@ -343,6 +346,16 @@ export default function AdminCategory() {
               onDelete={() => setDeleteId(item.id)}
             />
           ))}
+          {pagination && (
+            <PaginationControls
+              pagination={pagination}
+              onPageChange={setPage}
+              onPageSizeChange={(size) => {
+                setPage(1);
+                setPerPage(size);
+              }}
+            />
+          )}
         </div>
       ) : (
         <AdminDataTable

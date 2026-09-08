@@ -411,7 +411,7 @@ if (loading) {
             </div>
 
             {/* ACTIONS */}
-            <div className="flex justify-end gap-3 pt-4">
+            <div className="flex justify-center xl:justify-end gap-3 pt-4">
               <button
               type="button"
               onClick={() => router.push(`/admin/user-management${returnQuery}`)}

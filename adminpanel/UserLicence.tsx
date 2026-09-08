@@ -137,7 +137,7 @@ const disableDecline =
               { label: "Email Address", value: user.email },
               { label: "Phone Number", value: user.phone_no },
             ].map((item, i) => (
-              <div key={i} className="rounded-[15px] border border-border px-6 py-3">
+              <div key={i} className="rounded-[15px] border border-border px-3 sm:px-6 py-3">
                 <p className="text-xs text-seclightgray mb-1">{item.label}</p>
                 <p className="text-sm font-medium text-gray-900">
                   {item.value || "-"}
@@ -146,7 +146,7 @@ const disableDecline =
             ))}
 
             {/* Company */}
-            <div className="rounded-[15px] border border-border px-6 py-3 md:col-span-2">
+            <div className="rounded-[15px] border border-border px-3 sm:px-6 py-3 md:col-span-2">
               <p className="text-xs text-seclightgray mb-1">Company Name</p>
               <p className="text-sm font-medium text-gray-900 uppercase">
                 {user.company_name || "-"}
@@ -154,7 +154,7 @@ const disableDecline =
             </div>
 
             {/* Address */}
-            <div className="rounded-[15px] border border-border px-6 py-3 md:col-span-3">
+            <div className="rounded-[15px] border border-border px-3 sm:px-6 py-3 md:col-span-3">
               <p className="text-xs text-seclightgray mb-1">Address</p>
               <p className="text-sm font-medium text-gray-900">
                 {user.address || "-"}
@@ -166,7 +166,7 @@ const disableDecline =
               { label: "State", value: user.state },
               { label: "Zip Code", value: user.zip_code },
             ].map((item, i) => (
-              <div key={i} className="rounded-[15px] border border-border px-6 py-3">
+              <div key={i} className="rounded-[15px] border border-border px-3 sm:px-6 py-3">
                 <p className="text-xs text-seclightgray mb-1">{item.label}</p>
                 <p className="text-sm font-medium text-gray-900">
                   {item.value || "-"}
@@ -272,7 +272,7 @@ const disableDecline =
                   )}
                 </div>
               </div>
-              <div className="flex justify-end gap-3 mt-6">
+              <div className="flex justify-center xl:justify-end gap-3 mt-6">
                 <button
                   disabled={disableDecline}
                   onClick={() => handleLicenseAction("decline")}

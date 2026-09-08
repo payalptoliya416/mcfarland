@@ -27,8 +27,11 @@ export function RecentUserCard({ row, licenseBadge, userBadge }: any) {
 }
 
 const Info = ({ label, value }: any) => (
-  <div className="flex justify-between text-sm gap-1">
-    <span className="text-gray-500">{label}</span>
-    <span className="text-right">{value}</span>
+  <div className="flex justify-between text-sm gap-3 min-w-0">
+    <span className="text-gray-500 shrink-0">{label}</span>
+
+    <span className="text-right min-w-0 flex-1 break-all">
+      {value}
+    </span>
   </div>
 );

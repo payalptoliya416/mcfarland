@@ -1,6 +1,9 @@
 "use client";
 
-import AdminDataTable, { Column } from "@/components/tables/AdminDataTable";
+import AdminDataTable, {
+  Column,
+  PaginationControls,
+} from "@/components/tables/AdminDataTable";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,6 +18,7 @@ import MachineryMobileCard from "@/adminpanel/MachineryMobileCard";
 import { formatPrice } from "@/hooks/formate";
 import { TooltipWrapper } from "@/adminpanel/TooltipWrapper";
 import MachineryStatusDropdown from "@/adminpanel/MachineryStatusDropdown";
+import Loader from "@/components/common/Loader";
 
 /* ================= TYPES ================= */
 export type MachineryRow = {
@@ -403,6 +407,11 @@ export default function Machinery() {
       </div>
       {isMobile ? (
         <div className="space-y-4">
+          {loading && (
+            <p className="flex justify-center items-center h-full py-5">
+              <Loader />
+            </p>
+          )}
 
           {!loading && data.length === 0 && (
             <p className="text-center text-gray-500">{noDataMessage}</p>
@@ -423,6 +432,16 @@ export default function Machinery() {
               onDelete={() => setDeleteId(item.id)}
             />
           ))}
+          {pagination && (
+            <PaginationControls
+              pagination={pagination}
+              onPageChange={setPage}
+              onPageSizeChange={(size) => {
+                setPage(1);
+                setPerPage(size);
+              }}
+            />
+          )}
         </div>
       ) : (
         <AdminDataTable

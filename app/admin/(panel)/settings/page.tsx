@@ -527,7 +527,7 @@ export default function CompanySettingUI() {
               </div>
             </div>
             {/* ================= ACTIONS ================= */}
-            <div className="flex justify-end gap-3">
+            <div className="flex justify-center md:justify-end gap-3 me-3">
               {/* CANCEL */}
               <button
                 type="button"

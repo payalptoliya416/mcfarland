@@ -341,15 +341,15 @@ export default function UserProfileForm() {
         {/* ================= PROFILE CARD ================= */}
         <div className="border border-border rounded-xl overflow-hidden bg-white">
           {/* TOP GRADIENT */}
-          <div className="h-[120px] bg-gradient-to-r from-[#9FF5D2] via-[#CFF7E5] to-[#F4F9CC]" />
+          <div className="h-[100px] sm:h-[120px] bg-gradient-to-r from-[#9FF5D2] via-[#CFF7E5] to-[#F4F9CC]" />
 
           {/* PROFILE INFO */}
-          <div className="flex items-center justify-between px-6 pb-6 -mt-7 flex-wrap gap-4">
-            <div className="flex items-center gap-4 min-w-0">
+          <div className="flex items-center justify-between px-4 sm:px-6 pb-6 -mt-7 flex-wrap gap-4">
+            <div className="flex items-center gap-4 min-w-0 flex-wrap">
               <div className="relative shrink-0">
                 <div
-                  className={`w-[142px] h-[142px] rounded-full flex items-center justify-center
-              text-white text-4xl font-semibold border-4 border-white
+                  className={`w-[100px] sm:w-[142px] h-[100px] sm:h-[142px] rounded-full flex items-center justify-center
+              text-white text-2xl sm:text-4xl font-semibold border-4 border-white
               ${statusConfig.bg.split(" ")[0]}`}
                 >
                   {profile?.first_name?.charAt(0)}
@@ -357,7 +357,7 @@ export default function UserProfileForm() {
                 </div>
 
                 <span
-                  className={`border-2 border-white absolute bottom-3 right-2
+                  className={`border-2 border-white absolute bottom-1 sm:bottom-3 right-1 sm:right-2
               w-6 h-6 rounded-full flex items-center justify-center
               ${statusConfig.bg}`}
                 >
@@ -396,7 +396,7 @@ export default function UserProfileForm() {
             </div>
           )}
           {/* ================= FORM ================= */}
-          <div className="px-6 pb-6">
+          <div className="px-3 sm:px-6 pb-6">
             <Formik
               enableReinitialize
               initialValues={initialValues}
@@ -501,12 +501,12 @@ export default function UserProfileForm() {
 
                   {/* ZIP */}
                   {/* ================= LICENSE VERIFY ================= */}
-                  <div className="border border-border rounded-xl p-5">
-                    <h3 className="text-sm font-medium text-secgray mb-4">
+                  <div className="md:border border-border rounded-xl md:p-5">
+                    <h3 className="text-sm font-medium text-[#1d1b1a] mb-4">
                       License Verify
                     </h3>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-start">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 items-start">
                       {/* LEFT SIDE */}
                       <div className="border border-border rounded-xl p-4">
                         {canUploadLicense ? (
@@ -526,7 +526,7 @@ export default function UserProfileForm() {
                             />
                           </div>
                         ) : hasUploadedLicense ? (
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 xl:gap-6">
                             {/* FRONT SIDE */}
                             <div>
                               <p className="mb-3 text-base font-medium text-[#22201C]">
@@ -647,10 +647,10 @@ export default function UserProfileForm() {
                   </div>
 
                   {/* ACTIONS */}
-                  <div className="flex justify-end gap-3 pt-4">
+                  <div className="flex justify-center sm:justify-end gap-3 pt-4 flex-wrap">
                     <button
               type="button"
-              className="flex h-10 items-center justify-center gap-2 rounded-[62px]
+              className="flex h-9 sm:h-10 items-center justify-center gap-2 rounded-[62px]
               border border-gray px-4 xl:px-[25px]
               text-sm xl:text-base font-semibold text-gray
               transition-all duration-300 ease-out
@@ -672,7 +672,7 @@ export default function UserProfileForm() {
                         !frontFile ||
                         !backFile
                       }
-                      className={`flex h-10 items-center justify-center gap-2 rounded-[62px]
+                      className={`flex min-w-[150px] h-9 sm:h-10 items-center justify-center gap-2 rounded-[62px]
                       px-4 xl:px-[25px]
                       text-sm xl:text-base font-semibold text-white
                       transition-all duration-300 ease-out
@@ -699,7 +699,7 @@ export default function UserProfileForm() {
                 <button
                     type="submit"
                     disabled={saving}
-                    className={`flex h-10 items-center justify-center gap-2 rounded-[62px]
+                    className={`flex h-9 sm:h-10 items-center justify-center gap-2 rounded-[62px]
                     border border-primary px-4 xl:px-[25px]
                     text-sm xl:text-base font-semibold text-white
                     gradient-btn transition-all duration-300 ease-out
