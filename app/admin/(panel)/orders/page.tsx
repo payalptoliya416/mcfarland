@@ -526,6 +526,7 @@ const handleDelete = async (id: number) => {
               );
             }}
             onDelete={() => setDeleteId(order.id)}
+            onRegenerate={() => setRegenerateId(order.id)}
             onOpenPaymentSlip={(order) =>
               setSlipModal({
                 open: true,

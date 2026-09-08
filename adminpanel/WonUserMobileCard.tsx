@@ -10,7 +10,7 @@ type Props = {
 };
 
 const statusClassMap: Record<string, string> = {
-  Pending: "bg-yellow-400 text-black",
+  Pending: "bg-[#F2671C] text-white",
   Send: "bg-purple-500 text-white",
   Signed: "bg-blue-500 text-white",
   Approved: "bg-green-500 text-white",

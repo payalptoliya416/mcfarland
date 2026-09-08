@@ -4,6 +4,7 @@ import { FaFilePdf } from "react-icons/fa6";
 import OrderStatusDropdown from "./OrderStatusDropdown";
 import { IoReceiptSharp } from "react-icons/io5";
 import { HiOutlineTrash } from "react-icons/hi2";
+import { HiArrowPath } from "react-icons/hi2";
 
 type Props = {
   order: any;
@@ -11,6 +12,7 @@ type Props = {
   onView: () => void;
   onEdit: () => void;
   onDelete: () => void;
+  onRegenerate: () => void;
   onOpenPaymentSlip: (order: any) => void;
 };
 function PaymentSlipBadge({
@@ -55,6 +57,7 @@ export default function OrderMobileCard({
   onView,
   onEdit,
   onDelete,
+  onRegenerate,
   onOpenPaymentSlip,
 }: Props) {
   const isPaymentSlipDisabled =
@@ -81,6 +84,7 @@ export default function OrderMobileCard({
       <Field label="Phone Number" value={order.phone} />
       <Field label="Order Date" value={order.orderDate} />
       <Field label="Order Amount" value={order.orderAmount} />
+      <Field label="Order Type" value={order.typeText} />
       {/* Payment Receipt Status */}
       <div className="flex justify-between items-center">
         <span className="text-sm text-gray-500">Payment Receipt</span>
@@ -141,20 +145,24 @@ export default function OrderMobileCard({
           Contract
         </button>
 
-         <button
-          disabled={isPaymentSlipDisabled}
-          onClick={() => !isPaymentSlipDisabled && onOpenPaymentSlip(order)}
-          className={`flex items-center gap-2 text-sm font-medium transition mt-2
-    ${
-      isPaymentSlipDisabled
-        ? "text-orange  cursor-not-allowed"
-        : "text-orange cursor-pointer hover:opacity-80"
-    }
-  `}
-        >
-          <IoReceiptSharp size={18} />
-          Payment Receipt
-        </button>
+        {!isPaymentSlipDisabled && (
+          <button
+            onClick={() => onOpenPaymentSlip(order)}
+            className="flex items-center gap-2 text-sm font-medium text-orange cursor-pointer hover:opacity-80 transition mt-2"
+          >
+            <IoReceiptSharp size={18} />
+            Payment Receipt
+          </button>
+        )}
+        {order.typeText === "Checkout" && order.invoiceUrl && (
+          <button
+            onClick={onRegenerate}
+            className="flex items-center gap-2 text-sm font-medium text-blue-500 cursor-pointer hover:text-blue-600 transition mt-2"
+          >
+            <HiArrowPath size={18} />
+            Regenerate Invoice
+          </button>
+        )}
         {(order.status === "In Transit" ||
  order.status === "Delivered" ||
  order.status === "Cancelled") && (
