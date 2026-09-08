@@ -63,6 +63,7 @@ export default function MachineryStatusDropdown({
     if (loading !== null) return; // prevent multiple click
 
     try {
+      setOpen(false);
       setLoading(status);
 
       const res = await adminMachineryService.updateStatus({
@@ -77,7 +78,6 @@ export default function MachineryStatusDropdown({
       toast.success("Status updated");
 
       onUpdated(); // refresh table
-      setOpen(false); // ✅ close AFTER success
     } catch (err: any) {
       toast.error(err.message || "Failed to update");
     } finally {

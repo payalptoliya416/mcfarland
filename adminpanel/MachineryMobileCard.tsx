@@ -4,11 +4,13 @@ import Image from "next/image";
 import { HiOutlineTrash } from "react-icons/hi2";
 import { BiEdit } from "react-icons/bi";
 import { HiArrowPath } from "react-icons/hi2";
+import MachineryStatusDropdown from "./MachineryStatusDropdown";
 
 type Props = {
   item: any;
   onEdit: () => void;
   onDelete: () => void;
+  onUpdated: () => void;
   loadingEditId?: number | null;
 };
 
@@ -16,12 +18,13 @@ export default function MachineryMobileCard({
   item,
   onEdit,
   onDelete,
+  onUpdated,
   loadingEditId,
 }: Props) {
   return (
     <div className="bg-white border border-border rounded-xl p-4 space-y-3">
       {/* HEADER */}
-      <div className="flex gap-3">
+      <div className="flex gap-3 min-w-0">
         <div className="relative w-14 h-14 rounded-lg overflow-hidden shrink-0">
           <Image
             src={item.image_urls}
@@ -40,17 +43,14 @@ export default function MachineryMobileCard({
           <p className="text-xs text-gray-500">{item.category}</p>
         </div>
 
-        <span
-          className={`px-3 py-1 text-xs rounded-md h-fit ${
-            item.status === "Active"
-              ? "bg-green-100 text-green-700"
-              : item.status === "Sold"
-                ? "bg-yellow-100 text-yellow-700"
-                : "bg-red-100 text-red-700"
-          }`}
-        >
-          {item.status}
-        </span>
+      </div>
+
+      <div className="flex justify-end">
+        <MachineryStatusDropdown
+          value={item.status}
+          machineryId={item.id}
+          onUpdated={onUpdated}
+        />
       </div>
 
       {/* INFO GRID */}

@@ -1,4 +1,4 @@
-import { getAdminToken } from "./adminAuth";
+import { getAdminToken, handleAdminAuthFailure } from "./adminAuth";
 
 
 export const ADMIN_BASE_URL = process.env.NEXT_PUBLIC_ADMIN_BASE_URL;
@@ -29,6 +29,9 @@ export async function adminApi<T>(
   }
 
   if (!res.ok) {
+    if (res.status === 401 && token) {
+      handleAdminAuthFailure();
+    }
     let message = "Invalid email or password";
     // If backend sends message → use it
     if (data?.message) {

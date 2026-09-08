@@ -2,6 +2,12 @@ const ADMIN_TOKEN_KEY = "admin_token";
 const ADMIN_TOKEN_EXP_KEY = "admin_token_exp";
 const ADMIN_USER_KEY = "admin_user";
 
+const redirectToAdminSignIn = () => {
+  if (typeof window !== "undefined" && window.location.pathname !== "/admin") {
+    window.location.replace("/admin");
+  }
+};
+
 const getCookieValue = (name: string) => {
   if (typeof document === "undefined") return null;
   const match = document.cookie.match(
@@ -39,6 +45,7 @@ export const getAdminToken = () => {
   if (token && expiry) {
     if (Date.now() > Number(expiry)) {
       clearAdminToken();
+      redirectToAdminSignIn();
       return null;
     }
 
@@ -63,4 +70,9 @@ export const clearAdminToken = () => {
   localStorage.removeItem(ADMIN_USER_KEY);
 
   document.cookie = "admin_token=; path=/; max-age=0";
+};
+
+export const handleAdminAuthFailure = () => {
+  clearAdminToken();
+  redirectToAdminSignIn();
 };

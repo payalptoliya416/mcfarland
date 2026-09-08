@@ -430,6 +430,7 @@ export default function Machinery() {
                 );
               }}
               onDelete={() => setDeleteId(item.id)}
+              onUpdated={fetchMachinery}
             />
           ))}
           {pagination && (

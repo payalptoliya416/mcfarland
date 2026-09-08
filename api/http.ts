@@ -1,4 +1,4 @@
-import { getToken } from "./authToken";
+import { getToken, handleUserAuthFailure } from "./authToken";
 
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/+$/, "") || "";
 
@@ -38,12 +38,15 @@ export async function api<T>(
       data = responseText;
     }
 
-if (res.status === 401) {
-  if (data?.message) {
-    throw new Error(data.message); // ✅ Invalid email or password
-  }
-  throw new Error("Unauthorized");
-}
+    if (res.status === 401) {
+      if (token) {
+        handleUserAuthFailure();
+      }
+      if (data?.message) {
+        throw new Error(data.message);
+      }
+      throw new Error("Unauthorized");
+    }
 
 // Preserve API validation details so forms can show errors beside fields.
 if (data?.status === false || data?.success === false) {
