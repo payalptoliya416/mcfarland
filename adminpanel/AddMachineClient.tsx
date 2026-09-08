@@ -631,7 +631,7 @@ if (isEdit && loading) {
 
                 {/* ================= ACTIONS ================= */}
 
-              <div className="flex justify-end gap-5">
+              <div className="flex justify-center lg:justify-end gap-5 mb-15">
                       <button
                         type="button"
                         onClick={() => router.push(`/admin/machinery${returnQuery}`)}

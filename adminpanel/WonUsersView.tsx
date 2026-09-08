@@ -135,10 +135,10 @@ const isActionAllowed = data?.contract_status === "Signed";
   return (
     <div className="space-y-5">
       {/* ================= TOP CARD ================= */}
-      <div className="bg-white border border-border rounded-[10px] p-[25px]">
+      <div className="bg-white border border-border rounded-[10px] p-4 sm:p-[25px]">
         {/* HEADER */}
         <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
-          <h2 className="text-[#000000] text-2xl font-semibold">
+          <h2 className="text-[#000000] text-xl sm:text-2xl font-semibold">
             {data.machinery_name}
           </h2>
 
@@ -184,7 +184,7 @@ const isActionAllowed = data?.contract_status === "Signed";
       </div>
 
       {/* ================= CONTRACT VIEW ================= */}
-      <div className="bg-white border border-border rounded-[10px] p-[25px]">
+      <div className="bg-white border border-border rounded-[10px] p-4 sm:p-[25px]">
         <div className="flex justify-between items-center mb-4 flex-wrap gap-3">
           <h3 className="text-lg font-semibold">Contract</h3>
 

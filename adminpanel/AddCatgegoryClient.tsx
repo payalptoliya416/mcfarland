@@ -298,7 +298,7 @@ export default function AddCategoryClient() {
             </div>
           </div>
           {/* ACTION BUTTONS */}
-          <div className="flex justify-end gap-5">
+          <div className="flex justify-center lg:justify-end gap-5">
             <button
               type="button"
               onClick={() => router.push(`/admin/category${returnQuery}`)}

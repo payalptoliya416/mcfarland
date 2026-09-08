@@ -181,10 +181,18 @@ function BiddingList() {
             </div>
           )}
 
-          {!loading && rows.length === 0 && (
-            <div className="text-center py-10 text-gray-500">No bids found</div>
-          )}
+         {!loading && rows.length === 0 && (
+          <div className="mb-3 min-h-[130px] rounded-xl border border-border flex flex-col items-center justify-center text-center px-4">
 
+            <p className="text-sm font-medium text-gray-600">
+              No bids found
+            </p>
+
+            <p className="mt-1 text-xs text-gray-400">
+              There are no bids available at the moment.
+            </p>
+          </div>
+        )}
           {!loading &&
             rows.map((row) => (
               <div
